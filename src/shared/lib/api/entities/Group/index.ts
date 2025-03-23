@@ -1,4 +1,4 @@
-import { DeleteMessage, PageFilter, Sort } from "../Common"
+import { DeleteMessage, Page, PageFilter, Sort } from "../Common"
 import { Student } from "../Role"
 
 export type Group = {
@@ -7,6 +7,8 @@ export type Group = {
     students: Array<Student>,
     studentsCount: number
 }
+
+export type GroupPage = Page<Group>
 
 export type GroupCreate = Pick<Group, 'number'>
 
