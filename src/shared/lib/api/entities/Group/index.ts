@@ -15,7 +15,7 @@ export type GroupUpdate = Pick<Group, 'number'>
 export type GroupSearchAndFilter = {
     id?: string
     number?: string
-    sort?: Sort<Group, keyof Group>
+    sort?: Array<Sort<Group, keyof Group>>
 } & PageFilter
 
 export type DeleteGroup = DeleteMessage
