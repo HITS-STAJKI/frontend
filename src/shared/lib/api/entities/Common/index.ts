@@ -8,3 +8,8 @@ export type Page<T> = {
     content: Array<T>
     pagination: Pagination
 }
+
+export type PageFilter = {
+    size?: number
+    page?: number
+}
