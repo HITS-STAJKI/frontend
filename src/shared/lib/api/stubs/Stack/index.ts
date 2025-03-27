@@ -1,14 +1,14 @@
 import { Stack, StackPage } from "../../entities";
 
-const STACK1: Stack = {
+export const STACK1: Stack = {
     id: 'stack_id_1',
     name: 'Frontend',
 }
-const STACK2: Stack = {
+export const STACK2: Stack = {
     id: 'stack_id_2',
     name: 'Backend',
 }
-const STACK3: Stack = {
+export const STACK3: Stack = {
     id: 'stack_id_3',
     name: '1C',
 }
