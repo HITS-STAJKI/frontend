@@ -2,7 +2,7 @@ import { Page } from "../Common"
 
 export type Practice = {
     id: string
-    createdAt: Date
+    createdAt: string
     isPaid: boolean
     isArchived: boolean
     isApproved: boolean
@@ -16,8 +16,8 @@ export type PracticeCreate = Pick<Practice, 'isPaid'> & {companyId: string}
 
 export type PracticeApprove = Pick<Practice, 'id'> &
 {
-    createdAt: Date
-    modifiedAt: Date
+    createdAt: string
+    modifiedAt: string
     fileId: string
     isApproved: boolean
 }

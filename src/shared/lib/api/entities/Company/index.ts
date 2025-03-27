@@ -5,7 +5,7 @@ export type Company = {
     id: string
     name: string
     description: string
-    photo?: File
+    photo?: string
 }
 
 export type CompanyCreate = Pick<Company, 'name' | 'description'> & {
