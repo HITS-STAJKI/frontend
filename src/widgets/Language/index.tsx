@@ -96,7 +96,7 @@ export const LanguageList = () => {
                 </div>
                 <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
                     {filteredLanguages.map(lang => (
-                        <Card key={lang.id} shadow="sm" padding="lg" style={{ width: '32%', maxWidth: '300px', height: '64px' }}>
+                        <Card key={lang.id} shadow="sm" padding="lg" style={{ width: '100%', maxWidth: '300px', height: '64px' }}>
                             <Flex justify="space-between" align="center" style={{ height: '100%' }}>
                                 {selectedLanguage && selectedLanguage.id === lang.id ? (
                                     <LanguageForm language={lang} onSubmit={handleCreateOrUpdate} />

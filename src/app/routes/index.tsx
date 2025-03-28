@@ -5,6 +5,7 @@ import { RegistrationPage } from "pages/RegistrationPage"
 import { LoginPage } from "pages/LoginPage"
 
 import { LanguagePage } from "../../pages/LanguagePage";
+import { StackPage } from "../../pages/StackPage";
 
 export const AppRouter = () => {
     return (
@@ -13,6 +14,7 @@ export const AppRouter = () => {
                 <Route path={LOGIN_ROUTE} element={<LoginPage />} />
                 <Route path={REGISTRATION_ROUTE} element={<RegistrationPage />} />
                 <Route path="/languages" element={<LanguagePage />} />
+                <Route path="/stacks" element={<StackPage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>
