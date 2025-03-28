@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Navigate, Route, Routes } from "react-router-dom"
 import { PublicLayout } from "./layout/PublicLayout"
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "shared/lib"
 import { RegistrationPage } from "pages/RegistrationPage"
@@ -11,6 +11,7 @@ export const AppRouter = () => {
                 <Route path={LOGIN_ROUTE} element={<LoginPage />} />
                 <Route path={REGISTRATION_ROUTE} element={<RegistrationPage />} />
             </Route>
+            <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>
     )
 }

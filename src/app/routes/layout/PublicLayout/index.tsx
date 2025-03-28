@@ -1,19 +1,20 @@
-import { AppShell, Flex } from "@mantine/core"
-import { Link, Outlet } from "react-router-dom"
+import { Anchor, AppShell, Flex, Title } from "@mantine/core"
+import { Outlet, useNavigate } from "react-router-dom"
 import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "shared/lib"
 
 export const PublicLayout = () => {
+    const navigate = useNavigate()
     return (
         <AppShell
             header={{ height: 60 }}
             h='100vh'
         >
-            <AppShell.Header>
-                <Flex align='center' h='100%' justify='center' gap='xl'>
-                    <div>{'Стажки'}</div>
+            <AppShell.Header pl='md' pr='md'>
+                <Flex align='center' h='100%' justify='space-between' gap='xl'>
+                    <Title order={3}>{'Стажки'}</Title>
                     <Flex gap='xl'>
-                        <Link to={LOGIN_ROUTE}>Вход</Link>
-                        <Link to={REGISTRATION_ROUTE}>Регистрация</Link>
+                        <Anchor onClick={() => navigate(LOGIN_ROUTE)}>Вход</Anchor>
+                        <Anchor onClick={() => navigate(REGISTRATION_ROUTE)}>Регистрация</Anchor>
                     </Flex>
                 </Flex>
             </AppShell.Header>
