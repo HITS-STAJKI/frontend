@@ -1,3 +1,5 @@
 export const MAIN_ROUTE = '/'
 export const LOGIN_ROUTE = '/login'
 export const REGISTRATION_ROUTE = '/registration'
+export const GROUPS_ROUTE = '/groups'
+export const PARTNERS_ROUTE = '/partners'

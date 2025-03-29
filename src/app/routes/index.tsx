@@ -1,8 +1,10 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { PublicLayout } from "./layout/PublicLayout"
-import { LOGIN_ROUTE, REGISTRATION_ROUTE } from "shared/lib"
+import { GROUPS_ROUTE, LOGIN_ROUTE, PARTNERS_ROUTE, REGISTRATION_ROUTE } from "shared/lib"
 import { RegistrationPage } from "pages/RegistrationPage"
 import { LoginPage } from "pages/LoginPage"
+import { GroupsPage } from "pages/GroupsPage"
+import { PartnersPage } from "pages/PartnersPage"
 
 export const AppRouter = () => {
     return (
@@ -10,6 +12,8 @@ export const AppRouter = () => {
             <Route element={<PublicLayout />}>
                 <Route path={LOGIN_ROUTE} element={<LoginPage />} />
                 <Route path={REGISTRATION_ROUTE} element={<RegistrationPage />} />
+                <Route path={GROUPS_ROUTE} element={<GroupsPage />} />
+                <Route path={PARTNERS_ROUTE} element={<PartnersPage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>
