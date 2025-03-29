@@ -1,4 +1,4 @@
-import { ActionIcon, Button } from '@mantine/core';
+import { ActionIcon } from '@mantine/core';
 import { IconPencil } from '@tabler/icons-react';
 
 type EditButtonProps = {

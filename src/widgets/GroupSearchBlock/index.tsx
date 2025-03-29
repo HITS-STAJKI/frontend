@@ -1,5 +1,5 @@
 import { Input } from '@mantine/core';
-import { ActionIcon, Button } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 
 export const GroupSearchBlock = () => {
