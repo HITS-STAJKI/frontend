@@ -1,19 +1,19 @@
-import { CreateGroup } from "features/CreateGroup"
 import { GroupList } from "widgets/GroupList"
 import { GroupSearchBlock } from "widgets/GroupSearchBlock"
-import { Title } from '@mantine/core';
+import { Container, Flex, Title } from '@mantine/core';
+import { CreateGroup } from "features/Group";
 
 export const GroupsPage = () => {
     return (
-        <div style={{ width: '100%', padding: '0 2vw' }}>
+        <Container w={'100%'} fluid>
             <Title order={1}>Группы</Title>
 
-            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', width: '100%', marginTop: "3vh" }} >
+            <Flex justify='space-between' align='flex-end' w={'100%'} >
                 <GroupSearchBlock />
                 <CreateGroup />
-            </div>
-            
+            </Flex>
+
             <GroupList />
-        </div>
+        </Container>
     )
 }
