@@ -1,18 +1,12 @@
 import { useForm } from "@mantine/form";
-import { Language } from "../../shared/lib";
+import { Language, Stack } from "../../shared/lib";
 
-import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Modal } from "@mantine/core";
+import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Modal, Input } from "@mantine/core";
 import { useState } from "react";
-import { LanguagePage } from "../../shared/lib/api/entities";
-
-import { TrashSvgrepoCom } from '../../assets/icons';
-import { PencilSvgrepoCom } from '../../assets/icons';
+import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
 
 import { EditButton, DeleteButton } from "../../features";
 
-const inputFields: InputField[] = [
-    { name: 'languageName', placeholder: 'Введите название языка' }
-];
 
 // Поле для ввода текста (название и что отобразить в пустом поле для ввода)
 interface InputField {
@@ -26,48 +20,74 @@ interface ModalProps {
     inputFields: InputField[];
     isOpen: boolean;
     onClose: () => void;
+    onCreate: (newLanguage: Language | Stack) => void;
 }
 
-export function SerachForm(){
+// Интерфейс для определения что отображать в SearchForm
+interface SearchFormProps {
+    onCreate: (newItem: Language | Stack) => void;
+    type: 'language' | 'stack'; // что создавать
+}
+
+export function SearchForm({ onCreate, type }: SearchFormProps) {
     const [isModalOpen, setModalOpen] = useState(false);
+
+    const inputFields = type === 'language' 
+        ? [{ name: 'name', placeholder: 'Введите название языка' }] 
+        : [{ name: 'name', placeholder: 'Введите название стека' }];
+
     return(
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
         <TextInput
-            placeholder="Поиск языка..."
+            placeholder={type === 'language' ? "Поиск языка..." : "Поиск стека..."}
             //onChange={(event) => setSearchTerm(event.currentTarget.value)}
+            // Поиск не делаю - отправляется запрос на сервер и возвращается список языков/стеков
         />
         <Button onClick={() => setModalOpen(true)}  style={{ marginLeft: '10px' }}>
-            Создать язык
+            {type === 'language' ? 'Создать язык' : 'Создать стек'}
         </Button>
-        <ModalForm title="Создание нового языка" inputFields={inputFields} isOpen={isModalOpen} onClose={() => setModalOpen(false)}/>
+        <ModalForm title={type === 'language' ? "Создание нового языка" : "Создание нового стека"} inputFields={inputFields} isOpen={isModalOpen} onClose={() => setModalOpen(false)} onCreate={onCreate}/>
     </div>
     )
 }
 
-export function LanguageList({ content }: LanguagePage) {
+export function LanguageList({ content }: LanguagePage | StackPage) {
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
                 {content.map(card => (
-                <LanguageCard key={card.id} id={card.id} name={card.name} />
+                <LanguageStackCard key={card.id} id={card.id} name={card.name} />
             ))}
         </Flex>
     );
 };
 
 
-function LanguageCard({id, name}: Language){
-    function handleEdit({}: Language) {
+function LanguageStackCard({id, name}: Language | Stack){
+    const [isEditing, setIsEditing] = useState(false); // Состояние для отслеживания режима редактирования
+    const [currentName, setCurrentName] = useState(name); // Состояние для хранения текущего имени
+
+    function handleEdit({}: Language | Stack) {
+        setIsEditing(!isEditing)
+        name = currentName
         console.log(id, name)
     }
 
-    function handleDelete({}: Language) {
+    function handleDelete({}: Language | Stack) {
+        // Удаление пока не делаю
         console.log(id, name)
     }
 
     return(
         <Card key={id} shadow="sm" padding="lg" style={{ width: '100%', maxWidth: '300px', height: '64px' }}>
             <Flex justify="space-between" align="center" style={{ height: '100%' }}>
-                <Text>{name}</Text>
+                {isEditing ? (
+                        <Input 
+                            value={currentName} 
+                            onChange={(e) => setCurrentName(e.target.value)} 
+                        />
+                    ) : (
+                        <Text>{currentName}</Text>
+                    )}
                 <Flex gap="md">
                     <EditButton onClick={() => handleEdit({id, name})}></EditButton>
                     <DeleteButton onClick={() => handleDelete({id, name})}></DeleteButton>
@@ -77,7 +97,7 @@ function LanguageCard({id, name}: Language){
     )
 }
 
-function ModalForm({ title,  inputFields, isOpen, onClose} : ModalProps){
+function ModalForm({ title,  inputFields, isOpen, onClose,  onCreate} : ModalProps){
     const [formValues, setFormValues] = useState<Record<string, string>>({});
 
     const handleChange = (field: string, value: string) => {
@@ -89,7 +109,12 @@ function ModalForm({ title,  inputFields, isOpen, onClose} : ModalProps){
 
     const createNewObject = () => {
         // Логика для создания нового объекта (пока язык или стек)
-        console.log(formValues);
+        const newItem: Language | Stack = {
+            id: Date.now().toString(),
+            name: formValues['name'],
+        };
+        console.log(newItem);
+        onCreate(newItem);
         onClose();
     }
 
