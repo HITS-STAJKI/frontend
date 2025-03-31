@@ -1,11 +1,12 @@
 import { Language, Stack } from "../../shared/lib";
 
-import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Modal, Input } from "@mantine/core";
+import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Input } from "@mantine/core";
 import { useState } from "react";
 import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
 
 import { EditButton, DeleteButton } from "../../features";
 import { ModalForm } from "shared/ui/organisms";
+import { Modal } from "shared/ui/modals/Modal/index";
 
 
 
@@ -16,25 +17,34 @@ interface SearchFormProps {
 }
 
 export function SearchForm({ onCreate, type }: SearchFormProps) {
-    const [isModalOpen, setModalOpen] = useState(false);
-
-    const inputFields = type === 'language' 
-        ? [{ name: 'name', placeholder: 'Введите название языка' }] 
+    const inputFields = type === 'language'
+        ? [{ name: 'name', placeholder: 'Введите название языка' }]
         : [{ name: 'name', placeholder: 'Введите название стека' }];
-
-    return(
+    return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-        <TextInput
-            placeholder={type === 'language' ? "Поиск языка..." : "Поиск стека..."}
-            //onChange={(event) => setSearchTerm(event.currentTarget.value)}
-            // Поиск не делаю - отправляется запрос на сервер и возвращается список языков/стеков
-        />
-        <Button onClick={() => setModalOpen(true)}  style={{ marginLeft: '10px' }}>
-            {type === 'language' ? 'Создать язык' : 'Создать стек'}
-        </Button>
-        <ModalForm title={type === 'language' ? "Создание нового языка" : "Создание нового стека"} inputFields={inputFields} isOpen={isModalOpen} onClose={() => setModalOpen(false)} onCreate={onCreate}/>
-    </div>
-    )
+            <TextInput
+                placeholder={type === 'language' ? "Поиск языка..." : "Поиск стека..."}
+                // onChange={(event) => setSearchTerm(event.currentTarget.value)} 
+                // Поиск не делаю - отправляется запрос на сервер и возвращается список языков/стеков
+            />
+            <Modal
+                render={open => <Button onClick={open}>{type === 'language' ? 'Создать язык' : 'Создать стек'}</Button>}
+                content={({ close }) => (
+                    <ModalForm
+                        title={type === 'language' ? "Создать язык" : "Создать стек"}
+                        inputFields={inputFields}
+                        isOpen={true}
+                        onClose={close}
+                        onCreate={(newItem) => {
+                            onCreate(newItem); // Обрабатываем создание нового элемента
+                            close(); // Закрываем модальное окно после создания
+                        }}
+                    />
+                )}
+                title={type === 'language' ? "Создать язык" : "Создать стек"}
+            />
+        </div>
+    );
 }
 
 export function LanguageList({ content }: LanguagePage | StackPage) {
