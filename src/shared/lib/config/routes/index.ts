@@ -1,3 +1,5 @@
 export const MAIN_ROUTE = '/'
 export const LOGIN_ROUTE = '/login'
 export const REGISTRATION_ROUTE = '/registration'
+export const LANGUAGES_ROUTE = '/languages'
+export const STACKS_ROUTE = '/stacks'
