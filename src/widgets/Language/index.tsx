@@ -5,8 +5,10 @@ import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Modal } fr
 import { useState } from "react";
 import { LanguagePage } from "../../shared/lib/api/entities";
 
-import EditIcon from './edit';
-import TrashIcon from './trash';
+import { TrashSvgrepoCom } from '../../assets/icons';
+import { PencilSvgrepoCom } from '../../assets/icons';
+
+import { EditButton, DeleteButton } from "../../features";
 
 const inputFields: InputField[] = [
     { name: 'languageName', placeholder: 'Введите название языка' }
@@ -54,17 +56,21 @@ export function LanguageList({ content }: LanguagePage) {
 
 
 function LanguageCard({id, name}: Language){
+    function handleEdit({}: Language) {
+        console.log(id, name)
+    }
+
+    function handleDelete({}: Language) {
+        console.log(id, name)
+    }
+
     return(
         <Card key={id} shadow="sm" padding="lg" style={{ width: '100%', maxWidth: '300px', height: '64px' }}>
             <Flex justify="space-between" align="center" style={{ height: '100%' }}>
                 <Text>{name}</Text>
                 <Flex gap="md">
-                    <Button color="gray" /*onClick={() => handleEdit(lang)}*/ style={{ width: '48px', height: '48px', padding: 0, /*display: isEditing[lang.id] ? 'none' : 'inline'*/ }}>
-                        <EditIcon />
-                    </Button>
-                    <Button color="red" /*onClick={() => handleDelete(lang.id)}*/ style={{ width: '48px', height: '48px', padding: 0 }}>
-                        <TrashIcon />
-                    </Button>
+                    <EditButton onClick={() => handleEdit({id, name})}></EditButton>
+                    <DeleteButton onClick={() => handleDelete({id, name})}></DeleteButton>
                 </Flex>
             </Flex>
         </Card>
