@@ -1,5 +1,5 @@
 import { useForm } from "@mantine/form";
-import { Language } from "../../shared/lib/api/entities/Language";
+import { Language } from "../../shared/lib";
 
 import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Modal } from "@mantine/core";
 import { useState } from "react";
@@ -42,6 +42,17 @@ export function SerachForm(){
     )
 }
 
+export function LanguageList({ content }: LanguagePage) {
+    return (
+        <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
+                {content.map(card => (
+                <LanguageCard key={card.id} id={card.id} name={card.name} />
+            ))}
+        </Flex>
+    );
+};
+
+
 function LanguageCard({id, name}: Language){
     return(
         <Card key={id} shadow="sm" padding="lg" style={{ width: '100%', maxWidth: '300px', height: '64px' }}>
@@ -59,16 +70,6 @@ function LanguageCard({id, name}: Language){
         </Card>
     )
 }
-
-export function LanguageList({ content }: LanguagePage) {
-    return (
-        <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
-                {content.map(card => (
-                <LanguageCard key={card.id} id={card.id} name={card.name} />
-            ))}
-        </Flex>
-    );
-};
 
 function ModalForm({ title,  inputFields, isOpen, onClose} : ModalProps){
     const [formValues, setFormValues] = useState<Record<string, string>>({});
