@@ -1,23 +1,5 @@
-import { Language, Stack } from "../../../../shared/lib";
-
-import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Modal, Input } from "@mantine/core";
-import { useState } from "react";
+import { Button, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form"
-
-/*// Поле для ввода текста (название и что отобразить в пустом поле для ввода)
-interface InputField {
-    name: string;
-    placeholder: string;
-}
-
-// Интерфейс для вывода модального окна с определёнными полями
-interface ModalProps {
-    title: string;
-    inputFields: InputField[];
-    isOpen: boolean;
-    onClose: () => void;
-    onCreate: (newLanguage: Language | Stack) => void;
-}*/
 
 type CreateLanguageOrStackFormProps = {
     onSuccess: () => void;
