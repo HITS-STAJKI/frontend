@@ -5,7 +5,7 @@ import { useState } from "react";
 import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
 
 import { EditButton, DeleteButton } from "../../features";
-import { ModalForm } from "shared/ui/organisms";
+import { CreateLanguageOrStackForm } from "shared/ui/organisms";
 import { Modal } from "shared/ui/modals/Modal/index";
 
 
@@ -17,9 +17,9 @@ interface SearchFormProps {
 }
 
 export function SearchForm({ onCreate, type }: SearchFormProps) {
-    const inputFields = type === 'language'
+    /*const inputFields = type === 'language'
         ? [{ name: 'name', placeholder: 'Введите название языка' }]
-        : [{ name: 'name', placeholder: 'Введите название стека' }];
+        : [{ name: 'name', placeholder: 'Введите название стека' }];*/
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <TextInput
@@ -28,17 +28,11 @@ export function SearchForm({ onCreate, type }: SearchFormProps) {
                 // Поиск не делаю - отправляется запрос на сервер и возвращается список языков/стеков
             />
             <Modal
-                render={open => <Button onClick={open}>{type === 'language' ? 'Создать язык' : 'Создать стек'}</Button>}
+                render={open => <Button onClick={() => open()}>{type === 'language' ? 'Создать язык' : 'Создать стек'}</Button>}
                 content={({ close }) => (
-                    <ModalForm
-                        title={type === 'language' ? "Создать язык" : "Создать стек"}
-                        inputFields={inputFields}
-                        isOpen={true}
-                        onClose={close}
-                        onCreate={(newItem) => {
-                            onCreate(newItem); // Обрабатываем создание нового элемента
-                            close(); // Закрываем модальное окно после создания
-                        }}
+                    <CreateLanguageOrStackForm 
+                        type={type} 
+                        onSuccess={() => close()} 
                     />
                 )}
                 title={type === 'language' ? "Создать язык" : "Создать стек"}
