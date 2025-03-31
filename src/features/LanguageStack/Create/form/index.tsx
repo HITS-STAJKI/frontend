@@ -1,4 +1,4 @@
-import { Language, Stack } from "../../shared/lib";
+import { Language, Stack } from "../../../../shared/lib";
 
 import { Button, Container, Flex, Title, Card, Text, TextInput, Grid, Modal, Input } from "@mantine/core";
 import { useState } from "react";

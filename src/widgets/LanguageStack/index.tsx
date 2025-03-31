@@ -5,7 +5,7 @@ import { useState } from "react";
 import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
 
 import { EditButton, DeleteButton } from "../../features";
-import { CreateLanguageOrStackForm } from "shared/ui/organisms";
+import { CreateLanguageOrStackForm } from "features/LanguageStack/Create/form";
 import { Modal } from "shared/ui/modals/Modal/index";
 
 
