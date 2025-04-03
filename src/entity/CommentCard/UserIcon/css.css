@@ -1,0 +1,33 @@
+.user-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px; /* 48px = 3rem */
+  height: 35px; /* 48px = 3rem */
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+.user-icon svg {
+  width: 25px; /* 32px = 2rem */
+  height: 25px; /* 32px = 2rem */
+  color: #333; /* Цвет иконки */
+}
+.comment {
+  font-family: 'Manrope', sans-serif;
+}
+.comment-list {
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.comment-list.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 2px solid #ccc;
+  margin: 1vh 0; /* Можно оставить в vh для адаптивности */
+  padding: 0;
+}
