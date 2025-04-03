@@ -3,11 +3,6 @@ import { Flex, Text, Accordion} from "@mantine/core";
 import { GET_INTERVIEWS_COMMENTS } from "shared/lib/api/stubs";
 import  { CreateCommentForm } from 'features'
 
-interface Props {
-    commentsContent: any; // Замените 'any' на соответствующий тип данных для комментариев
-    commentsPagination: any; // Замените 'any' на соответствующий тип данных для пагинации комментариев
-}
-
 export const SelectionComments = () => {
 return (
     <div className="comment" style={{ width: '100%', margin: '1rem' }}>
