@@ -1,3 +1,3 @@
 export * from './LanguageOrStack'
 export * from './Comment/CreateCommentForm'
-export * from './Comment/SelectionComments'
+export * from '../widgets/Selection/Comment/SelectionComments'

@@ -25,9 +25,10 @@
 }
 hr {
   display: block;
-  height: 1px;
+  height: 0;
   border: 0;
-  border-top: 2px solid #ccc;
-  margin: 1vh 0; /* Можно оставить в vh для адаптивности */
+  border-top: 1px solid #ccc;
+  margin: 0 0;
+  margin-bottom: 1vh; /* Можно оставить в vh для адаптивности */
   padding: 0;
 }
