@@ -1,4 +1,4 @@
-import { Button, TextInput, MultiSelect, Textarea } from "@mantine/core";
+import { Button, TextInput, MultiSelect, Textarea, Select } from "@mantine/core";
 import { useForm } from "@mantine/form"
 import { Company, CompanyPage, GET_STACKS, GET_COMPANIES, Language, Page, Stack } from "shared/lib";
 import { GET_LANGUAGES } from "shared/lib/api/stubs/Language";
@@ -35,7 +35,7 @@ export const CreateEditSelectionForm = ({ onSuccess, type }: CreateSelectionForm
         <form onSubmit={form.onSubmit(onSubmit)}>
             <SelectForm page={GET_COMPANIES} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
             <SelectForm page={GET_STACKS} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
-            <SelectForm page={GET_LANGUAGES} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)}/>
+            <MultiSelectForm page={GET_LANGUAGES} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)}/>
                 <Textarea
                     style={{ marginBottom: '15px' }}
                     placeholder={"Напишите комментарий"}
@@ -56,9 +56,9 @@ type SelectFormProps = {
     onChange: (value: string) => void;
 }
 
-const SelectForm = ({ page, label, onChange }: SelectFormProps) => {
+const MultiSelectForm = ({ page, label, onChange }: SelectFormProps) => {
     return (
-        <MultiSelect 
+        <MultiSelect
         style={{ marginBottom: '15px' }}
         label={label}
         withAsterisk
@@ -69,3 +69,17 @@ const SelectForm = ({ page, label, onChange }: SelectFormProps) => {
       />
     );
   };
+
+const SelectForm = ({ page, label, onChange }: SelectFormProps) => {
+return (
+    <Select 
+    style={{ marginBottom: '15px' }}
+    label={label}
+    withAsterisk
+    placeholder={label}
+    onChange={onChange}
+    data={page.content.map(option => ({ value: option.id, label: option.name }))}
+    required
+    />
+    );
+};
