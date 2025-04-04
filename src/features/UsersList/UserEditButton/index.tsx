@@ -1,6 +1,5 @@
 import { Button } from "@mantine/core"
-import { TrashSvgrepoCom } from "assets/icons"
-import { Modal } from "shared/ui"
+import { PencilSvgrepoCom } from "assets/icons"
 
 type UserIdProps = {
     id: string
@@ -8,12 +7,12 @@ type UserIdProps = {
 
 export const EditUserButton = ({ id }: UserIdProps) => {
 
-    const handleDelete = (close: () => void) => {
+    const handleEdit = (close: () => void) => {
         close()
     }
 
     return (
-        <Button color="red" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}><TrashSvgrepoCom /></Button>
+        <Button color="gray" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}><PencilSvgrepoCom /></Button>
 
     )
 }
