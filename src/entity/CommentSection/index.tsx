@@ -1,4 +1,4 @@
-import { Avatar, Card, Container, Flex, Group, MantineColor, Space, Stack, Text, Title } from "@mantine/core"
+import { Avatar, Container, Flex, Group, MantineColor, Space, Stack, Text, Title } from "@mantine/core"
 import { CreateCommentForm } from "features/CreateCommentForm"
 import { dateFormatter, InterviewsComment } from "shared/lib"
 
@@ -26,24 +26,21 @@ export const CommentSection = ({ comments }: CommentSectionProps) => {
     )
 }
 
-export const Comment = ({ content, createdAt, modifiedAt, author, ...props }: InterviewsComment) => {
+export const Comment = ({ content, createdAt, modifiedAt, author }: InterviewsComment) => {
     return (
-        <>
-            <Group>
-                <Avatar color={AvatarColor[Math.round(AvatarColor.length * Math.random())]}>
-                    {`${author.firstName[0].toUpperCase()}${author.lastName[0].toUpperCase()}`}
-                </Avatar>
-                <Flex direction='column'>
-                    <Group>
-                        <Text>
-                            {`${author.firstName} ${author.lastName}`}
-                        </Text>
-                        <Text c='gray'>{dateFormatter(modifiedAt ? modifiedAt : createdAt)}</Text>
-                    </Group>
-                    <Text>{content}</Text>
-                </Flex>
-
-            </Group>
-        </>
+        <Group>
+            <Avatar color={AvatarColor[Math.round(AvatarColor.length * Math.random())]}>
+                {`${author.firstName[0].toUpperCase()}${author.lastName[0].toUpperCase()}`}
+            </Avatar>
+            <Flex direction='column'>
+                <Group>
+                    <Text>
+                        {`${author.firstName} ${author.lastName}`}
+                    </Text>
+                    <Text c='gray'>{dateFormatter(modifiedAt ? modifiedAt : createdAt)}</Text>
+                </Group>
+                <Text>{content}</Text>
+            </Flex>
+        </Group>
     )
 }
