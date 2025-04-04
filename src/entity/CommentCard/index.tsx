@@ -25,7 +25,7 @@ export function CommentCard({ id, content, createdAt, modifiedAt, author }: Inte
 
 function getColorById(id: string) {
     const colors = [
-        '#B22222', '#4CAF50', '#3F51B5', '#D3D300', '#D5006D', '#009688', '#FF8C00', '#6A5ACD', '#FF4500', '#3CB371'
+        '#B22222', '#4CAF50', '#3F51B5', '#D5006D', '#009688', '#FF8C00', '#6A5ACD', '#FF4500', '#3CB371'
     ];
     const index = Math.abs(hashCode(id)) % colors.length;
     return colors[index];
