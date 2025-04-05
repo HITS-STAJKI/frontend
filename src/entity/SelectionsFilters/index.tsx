@@ -1,39 +1,51 @@
 import { Button, TextInput, Select, Grid } from "@mantine/core";
 import { DatePickerInput } from '@mantine/dates';
 import { useForm } from "@mantine/form";
-import { Group } from "shared/lib";
+import { Company, Group } from "shared/lib";
+import '@mantine/dates/styles.css';
 
-export function SelectionFiltersForm({ groupContent }: { groupContent: Group[] }) {
-    const form = useForm({
+const type = [
+    { value: "All", label: "Все" },
+    { value: "Current", label: "Семестр" },
+];
+
+const statuses = [
+    { value: "pending", label: "На рассмотрении" },
+    { value: "accepted", label: "Приняли" },
+    { value: "rejected", label: "Не приняли" },
+    { value: "interning", label: "На практике" },
+];
+
+interface SelectionFiltersFormValues {
+    StudentName: string;
+    Direction: string;
+    type: string;
+    status: string;
+    selectedGroup: Group | null;
+    selectedCompany: Company | null;
+    dateFrom: Date | null;
+    dateTo: Date | null;
+}
+
+export function SelectionFiltersForm({ groupContent, companyContent, onFormSubmit }: { groupContent: Group[], companyContent: Company[], onFormSubmit: (data: SelectionFiltersFormValues) => void }) {
+    const form = useForm<SelectionFiltersFormValues>({
         initialValues: {
-        StudentName: '',
-        CompanyName: '',
-        Direction: '',
-        type: '',
-        status: '',
-        selectedGroup: null,
-        selectedStudentCompany: null,
-        selectedCuratorCompany: null,
-        dateFrom: null,
-        dateTo: null,
+            StudentName: '',
+            Direction: '',
+            type: '',
+            status: '',
+            selectedGroup: null,
+            selectedCompany: null,
+            dateFrom: null,
+            dateTo: null,
         },
-    });
-
-    const type = [
-        { value: "All", label: "Все" },
-        { value: "Current", label: "Семестр" },
-    ];
-
-    const statuses = [
-        { value: "pending", label: "На рассмотрении" },
-        { value: "accepted", label: "Приняли" },
-        { value: "rejected", label: "Не приняли" },
-        { value: "interning", label: "На практике" },
-    ];
+      });
 
     const groups = groupContent.map(group => ({ value: group.id, label: group.number }));
+    const companies = companyContent.map(company => ({ value: company.id, label: company.name }));
 
     function handleSearch() {
+        onFormSubmit(form.values);
         console.log("Поиск выполнен!", form.values);
     }
 
@@ -54,7 +66,7 @@ export function SelectionFiltersForm({ groupContent }: { groupContent: Group[] }
                     </Grid.Col>
 
                     <Grid.Col span={3}>
-                        <TextInput label="Название компании" placeholder="Введите название" {...form.getInputProps('CompanyName')}/>
+                        <Select label="Компания" placeholder="Выберите компанию" data={companies} {...form.getInputProps('selectedCompany')} clearable/>
                     </Grid.Col>
 
                     <Grid.Col span={3}>
@@ -76,11 +88,11 @@ export function SelectionFiltersForm({ groupContent }: { groupContent: Group[] }
                     </Grid.Col>
 
                     <Grid.Col span={1.5}>
-                        <DatePickerInput label="Дата от" placeholder="Выберите дату" {...form.getInputProps('dateFrom')} clearable style={{ width: '100%' }}/>
+                        <DatePickerInput label="Дата от" placeholder="Выберите дату" {...form.getInputProps('dateFrom')} clearable/>
                     </Grid.Col>
 
                     <Grid.Col span={1.5}>
-                        <DatePickerInput label="Дата до" placeholder="Выберите дату" {...form.getInputProps('dateTo')} clearable style={{ width: '100%' }}/>
+                        <DatePickerInput label="Дата до" placeholder="Выберите дату" {...form.getInputProps('dateTo')} clearable/>
                     </Grid.Col>
 
                     <Grid.Col span={1}/>
