@@ -3,20 +3,18 @@ import { useState } from 'react';
 
 
 export const CreateCommentForm = () => {
-    const [newComment, setNewComment] = useState('');
 
-    const CreateComment = (e: { preventDefault: () => void; }) => {
+    const CreateComment = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Новый комментарий:', newComment);
-        setNewComment('');
+        console.log('Новый комментарий:', e.currentTarget.comment.value);
+        e.currentTarget.reset();
     };
 
     return(
         <form onSubmit={CreateComment} style={{ marginTop: '10px' }}>
         <Flex align="center">
             <Textarea
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
+                name="comment"
                 placeholder="Комментарий"
                 style={{ marginBottom: '10px', flex: 1 }}
                 minRows={4}

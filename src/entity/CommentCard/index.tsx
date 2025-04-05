@@ -1,4 +1,4 @@
-import { Card, Flex, Avatar} from "@mantine/core";
+import { Card, Flex, Avatar, Text} from "@mantine/core";
 import { InterviewsComment } from "shared/lib";
 import { UserIcon } from "./UserIcon/UserIcon";
 
@@ -10,12 +10,12 @@ export function CommentCard({ id, content, createdAt, modifiedAt, author }: Inte
                 <div style={{ flex: 1, marginLeft: '10px'}}>
                     <Flex direction="column">
                         <Flex align="center">
-                            <span>{author.firstName} {author.lastName}</span>
-                            <span style={{ color: 'gray', fontSize: '0.8em', marginLeft: '5px' }}>
+                            <Text>{author.firstName} {author.lastName}</Text>
+                            <Text style={{ color: 'gray', fontSize: '0.8em', marginLeft: '5px' }}>
                                 {createdAt === modifiedAt ? createdAt : modifiedAt}
-                            </span>
+                            </Text>
                         </Flex>
-                        <span style={{ marginTop: '5px' }}>{content}</span>
+                        <Text style={{ marginTop: '5px' }}>{content}</Text>
                     </Flex>
                 </div>
             </Flex>
