@@ -4,6 +4,14 @@ import { dateFormatter, InterviewsComment } from "shared/lib"
 
 const AvatarColor: Array<MantineColor> = ['dark', 'gray', 'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'green', 'lime', 'yellow', 'orange', 'teal']
 
+const hashCode = (str: string) => {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+        hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return hash;
+}
+
 type CommentSectionProps = {
     comments: Array<InterviewsComment>
 }
@@ -26,10 +34,10 @@ export const CommentSection = ({ comments }: CommentSectionProps) => {
     )
 }
 
-export const Comment = ({ content, createdAt, modifiedAt, author }: InterviewsComment) => {
+export const Comment = ({ content, createdAt, modifiedAt, author, id }: InterviewsComment) => {
     return (
         <Group>
-            <Avatar color={AvatarColor[Math.round(AvatarColor.length * Math.random())]}>
+            <Avatar color={AvatarColor[Math.abs(hashCode(id)) % AvatarColor.length]}>
                 {`${author.firstName[0].toUpperCase()}${author.lastName[0].toUpperCase()}`}
             </Avatar>
             <Flex direction='column'>
