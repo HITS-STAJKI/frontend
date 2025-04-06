@@ -5,7 +5,7 @@ export const SelectionPage = () => {
     return (
         <>
             <SelectionComments />
-            <CreateEditSelection type="create"/> {/*Замени type на edit, чтобы вызвать окно изменения*/}
+            <CreateEditSelection type="edit"/> {/*Замени type на edit, чтобы вызвать окно изменения*/}
         </>
     )
 }

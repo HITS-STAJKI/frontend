@@ -10,7 +10,9 @@ interface CreateEditSelectionProps {
 export function CreateEditSelection({ type }: CreateEditSelectionProps) {
     return (
         <Modal
-            render={open => <Button onClick={() => open()} style={{ minWidth: '9rem' }}>{type === 'create' ? "Создать отбор" : <PencilSvgrepoCom />}</Button>}
+            render={open => <Button onClick={() => open()} style={{ padding: '0', 
+                minWidth: type === 'create' ? '9rem' : 'null', 
+                aspectRatio: type === 'edit' ? '1 / 1' : ''}}>{type === 'create' ? "Создать отбор" : <PencilSvgrepoCom fontSize={'30'}/>}</Button>}
             content={({ close }) => (
                 <CreateEditSelectionForm
                     onSuccess={() => close()}

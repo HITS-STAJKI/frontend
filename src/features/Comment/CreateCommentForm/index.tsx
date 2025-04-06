@@ -1,6 +1,4 @@
 import { Flex, Textarea, Button  } from "@mantine/core";
-import { useState } from 'react';
-
 
 export const CreateCommentForm = () => {
 
