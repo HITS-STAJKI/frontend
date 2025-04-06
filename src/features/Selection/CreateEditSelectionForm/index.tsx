@@ -1,8 +1,7 @@
 import { Button, TextInput, MultiSelect, Textarea, Select } from "@mantine/core";
 import { useForm } from "@mantine/form"
-import { Company, CompanyPage, GET_STACKS, GET_COMPANIES, Language, Page, Stack } from "shared/lib";
+import { Company, GET_STACKS, GET_COMPANIES, Language, Stack } from "shared/lib";
 import { GET_LANGUAGES } from "shared/lib/api/stubs/Language";
-import { InterviewStatus } from "shared/lib/api/entities/Interview";
 
 type CreateSelectionFormProps = {
     onSuccess: () => void;
