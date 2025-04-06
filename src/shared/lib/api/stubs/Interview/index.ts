@@ -33,8 +33,24 @@ const INTERVIEW_COMMENT1: InterviewsComment = {
     author: GET_USER 
 }
 
+const INTERVIEW_COMMENT2: InterviewsComment = {
+    id: "interview_comm_id_2",
+    content: "Комментарий 2",
+    createdAt: "2025-03-26",
+    modifiedAt: "2025-03-27",
+    author: GET_USER 
+}
+
+const INTERVIEW_COMMENT3: InterviewsComment = {
+    id: "interview_comm_id_3",
+    content: "Комментарий 3",
+    createdAt: "2025-03-28",
+    modifiedAt: "2025-03-27",
+    author: GET_USER 
+}
+
 export const GET_INTERVIEWS_COMMENTS: InterviewsCommentPage  = {
-    content: [INTERVIEW_COMMENT1, INTERVIEW_COMMENT1],
+    content: [INTERVIEW_COMMENT1, INTERVIEW_COMMENT2, INTERVIEW_COMMENT3],
     pagination: {
         count: 1,
         current: 0,
