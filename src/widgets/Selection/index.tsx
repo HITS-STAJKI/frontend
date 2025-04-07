@@ -9,7 +9,7 @@ export function SearchForm() {
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <Title size="h1">Мои отборы</Title>
-            <CreateSelection id={'ГЕНЕРАТО НОВОГО ID'} />
+            <CreateSelection id={'ГЕНЕРАТОР НОВОГО ID'} />
         </div>
     );
 }
