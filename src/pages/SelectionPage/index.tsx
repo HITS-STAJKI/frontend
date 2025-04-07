@@ -1,12 +1,17 @@
-import { CreateSelection, EditSelection } from "widgets/Selection"
-import { SelectionComments } from "widgets/Selection/Comment/SelectionComments"
+import { SelectionList } from "widgets/Selection"
+import { GET_INTERVIEWS } from "shared/lib";
+import { Container, Flex } from "@mantine/core";
+import { SearchForm } from "widgets/Selection";
 
 export const SelectionPage = () => {
     return (
         <>
-            <SelectionComments />
-            <CreateSelection /> {/*Замени type на edit, чтобы вызвать окно изменения*/}
-            <EditSelection />
+            <Container p={0} fluid style={{ width: '100%', marginInline: '2vh' }}>
+                <Flex direction="column">
+                    <SearchForm />
+                    <SelectionList page={GET_INTERVIEWS}/>
+                </Flex>
+            </Container>
         </>
     )
 }

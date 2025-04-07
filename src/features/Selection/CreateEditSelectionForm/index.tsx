@@ -1,10 +1,11 @@
-import { Button, TextInput, MultiSelect, Textarea, Select } from "@mantine/core";
+import { Button, MultiSelect, Textarea, Select } from "@mantine/core";
 import { useForm } from "@mantine/form"
 import { Company, GET_STACKS, GET_COMPANIES, Language, Stack } from "shared/lib";
 import { GET_LANGUAGES } from "shared/lib/api/stubs/Language";
 
 type SelectionFormProps = {
     onSuccess: () => void;
+    id: string;
 }
 
 type StatusOption = {
@@ -18,7 +19,7 @@ const statusOptions: StatusOption[] = [
     { id: "SUCCEED", name: "Пройдено" },
 ];
 
-export const CreateSelectionForm = ({ onSuccess}: SelectionFormProps) => {
+export const CreateSelectionForm = ({ onSuccess, id}: SelectionFormProps) => {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
@@ -34,7 +35,7 @@ export const CreateSelectionForm = ({ onSuccess}: SelectionFormProps) => {
         }
     });
     const onSubmit = (vals: { comment: string }) => {
-        console.log('Тело запроса создания', vals); // Тело запроса для создания
+        console.log(`Тело запроса создания для ${id}:`, vals); // Тело запроса для создания
         onSuccess(); // Успешная отправка
     };
     return (
@@ -56,7 +57,7 @@ export const CreateSelectionForm = ({ onSuccess}: SelectionFormProps) => {
     );
 }
 
-export const EditSelectionForm = ({ onSuccess }: SelectionFormProps) => {
+export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
@@ -71,7 +72,7 @@ export const EditSelectionForm = ({ onSuccess }: SelectionFormProps) => {
         }
     });
     const onSubmit = (vals: { comment: string }) => {
-        console.log('Тело запроса изменения', vals); // Тело запроса для изменения
+        console.log(`Тело запроса изменения для ${id}:`, vals); // Тело запроса для изменения
         onSuccess(); // Успешная отправка
     };
     return (
