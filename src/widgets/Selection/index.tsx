@@ -1,25 +1,35 @@
 import { Button } from "@mantine/core";
 import { Modal } from "shared/ui";
-import { CreateEditSelectionForm } from "features/Selection/CreateEditSelectionForm";
+import { CreateSelectionForm, EditSelectionForm } from "features/Selection/CreateEditSelectionForm";
 import { PencilSvgrepoCom } from "assets/icons";
 
-interface CreateEditSelectionProps {
-    type: 'create' | 'edit';
-}
 
-export function CreateEditSelection({ type }: CreateEditSelectionProps) {
+export function CreateSelection() {
     return (
         <Modal
             render={open => <Button onClick={() => open()} style={{ padding: '0', 
-                minWidth: type === 'create' ? '9rem' : 'null', 
-                aspectRatio: type === 'edit' ? '1 / 1' : ''}}>{type === 'create' ? "Создать отбор" : <PencilSvgrepoCom fontSize={'30'}/>}</Button>}
+                minWidth: '9rem'}}>{"Создать отбор"}</Button>}
             content={({ close }) => (
-                <CreateEditSelectionForm
+                <CreateSelectionForm
                     onSuccess={() => close()}
-                    type={type}
                 />
             )}
-            title={type === 'create' ? "Создать отбор" : "Редактировать отбор"}
+            title={"Создать отбор"}
+        />
+    );
+}
+
+export function EditSelection() {
+    return (
+        <Modal
+            render={open => <Button onClick={() => open()} style={{ padding: '0', 
+                aspectRatio: '1 / 1'}}>{<PencilSvgrepoCom fontSize={'30'}/>}</Button>}
+            content={({ close }) => (
+                <EditSelectionForm
+                    onSuccess={() => close()}
+                />
+            )}
+            title={"Редактировать отбор"}
         />
     );
 }
