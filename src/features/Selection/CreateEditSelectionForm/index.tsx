@@ -3,13 +3,7 @@ import { useForm } from "@mantine/form"
 import { Company, GET_STACKS, GET_COMPANIES, Language, Stack } from "shared/lib";
 import { GET_LANGUAGES } from "shared/lib/api/stubs/Language";
 
-export interface  EditSelectionFormProps<T> {
-    onSuccess: () => void;
-    id: string;
-    initialValues?: T;
-}
-
-type CreateSelectionFormProps = {
+type SelectionFormProps = {
     onSuccess: () => void;
     id: string;
 }
@@ -25,7 +19,13 @@ const statusOptions: StatusOption[] = [
     { id: "SUCCEED", name: "Пройдено" },
 ];
 
-export const CreateSelectionForm = ({ onSuccess, id}: CreateSelectionFormProps) => {
+type EditFormValues = {
+    companyId: string;
+    stackId: string;
+    status: string;
+};
+
+export const CreateSelectionForm = ({ onSuccess, id}: SelectionFormProps) => {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
@@ -63,10 +63,10 @@ export const CreateSelectionForm = ({ onSuccess, id}: CreateSelectionFormProps) 
     );
 }
 
-export const EditSelectionForm = <T extends { companyId: string; stackId: string; status: string }>({ onSuccess, id, initialValues }: EditSelectionFormProps<T>) => {
-    const form = useForm({
+export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
+    const form = useForm<EditFormValues>({
         mode: 'uncontrolled',
-        initialValues: initialValues || {
+        initialValues: {
             companyId: '',
             stackId: '',
             status: ''
@@ -77,7 +77,7 @@ export const EditSelectionForm = <T extends { companyId: string; stackId: string
             status: (value) => (value ? null : 'Это поле обязательно'),
         }
     });
-    const onSubmit = (vals: T) => {
+    const onSubmit = (vals: EditFormValues) => {
         console.log(`Тело запроса изменения для ${id}:`, vals); // Тело запроса для изменения
         onSuccess(); // Успешная отправка
     };
