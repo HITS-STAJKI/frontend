@@ -1,25 +1,117 @@
-import { Button } from "@mantine/core";
-import { Modal } from "shared/ui";
-import { CreateEditSelectionForm } from "features/Selection/CreateEditSelectionForm";
-import { PencilSvgrepoCom } from "assets/icons";
+import { Button, Container, Flex, Group, MultiSelect, Text, TextInput, Title } from "@mantine/core";
+import { GET_STACKS, Interview, InterviewPage, InterviewStatus } from "shared/lib";
+import { SelectionComments } from "features";
+import './css.css';
+import { CreateSelection, DeleteSelection, EditSelection } from "./ModuleWindows";
+import { useForm } from "@mantine/form";
 
-interface CreateEditSelectionProps {
-    type: 'create' | 'edit';
-}
 
-export function CreateEditSelection({ type }: CreateEditSelectionProps) {
+export function TitleForm() {
     return (
-        <Modal
-            render={open => <Button onClick={() => open()} style={{ padding: '0', 
-                minWidth: type === 'create' ? '9rem' : 'null', 
-                aspectRatio: type === 'edit' ? '1 / 1' : ''}}>{type === 'create' ? "Создать отбор" : <PencilSvgrepoCom fontSize={'30'}/>}</Button>}
-            content={({ close }) => (
-                <CreateEditSelectionForm
-                    onSuccess={() => close()}
-                    type={type}
-                />
-            )}
-            title={type === 'create' ? "Создать отбор" : "Редактировать отбор"}
-        />
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <Title size="h1">Мои отборы</Title>
+            <CreateSelection id={'ГЕНЕРАТОР НОВОГО ID'} />
+        </div>
     );
 }
+
+// type SelectionSearchFormProps = {
+//     onSuccess: () => void;
+// }
+
+type FiltrationValues = {
+    company: string;
+    stackId: string[];
+};
+
+export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/) => {
+    const form = useForm<FiltrationValues>({
+        mode: 'uncontrolled',
+        initialValues: {
+            company: '',
+            stackId: []
+        }
+    });
+
+    const onSubmit = (vals : {company: string, stackId: string}) => {
+        console.log(`Запрос фильтрации`, vals); // Тело запроса для изменения
+        //onSuccess();
+    };
+    return (
+        <Container p={0} fluid style={{width: '100%', border: '1px solid black', marginBottom: '5vh', borderRadius: '2px' }}>
+            <form onSubmit={form.onSubmit(onSubmit)}>
+                <Group gap="xl" wrap="nowrap">
+                    <TextInput w={300} style={{margin:'2%'}}
+                            label="Название компании" 
+                            {...form.getInputProps('company')}
+                        />
+                    <MultiSelect miw={150} style={{ margin:'2%'}}
+                        label="Направлеение"
+                        onChange={(value) => form.setFieldValue('stackId', value)}
+                        data={GET_STACKS.content.map(option => {
+                            return { value: option.id, label: option.name };
+                        })}/>
+                </Group>
+                <hr style={{margin: 'auto', marginLeft: '10px', marginRight: '10px'}}/>
+                <div style={{ display: 'flex', justifyContent: 'end'}} >
+                    <Button type='submit' style={{ marginLeft: 'auto', margin:'1%' }}>{'Поиск'}</Button>
+                </div>
+            </form>
+        </Container >
+    );
+}
+
+
+export function SelectionList( { page }: { page: InterviewPage }) {
+    return (
+        <Container p={0} fluid style={{width: '100%' }}>
+        {page.content.map(card => (
+            <SelectionCard key={card.id} selection={card} />
+        ))}
+        </Container >
+    );
+}
+
+
+export function SelectionCard({ selection }: { selection: Interview })  {
+    return (
+        <div style={{ border: '1px solid black', marginBottom: '2vh', borderRadius: '2px'}}>
+            <SelectionHeaderCard selection={selection}/>
+            <SelectionComments id={selection.id}/>
+        </div>
+    );
+}
+
+export function SelectionHeaderCard( { selection }: { selection: Interview }) {
+    return (
+            <Container fluid p={'lg'} style={{padding: '0', borderBottom: '1px solid black'}}>
+                <Flex justify="space-between">
+                    <div>
+                        <Text size="xl" style={{fontWeight: '500'}}>{selection.companyPartner}</Text>
+                        <Text size="xl">Направление: {selection.stack.name}</Text>
+                    </div>
+                    <div>
+                    <Flex wrap="wrap">
+                        <span className={selection.status} style={{marginBottom: '10px', whiteSpace: 'nowrap'}}>{getStatusText(selection.status)}</span>
+                        <EditSelection id={selection.id} />
+                        <DeleteSelection id={selection.id} />
+                    </Flex>
+                    </div>
+                </Flex>
+            </Container>
+    );
+}
+
+
+const getStatusText = (status: InterviewStatus): string => {
+    switch (status) {
+        case "PENDING":
+            return "В процессе";
+        case "REJECTED":
+            return "Отклонено";
+        case "SUCCEED":
+            return "Пройдено";
+        default:
+            return "";
+    }
+};

@@ -6,18 +6,25 @@ const INTERVIEW1: Interview = {
     id: "interview_id_1",
     status: "PENDING",
     stack: STACK1,
-    companyPartner: "Норм компани" //TODO заменить потом на импортированный стаб компании
+    companyPartner: "Норм компани 1" //TODO заменить потом на импортированный стаб компании
 }
 
 const INTERVIEW2: Interview = {
     id: "interview_id_2",
     status: "REJECTED",
     stack: STACK2,
-    companyPartner: "Норм компани" //TODO заменить потом на импортированный стаб компании
+    companyPartner: "Норм компани 2" //TODO заменить потом на импортированный стаб компании
+}
+
+const INTERVIEW3: Interview = {
+    id: "interview_id_3",
+    status: "SUCCEED",
+    stack: STACK2,
+    companyPartner: "Норм компани 3" //TODO заменить потом на импортированный стаб компании
 }
 
 export const GET_INTERVIEWS: InterviewPage  = {
-    content: [INTERVIEW1, INTERVIEW2, INTERVIEW1],
+    content: [INTERVIEW1, INTERVIEW2, INTERVIEW3],
     pagination: {
         count: 1,
         current: 0,

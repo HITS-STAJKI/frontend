@@ -1,11 +1,11 @@
-import { Button, TextInput, MultiSelect, Textarea, Select } from "@mantine/core";
+import { Button, MultiSelect, Textarea, Select } from "@mantine/core";
 import { useForm } from "@mantine/form"
 import { Company, GET_STACKS, GET_COMPANIES, Language, Stack } from "shared/lib";
 import { GET_LANGUAGES } from "shared/lib/api/stubs/Language";
 
-type CreateSelectionFormProps = {
+type SelectionFormProps = {
     onSuccess: () => void;
-    type: 'create' | 'edit';
+    id: string;
 }
 
 type StatusOption = {
@@ -19,54 +19,73 @@ const statusOptions: StatusOption[] = [
     { id: "SUCCEED", name: "Пройдено" },
 ];
 
-export const CreateEditSelectionForm = ({ onSuccess, type }: CreateSelectionFormProps) => {
+type EditFormValues = {
+    companyId: string;
+    stackId: string;
+    status: string;
+};
 
+export const CreateSelectionForm = ({ onSuccess, id}: SelectionFormProps) => {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: {
             companyId: '',
             stackId: '',
-            comment: type === 'create' ? '' : undefined,
-            languageId: type === 'create' ? '' : undefined,
-            status: type === 'edit' ? '' : undefined
+            comment: '',
+            languageId: ''
         },
         validate: {
             companyId: (value) => (value ? null : 'Это поле обязательно'),
             stackId: (value) => (value ? null : 'Это поле обязательно'),
-            ...(type === 'create' && {
-                languageId: (value) => (value ? null : 'Это поле обязательно'),
-            }),
-            ...(type === 'edit' && {
-                status: (value) => (value ? null : 'Это поле обязательно'),
-            }),
+            languageId: (value) => (value ? null : 'Это поле обязательно'),
         }
     });
     const onSubmit = (vals: { comment: string }) => {
-        if (type === 'create') {
-            console.log('Тело запроса создания', vals); // Тело запроса для создания
-        } else{
-            console.log('Тело запроса изменения', vals); // Тело запроса для создания
-        }
+        console.log(`Тело запроса создания для ${id}:`, vals); // Тело запроса для создания
         onSuccess(); // Успешная отправка
     };
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
             <SelectForm content={GET_COMPANIES.content} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
             <SelectForm content={GET_STACKS.content} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
-            {type === 'edit'? 
-            <>
-                <SelectForm content={statusOptions} label={"Статус"} onChange={(value) => form.setFieldValue('status', value)} />
-            </> :
-            <>
-                <MultiSelectForm content={GET_LANGUAGES.content} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)} />
-                <Textarea
-                    style={{ marginBottom: '15px' }}
-                    placeholder={"Напишите комментарий"}
-                    key={form.key('comment')}
-                    mb="xs"
-                    {...form.getInputProps('comment')}
-                />
-            </>}
+            <MultiSelectForm content={GET_LANGUAGES.content} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)} />
+            <Textarea
+                style={{ marginBottom: '15px' }}
+                placeholder={"Напишите комментарий"}
+                key={form.key('comment')}
+                mb="xs"
+                {...form.getInputProps('comment')}
+            />
+            <div style={{ display: 'flex' }}>
+                <Button type='submit' style={{ marginLeft: 'auto' }}>{'Сохранить'}</Button>
+            </div>
+        </form>
+    );
+}
+
+export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
+    const form = useForm<EditFormValues>({
+        mode: 'uncontrolled',
+        initialValues: {
+            companyId: '',
+            stackId: '',
+            status: ''
+        },
+        validate: {
+            companyId: (value) => (value ? null : 'Это поле обязательно'),
+            stackId: (value) => (value ? null : 'Это поле обязательно'),
+            status: (value) => (value ? null : 'Это поле обязательно'),
+        }
+    });
+    const onSubmit = (vals: EditFormValues) => {
+        console.log(`Тело запроса изменения для ${id}:`, vals); // Тело запроса для изменения
+        onSuccess(); // Успешная отправка
+    };
+    return (
+        <form onSubmit={form.onSubmit(onSubmit)}>
+            <SelectForm content={GET_COMPANIES.content} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
+            <SelectForm content={GET_STACKS.content} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
+            <SelectForm content={statusOptions} label={"Статус"} onChange={(value) => form.setFieldValue('status', value)} />
             <div style={{ display: 'flex' }}>
                 <Button type='submit' style={{ marginLeft: 'auto' }}>{'Сохранить'}</Button>
             </div>
@@ -78,24 +97,21 @@ type SelectFormProps = {
     content: Company[] | Stack[] | Language[] | StatusOption[];
     label: string;
     onChange: (value: string) => void;
+    required?: boolean;
 }
 
-const MultiSelectForm = ({ content, label, onChange }: SelectFormProps) => {
+export const MultiSelectForm = ({ content, label, onChange, required = true }: SelectFormProps) => {
     return (
         <MultiSelect
         style={{ marginBottom: '15px' }}
         label={label}
-        withAsterisk
+        withAsterisk={required}
         placeholder={label}
         onChange={onChange}
         data={content.map(option => {
-            if (typeof option === 'string') {
-                return { value: option, label: option };
-            } else {
-                return { value: option.id, label: option.name };
-            }
+            return { value: option.id, label: option.name };
         })}
-        required
+        required={required}
       />
     );
   };
@@ -109,11 +125,7 @@ const SelectForm = ({ content, label, onChange }: SelectFormProps) => {
         placeholder={label}
         onChange={onChange}
         data={content.map(option => {
-            if (typeof option === 'string') {
-                return { value: option, label: option };
-            } else {
-                return { value: option.id, label: option.name };
-            }
+            return { value: option.id, label: option.name };
         })}
         required
       />

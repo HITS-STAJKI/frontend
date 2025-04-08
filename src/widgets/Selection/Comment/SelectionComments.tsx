@@ -1,14 +1,14 @@
 import { CommentList } from "widgets/Selection/Comment/CommentList";
-import { Flex, Text, Accordion} from "@mantine/core";
+import { Flex, Text, Accordion, Container} from "@mantine/core";
 import { GET_INTERVIEWS_COMMENTS } from "shared/lib/api/stubs";
 import  { CreateCommentForm } from 'features'
 
-export const SelectionComments = () => {
+export const SelectionComments = ({ id }: { id: string }) => {
 return (
-    <div className="comment" style={{ width: '100%', margin: '1rem' }}>
+    <Container fluid p={'0'}>
         <Accordion>
             <Accordion.Item value="comments">
-                <Accordion.Control>
+                <Accordion.Control px={'lg'}>
                     <Text size="xl">Комментарии:</Text>
                 </Accordion.Control>
                 <Accordion.Panel>
@@ -18,6 +18,6 @@ return (
                 </Accordion.Panel>
             </Accordion.Item>
         </Accordion>
-    </div>
+    </Container>
 );
 };
