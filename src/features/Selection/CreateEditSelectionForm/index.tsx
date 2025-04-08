@@ -97,20 +97,21 @@ type SelectFormProps = {
     content: Company[] | Stack[] | Language[] | StatusOption[];
     label: string;
     onChange: (value: string) => void;
+    required?: boolean;
 }
 
-const MultiSelectForm = ({ content, label, onChange }: SelectFormProps) => {
+export const MultiSelectForm = ({ content, label, onChange, required = true }: SelectFormProps) => {
     return (
         <MultiSelect
         style={{ marginBottom: '15px' }}
         label={label}
-        withAsterisk
+        withAsterisk={required}
         placeholder={label}
         onChange={onChange}
         data={content.map(option => {
             return { value: option.id, label: option.name };
         })}
-        required
+        required={required}
       />
     );
   };
