@@ -11,13 +11,13 @@ export type Interview = {
     companyPartner: string //TODO заменить потом на импортированный тип компании
 }
 
-export type InterviewUpdate = Pick<Interview, 'status'>&{
+export type InterviewUpdate = Pick<Interview, 'status'> & {
     stackId: string
 }
 
 export type DeleteInterview = DeleteMessage
 
-export type InterviewCreate = Pick<Interview, 'status'>&{
+export type InterviewCreate = Pick<Interview, 'status'> & {
     stackId: string
     companyPartnerId: string
 }
@@ -38,8 +38,8 @@ export type InterviewsComment = {
     id: string
     content: string
     createdAt: string
-    modifiedAt: string
-    author: User 
+    modifiedAt?: string
+    author: User
 }
 
 export type InterviewsCommentCreate = Pick<InterviewsComment, 'content'>
