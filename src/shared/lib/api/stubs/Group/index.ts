@@ -9,10 +9,10 @@ const GROUP: Group = {
 }
 
 export const GET_GROUPS: GroupPage  = {
-    content: [GROUP, GROUP, GROUP],
+    content: [GROUP, GROUP, GROUP, GROUP],
     pagination: {
-        count: 1,
-        current: 0,
+        count: 4,
+        current: 2,
         size: 10
     }
 }

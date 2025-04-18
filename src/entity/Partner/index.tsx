@@ -1,6 +1,6 @@
-import { Company, GroupUpdate }  from "shared/lib"
-import { Space } from '@mantine/core';
-import { useState } from 'react';
+import { Company }  from "shared/lib"
+import { Card, Flex } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 type PartnerProps = {
     partner: Company; 
@@ -8,18 +8,15 @@ type PartnerProps = {
 
 export const Partner = ({ partner }: PartnerProps) => {
 
-    return (
-        <div style={{
-            padding: '10px', 
-            border: '1px solid black', 
-            borderRadius: '8px', 
-            marginBottom: '10px', 
-            width: '100%', 
-            boxSizing: 'border-box' 
-        }}>
-            
-            {partner.name}
+    const navigate = useNavigate();
 
-        </div>
+    const handleCardClick = () => {
+        navigate(`/partner/${partner.id}`); 
+    };
+
+    return (
+        <Card shadow='sm' withBorder mb="xs" onClick={handleCardClick} style={{ cursor: 'pointer' }}>
+            {partner.name}
+        </Card>
     )
 }
