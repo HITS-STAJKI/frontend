@@ -23,8 +23,8 @@ export const AppRouter = () => {
                 <Route path={STACKS_ROUTE} element={<StackPage />} />
                 <Route path={ROLES_ROUTE} element={<RolesPage />} />
                 <Route path={INTERVIEW_REPORT} element={<InterviewReportPage />} />
-                <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
             </Route>
+            <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>
     )
 }
