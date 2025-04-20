@@ -18,11 +18,11 @@ export type InterviewUpdate = {
     stackId: string
     languageIds: Array<string>
     status: InterviewStatus
-  }
+}
 
 export type DeleteInterview = DeleteMessage
 
-export type InterviewCreate = Pick<Interview, 'status'>&{
+export type InterviewCreate = Pick<Interview, 'status'> & {
     stackId: string
     languagesIds: string
     companyPartnerId: string
@@ -44,8 +44,8 @@ export type InterviewsComment = {
     id: string
     content: string
     createdAt: string
-    modifiedAt: string
-    author: User 
+    modifiedAt?: string
+    author: User
 }
 
 export type InterviewsCommentCreate = Pick<InterviewsComment, 'content'>
