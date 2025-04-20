@@ -24,6 +24,7 @@ export const AppRouter = () => {
                 <Route path={ROLES_ROUTE} element={<RolesPage />} />
                 <Route path={INTERVIEW_REPORT} element={<InterviewReportPage />} />
                 <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
+            </Route>
         </Routes>
     )
 }
