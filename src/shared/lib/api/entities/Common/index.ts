@@ -1,7 +1,7 @@
 export type Pagination = {
     size: number
-    current: number
-    count: number
+    currentPage: number
+    totalPages: number
 }
 
 export type Page<T> = {

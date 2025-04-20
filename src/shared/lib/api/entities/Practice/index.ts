@@ -1,7 +1,13 @@
 import { Page } from "../Common"
+import { Company } from "../Company"
+import { Group } from "../Group"
+import { User } from "../User"
 
 export type Practice = {
     id: string
+    user: User
+    group: Group
+    company: Company
     createdAt: string
     isPaid: boolean
     isArchived: boolean
