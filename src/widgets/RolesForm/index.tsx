@@ -20,7 +20,7 @@ function RoleDropdown() {
     );
 }
 
-export function SearchRolesForm({ groupContent, companyContent }: { groupContent: Group[], companyContent: Company[] }) {
+export function SearchRolesForm({ groupContent, companyContent }: { groupContent: Group[], companyContent: Pick<Company, 'id' | 'name'>[] }) {
     const form = useForm({
         initialValues: {
             name: '',
@@ -79,7 +79,7 @@ export function UsersList({ content }: UserList) {
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
                 {content.map(user => (
-                <UserCard key={user.id} id={user.id} email={user.email} firstName={user.firstName} lastName={user.lastName} roles={user.roles}/>
+                <UserCard key={user.id} id={user.id} email={user.email} fullname={user.fullname} roles={user.roles}/>
             ))}
         </Flex>
     );

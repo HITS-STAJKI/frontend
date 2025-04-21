@@ -9,14 +9,14 @@ export const GROUP1: Group = {
 }
 
 export const GROUP2: Group = {
-    id: 'some_group_id_1',
+    id: 'some_group_id_2',
     studentsCount:3,
     number: '972202',
     students:[GET_STUDENT, GET_STUDENT, GET_STUDENT]
 }
 
 export const GROUP3: Group = {
-    id: 'some_group_id_1',
+    id: 'some_group_id_3',
     studentsCount:3,
     number: '972203',
     students:[GET_STUDENT, GET_STUDENT, GET_STUDENT]
