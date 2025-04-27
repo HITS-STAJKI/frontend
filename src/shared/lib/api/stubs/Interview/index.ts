@@ -1,7 +1,7 @@
 import { GET_USER } from "..";
 import { Interview, InterviewPage, InterviewsComment, InterviewsCommentPage } from "../../entities";
 import { STACK1, STACK2 } from "../Stack"
-import {LANGUAGE1, LANGUAGE2} from "../Language"
+import { LANGUAGE1, LANGUAGE2 } from "../Language"
 
 const INTERVIEW1: Interview = {
     id: "interview_id_1",
@@ -41,9 +41,16 @@ const INTERVIEW_COMMENT1: InterviewsComment = {
     modifiedAt: "2025-03-27",
     author: GET_USER
 }
+const INTERVIEW_COMMENT2: InterviewsComment = {
+    id: "interview_comm_id_2",
+    content: "Комментарий 2",
+    createdAt: "2025-03-27",
+    modifiedAt: "2025-03-27",
+    author: GET_USER
+}
 
 export const GET_INTERVIEWS_COMMENTS: InterviewsCommentPage = {
-    content: [INTERVIEW_COMMENT1, INTERVIEW_COMMENT1],
+    content: [INTERVIEW_COMMENT1, INTERVIEW_COMMENT2],
     pagination: {
         totalPages: 1,
         currentPage: 0,

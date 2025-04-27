@@ -1,13 +1,14 @@
 import { Card, Flex } from "@mantine/core"
 import { ReactNode } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { INTERVIEW_REPORT, LANGUAGES_ROUTE, STACKS_ROUTE } from "shared/lib"
+import { INTERVIEW_REPORT, LANGUAGES_ROUTE, ROLES_ROUTE, STACKS_ROUTE } from "shared/lib"
 
 export const Menu = () => {
     const routes: Array<MenuItemProps> = [
         { to: LANGUAGES_ROUTE, label: 'Языки' },
         { to: STACKS_ROUTE, label: 'Стэки' },
-        { to: INTERVIEW_REPORT, label: 'Отчеты о прохождениях собеседований' }
+        { to: INTERVIEW_REPORT, label: 'Отчеты о прохождениях собеседований' },
+        { to: ROLES_ROUTE, label: 'Пользователи' },
     ]
     return (
         <Flex w='100%' h='100%' align='center' gap='lg' mt='md' direction='column'>
