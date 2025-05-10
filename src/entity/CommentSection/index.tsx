@@ -30,12 +30,12 @@ export const Comment = ({ content, createdAt, modifiedAt, author, id }: Intervie
     return (
         <Group>
             <Avatar color={AvatarColor[Math.abs(hashCode(id)) % AvatarColor.length]}>
-                {`${author.firstName[0].toUpperCase()}${author.lastName[0].toUpperCase()}`}
+                {`${author.fullname[0].toUpperCase()}`}
             </Avatar>
             <Flex direction='column'>
                 <Group>
                     <Text>
-                        {`${author.firstName} ${author.lastName}`}
+                        {`${author.fullname}`}
                     </Text>
                     <Text c='gray'>{dateFormatter(modifiedAt ? modifiedAt : createdAt)}</Text>
                 </Group>
