@@ -16,7 +16,7 @@ const INTERVIEW2: Interview = {
     companyPartner: "Норм компани" //TODO заменить потом на импортированный стаб компании
 }
 
-export const GET_INTERVIEWS: InterviewPage  = {
+export const GET_INTERVIEWS: InterviewPage = {
     content: [INTERVIEW1, INTERVIEW2, INTERVIEW1],
     pagination: {
         count: 1,
@@ -30,10 +30,10 @@ const INTERVIEW_COMMENT1: InterviewsComment = {
     content: "Комментарий 1",
     createdAt: "2025-03-27",
     modifiedAt: "2025-03-27",
-    author: GET_USER 
+    author: GET_USER
 }
 
-export const GET_INTERVIEWS_COMMENTS: InterviewsCommentPage  = {
+export const GET_INTERVIEWS_COMMENTS: InterviewsCommentPage = {
     content: [INTERVIEW_COMMENT1, INTERVIEW_COMMENT1],
     pagination: {
         count: 1,
