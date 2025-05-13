@@ -1,17 +1,18 @@
 import { Company }  from "shared/lib"
-import { Card, Flex } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { Title, Container } from '@mantine/core';
 
 type PartnerInfoProps = {
     partner: Company; 
 }
 
-export const PartnerInfo = ({ partner }: PartnerInfoProps) => {
+export const PartnerInfo = ({partner}: PartnerInfoProps) => {
 
     return (
-        <Card shadow='sm' withBorder mb="xs">
+        <Container w='100%'>
             {/* {partner.name} */}
-            Card name
-        </Card>
+            <Title order={1}>{partner.name}</Title>
+            <div>{partner.description}</div>
+            
+        </Container>
     )
 }

@@ -1,7 +1,6 @@
 import { Group } from "entity"
 import { GET_GROUPS } from "shared/lib"
 import { Grid } from "@mantine/core";
-import { useState } from 'react';
 import { Pagination } from "shared/ui";
 
 export const GroupList = () => {

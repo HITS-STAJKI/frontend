@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { PublicLayout } from "./layout/PublicLayout"
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE } from "shared/lib"
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE } from "shared/lib"
 import { RegistrationPage } from "pages/RegistrationPage"
 import { LoginPage } from "pages/LoginPage"
 
@@ -9,6 +9,9 @@ import { StackPage } from "../../pages/StackPage";
 import { RolesPage } from "pages/RolesPage"
 import { InterviewReportPage } from "pages/InterviewReportPage"
 import { PrivateLayout } from "./layout/PrivateLayout"
+import { GroupsPage } from "pages/GroupsPage"
+import { PartnersPage } from "pages/PartnersPage"
+import { ConcretePartnerPage } from "pages/ConcretePartnerPage"
 
 export const AppRouter = () => {
     return (
@@ -22,6 +25,9 @@ export const AppRouter = () => {
             </Route>
             <Route element={<PrivateLayout />}>
                 <Route path={INTERVIEW_REPORT} element={<InterviewReportPage />} />
+                <Route path={GROUPS_ROUTE} element={<GroupsPage />} />
+                <Route path={PARTNERS_ROUTE} element={<PartnersPage />} />
+                <Route path={CONCRETE_PARTNER_ROUTE} element={<ConcretePartnerPage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>

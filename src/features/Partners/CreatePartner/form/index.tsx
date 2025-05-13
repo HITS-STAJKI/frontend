@@ -1,6 +1,6 @@
 import { Button, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { CompanyCreate, GroupCreate } from "shared/lib"
+import { CompanyCreate } from "shared/lib"
 
 type CreatePartnerFormProps = {
     onSuccess: () => void
