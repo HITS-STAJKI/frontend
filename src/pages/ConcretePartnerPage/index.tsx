@@ -1,10 +1,14 @@
 import { Container } from '@mantine/core';
 import { PartnerInfo } from 'entity';
+import { Link } from 'react-router-dom';
 
 export const ConcretePartnerPage = () => {
     
     return (
-        <Container w={'100%'} fluid>
+        <Container w={'90%'} fluid>
+            <Link to="/partners" style={{ textDecoration: 'none', color: 'blue' }}  >
+                Назад 
+            </Link>
             <PartnerInfo partner={{id: "333", name: "Company", description: "DEsss"}} />
         </Container>
     )

@@ -1,5 +1,7 @@
 import { Company }  from "shared/lib"
-import { Title, Container } from '@mantine/core';
+import { Title, Container, Flex, Group } from '@mantine/core';
+import { DeletePartnerButton } from "features/Partners/DeletePartnerButton";
+import { EditPartnerButton } from "features/Partners/EditPartnerButton";
 
 type PartnerInfoProps = {
     partner: Company; 
@@ -9,10 +11,14 @@ export const PartnerInfo = ({partner}: PartnerInfoProps) => {
 
     return (
         <Container w='100%'>
-            {/* {partner.name} */}
-            <Title order={1}>{partner.name}</Title>
+            <Flex >
+                <Group>
+                    <Title order={1}>{partner.name}</Title>
+                    <EditPartnerButton partner={partner} />
+                    <DeletePartnerButton partner={partner} />
+                </Group>
+            </Flex>
             <div>{partner.description}</div>
-            
         </Container>
     )
 }
