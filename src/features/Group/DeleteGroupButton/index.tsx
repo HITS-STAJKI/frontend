@@ -1,24 +1,25 @@
 import { Button } from "@mantine/core"
+import { TrashSvgrepoCom } from "assets/icons"
 import { Group } from "shared/lib"
+import { Modal } from "shared/ui"
 
 type DeleteGroupButtonProps = {
-    onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
     group: Group
 }
 
-export const DeleteGroupButton = ({ onClick, group }: DeleteGroupButtonProps) => {
+export const DeleteGroupButton = ({ group }: DeleteGroupButtonProps) => {
     //добавить запрос
-    const handleDelete = () => {
-        // TODO Логика удаления группы
-        console.log(`Группа ${group.number} удалена`);
-    };
+    const handleDelete = (close: () => void) => {
+        close()
+    }
 
     return (
-        <Button color='red' onClick={e => {
-            handleDelete()
-            onClick(e)
-        }}>
-            {'Удалить'}
-        </Button>
+        <Modal
+            title={`Вы уверены, что хотите удалить группу ${group.number}?`}
+            render={open => <Button color="red" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}>
+                <TrashSvgrepoCom/>
+            </Button>}
+            content={({ close }) => <Button onClick={() => handleDelete(close)} color='red'>{'Удалить'}</Button>}
+        />
     )
 }

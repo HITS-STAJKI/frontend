@@ -1,35 +1,23 @@
-import { Button, TextInput } from "@mantine/core"
-import { useForm } from "@mantine/form"
-import { Group, GroupUpdate } from "shared/lib"
+import { Button } from "@mantine/core"
+import { PencilSvgrepoCom } from "assets/icons"
+import { Modal } from "shared/ui"
+import { EditGroupForm } from "./form"
+import { Group } from "shared/lib"
 
 type EditGroupButtonProps = {
-    onSuccess: () => void
     group: Group
-}
+} 
 
-export const EditGroupForm = ({ onSuccess, group }: EditGroupButtonProps) => {
-    const form = useForm<GroupUpdate>({
-        initialValues: {
-            number: group.number
-        }
-    })
-
-    const handleEdit = (vals: GroupUpdate) => {
-        // TODO Логика редактирования группы
-        console.log("Тело запроса", vals)
-        onSuccess()
-    }
+export const EditGroupButton = ({ group }: EditGroupButtonProps) => {
 
     return (
-        <form onSubmit={form.onSubmit(handleEdit)}>
-            <TextInput
-                label="Номер группы"
-                key={form.key('number')}
-                error={form.errors}
-                mb="xs"
-                {...form.getInputProps('number')}
-            />
-            <Button type='submit'>{'Сохранить'}</Button>
-        </form>
+        <Modal
+            render={open => <Button color="gray" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}>
+                <PencilSvgrepoCom />
+            </Button>}
+            content={({ close }) => <EditGroupForm group={group} onSuccess={() => close()} />}
+            title={'Редактировать группу'}
+        />
+
     )
 }
