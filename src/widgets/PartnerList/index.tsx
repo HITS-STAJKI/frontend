@@ -1,6 +1,7 @@
 import { Partner } from "entity"
 import { GET_COMPANIES } from "shared/lib"
 import { Container } from '@mantine/core';
+import { Pagination } from "shared/ui";
 
 export const PartnerList = () => {
 
@@ -9,6 +10,7 @@ export const PartnerList = () => {
             {GET_COMPANIES.content.map((partner) => (
                 <Partner key={partner.id} partner={partner} /> 
             ))}
+            <Pagination pagination={GET_COMPANIES.pagination} />
         </Container>
     )
 }

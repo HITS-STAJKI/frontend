@@ -1,26 +1,34 @@
-import { Pagination as MPagination } from "@mantine/core";
+import { Pagination as MPagination, Flex } from "@mantine/core";
 import { useState } from 'react';
-import { GroupPage } from "shared/lib";
 
 type PaginationProps = {
-    groups: GroupPage; 
+    pagination: {
+        count: number,
+        current: number,
+        size: number
+    }; 
 };
 
-export const Pagination = ( { groups }: PaginationProps) => {
-    const [currentPage, setCurrentPage] = useState(groups.pagination.current);
-    const pageSize = groups.pagination.size;
-    const totalPages = groups.pagination.count; 
+export const Pagination = ( { pagination }: PaginationProps) => {
+    const [currentPage, setCurrentPage] = useState(pagination.current);
+    const pageSize = pagination.size;
+    const totalPages = pagination.count; 
 
     console.log("i", totalPages)
 
 
     return (
+        <Flex
+        justify="center"
+        align="flex-end"
+    >
         <MPagination
             total={totalPages}
             value={currentPage + 1} 
             onChange={(page) => setCurrentPage(page - 1)}
             mt="md"
         />
+    </Flex>
     );
 };
 

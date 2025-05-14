@@ -18,7 +18,7 @@ export const GroupList = () => {
                 </Grid.Col>
             ))}
             </Grid>
-            <Pagination groups={GET_GROUPS} />
+            <Pagination pagination={GET_GROUPS.pagination} />
         </>
         
     )

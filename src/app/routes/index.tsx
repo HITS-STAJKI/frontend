@@ -22,12 +22,12 @@ export const AppRouter = () => {
                 <Route path={LANGUAGES_ROUTE} element={<LanguagePage />} />
                 <Route path={STACKS_ROUTE} element={<StackPage />} />
                 <Route path={ROLES_ROUTE} element={<RolesPage />} />
+                <Route path={PARTNERS_ROUTE} element={<PartnersPage />} />
+                <Route path={CONCRETE_PARTNER_ROUTE} element={<ConcretePartnerPage />} />
             </Route>
             <Route element={<PrivateLayout />}>
                 <Route path={INTERVIEW_REPORT} element={<InterviewReportPage />} />
                 <Route path={GROUPS_ROUTE} element={<GroupsPage />} />
-                <Route path={PARTNERS_ROUTE} element={<PartnersPage />} />
-                <Route path={CONCRETE_PARTNER_ROUTE} element={<ConcretePartnerPage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>

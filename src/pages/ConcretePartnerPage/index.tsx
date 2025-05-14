@@ -6,9 +6,6 @@ export const ConcretePartnerPage = () => {
     
     return (
         <Container w={'90%'} fluid>
-            <Link to="/partners" style={{ textDecoration: 'none', color: 'blue' }}  >
-                Назад 
-            </Link>
             <PartnerInfo partner={{id: "333", name: "Company", description: "DEsss"}} />
         </Container>
     )
