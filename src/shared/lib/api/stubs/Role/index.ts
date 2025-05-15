@@ -7,6 +7,12 @@ export const GET_STUDENT: Student = {
     user: GET_USER
 }
 
+export const GET_STUDENT_2: Student = {
+    id: 'some_student_uuid_2',
+    groupId: 'some_group_uuid',
+    user: GET_USER
+}
+
 export const GET_TEACHER: Teacher = {
     id: 'some_teacher_uuid',
     user: GET_USER
