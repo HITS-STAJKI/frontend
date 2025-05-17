@@ -1,6 +1,8 @@
 import { User } from '../User';
 import { DeleteMessage, Page, PageFilter, Sort } from "../Common"
 import { Stack } from "../Stack"
+import { Language } from '../Language';
+import { Company } from '../Company';
 
 export type InterviewStatus = "PENDING" | "REJECTED" | "SUCCEED"
 
@@ -8,17 +10,21 @@ export type Interview = {
     id: string
     status: InterviewStatus
     stack: Stack
-    companyPartner: string //TODO заменить потом на импортированный тип компании
+    languages: Array<Language>
+    companyPartner: Pick<Company, 'id' | 'name'>
 }
 
-export type InterviewUpdate = Pick<Interview, 'status'> & {
+export type InterviewUpdate = {
     stackId: string
+    languageIds: Array<string>
+    status: InterviewStatus
 }
 
 export type DeleteInterview = DeleteMessage
 
 export type InterviewCreate = Pick<Interview, 'status'> & {
     stackId: string
+    languagesIds: string
     companyPartnerId: string
 }
 
