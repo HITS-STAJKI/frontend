@@ -38,7 +38,7 @@ export const AddStudentInGroupForm = ({ onSuccess, group }: AddStudentInGroupFor
                         placeholder="Начните вводить имя студента"
                         data={group.students.map(student => ({
                             value: student.id,
-                            label: `${student.user.firstName} ${student.user.lastName}`, 
+                            label: `${student.user.fullname}`, 
                         }))}
                         searchable
                         {...form.getInputProps('studentId')}
