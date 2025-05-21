@@ -38,11 +38,14 @@ export const ProfileBlock = ({
     };
 
     return (
-        <div style={{ marginTop: '2vh', marginLeft: '4vw' }}>
+        <div style={{ marginTop: '2vh', marginLeft: '4vw', width: '50vw', minWidth: "300px"  }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Title order={2}>Профиль</Title>
                 {profileData.student?.isGraduated && <Text c="gray" ml="xs">(Выпустился)</Text>}
                 {profileData.student?.isAcadem && <Text c="red" ml="xs">(В академе)</Text>}
+                <div style={{ marginLeft: 'auto' }}>
+                    {renderActionButton()}
+                </div>
             </div>
 
             <div style={{ marginBottom: '1vh' }}>
@@ -53,14 +56,8 @@ export const ProfileBlock = ({
                 {profileData.educationalProgramLead && <Badge color="yellow" mr="xs">Рук. ОП</Badge>}
             </div>
 
-            <ProfileForm profileInfo={profileData} mod={mode}>
-                {(saveButton) => (
-                    <Group mt="md">
-                        {renderActionButton()}
-                        {saveButton}
-                    </Group>
-                )}
-            </ProfileForm>
+            <ProfileForm profileInfo={profileData} mod={mode} />
+            
         </div>
     )
 }

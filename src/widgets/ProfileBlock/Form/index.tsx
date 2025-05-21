@@ -4,11 +4,10 @@ import { UserProfileType } from "shared/lib";
 
 type ProfileFormProps = {
     profileInfo: UserProfileType;
-    children?: (saveButton: React.ReactNode) => React.ReactNode;
     mod: "my" | "user";
 };
 
-export const ProfileForm = ({ profileInfo, children, mod }: ProfileFormProps) => {
+export const ProfileForm = ({ profileInfo, mod }: ProfileFormProps) => {
 
     const canEdit = !!(profileInfo.dean || profileInfo.curator || profileInfo.teacher || profileInfo.educationalProgramLead || (mod==="user"));
 
@@ -23,11 +22,6 @@ export const ProfileForm = ({ profileInfo, children, mod }: ProfileFormProps) =>
         console.log("Edit profile", values);
     };
 
-    const saveButton = (
-        <Button type="submit" color="blue" disabled={!canEdit}>
-            Сохранить
-        </Button>
-    );
 
     return (
         <form onSubmit={form.onSubmit(handleSubmit)}>
@@ -43,7 +37,9 @@ export const ProfileForm = ({ profileInfo, children, mod }: ProfileFormProps) =>
                 mb="xs"
                 readOnly={!canEdit}
             />
-            {children ? children(saveButton) : saveButton}
+            <Button type="submit" color="blue" disabled={!canEdit}>
+                Сохранить
+            </Button>
         </form>
     );
 };
