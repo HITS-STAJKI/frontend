@@ -17,6 +17,7 @@
     "@mantine/hooks": "^7.17.2",
     "@tabler/icons-react": "^3.31.0",
     "react": "^19.0.0",
+    "react-charts": "^3.0.0-beta.57",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.4.0",
     "vite-plugin-checker": "^0.9.1",
