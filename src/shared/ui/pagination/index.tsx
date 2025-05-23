@@ -3,16 +3,16 @@ import { useState } from 'react';
 
 type PaginationProps = {
     pagination: {
-        count: number,
-        current: number,
+        totalPages: number,
+        currentPage: number,
         size: number
     }; 
 };
 
 export const Pagination = ( { pagination }: PaginationProps) => {
-    const [currentPage, setCurrentPage] = useState(pagination.current);
+    const [currentPage, setCurrentPage] = useState(pagination.currentPage);
     const pageSize = pagination.size;
-    const totalPages = pagination.count; 
+    const totalPages = pagination.totalPages; 
 
     console.log("i", totalPages)
 
