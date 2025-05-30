@@ -1,7 +1,28 @@
 import { useEffect, useState } from "react";
 import { TextInput, Select, MultiSelect } from "@mantine/core";
-import { GET_GROUPS, GET_COMPANIES, GET_STACKS } from "shared/lib";
-import { DatePicker } from "@mantine/dates";
+import { GET_GROUPS, GET_COMPANIES, GET_STACKS, GET_LANGUAGES } from "shared/lib";
+import { DateInput  } from "@mantine/dates";
+
+export function FilterLanguageName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
+{
+    const [value, setValue] = useState("");
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => 
+    {
+        const val = event.currentTarget.value;
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <TextInput
+            id={`filter-${id}`}
+            placeholder="Технологии"
+            value={value}
+            onChange={handleChange}
+        />
+    );
+}
 
 export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
 {
@@ -18,6 +39,158 @@ export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (
         <TextInput
             id={`filter-${id}`}
             placeholder="ФИО"
+            value={value}
+            onChange={handleChange}
+        />
+    );
+}
+
+export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
+{
+    const [value, setValue] = useState<string | null>(null);
+    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            const stacks = GET_STACKS.content;
+            const selectData = stacks.map(stack => ({
+                value: stack.id,
+                label: stack.name,
+            }));
+
+            setData(selectData);
+        }, 300);
+    }, []);
+
+    const handleChange = (val: string | null) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <Select
+            id={`filter-${id}`}
+            placeholder="Выберите направление"
+            value={value}
+            onChange={handleChange}
+            data={data}
+            clearable
+        />
+    );
+}
+
+export function FilterLanguageMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) 
+{
+    const [value, setValue] = useState<string[]>([]);
+    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            const languages = GET_LANGUAGES;
+            const selectData = languages.content.map(language => ({
+                value: language.id,
+                label: language.name,
+            }));
+
+            setData(selectData);
+        }, 300);
+    }, []);
+
+    const handleChange = (val: string[]) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <MultiSelect
+            id={`filter-${id}`}
+            placeholder="Выберите технологии"
+            value={value}
+            onChange={handleChange}
+            data={data}
+            clearable
+        />
+    );
+}
+
+export function FilterGroup({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
+{
+    const [value, setValue] = useState<string | null>(null);
+    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            const groups = GET_GROUPS.content;
+            const selectData = groups.map(group => ({
+                value: group.id,
+                label: group.number,
+            }));
+
+            setData(selectData);
+        }, 300);
+    }, []);
+
+    const handleChange = (val: string | null) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <Select
+            id={`filter-${id}`}
+            placeholder="Выберите группу"
+            value={value}
+            onChange={handleChange}
+            data={data}
+            clearable
+        />
+    );
+}
+
+export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
+{
+    const [value, setValue] = useState<string | null>(null);
+    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+
+    useEffect(() => {
+        setTimeout(() => {
+        setData([
+            { value: "PENDING", label: "На рассмотрении" },
+            { value: "REJECTED", label: "Отклонен" },
+            { value: "SUCCEED", label: "Пройден" },
+        ]);
+        }, 300);
+    }, []);
+
+    const handleChange = (val: string | null) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <Select
+            id={`filter-${id}`}
+            placeholder="Выберите статус"
+            value={value}
+            onChange={handleChange}
+            data={data}
+            clearable
+        />
+    );
+}
+
+export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
+{
+    const [value, setValue] = useState<Date | null>(null);
+
+    const handleChange = (date: Date | null) => {
+        setValue(date);
+        onChangeValue(date ? date.toISOString() : null);
+    };
+
+    return (
+        <DateInput 
+            id={`filter-${id}`}
             value={value}
             onChange={handleChange}
         />
@@ -79,74 +252,6 @@ export function FilterCompanySelect({ id, onChangeValue }: { id: string; onChang
     );
 }
 
-
-export function FilterRoles({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) 
-{
-    const [value, setValue] = useState<string[]>([]);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-        setData([
-            { value: "student", label: "Студент" },
-            { value: "curator", label: "Куратор" },
-            { value: "dean", label: "Деканат" },
-        ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string[]) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <MultiSelect
-            id={`filter-${id}`}
-            placeholder="Выберите роли"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-
-export function FilterGroup({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            const groups = GET_GROUPS.content;
-            const selectData = groups.map(group => ({
-                value: group.id,
-                label: group.number,
-            }));
-
-            setData(selectData);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`}
-            placeholder="Выберите группу"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
 export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) 
 {
     const [value, setValue] = useState<string[]>([]);
@@ -181,20 +286,18 @@ export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChang
     );
 }
 
-export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
+export function FilterTrueFalseNull({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
 {
     const [value, setValue] = useState<string | null>(null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
-            const stacks = GET_STACKS.content;
-            const selectData = stacks.map(stack => ({
-                value: stack.id,
-                label: stack.name,
-            }));
-
-            setData(selectData);
+        setData([
+            { value: "true", label: "Да" },
+            { value: "false", label: "Нет" },
+            { value: "null", label: "" }
+        ]);
         }, 300);
     }, []);
 
@@ -206,7 +309,6 @@ export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: 
     return (
         <Select
             id={`filter-${id}`}
-            placeholder="Выберите направление"
             value={value}
             onChange={handleChange}
             data={data}
@@ -215,7 +317,41 @@ export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: 
     );
 }
 
-export function FilterLanguage({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
+export function FilterUserRole({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
+{
+    const [value, setValue] = useState<string | null>(null);
+    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+
+    useEffect(() => {
+        setTimeout(() => {
+        setData([
+            { value: "ADMIN", label: "Админ" },
+            { value: "DEAN", label: "Деканат" },
+            { value: "CURATOR", label: "Куратор" },
+            { value: "STUDENT", label: "Студент" },
+            { value: "TEACHER", label: "Преподаватель" },
+            { value: "EDUCATIONAL_PROGRAM_LEAD", label: "Руководитель образовательной программы" }
+        ]);
+        }, 300);
+    }, []);
+
+    const handleChange = (val: string | null) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <Select
+            id={`filter-${id}`}
+            value={value}
+            onChange={handleChange}
+            data={data}
+            clearable
+        />
+    );
+}
+
+export function FilterStackName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
 {
     const [value, setValue] = useState("");
 
@@ -229,218 +365,30 @@ export function FilterLanguage({ id, onChangeValue }: { id: string; onChangeValu
     return (
         <TextInput
             id={`filter-${id}`}
-            placeholder="Технологии"
+            placeholder="Название направления"
             value={value}
             onChange={handleChange}
         />
     );
 }
 
-export function FilterReportStatus({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
+export function FilterGroupName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
 {
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+    const [value, setValue] = useState("");
 
-    useEffect(() => {
-        setTimeout(() => {
-        setData([
-            { value: "student", label: "На рассмотрении" },
-            { value: "curator", label: "Отклонен" },
-            { value: "dean", label: "Пройден" },
-        ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => 
+    {
+        const val = event.currentTarget.value;
         setValue(val);
         onChangeValue(val);
     };
 
     return (
-        <Select
+        <TextInput
             id={`filter-${id}`}
-            placeholder="Выберите статус"
+            placeholder="Номер группы"
             value={value}
             onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterType({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-        setData([
-            { value: "student", label: "Этот семестр" },
-            { value: "curator", label: "Все семестры" }
-        ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`}
-            placeholder="Выберите тип"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<Date | null>(null);
-
-    const handleChange = (date: Date | null) => {
-        setValue(date);
-        onChangeValue(date ? date.toISOString() : null);
-    };
-
-    return (
-        <DatePicker
-            id={`filter-${id}`}
-            value={value}
-            onChange={handleChange}
-        />
-    );
-}
-
-export function FilterReportApprove({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-        setData([
-            { value: "all", label: "Все" },
-            { value: "NotAvailable", label: "Не приложен" },
-            { value: "NotApproved", label: "Не подтвержден" },
-            { value: "Approved", label: "Подтвержден" }
-        ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`}
-            placeholder="Отчет по практике"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterReportAvailability({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-        setData([
-            { value: "true", label: "Да" },
-            { value: "false", label: "Нет" },
-            { value: "null", label: "" }
-        ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`}
-            placeholder="Отчет подтвержден"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterArchive({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-        setData([
-            { value: "true", label: "Да" },
-            { value: "false", label: "Нет" },
-            { value: "null", label: "" }
-        ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`} 
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterPracticeApprove({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-        setData([
-            { value: "true", label: "Да" },
-            { value: "false", label: "Нет" },
-            { value: "null", label: "" }
-        ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`}
-            placeholder="Практика подтверждена"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
         />
     );
 }

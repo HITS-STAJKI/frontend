@@ -4,24 +4,24 @@ import { IconX, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 
 
 {/*<FilterBlockShort availableFilters={[
+    {id: "languageName",label: "Название технологии",element: (props) => <FilterLanguageName id="languageName" onChangeValue={props.onChangeValue} />},
     {id: "name",label: "ФИО",element: (props) => <FilterName id="name" onChangeValue={props.onChangeValue} />},
-    {id: "roles",label: "Роли",element: (props) => <FilterRoles id="roles" onChangeValue={props.onChangeValue} />},
+    {id: "stack",label: "Направление",element: (props) => <FilterStack id="stack" onChangeValue={props.onChangeValue} />},
+    {id: "languages",label: "Технологии",element: (props) => <FilterLanguageMultiple id="languages" onChangeValue={props.onChangeValue} />},
+    {id: "group",label: "Группа",element: (props) => <FilterGroup id="group" onChangeValue={props.onChangeValue} />},
+    {id: "interviewStatus",label: "Статус отбора",element: (props) => <FilterInterviewStatus id="interviewStatus" onChangeValue={props.onChangeValue} />},
+    {id: "date",label: "Дата",element: (props) => <FilterDate id="date" onChangeValue={props.onChangeValue} />},
     {id: "companyname", label: "Название компании",element: (props) => <FilterCompanyName id="companyname" onChangeValue={props.onChangeValue} />},
     {id: "company",label: "Компания",element: (props) => <FilterCompanySelect id="company" onChangeValue={props.onChangeValue} />},
+    {id: "companyType",label: "Новая компания",element: (props) => <FilterTrueFalseNull id="companyType" onChangeValue={props.onChangeValue} />},
     {id: "groups",label: "Группы",element: (props) => <FilterGroupMultiple id="groups" onChangeValue={props.onChangeValue} />},
-    {id: "group",label: "Группа",element: (props) => <FilterGroup id="group" onChangeValue={props.onChangeValue} />},
-    {id: "stack",label: "Направление",element: (props) => <FilterStack id="stack" onChangeValue={props.onChangeValue} />},
-    {id: "language",label: "Технологии",element: (props) => <FilterLanguage id="language" onChangeValue={props.onChangeValue} />},
-    {id: "status",label: "Отчет по практике",element: (props) => <FilterReportStatus id="status" onChangeValue={props.onChangeValue} />},
-    {id: "type",label: "Тип",element: (props) => <FilterType id="type" onChangeValue={props.onChangeValue} />},
-    {id: "datefrom",label: "Дата от",element: (props) => <FilterDate id="datefrom" onChangeValue={props.onChangeValue} />},
-    {id: "dateto",label: "Дата до",element: (props) => <FilterDate id="dateto" onChangeValue={props.onChangeValue} />},
-    {id: "reportapprove",label: "Отчет подтвержден",element: (props) => <FilterReportApprove id="reportapprove" onChangeValue={props.onChangeValue} />},
-    {id: "reportavailability",label: "Отчет есть",element: (props) => <FilterReportAvailability id="reportavailability" onChangeValue={props.onChangeValue} />},
-    {id: "archive",label: "Архивная",element: (props) => <FilterArchive id="archive" onChangeValue={props.onChangeValue} />},
-    {id: "practiceapprove",label: "Практика подтверждена",element: (props) => <FilterPracticeApprove id="practiceapprove" onChangeValue={props.onChangeValue} />}
+    {id: "truefalse",label: "Да?",element: (props) => <FilterTrueFalseNull id="truefalse" onChangeValue={props.onChangeValue} />},
+    {id: "userRole",label: "Роль пользователя",element: (props) => <FilterUserRole id="userRole" onChangeValue={props.onChangeValue} />},
+    {id: "stackName",label: "Название стэка",element: (props) => <FilterStackName id="stackName" onChangeValue={props.onChangeValue} />},
+    {id: "groupName",label: "Номер группы",element: (props) => <FilterGroupName id="groupName" onChangeValue={props.onChangeValue} />}
 ]}/>*/}
 
+const pageSizes = [10, 15, 20, 25, 50, 100];
 
 type FilterItem = 
 {
@@ -43,6 +43,7 @@ type FilterBlockProps =
 export function FilterBlockFull({ availableFilters }: FilterBlockProps) 
 {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null);
+    const [selectedPage, setSelectedPage] = useState<number>(10);
     const [activeFilters, setActiveFilters] = useState<FilterItem[]>([]);
     const [opened, setOpened] = useState(false);
     const [filterValues, setFilterValues] = useState<Record<string, any>>({});
@@ -99,6 +100,12 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
         setFilterValues({});
     };
 
+    const handleChangePage = (value: string | null) => {
+        if (value !== null) {
+        setSelectedPage(Number(value));
+        }
+    };
+
     const handleSearch = () => 
     {
         console.log("🔍 Filter values:", filterValues);
@@ -125,6 +132,13 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
                 </Flex>
 
                 <Flex align="center" gap="md">
+                    <Select
+                        placeholder="Выберите количество"
+                        value={selectedPage.toString()}
+                        onChange={handleChangePage}
+                        data={pageSizes.map(size => ({ value: size.toString(), label: size.toString() }))}
+                        styles={{ input: { minWidth: 0 } }}
+                    />
                     <Button color="green" onClick={handleSearch}>
                         Поиск
                     </Button>
@@ -189,6 +203,7 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
 export function FilterBlockShort({ availableFilters }: FilterBlockProps) 
 {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null);
+    const [selectedPage, setSelectedPage] = useState<number>(10);
     const [activeFilters, setActiveFilters] = useState<FilterItem[]>([]);
     const [opened, setOpened] = useState(false);
     const [filterValues, setFilterValues] = useState<Record<string, any>>({});
@@ -245,6 +260,12 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps)
         setFilterValues({});
     };
 
+    const handleChangePage = (value: string | null) => {
+        if (value !== null) {
+        setSelectedPage(Number(value));
+        }
+    };
+
     const handleSearch = () => 
     {
         console.log("🔍 Filter values:", filterValues);
@@ -271,6 +292,13 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps)
                 </Flex>
 
                 <Flex align="center" gap="md">
+                    <Select
+                        placeholder="Выберите количество"
+                        value={selectedPage.toString()}
+                        onChange={handleChangePage}
+                        data={pageSizes.map(size => ({ value: size.toString(), label: size.toString() }))}
+                        styles={{ input: { minWidth: 0 } }}
+                    />
                     <Button color="green" onClick={handleSearch}>
                         Поиск
                     </Button>
