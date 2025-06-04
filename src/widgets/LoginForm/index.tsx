@@ -1,6 +1,7 @@
 import { Button, Container, Flex, PasswordInput, TextInput, Title } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { LoginFormProps } from "./types"
+import { useLoginMutation } from "services/api/api-client/UserQuery"
 
 export const LoginForm = () => {
     const { onSubmit, ...form } = useForm<LoginFormProps>({
@@ -9,8 +10,12 @@ export const LoginForm = () => {
             password: ''
         }
     })
+    const { mutateAsync } = useLoginMutation()
     const onFormSubmit = (vals: LoginFormProps) => {
-        console.log(vals)
+        mutateAsync(vals).then(tokens => {
+            localStorage.setItem("token", tokens.token!)
+            localStorage.setItem("exp", tokens.expirationDate?.toString()!)
+        })
     }
     return (
         <Container w='100%'>
