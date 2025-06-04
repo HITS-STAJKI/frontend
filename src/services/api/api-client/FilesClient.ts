@@ -83,6 +83,13 @@ function processUploadFile(response: AxiosResponse): Promise<Types.FileDto> {
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -169,6 +176,13 @@ function processGetFileMetadata(response: AxiosResponse): Promise<Types.FileDto>
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -258,6 +272,13 @@ function processDownloadFile(response: AxiosResponse): Promise<Types.FileRespons
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -284,7 +305,7 @@ function processDownloadFile(response: AxiosResponse): Promise<Types.FileRespons
 }
 
 /**
- * Получить свои отчеты
+ * Получить свои файлы
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -360,6 +381,13 @@ function processGetMyFiles(response: AxiosResponse): Promise<Types.PagedListDtoF
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -382,7 +410,116 @@ function processGetMyFiles(response: AxiosResponse): Promise<Types.PagedListDtoF
 }
 
 /**
- * Удалить файл отчета
+ * Получить все файлы по типу
+ * @param page (optional) Zero-based page index (0..N)
+ * @param size (optional) The size of the page to be returned
+ * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @return OK
+ */
+export function getAllFilesByType(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoFileDto> {
+    let url_ = getBaseUrl() + "/api/v1/files/all?";
+      if (type === undefined || type === null)
+        throw new Error("The parameter 'type' must be defined and cannot be null.");
+      else
+        url_ += "type=" + encodeURIComponent("" + type) + "&";
+    if (page === null)
+        throw new Error("The parameter 'page' cannot be null.");
+    else if (page !== undefined)
+        url_ += "page=" + encodeURIComponent("" + page) + "&";
+    if (size === null)
+        throw new Error("The parameter 'size' cannot be null.");
+    else if (size !== undefined)
+        url_ += "size=" + encodeURIComponent("" + size) + "&";
+    if (sort === null)
+        throw new Error("The parameter 'sort' cannot be null.");
+    else if (sort !== undefined)
+        sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
+      url_ = url_.replace(/[?&]$/, "");
+
+    let options_: AxiosRequestConfig = {
+        ..._requestConfigGetAllFilesByType,
+        ...config,
+        method: "GET",
+        url: url_,
+        headers: {
+            ..._requestConfigGetAllFilesByType?.headers,
+            "Accept": "*/*",
+            ...config?.headers,
+        }
+    };
+
+    return getAxios().request(options_).catch((_error: any) => {
+        if (isAxiosError(_error) && _error.response) {
+            return _error.response;
+        } else {
+            throw _error;
+        }
+    }).then((_response: AxiosResponse) => {
+        return processGetAllFilesByType(_response);
+    });
+}
+
+function processGetAllFilesByType(response: AxiosResponse): Promise<Types.PagedListDtoFileDto> {
+    const status = response.status;
+    let _headers: any = {};
+    if (response.headers && typeof response.headers === "object") {
+        for (let k in response.headers) {
+            if (response.headers.hasOwnProperty(k)) {
+                _headers[k] = response.headers[k];
+            }
+        }
+    }
+    if (status === 409) {
+        const _responseText = response.data;
+        let result409: any = null;
+        let resultData409  = _responseText;
+        result409 = Types.initErrorResponse(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+
+    } else if (status === 400) {
+        const _responseText = response.data;
+        let result400: any = null;
+        let resultData400  = _responseText;
+        result400 = Types.initErrorResponse(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+
+    } else if (status === 500) {
+        const _responseText = response.data;
+        let result500: any = null;
+        let resultData500  = _responseText;
+        result500 = Types.initErrorResponse(resultData500);
+        return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
+    } else if (status === 404) {
+        const _responseText = response.data;
+        let result404: any = null;
+        let resultData404  = _responseText;
+        result404 = Types.initErrorResponse(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+
+    } else if (status === 200) {
+        const _responseText = response.data;
+        let result200: any = null;
+        let resultData200  = _responseText;
+        result200 = Types.initPagedListDtoFileDto(resultData200);
+        return Promise.resolve<Types.PagedListDtoFileDto>(result200);
+
+    } else if (status !== 200 && status !== 204) {
+        const _responseText = response.data;
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+    }
+    return Promise.resolve<Types.PagedListDtoFileDto>(null as any);
+}
+
+/**
+ * Удалить файл
  * @param id id файла
  * @return OK
  */
@@ -447,6 +584,13 @@ function processDeleteFile(response: AxiosResponse): Promise<Types.Response> {
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -509,6 +653,17 @@ export function setGetMyFilesRequestConfig(value: Partial<AxiosRequestConfig>) {
 }
 export function patchGetMyFilesRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
   _requestConfigGetMyFiles = patch(_requestConfigGetMyFiles ?? {});
+}
+
+let _requestConfigGetAllFilesByType: Partial<AxiosRequestConfig> | null;
+export function getGetAllFilesByTypeRequestConfig() {
+  return _requestConfigGetAllFilesByType;
+}
+export function setGetAllFilesByTypeRequestConfig(value: Partial<AxiosRequestConfig>) {
+  _requestConfigGetAllFilesByType = value;
+}
+export function patchGetAllFilesByTypeRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
+  _requestConfigGetAllFilesByType = patch(_requestConfigGetAllFilesByType ?? {});
 }
 
 let _requestConfigDeleteFile: Partial<AxiosRequestConfig> | null;

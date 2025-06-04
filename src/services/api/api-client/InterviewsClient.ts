@@ -79,6 +79,13 @@ function processGetInterview(response: AxiosResponse): Promise<Types.InterviewDt
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -170,6 +177,13 @@ function processUpdateInterview(response: AxiosResponse): Promise<Types.Intervie
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -257,6 +271,13 @@ function processDeleteInterview(response: AxiosResponse): Promise<Types.Response
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -343,6 +364,13 @@ function processCreateInterview(response: AxiosResponse): Promise<Types.Intervie
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -482,6 +510,13 @@ function processGetInterviewList(response: AxiosResponse): Promise<Types.PagedLi
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -579,6 +614,13 @@ function processGetInterviewList_1(response: AxiosResponse): Promise<Types.Paged
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;

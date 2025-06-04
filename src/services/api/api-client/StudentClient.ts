@@ -79,6 +79,13 @@ function processSendStudentToAcadem(response: AxiosResponse): Promise<Types.Stud
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -169,6 +176,13 @@ function processReturnStudentFromAcadem(response: AxiosResponse): Promise<Types.
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -261,6 +275,13 @@ function processUpdateStudent(response: AxiosResponse): Promise<Types.StudentDto
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -347,6 +368,13 @@ function processCreateStudentForCurrentUser(response: AxiosResponse): Promise<Ty
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -439,6 +467,13 @@ function processCreateStudent(response: AxiosResponse): Promise<Types.StudentDto
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -462,14 +497,18 @@ function processCreateStudent(response: AxiosResponse): Promise<Types.StudentDto
 
 /**
  * Импорт студентов из Excel-файла
- * @param body (optional) 
+ * @param file (optional) 
  * @return OK
  */
-export function importStudents(body?: Types.Body | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.FileResponse> {
+export function importStudents(file?: Types.FileParameter | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.FileResponse> {
     let url_ = getBaseUrl() + "/api/v1/student/import";
       url_ = url_.replace(/[?&]$/, "");
 
-    const content_ = Types.serializeBody(body);
+    const content_ = new FormData();
+    if (file === null || file === undefined)
+        throw new Error("The parameter 'file' cannot be null.");
+    else
+        content_.append("file", file.data, file.fileName ? file.fileName : "file");
 
     let options_: AxiosRequestConfig = {
         responseType: "blob",
@@ -480,7 +519,6 @@ export function importStudents(body?: Types.Body | undefined, config?: AxiosRequ
         url: url_,
         headers: {
             ..._requestConfigImportStudents?.headers,
-            "Content-Type": "application/json",
             "Accept": "*/*",
             ...config?.headers,
         }
@@ -528,6 +566,13 @@ function processImportStudents(response: AxiosResponse): Promise<Types.FileRespo
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -558,10 +603,19 @@ function processImportStudents(response: AxiosResponse): Promise<Types.FileRespo
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param fullName (optional) 
+ * @param fullName (optional) ФИО
+ * @param isAcadem (optional) Статус нахождения студента в академе
+ * @param isGraduated (optional) Статус выпуска студента
+ * @param groupIds (optional) Идентификаторы потоков
+ * @param companyIds (optional) Идентификаторы компаний-партнеров
+ * @param isOnPractice (optional) Находятся на практике/не находятся
+ * @param hasPracticeRequest (optional) Наличие заявки на практику
+ * @param hasInterviews (optional) Приступили/не приступили к собеседованиям
+ * @param stackIds (optional) Идентификаторы стеков
+ * @param lastLogin (optional) Время последнего захода в систему
  * @return OK
  */
-export function getAllStudents(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoStudentDto> {
+export function getAllStudents(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoStudentDto> {
     let url_ = getBaseUrl() + "/api/v1/student/list?";
     if (page === null)
         throw new Error("The parameter 'page' cannot be null.");
@@ -579,6 +633,42 @@ export function getAllStudents(page?: number | undefined, size?: number | undefi
         throw new Error("The parameter 'fullName' cannot be null.");
     else if (fullName !== undefined)
         url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
+    if (isAcadem === null)
+        throw new Error("The parameter 'isAcadem' cannot be null.");
+    else if (isAcadem !== undefined)
+        url_ += "isAcadem=" + encodeURIComponent("" + isAcadem) + "&";
+    if (isGraduated === null)
+        throw new Error("The parameter 'isGraduated' cannot be null.");
+    else if (isGraduated !== undefined)
+        url_ += "isGraduated=" + encodeURIComponent("" + isGraduated) + "&";
+    if (groupIds === null)
+        throw new Error("The parameter 'groupIds' cannot be null.");
+    else if (groupIds !== undefined)
+        groupIds && groupIds.forEach(item => { url_ += "groupIds=" + encodeURIComponent("" + item) + "&"; });
+    if (companyIds === null)
+        throw new Error("The parameter 'companyIds' cannot be null.");
+    else if (companyIds !== undefined)
+        companyIds && companyIds.forEach(item => { url_ += "companyIds=" + encodeURIComponent("" + item) + "&"; });
+    if (isOnPractice === null)
+        throw new Error("The parameter 'isOnPractice' cannot be null.");
+    else if (isOnPractice !== undefined)
+        url_ += "isOnPractice=" + encodeURIComponent("" + isOnPractice) + "&";
+    if (hasPracticeRequest === null)
+        throw new Error("The parameter 'hasPracticeRequest' cannot be null.");
+    else if (hasPracticeRequest !== undefined)
+        url_ += "hasPracticeRequest=" + encodeURIComponent("" + hasPracticeRequest) + "&";
+    if (hasInterviews === null)
+        throw new Error("The parameter 'hasInterviews' cannot be null.");
+    else if (hasInterviews !== undefined)
+        url_ += "hasInterviews=" + encodeURIComponent("" + hasInterviews) + "&";
+    if (stackIds === null)
+        throw new Error("The parameter 'stackIds' cannot be null.");
+    else if (stackIds !== undefined)
+        stackIds && stackIds.forEach(item => { url_ += "stackIds=" + encodeURIComponent("" + item) + "&"; });
+    if (lastLogin === null)
+        throw new Error("The parameter 'lastLogin' cannot be null.");
+    else if (lastLogin !== undefined)
+        url_ += "lastLogin=" + encodeURIComponent(lastLogin ? "" + lastLogin.toISOString() : "") + "&";
       url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
@@ -635,6 +725,13 @@ function processGetAllStudents(response: AxiosResponse): Promise<Types.PagedList
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -658,15 +755,15 @@ function processGetAllStudents(response: AxiosResponse): Promise<Types.PagedList
 
 /**
  * Экспорт студентов в Excel-файл
- * @param userIds (optional) 
+ * @param studentIds (optional) 
  * @return OK
  */
-export function exportStudents(userIds?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.FileResponse> {
+export function exportStudents(studentIds?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.FileResponse> {
     let url_ = getBaseUrl() + "/api/v1/student/export?";
-    if (userIds === null)
-        throw new Error("The parameter 'userIds' cannot be null.");
-    else if (userIds !== undefined)
-        userIds && userIds.forEach(item => { url_ += "userIds=" + encodeURIComponent("" + item) + "&"; });
+    if (studentIds === null)
+        throw new Error("The parameter 'studentIds' cannot be null.");
+    else if (studentIds !== undefined)
+        studentIds && studentIds.forEach(item => { url_ += "studentIds=" + encodeURIComponent("" + item) + "&"; });
       url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
@@ -723,6 +820,13 @@ function processExportStudents(response: AxiosResponse): Promise<Types.FileRespo
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;

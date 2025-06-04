@@ -75,6 +75,13 @@ function processGetCurrentUser(response: AxiosResponse): Promise<Types.UserDetai
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -161,6 +168,13 @@ function processUpdateCurrentUser(response: AxiosResponse): Promise<Types.UserSh
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -252,6 +266,13 @@ function processUpdateUserEmail(response: AxiosResponse): Promise<Types.UserShor
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -338,6 +359,13 @@ function processUpdateCurrentUserPassword(response: AxiosResponse): Promise<Type
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -426,6 +454,13 @@ function processRegister(response: AxiosResponse): Promise<Types.TokenDto> {
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -513,6 +548,13 @@ function processLogin(response: AxiosResponse): Promise<Types.TokenDto> {
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -599,6 +641,13 @@ function processGetUserById(response: AxiosResponse): Promise<Types.UserDetailsD
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -622,23 +671,23 @@ function processGetUserById(response: AxiosResponse): Promise<Types.UserDetailsD
 
 /**
  * Получение списка пользователей
- * @param userRole (optional) 
  * @param fullName (optional) ФИО пользователя (разрешается частичное совпадение)
+ * @param userRole (optional) Роль пользователя
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function getUserList(userRole?: Types.UserRole | undefined, fullName?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoUserDto> {
+export function getUserList(fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoUserDto> {
     let url_ = getBaseUrl() + "/api/v1/user/list?";
-    if (userRole === null)
-        throw new Error("The parameter 'userRole' cannot be null.");
-    else if (userRole !== undefined)
-        url_ += "userRole=" + encodeURIComponent("" + userRole) + "&";
     if (fullName === null)
         throw new Error("The parameter 'fullName' cannot be null.");
     else if (fullName !== undefined)
         url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
+    if (userRole === null)
+        throw new Error("The parameter 'userRole' cannot be null.");
+    else if (userRole !== undefined)
+        url_ += "userRole=" + encodeURIComponent("" + userRole) + "&";
     if (page === null)
         throw new Error("The parameter 'page' cannot be null.");
     else if (page !== undefined)
@@ -706,6 +755,13 @@ function processGetUserList(response: AxiosResponse): Promise<Types.PagedListDto
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;

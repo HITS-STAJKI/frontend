@@ -30,6 +30,10 @@ export type ArchiveStudentPracticePracticeQueryParameters = {
   id: string ;
 }
 
+export type ArchiveStudentPracticesByGroupPracticeQueryParameters = {
+  groupId: string ;
+}
+
 export type ApproveStudentPracticePracticeQueryParameters = {
   id: string ;
 }
@@ -302,6 +306,62 @@ export function useArchiveStudentPracticeMutationWithParameters<TContext>(option
 return useMutation({
   ...options, 
   mutationFn: (data: ArchiveStudentPractice__MutationParameters) => Client.archiveStudentPractice(data.id ?? options?.parameters?.id!),
+  mutationKey: key,
+});
+}
+  
+export function archiveStudentPracticesByGroupUrl(groupId: string): string {
+  let url_ = getBaseUrl() + "/api/v1/practice/archiveAll?";
+  if (groupId === undefined || groupId === null)
+    throw new Error("The parameter 'groupId' must be defined and cannot be null.");
+  else
+    url_ += "groupId=" + encodeURIComponent("" + groupId) + "&";
+  url_ = url_.replace(/[?&]$/, "");
+  return url_;
+}
+
+export function archiveStudentPracticesByGroupMutationKey(groupId: string): MutationKey {
+  return trimArrayEnd([
+      'PracticeClient',
+      'archiveStudentPracticesByGroup',
+      groupId as any,
+    ]);
+}
+
+/**
+ * Заархивирование практик студентов конкретной группы
+ * @param groupId Id группы
+ * @return OK
+ */
+export function useArchiveStudentPracticesByGroupMutation<TContext>(groupId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
+  const key = archiveStudentPracticesByGroupMutationKey(groupId);
+  
+  const metaContext = useContext(QueryMetaContext);
+  options = addMetaToOptions(options, metaContext);
+  
+  return useMutation({
+    ...options,
+    mutationFn: () => Client.archiveStudentPracticesByGroup(groupId),
+    mutationKey: key,
+  });
+}
+  
+type ArchiveStudentPracticesByGroup__MutationParameters = ArchiveStudentPracticesByGroupPracticeQueryParameters
+
+/**
+ * Заархивирование практик студентов конкретной группы
+ * @param groupId Id группы
+ * @return OK
+ */
+export function useArchiveStudentPracticesByGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, ArchiveStudentPracticesByGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ArchiveStudentPracticesByGroupPracticeQueryParameters}): UseMutationResult<Types.Response, unknown, ArchiveStudentPracticesByGroup__MutationParameters, TContext> {
+  const key = archiveStudentPracticesByGroupMutationKey(options?.parameters?.groupId!);
+  
+  const metaContext = useContext(QueryMetaContext);
+  options = addMetaToOptions(options, metaContext);
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: ArchiveStudentPracticesByGroup__MutationParameters) => Client.archiveStudentPracticesByGroup(data.groupId ?? options?.parameters?.groupId!),
   mutationKey: key,
 });
 }

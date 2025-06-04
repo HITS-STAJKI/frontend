@@ -80,6 +80,13 @@ function processGetCurrentStudentPractice(response: AxiosResponse): Promise<Type
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -172,6 +179,13 @@ function processUpdatePractice(response: AxiosResponse): Promise<Types.PracticeD
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -258,6 +272,13 @@ function processCreateStudentPractice(response: AxiosResponse): Promise<Types.Pr
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -347,6 +368,13 @@ function processArchiveStudentPractice(response: AxiosResponse): Promise<Types.P
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -366,6 +394,101 @@ function processArchiveStudentPractice(response: AxiosResponse): Promise<Types.P
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
     }
     return Promise.resolve<Types.PracticeDto>(null as any);
+}
+
+/**
+ * Заархивирование практик студентов конкретной группы
+ * @param groupId Id группы
+ * @return OK
+ */
+export function archiveStudentPracticesByGroup(groupId: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
+    let url_ = getBaseUrl() + "/api/v1/practice/archiveAll?";
+      if (groupId === undefined || groupId === null)
+        throw new Error("The parameter 'groupId' must be defined and cannot be null.");
+      else
+        url_ += "groupId=" + encodeURIComponent("" + groupId) + "&";
+      url_ = url_.replace(/[?&]$/, "");
+
+    let options_: AxiosRequestConfig = {
+        ..._requestConfigArchiveStudentPracticesByGroup,
+        ...config,
+        method: "PUT",
+        url: url_,
+        headers: {
+            ..._requestConfigArchiveStudentPracticesByGroup?.headers,
+            "Accept": "*/*",
+            ...config?.headers,
+        }
+    };
+
+    return getAxios().request(options_).catch((_error: any) => {
+        if (isAxiosError(_error) && _error.response) {
+            return _error.response;
+        } else {
+            throw _error;
+        }
+    }).then((_response: AxiosResponse) => {
+        return processArchiveStudentPracticesByGroup(_response);
+    });
+}
+
+function processArchiveStudentPracticesByGroup(response: AxiosResponse): Promise<Types.Response> {
+    const status = response.status;
+    let _headers: any = {};
+    if (response.headers && typeof response.headers === "object") {
+        for (let k in response.headers) {
+            if (response.headers.hasOwnProperty(k)) {
+                _headers[k] = response.headers[k];
+            }
+        }
+    }
+    if (status === 409) {
+        const _responseText = response.data;
+        let result409: any = null;
+        let resultData409  = _responseText;
+        result409 = Types.initErrorResponse(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+
+    } else if (status === 400) {
+        const _responseText = response.data;
+        let result400: any = null;
+        let resultData400  = _responseText;
+        result400 = Types.initErrorResponse(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+
+    } else if (status === 500) {
+        const _responseText = response.data;
+        let result500: any = null;
+        let resultData500  = _responseText;
+        result500 = Types.initErrorResponse(resultData500);
+        return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
+    } else if (status === 404) {
+        const _responseText = response.data;
+        let result404: any = null;
+        let resultData404  = _responseText;
+        result404 = Types.initErrorResponse(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+
+    } else if (status === 200) {
+        const _responseText = response.data;
+        let result200: any = null;
+        let resultData200  = _responseText;
+        result200 = Types.initResponse(resultData200);
+        return Promise.resolve<Types.Response>(result200);
+
+    } else if (status !== 200 && status !== 204) {
+        const _responseText = response.data;
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+    }
+    return Promise.resolve<Types.Response>(null as any);
 }
 
 /**
@@ -434,6 +557,13 @@ function processApproveStudentPractice(response: AxiosResponse): Promise<Types.P
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -523,6 +653,13 @@ function processApproveStudentPractices(response: AxiosResponse): Promise<Types.
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -611,6 +748,13 @@ function processApproveStudentPractices_1(response: AxiosResponse): Promise<Type
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -693,6 +837,13 @@ function processGetMyPractice(response: AxiosResponse): Promise<Types.PracticeDt
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -797,6 +948,13 @@ function processGetStudentPractices(response: AxiosResponse): Promise<Types.Page
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -894,6 +1052,13 @@ function processGetPracticeRequests(response: AxiosResponse): Promise<Types.Page
         let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
@@ -1028,6 +1193,13 @@ function processGetAllPractices(response: AxiosResponse): Promise<Types.PagedLis
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
@@ -1090,6 +1262,17 @@ export function setArchiveStudentPracticeRequestConfig(value: Partial<AxiosReque
 }
 export function patchArchiveStudentPracticeRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
   _requestConfigArchiveStudentPractice = patch(_requestConfigArchiveStudentPractice ?? {});
+}
+
+let _requestConfigArchiveStudentPracticesByGroup: Partial<AxiosRequestConfig> | null;
+export function getArchiveStudentPracticesByGroupRequestConfig() {
+  return _requestConfigArchiveStudentPracticesByGroup;
+}
+export function setArchiveStudentPracticesByGroupRequestConfig(value: Partial<AxiosRequestConfig>) {
+  _requestConfigArchiveStudentPracticesByGroup = value;
+}
+export function patchArchiveStudentPracticesByGroupRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
+  _requestConfigArchiveStudentPracticesByGroup = patch(_requestConfigArchiveStudentPracticesByGroup ?? {});
 }
 
 let _requestConfigApproveStudentPractice: Partial<AxiosRequestConfig> | null;

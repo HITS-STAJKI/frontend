@@ -34,15 +34,28 @@ export type CreateStudentStudentQueryParameters = {
   userId: string ;
 }
 
+export type ImportStudentsStudentMutationParameters = {
+  file?: Types.FileParameter | undefined ;
+}
+
 export type GetAllStudentsStudentQueryParameters = {
   page?: number | undefined ;
   size?: number | undefined ;
   sort?: string[] | undefined ;
   fullName?: string | undefined ;
+  isAcadem?: boolean | undefined ;
+  isGraduated?: boolean | undefined ;
+  groupIds?: string[] | undefined ;
+  companyIds?: string[] | undefined ;
+  isOnPractice?: boolean | undefined ;
+  hasPracticeRequest?: boolean | undefined ;
+  hasInterviews?: boolean | undefined ;
+  stackIds?: string[] | undefined ;
+  lastLogin?: Date | undefined ;
 }
 
 export type ExportStudentsStudentQueryParameters = {
-  userIds?: string[] | undefined ;
+  studentIds?: string[] | undefined ;
 }
 
 export function sendStudentToAcademUrl(studentId: string): string {
@@ -316,10 +329,10 @@ export function importStudentsMutationKey(): MutationKey {
 
 /**
  * Импорт студентов из Excel-файла
- * @param body (optional) 
+ * @param file (optional) 
  * @return OK
  */
-export function useImportStudentsMutation<TContext>(options?: Omit<UseMutationOptions<Types.FileResponse, unknown, Types.Body, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.FileResponse, unknown, Types.Body, TContext> {
+export function useImportStudentsMutation<TContext>(options?: Omit<UseMutationOptions<Types.FileResponse, unknown, ImportStudentsStudentMutationParameters, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.FileResponse, unknown, ImportStudentsStudentMutationParameters, TContext> {
   const key = importStudentsMutationKey();
   
   const metaContext = useContext(QueryMetaContext);
@@ -327,12 +340,12 @@ export function useImportStudentsMutation<TContext>(options?: Omit<UseMutationOp
   
   return useMutation({
     ...options,
-    mutationFn: (body: Types.Body) => Client.importStudents(body),
+    mutationFn: (importStudentsStudentMutationParameters: ImportStudentsStudentMutationParameters) => Client.importStudents(importStudentsStudentMutationParameters.file),
     mutationKey: key,
   });
 }
   
-export function getAllStudentsUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): string {
+export function getAllStudentsUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/student/list?";
 if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
@@ -350,6 +363,42 @@ if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
 else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
+if (isAcadem === null)
+    throw new Error("The parameter 'isAcadem' cannot be null.");
+else if (isAcadem !== undefined)
+    url_ += "isAcadem=" + encodeURIComponent("" + isAcadem) + "&";
+if (isGraduated === null)
+    throw new Error("The parameter 'isGraduated' cannot be null.");
+else if (isGraduated !== undefined)
+    url_ += "isGraduated=" + encodeURIComponent("" + isGraduated) + "&";
+if (groupIds === null)
+    throw new Error("The parameter 'groupIds' cannot be null.");
+else if (groupIds !== undefined)
+    groupIds && groupIds.forEach(item => { url_ += "groupIds=" + encodeURIComponent("" + item) + "&"; });
+if (companyIds === null)
+    throw new Error("The parameter 'companyIds' cannot be null.");
+else if (companyIds !== undefined)
+    companyIds && companyIds.forEach(item => { url_ += "companyIds=" + encodeURIComponent("" + item) + "&"; });
+if (isOnPractice === null)
+    throw new Error("The parameter 'isOnPractice' cannot be null.");
+else if (isOnPractice !== undefined)
+    url_ += "isOnPractice=" + encodeURIComponent("" + isOnPractice) + "&";
+if (hasPracticeRequest === null)
+    throw new Error("The parameter 'hasPracticeRequest' cannot be null.");
+else if (hasPracticeRequest !== undefined)
+    url_ += "hasPracticeRequest=" + encodeURIComponent("" + hasPracticeRequest) + "&";
+if (hasInterviews === null)
+    throw new Error("The parameter 'hasInterviews' cannot be null.");
+else if (hasInterviews !== undefined)
+    url_ += "hasInterviews=" + encodeURIComponent("" + hasInterviews) + "&";
+if (stackIds === null)
+    throw new Error("The parameter 'stackIds' cannot be null.");
+else if (stackIds !== undefined)
+    stackIds && stackIds.forEach(item => { url_ += "stackIds=" + encodeURIComponent("" + item) + "&"; });
+if (lastLogin === null)
+    throw new Error("The parameter 'lastLogin' cannot be null.");
+else if (lastLogin !== undefined)
+    url_ += "lastLogin=" + encodeURIComponent(lastLogin ? "" + lastLogin.toISOString() : "") + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
@@ -364,10 +413,10 @@ export function setGetAllStudentsDefaultOptions(options: typeof getAllStudentsDe
 }
 
 export function getAllStudentsQueryKey(dto: GetAllStudentsStudentQueryParameters): QueryKey;
-export function getAllStudentsQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): QueryKey;
+export function getAllStudentsQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined): QueryKey;
 export function getAllStudentsQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort, fullName,  } = params[0] as GetAllStudentsStudentQueryParameters;
+    const { page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin,  } = params[0] as GetAllStudentsStudentQueryParameters;
 
     return trimArrayEnd([
         'StudentClient',
@@ -376,6 +425,15 @@ export function getAllStudentsQueryKey(...params: any[]): QueryKey {
         size as any,
         sort as any,
         fullName as any,
+        isAcadem as any,
+        isGraduated as any,
+        groupIds as any,
+        companyIds as any,
+        isOnPractice as any,
+        hasPracticeRequest as any,
+        hasInterviews as any,
+        stackIds as any,
+        lastLogin as any,
       ]);
   } else {
     return trimArrayEnd([
@@ -387,7 +445,7 @@ export function getAllStudentsQueryKey(...params: any[]): QueryKey {
 }
 export function __getAllStudents(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getAllStudents(
-      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,       context.queryKey[5] as string | undefined,axiosConfig    );
+      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,       context.queryKey[5] as string | undefined,       context.queryKey[6] as boolean | undefined,       context.queryKey[7] as boolean | undefined,       context.queryKey[8] as string[] | undefined,       context.queryKey[9] as string[] | undefined,       context.queryKey[10] as boolean | undefined,       context.queryKey[11] as boolean | undefined,       context.queryKey[12] as boolean | undefined,       context.queryKey[13] as string[] | undefined,       context.queryKey[14] as Date | undefined,axiosConfig    );
 }
 
 export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(dto: GetAllStudentsStudentQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -396,10 +454,19 @@ export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDt
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param fullName (optional) 
+ * @param fullName (optional) ФИО
+ * @param isAcadem (optional) Статус нахождения студента в академе
+ * @param isGraduated (optional) Статус выпуска студента
+ * @param groupIds (optional) Идентификаторы потоков
+ * @param companyIds (optional) Идентификаторы компаний-партнеров
+ * @param isOnPractice (optional) Находятся на практике/не находятся
+ * @param hasPracticeRequest (optional) Наличие заявки на практику
+ * @param hasInterviews (optional) Приступили/не приступили к собеседованиям
+ * @param stackIds (optional) Идентификаторы стеков
+ * @param lastLogin (optional) Время последнего захода в систему
  * @return OK
  */
-export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData> | undefined = undefined;
   let axiosConfig: AxiosRequestConfig |undefined = undefined;
@@ -407,14 +474,23 @@ export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDt
   let size: any = undefined;
   let sort: any = undefined;
   let fullName: any = undefined;
+  let isAcadem: any = undefined;
+  let isGraduated: any = undefined;
+  let groupIds: any = undefined;
+  let companyIds: any = undefined;
+  let isOnPractice: any = undefined;
+  let hasPracticeRequest: any = undefined;
+  let hasInterviews: any = undefined;
+  let stackIds: any = undefined;
+  let lastLogin: any = undefined;
   
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort, fullName,  } = params[0] as GetAllStudentsStudentQueryParameters);
+      ({ page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin,  } = params[0] as GetAllStudentsStudentQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
-      [page, size, sort, fullName, options, axiosConfig] = params;
+      [page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin, options, axiosConfig] = params;
     }
   }
 
@@ -423,7 +499,7 @@ export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDt
 
   return useQuery<Types.PagedListDtoStudentDto, TError, TSelectData>({
     queryFn: axiosConfig ? (context) => __getAllStudents(context, axiosConfig) : __getAllStudents,
-    queryKey: getAllStudentsQueryKey(page, size, sort, fullName),
+    queryKey: getAllStudentsQueryKey(page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin),
     ...getAllStudentsDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData>, 'queryKey'>,
     ...options,
   });
@@ -433,11 +509,20 @@ export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDt
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param fullName (optional) 
+ * @param fullName (optional) ФИО
+ * @param isAcadem (optional) Статус нахождения студента в академе
+ * @param isGraduated (optional) Статус выпуска студента
+ * @param groupIds (optional) Идентификаторы потоков
+ * @param companyIds (optional) Идентификаторы компаний-партнеров
+ * @param isOnPractice (optional) Находятся на практике/не находятся
+ * @param hasPracticeRequest (optional) Наличие заявки на практику
+ * @param hasInterviews (optional) Приступили/не приступили к собеседованиям
+ * @param stackIds (optional) Идентификаторы стеков
+ * @param lastLogin (optional) Время последнего захода в систему
  * @return OK
  */
-export function setGetAllStudentsData(queryClient: QueryClient, updater: (data: Types.PagedListDtoStudentDto | undefined) => Types.PagedListDtoStudentDto, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined) {
-  queryClient.setQueryData(getAllStudentsQueryKey(page, size, sort, fullName),
+export function setGetAllStudentsData(queryClient: QueryClient, updater: (data: Types.PagedListDtoStudentDto | undefined) => Types.PagedListDtoStudentDto, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined) {
+  queryClient.setQueryData(getAllStudentsQueryKey(page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin),
     updater
   );
 }
@@ -447,19 +532,28 @@ export function setGetAllStudentsData(queryClient: QueryClient, updater: (data: 
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
- * @param fullName (optional) 
+ * @param fullName (optional) ФИО
+ * @param isAcadem (optional) Статус нахождения студента в академе
+ * @param isGraduated (optional) Статус выпуска студента
+ * @param groupIds (optional) Идентификаторы потоков
+ * @param companyIds (optional) Идентификаторы компаний-партнеров
+ * @param isOnPractice (optional) Находятся на практике/не находятся
+ * @param hasPracticeRequest (optional) Наличие заявки на практику
+ * @param hasInterviews (optional) Приступили/не приступили к собеседованиям
+ * @param stackIds (optional) Идентификаторы стеков
+ * @param lastLogin (optional) Время последнего захода в систему
  * @return OK
  */
 export function setGetAllStudentsDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoStudentDto | undefined) => Types.PagedListDtoStudentDto) {
   queryClient.setQueryData(queryKey, updater);
 }
     
-export function exportStudentsUrl(userIds?: string[] | undefined): string {
+export function exportStudentsUrl(studentIds?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/student/export?";
-if (userIds === null)
-    throw new Error("The parameter 'userIds' cannot be null.");
-else if (userIds !== undefined)
-    userIds && userIds.forEach(item => { url_ += "userIds=" + encodeURIComponent("" + item) + "&"; });
+if (studentIds === null)
+    throw new Error("The parameter 'studentIds' cannot be null.");
+else if (studentIds !== undefined)
+    studentIds && studentIds.forEach(item => { url_ += "studentIds=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
@@ -473,15 +567,15 @@ export function setExportStudentsDefaultOptions(options: typeof exportStudentsDe
   exportStudentsDefaultOptions = options;
 }
 
-export function exportStudentsQueryKey(userIds?: string[] | undefined): QueryKey;
+export function exportStudentsQueryKey(studentIds?: string[] | undefined): QueryKey;
 export function exportStudentsQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { userIds,  } = params[0] as ExportStudentsStudentQueryParameters;
+    const { studentIds,  } = params[0] as ExportStudentsStudentQueryParameters;
 
     return trimArrayEnd([
         'StudentClient',
         'exportStudents',
-        userIds as any,
+        studentIds as any,
       ]);
   } else {
     return trimArrayEnd([
@@ -499,22 +593,22 @@ export function __exportStudents(context: QueryFunctionContext, axiosConfig?: Ax
 export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(dto: ExportStudentsStudentQueryParameters, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 /**
  * Экспорт студентов в Excel-файл
- * @param userIds (optional) 
+ * @param studentIds (optional) 
  * @return OK
  */
-export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(userIds?: string[] | undefined, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(studentIds?: string[] | undefined, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.FileResponse, TError, TSelectData> | undefined = undefined;
   let axiosConfig: AxiosRequestConfig |undefined = undefined;
-  let userIds: any = undefined;
+  let studentIds: any = undefined;
   
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ userIds,  } = params[0] as ExportStudentsStudentQueryParameters);
+      ({ studentIds,  } = params[0] as ExportStudentsStudentQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
-      [userIds, options, axiosConfig] = params;
+      [studentIds, options, axiosConfig] = params;
     }
   }
 
@@ -523,25 +617,25 @@ export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError 
 
   return useQuery<Types.FileResponse, TError, TSelectData>({
     queryFn: axiosConfig ? (context) => __exportStudents(context, axiosConfig) : __exportStudents,
-    queryKey: exportStudentsQueryKey(userIds),
+    queryKey: exportStudentsQueryKey(studentIds),
     ...exportStudentsDefaultOptions as unknown as Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>,
     ...options,
   });
 }
 /**
  * Экспорт студентов в Excel-файл
- * @param userIds (optional) 
+ * @param studentIds (optional) 
  * @return OK
  */
-export function setExportStudentsData(queryClient: QueryClient, updater: (data: Types.FileResponse | undefined) => Types.FileResponse, userIds?: string[] | undefined) {
-  queryClient.setQueryData(exportStudentsQueryKey(userIds),
+export function setExportStudentsData(queryClient: QueryClient, updater: (data: Types.FileResponse | undefined) => Types.FileResponse, studentIds?: string[] | undefined) {
+  queryClient.setQueryData(exportStudentsQueryKey(studentIds),
     updater
   );
 }
 
 /**
  * Экспорт студентов в Excel-файл
- * @param userIds (optional) 
+ * @param studentIds (optional) 
  * @return OK
  */
 export function setExportStudentsDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.FileResponse | undefined) => Types.FileResponse) {

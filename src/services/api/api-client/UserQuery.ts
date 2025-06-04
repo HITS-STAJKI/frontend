@@ -29,8 +29,8 @@ export type GetUserByIdUserQueryParameters = {
 }
 
 export type GetUserListUserQueryParameters = {
-  userRole?: Types.UserRole | undefined ;
   fullName?: string | undefined ;
+  userRole?: Types.UserRole | undefined ;
   page?: number | undefined ;
   size?: number | undefined ;
   sort?: string[] | undefined ;
@@ -369,16 +369,16 @@ export function setGetUserByIdDataByQueryId(queryClient: QueryClient, queryKey: 
   queryClient.setQueryData(queryKey, updater);
 }
     
-export function getUserListUrl(userRole?: Types.UserRole | undefined, fullName?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
+export function getUserListUrl(fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/user/list?";
-if (userRole === null)
-    throw new Error("The parameter 'userRole' cannot be null.");
-else if (userRole !== undefined)
-    url_ += "userRole=" + encodeURIComponent("" + userRole) + "&";
 if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
 else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
+if (userRole === null)
+    throw new Error("The parameter 'userRole' cannot be null.");
+else if (userRole !== undefined)
+    url_ += "userRole=" + encodeURIComponent("" + userRole) + "&";
 if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
 else if (page !== undefined)
@@ -405,16 +405,16 @@ export function setGetUserListDefaultOptions(options: typeof getUserListDefaultO
 }
 
 export function getUserListQueryKey(dto: GetUserListUserQueryParameters): QueryKey;
-export function getUserListQueryKey(userRole?: Types.UserRole | undefined, fullName?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
+export function getUserListQueryKey(fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getUserListQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { userRole, fullName, page, size, sort,  } = params[0] as GetUserListUserQueryParameters;
+    const { fullName, userRole, page, size, sort,  } = params[0] as GetUserListUserQueryParameters;
 
     return trimArrayEnd([
         'UserClient',
         'getUserList',
-        userRole as any,
         fullName as any,
+        userRole as any,
         page as any,
         size as any,
         sort as any,
@@ -429,36 +429,36 @@ export function getUserListQueryKey(...params: any[]): QueryKey {
 }
 export function __getUserList(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getUserList(
-      context.queryKey[2] as Types.UserRole | undefined,       context.queryKey[3] as string | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as number | undefined,       context.queryKey[6] as string[] | undefined,axiosConfig    );
+      context.queryKey[2] as string | undefined,       context.queryKey[3] as Types.UserRole | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as number | undefined,       context.queryKey[6] as string[] | undefined,axiosConfig    );
 }
 
 export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(dto: GetUserListUserQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 /**
  * Получение списка пользователей
- * @param userRole (optional) 
  * @param fullName (optional) ФИО пользователя (разрешается частичное совпадение)
+ * @param userRole (optional) Роль пользователя
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(userRole?: Types.UserRole | undefined, fullName?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData> | undefined = undefined;
   let axiosConfig: AxiosRequestConfig |undefined = undefined;
-  let userRole: any = undefined;
   let fullName: any = undefined;
+  let userRole: any = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
   
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ userRole, fullName, page, size, sort,  } = params[0] as GetUserListUserQueryParameters);
+      ({ fullName, userRole, page, size, sort,  } = params[0] as GetUserListUserQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
-      [userRole, fullName, page, size, sort, options, axiosConfig] = params;
+      [fullName, userRole, page, size, sort, options, axiosConfig] = params;
     }
   }
 
@@ -467,30 +467,30 @@ export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TEr
 
   return useQuery<Types.PagedListDtoUserDto, TError, TSelectData>({
     queryFn: axiosConfig ? (context) => __getUserList(context, axiosConfig) : __getUserList,
-    queryKey: getUserListQueryKey(userRole, fullName, page, size, sort),
+    queryKey: getUserListQueryKey(fullName, userRole, page, size, sort),
     ...getUserListDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData>, 'queryKey'>,
     ...options,
   });
 }
 /**
  * Получение списка пользователей
- * @param userRole (optional) 
  * @param fullName (optional) ФИО пользователя (разрешается частичное совпадение)
+ * @param userRole (optional) Роль пользователя
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function setGetUserListData(queryClient: QueryClient, updater: (data: Types.PagedListDtoUserDto | undefined) => Types.PagedListDtoUserDto, userRole?: Types.UserRole | undefined, fullName?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
-  queryClient.setQueryData(getUserListQueryKey(userRole, fullName, page, size, sort),
+export function setGetUserListData(queryClient: QueryClient, updater: (data: Types.PagedListDtoUserDto | undefined) => Types.PagedListDtoUserDto, fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
+  queryClient.setQueryData(getUserListQueryKey(fullName, userRole, page, size, sort),
     updater
   );
 }
 
 /**
  * Получение списка пользователей
- * @param userRole (optional) 
  * @param fullName (optional) ФИО пользователя (разрешается частичное совпадение)
+ * @param userRole (optional) Роль пользователя
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.

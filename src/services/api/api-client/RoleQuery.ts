@@ -18,68 +18,11 @@ import * as Client from './RoleClient'
 export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
-export type DeleteCurrentUserRoleRoleQueryParameters = {
-  roleId: string ;
-}
-
 export type DeleteUserRoleRoleQueryParameters = {
   roleId: string ;
   userId: string ;
 }
 
-export function deleteCurrentUserRoleUrl(roleId: string): string {
-  let url_ = getBaseUrl() + "/api/v1/role/{roleId}";
-if (roleId === undefined || roleId === null)
-  throw new Error("The parameter 'roleId' must be defined.");
-url_ = url_.replace("{roleId}", encodeURIComponent("" + roleId));
-  url_ = url_.replace(/[?&]$/, "");
-  return url_;
-}
-
-export function deleteCurrentUserRoleMutationKey(roleId: string): MutationKey {
-  return trimArrayEnd([
-      'RoleClient',
-      'deleteCurrentUserRole',
-      roleId as any,
-    ]);
-}
-
-/**
- * Удаление роли текущего пользователя
- * @return OK
- */
-export function useDeleteCurrentUserRoleMutation<TContext>(roleId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
-  const key = deleteCurrentUserRoleMutationKey(roleId);
-  
-  const metaContext = useContext(QueryMetaContext);
-  options = addMetaToOptions(options, metaContext);
-  
-  return useMutation({
-    ...options,
-    mutationFn: () => Client.deleteCurrentUserRole(roleId),
-    mutationKey: key,
-  });
-}
-  
-type DeleteCurrentUserRole__MutationParameters = DeleteCurrentUserRoleRoleQueryParameters
-
-/**
- * Удаление роли текущего пользователя
- * @return OK
- */
-export function useDeleteCurrentUserRoleMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteCurrentUserRole__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteCurrentUserRoleRoleQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteCurrentUserRole__MutationParameters, TContext> {
-  const key = deleteCurrentUserRoleMutationKey(options?.parameters?.roleId!);
-  
-  const metaContext = useContext(QueryMetaContext);
-  options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: DeleteCurrentUserRole__MutationParameters) => Client.deleteCurrentUserRole(data.roleId ?? options?.parameters?.roleId!),
-  mutationKey: key,
-});
-}
-  
 export function deleteUserRoleUrl(roleId: string, userId: string): string {
   let url_ = getBaseUrl() + "/api/v1/role/{roleId}/user/{userId}";
 if (roleId === undefined || roleId === null)
