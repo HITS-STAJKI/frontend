@@ -29,17 +29,19 @@ export const CommentSection = ({ comments }: CommentSectionProps) => {
 export const Comment = ({ content, createdAt, modifiedAt, author, id }: InterviewsComment) => {
     return (
         <Group>
-            <Avatar color={AvatarColor[Math.abs(hashCode(id)) % AvatarColor.length]}>
-                {`${author.fullname[0].toUpperCase()}`}
-            </Avatar>
-            <Flex direction='column'>
-                <Group>
-                    <Text>
-                        {`${author.fullname}`}
-                    </Text>
-                    <Text c='gray'>{dateFormatter(modifiedAt ? modifiedAt : createdAt)}</Text>
-                </Group>
-                <Text>{content}</Text>
+            <Flex align="flex-start" gap="sm">
+                <Avatar color={AvatarColor[Math.abs(hashCode(id)) % AvatarColor.length]}>
+                    {author.fullname[0].toUpperCase()}
+                </Avatar>
+                <Flex direction="column">
+                    <Group gap="xs">
+                        <Text fw={500}>{author.fullname}</Text>
+                        <Text c="gray" size="sm">
+                            {dateFormatter(modifiedAt ?? createdAt)}
+                        </Text>
+                    </Group>
+                    <Text>{content}</Text>
+                </Flex>
             </Flex>
         </Group>
     )
