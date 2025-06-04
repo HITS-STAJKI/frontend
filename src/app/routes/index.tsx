@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { PublicLayout } from "./layout/PublicLayout"
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE, MY_PROFILE_ROUTE, PERSON_PROFILE_ROUTE, STUDENTS_PRACTICES_ROUTE } from "shared/lib"
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE, MY_PROFILE_ROUTE, PERSON_PROFILE_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENT_PRACTICES_ROUTE, PRACTICE_ROUTE, STUDENTS_ROUTE } from "shared/lib"
 import { RegistrationPage } from "pages/RegistrationPage"
 import { LoginPage } from "pages/LoginPage"
 
@@ -15,6 +15,7 @@ import { ConcretePartnerPage } from "pages/ConcretePartnerPage"
 import { MyProfilePage } from "pages/MyProfilePage"
 import { UserProfilePage } from "pages/UserProfilePage"
 import { StudentsPracticesPage } from "pages/StudentsPracticesPage"
+import { StudentPracticesPage } from "pages/StudentPracticesPage"
 
 export const AppRouter = () => {
     return (
@@ -35,6 +36,9 @@ export const AppRouter = () => {
                 <Route path={MY_PROFILE_ROUTE} element={<MyProfilePage />} />
                 <Route path={PERSON_PROFILE_ROUTE} element={<UserProfilePage />} />
                 <Route path={STUDENTS_PRACTICES_ROUTE} element={<StudentsPracticesPage />} />
+                <Route path={STUDENT_PRACTICES_ROUTE} element={<StudentPracticesPage />} />
+                <Route path={PRACTICE_ROUTE} element={<StudentsPracticesPage />} />
+                <Route path={STUDENTS_ROUTE} element={<StudentsPracticesPage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>
