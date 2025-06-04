@@ -2,11 +2,11 @@ import { Button } from "@mantine/core"
 import { PencilSvgrepoCom } from "assets/icons"
 import { Modal } from "shared/ui"
 import { EditGroupForm } from "./form"
-import { Group } from "shared/lib"
+import { GroupDto } from "services/api/api-client.types";
 
 type EditGroupButtonProps = {
-    group: Group
-} 
+    group: GroupDto
+}
 
 export const EditGroupButton = ({ group }: EditGroupButtonProps) => {
 

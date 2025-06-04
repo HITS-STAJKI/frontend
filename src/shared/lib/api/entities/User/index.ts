@@ -1,20 +1,21 @@
+import { RoleDto, UserDto } from "services/api/api-client.types"
 import { Page, PageFilter } from "../Common"
-import { Role, RoleType } from "../Role"
+import { RoleType } from "../Role"
 
 export type User = {
     id: string
     email: string
     fullname: string
-    roles: Array<Role>
+    roles: Array<RoleDto>
 }
 
-export type UserRegistration = Pick<User, 'email' | 'fullname'>&{
+export type UserRegistration = Pick<User, 'email' | 'fullname'> & {
     password: string
 }
 
 export type UserLogin = Pick<UserRegistration, 'email' | 'password'>
 
-export type UserList = Page<User>
+export type UserList = Page<UserDto>
 
 export type UserUpdate = Pick<User, 'fullname'>
 

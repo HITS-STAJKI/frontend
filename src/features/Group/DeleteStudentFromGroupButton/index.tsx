@@ -1,15 +1,13 @@
 import { Button } from "@mantine/core"
 import { TrashSvgrepoCom } from "assets/icons"
-import { Student } from "shared/lib"
+import { UserDto } from "services/api/api-client.types"
 import { Modal } from "shared/ui"
 
 type DeleteStudentFromGroupButtonProps = {
-    student: Student
-    //??????????????????
+    student: UserDto
 }
 
 export const DeleteStudentFromGroupButton = ({ student }: DeleteStudentFromGroupButtonProps) => {
-    //добавить запрос
     const handleDelete = (close: () => void) => {
         close()
     }
@@ -18,7 +16,7 @@ export const DeleteStudentFromGroupButton = ({ student }: DeleteStudentFromGroup
         <Modal
             title={`Вы уверены, что хотите удалить студента ${student.user.lastName} ${student.user.firstName} из данной группы?`}
             render={open => <Button color="red" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}>
-                <TrashSvgrepoCom/>
+                <TrashSvgrepoCom />
             </Button>}
             content={({ close }) => <Button onClick={() => handleDelete(close)} color='red'>{'Удалить'}</Button>}
         />

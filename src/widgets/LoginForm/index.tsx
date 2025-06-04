@@ -2,6 +2,8 @@ import { Button, Container, Flex, PasswordInput, TextInput, Title } from "@manti
 import { useForm } from "@mantine/form"
 import { LoginFormProps } from "./types"
 import { useLoginMutation } from "services/api/api-client/UserQuery"
+import { useNavigate } from "react-router-dom"
+import { MY_PROFILE_ROUTE } from "shared/lib"
 
 export const LoginForm = () => {
     const { onSubmit, ...form } = useForm<LoginFormProps>({
@@ -11,10 +13,12 @@ export const LoginForm = () => {
         }
     })
     const { mutateAsync } = useLoginMutation()
+    const navigate = useNavigate()
     const onFormSubmit = (vals: LoginFormProps) => {
         mutateAsync(vals).then(tokens => {
             localStorage.setItem("token", tokens.token!)
             localStorage.setItem("exp", tokens.expirationDate?.toString()!)
+            navigate(MY_PROFILE_ROUTE)
         })
     }
     return (

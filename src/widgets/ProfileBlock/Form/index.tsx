@@ -1,15 +1,17 @@
 import { Button, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { UserProfileType } from "shared/lib";
+import { useParams } from "react-router-dom";
+import { UserDetailsDto } from "services/api/api-client.types";
+import { useUpdateUserEmailMutation } from "services/api/api-client/UserQuery";
 
 type ProfileFormProps = {
-    profileInfo: UserProfileType;
+    profileInfo: UserDetailsDto;
     mod: "my" | "user";
 };
 
 export const ProfileForm = ({ profileInfo, mod }: ProfileFormProps) => {
 
-    const canEdit = !!(profileInfo.dean || profileInfo.curator || profileInfo.teacher || profileInfo.educationalProgramLead || (mod==="user"));
+    const canEdit = !!(profileInfo.dean || profileInfo.curator || profileInfo.teacher || profileInfo.educationalProgramLead || (mod === "user"));
 
     const form = useForm({
         initialValues: {
@@ -17,9 +19,10 @@ export const ProfileForm = ({ profileInfo, mod }: ProfileFormProps) => {
             email: profileInfo.email,
         },
     });
-
+    const { id } = useParams()
+    const { mutateAsync } = useUpdateUserEmailMutation(id!)
     const handleSubmit = (values: { fullName: string; email: string }) => {
-        console.log("Edit profile", values);
+        mutateAsync({ email: values.email })
     };
 
 

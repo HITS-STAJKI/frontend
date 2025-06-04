@@ -1,19 +1,22 @@
 import { Partner } from "entity"
-import { GET_COMPANIES } from "shared/lib"
 import { Container } from '@mantine/core';
 import { Pagination } from "shared/ui";
+import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 
 export const PartnerList = () => {
-
+    const { data, isLoading } = useGetPartnersQuery()
+    if (isLoading) {
+        return 'Загрузка'
+    }
     return (
         <div style={{ paddingBottom: '70px' }}>
             <Container size="100%" mt="3vh">
-            {GET_COMPANIES.content.map((partner) => (
-                <Partner key={partner.id} partner={partner} /> 
-            ))}
-            <Pagination pagination={GET_COMPANIES.pagination} />
-        </Container>
+                {data?.items!.map((partner) => (
+                    <Partner key={partner.id} partner={partner} />
+                ))}
+                <Pagination pagination={data?.pagination} />
+            </Container>
         </div>
-        
+
     )
 }

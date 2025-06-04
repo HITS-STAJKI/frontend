@@ -44,7 +44,7 @@ export function getGroups(id?: string | undefined, number?: string | undefined, 
         throw new Error("The parameter 'sort' cannot be null.");
     else if (sort !== undefined)
         sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetGroups,
@@ -55,6 +55,7 @@ export function getGroups(id?: string | undefined, number?: string | undefined, 
             ..._requestConfigGetGroups?.headers,
             "Accept": "*/*",
             ...config?.headers,
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
     };
 
@@ -82,42 +83,42 @@ function processGetGroups(response: AxiosResponse): Promise<Types.PagedListDtoGr
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initPagedListDtoGroupDto(resultData200);
         return Promise.resolve<Types.PagedListDtoGroupDto>(result200);
 
@@ -134,7 +135,7 @@ function processGetGroups(response: AxiosResponse): Promise<Types.PagedListDtoGr
  */
 export function createGroup(body: Types.CreateGroupDto, config?: AxiosRequestConfig | undefined): Promise<Types.GroupDto> {
     let url_ = getBaseUrl() + "/api/v1/groups";
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeCreateGroupDto(body);
 
@@ -176,42 +177,42 @@ function processCreateGroup(response: AxiosResponse): Promise<Types.GroupDto> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initGroupDto(resultData200);
         return Promise.resolve<Types.GroupDto>(result200);
 
@@ -230,9 +231,9 @@ function processCreateGroup(response: AxiosResponse): Promise<Types.GroupDto> {
 export function deleteGroup(id: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/groups/{id}";
     if (id === undefined || id === null)
-      throw new Error("The parameter 'id' must be defined.");
+        throw new Error("The parameter 'id' must be defined.");
     url_ = url_.replace("{id}", encodeURIComponent("" + id));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigDeleteGroup,
@@ -270,42 +271,42 @@ function processDeleteGroup(response: AxiosResponse): Promise<Types.Response> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -324,9 +325,9 @@ function processDeleteGroup(response: AxiosResponse): Promise<Types.Response> {
 export function updateGroup(id: string, body: Types.UpdateGroupDto, config?: AxiosRequestConfig | undefined): Promise<Types.GroupDto> {
     let url_ = getBaseUrl() + "/api/v1/groups/{id}";
     if (id === undefined || id === null)
-      throw new Error("The parameter 'id' must be defined.");
+        throw new Error("The parameter 'id' must be defined.");
     url_ = url_.replace("{id}", encodeURIComponent("" + id));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeUpdateGroupDto(body);
 
@@ -368,42 +369,42 @@ function processUpdateGroup(response: AxiosResponse): Promise<Types.GroupDto> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initGroupDto(resultData200);
         return Promise.resolve<Types.GroupDto>(result200);
 
@@ -415,44 +416,44 @@ function processUpdateGroup(response: AxiosResponse): Promise<Types.GroupDto> {
 }
 let _requestConfigGetGroups: Partial<AxiosRequestConfig> | null;
 export function getGetGroupsRequestConfig() {
-  return _requestConfigGetGroups;
+    return _requestConfigGetGroups;
 }
 export function setGetGroupsRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigGetGroups = value;
+    _requestConfigGetGroups = value;
 }
 export function patchGetGroupsRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigGetGroups = patch(_requestConfigGetGroups ?? {});
+    _requestConfigGetGroups = patch(_requestConfigGetGroups ?? {});
 }
 
 let _requestConfigCreateGroup: Partial<AxiosRequestConfig> | null;
 export function getCreateGroupRequestConfig() {
-  return _requestConfigCreateGroup;
+    return _requestConfigCreateGroup;
 }
 export function setCreateGroupRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigCreateGroup = value;
+    _requestConfigCreateGroup = value;
 }
 export function patchCreateGroupRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigCreateGroup = patch(_requestConfigCreateGroup ?? {});
+    _requestConfigCreateGroup = patch(_requestConfigCreateGroup ?? {});
 }
 
 let _requestConfigDeleteGroup: Partial<AxiosRequestConfig> | null;
 export function getDeleteGroupRequestConfig() {
-  return _requestConfigDeleteGroup;
+    return _requestConfigDeleteGroup;
 }
 export function setDeleteGroupRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigDeleteGroup = value;
+    _requestConfigDeleteGroup = value;
 }
 export function patchDeleteGroupRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigDeleteGroup = patch(_requestConfigDeleteGroup ?? {});
+    _requestConfigDeleteGroup = patch(_requestConfigDeleteGroup ?? {});
 }
 
 let _requestConfigUpdateGroup: Partial<AxiosRequestConfig> | null;
 export function getUpdateGroupRequestConfig() {
-  return _requestConfigUpdateGroup;
+    return _requestConfigUpdateGroup;
 }
 export function setUpdateGroupRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigUpdateGroup = value;
+    _requestConfigUpdateGroup = value;
 }
 export function patchUpdateGroupRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigUpdateGroup = patch(_requestConfigUpdateGroup ?? {});
+    _requestConfigUpdateGroup = patch(_requestConfigUpdateGroup ?? {});
 }

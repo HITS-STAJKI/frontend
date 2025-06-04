@@ -2,11 +2,11 @@ import { Button } from "@mantine/core"
 import { PencilSvgrepoCom } from "assets/icons"
 import { Modal } from "shared/ui"
 import { EditPartnerForm } from "./form"
-import { Company } from "shared/lib"
+import { CompanyPartnerDto } from "services/api/api-client.types"
 
 type EditPartnerButtonProps = {
-    partner: Company
-} 
+    partner: CompanyPartnerDto
+}
 
 export const EditPartnerButton = ({ partner }: EditPartnerButtonProps) => {
 
