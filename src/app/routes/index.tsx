@@ -17,6 +17,7 @@ import { UserProfilePage } from "pages/UserProfilePage"
 import { StudentsPracticesPage } from "pages/StudentsPracticesPage"
 import { StudentPracticesPage } from "pages/StudentPracticesPage"
 import { StudentsListPage } from "pages/StudentsListPage"
+import { StudentPractice } from "pages/StudentPractice"
 
 export const AppRouter = () => {
     return (
@@ -38,7 +39,7 @@ export const AppRouter = () => {
                 <Route path={PERSON_PROFILE_ROUTE} element={<UserProfilePage />} />
                 <Route path={STUDENTS_PRACTICES_ROUTE} element={<StudentsPracticesPage />} />
                 <Route path={STUDENT_PRACTICES_ROUTE} element={<StudentPracticesPage />} />
-                <Route path={PRACTICE_ROUTE} element={<StudentsPracticesPage />} />
+                <Route path={PRACTICE_ROUTE} element={<StudentPractice />} />
                 <Route path={STUDENTS_ROUTE} element={<StudentsListPage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
