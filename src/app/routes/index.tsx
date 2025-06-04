@@ -16,6 +16,7 @@ import { MyProfilePage } from "pages/MyProfilePage"
 import { UserProfilePage } from "pages/UserProfilePage"
 import { StudentsPracticesPage } from "pages/StudentsPracticesPage"
 import { StudentPracticesPage } from "pages/StudentPracticesPage"
+import { StudentsListPage } from "pages/StudentsListPage"
 
 export const AppRouter = () => {
     return (
@@ -38,7 +39,7 @@ export const AppRouter = () => {
                 <Route path={STUDENTS_PRACTICES_ROUTE} element={<StudentsPracticesPage />} />
                 <Route path={STUDENT_PRACTICES_ROUTE} element={<StudentPracticesPage />} />
                 <Route path={PRACTICE_ROUTE} element={<StudentsPracticesPage />} />
-                <Route path={STUDENTS_ROUTE} element={<StudentsPracticesPage />} />
+                <Route path={STUDENTS_ROUTE} element={<StudentsListPage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>
