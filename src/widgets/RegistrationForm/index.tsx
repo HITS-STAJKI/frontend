@@ -1,6 +1,9 @@
 import { Button, Container, Flex, PasswordInput, TextInput, Title } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { RegistrationFormProps } from "./types"
+import { useRegisterMutation } from "services/api/api-client/UserQuery"
+import { useNavigate } from "react-router-dom"
+import { MY_PROFILE_ROUTE } from "shared/lib"
 
 export const RegistrationForm = () => {
     const { onSubmit, ...form } = useForm<RegistrationFormProps>({
@@ -11,8 +14,18 @@ export const RegistrationForm = () => {
             lastName: ''
         }
     })
+    const { mutateAsync } = useRegisterMutation()
+    const navigate = useNavigate()
     const onFormSubmit = (vals: RegistrationFormProps) => {
-        console.log(vals)
+        mutateAsync({ fullName: `${vals.lastName} ${vals.firstName}`, email: vals.email, password: vals.password })
+            .then(tokens => {
+                localStorage.setItem("token", tokens.token!)
+                localStorage.setItem("exp", tokens.expirationDate?.toString()!)
+                navigate(MY_PROFILE_ROUTE)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }
     return (
         <Container w='100%'>
