@@ -1,12 +1,14 @@
+import { PageDto } from "services/api/api-client.types"
+
 export type Pagination = {
     size: number
-    current: number
-    count: number
+    currentPage: number
+    totalPages: number
 }
 
 export type Page<T> = {
-    content: Array<T>
-    pagination: Pagination
+    items: Array<T>
+    pagination: PageDto
 }
 
 export type PageFilter = {

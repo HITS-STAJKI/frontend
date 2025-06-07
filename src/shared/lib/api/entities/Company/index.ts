@@ -6,15 +6,16 @@ export type Company = {
     name: string
     description: string
     photo?: string
-}
-
-export type CompanyCreate = Pick<Company, 'name' | 'description'> & {
     curator: Curator
 }
 
+export type CompanyCreate = Pick<Company, 'name' | 'description'>
+
 export type CompanyUpdate = Pick<Company, 'name' | 'description'>
 
-export type CompanyPage = Page<Company & {
-    studentsNum: number
-    popularStack: string
-}>
+export type CompanyPage = Page<Pick<Company, 'id' | 'name'>>
+
+export type CompanyFull = Pick<Company, 'id' | 'name' | 'description'> &
+{
+    curator: Curator
+}

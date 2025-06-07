@@ -3,6 +3,15 @@ import { GET_USER } from "../User";
 
 export const GET_STUDENT: Student = {
     id: 'some_student_uuid',
+    group: {
+        id: 'some_group_uuid',
+        number: 'some_group_number',
+    },
+    user: GET_USER
+}
+
+export const GET_STUDENT_2: Student = {
+    id: 'some_student_uuid_2',
     groupId: 'some_group_uuid',
     user: GET_USER
 }
@@ -14,7 +23,10 @@ export const GET_TEACHER: Teacher = {
 
 export const GET_CURATOR: Curator = {
     id: 'some_curator_uuid',
-    companyId: 'some_company_uuid',
+    companyPartner: {
+        id: 'some_company_id',
+        name: 'some_company_name'
+    },
     user: GET_USER
 }
 
@@ -26,10 +38,10 @@ export const GET_DEAN: Dean = {
 export const GET_USER_ROLE_LIST: UserRoleList = [
     {
         id: 'some_role_uuid1',
-        role:'STUDENT'
+        userRole:'STUDENT'
     },
     {
         id: 'some_role_uuid2',
-        role:'ADMIN'
+        userRole:'ADMIN'
     }
 ]
