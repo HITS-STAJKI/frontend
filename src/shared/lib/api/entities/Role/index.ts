@@ -1,11 +1,13 @@
 import { DeleteMessage } from "../Common"
+import { Company } from "../Company"
+import { Group } from "../Group"
 import { User } from "../User"
 
 export type RoleType = 'ADMIN' | 'DEAN' | 'CURATOR' |'STUDENT' | 'TEACHER'
 
 export type Role = {
     id: string
-    role: RoleType
+    userRole: RoleType
 }
 
 type UserWithId = {
@@ -17,21 +19,29 @@ type UserId = {
     userId: string
 }
 
-export type Student = UserWithId & {
+type GroupId = {
     groupId: string
 }
 
-export type StudentCreate = Pick<Student, 'groupId'> & UserId
+export type Student = UserWithId & {
+    group: Pick<Group, 'id' | 'number'>
+}
 
-export type StudentUpdate = Pick<Student, 'groupId'>
+export type StudentCreate = GroupId
+
+export type StudentUpdate = GroupId
 
 export type Curator = UserWithId & {
+    companyPartner: Pick<Company, 'id' | 'name'>
+}
+
+export type CuratorCreate = UserId & {
     companyId: string
 }
 
-export type CuratorCreate = Pick<Curator, 'companyId'> & UserId
-
-export type UpdateCurator = Pick<Curator, 'companyId'>
+export type UpdateCurator = {
+    companyId: string
+}
 
 export type Dean = UserWithId
 
