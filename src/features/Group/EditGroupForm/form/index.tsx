@@ -1,16 +1,17 @@
 import { Button, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { Group, GroupUpdate } from "shared/lib"
+import { GroupDto } from "services/api/api-client.types"
+import { GroupUpdate } from "shared/lib"
 
 type EditGroupFormProps = {
     onSuccess: () => void
-    group: Group
+    group: GroupDto
 }
 
 export const EditGroupForm = ({ onSuccess, group }: EditGroupFormProps) => {
     const form = useForm<GroupUpdate>({
         initialValues: {
-            number: group.number
+            number: group.number!
         }
     })
 

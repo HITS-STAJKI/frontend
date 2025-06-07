@@ -1,24 +1,32 @@
 import { Button, TextInput, Textarea } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { Company, CompanyUpdate } from "shared/lib"
+import { CompanyUpdate } from "shared/lib"
+import { CompanyPartnerDto } from "services/api/api-client.types"
+import { useParams } from "react-router-dom"
+import { useGetPartnerInfoQuery, useUpdatePartnerInfoMutation } from "services/api/api-client/CompanyPartnersQuery"
 
 type EditPartnerFormProps = {
     onSuccess: () => void
-    partner: Company
+    partner: CompanyPartnerDto
 }
 
 export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) => {
+    const { id } = useParams()
     const form = useForm<CompanyUpdate>({
         initialValues: {
             name: partner.name,
             description: partner.description,
         }
     })
-
+    const { mutateAsync } = useUpdatePartnerInfoMutation(id!)
+    const { refetch } = useGetPartnerInfoQuery(id!)
     const handleEdit = (vals: CompanyUpdate) => {
-        // TODO Логика редактирования
-        console.log("Тело запроса", vals)
-        onSuccess()
+        mutateAsync(vals)
+            .then(() => {
+                refetch()
+                onSuccess()
+            })
+
     }
 
     return (

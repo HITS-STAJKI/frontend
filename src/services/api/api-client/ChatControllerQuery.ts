@@ -18,6 +18,37 @@ import * as Client from './ChatControllerClient'
 export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
+
+export function sendMessagesUrl(): string {
+  let url_ = getBaseUrl() + "/api/v1/chats/studentMessages";
+  url_ = url_.replace(/[?&]$/, "");
+  return url_;
+}
+
+export function sendMessagesMutationKey(): MutationKey {
+  return trimArrayEnd([
+      'ChatControllerClient',
+      'sendMessages',
+    ]);
+}
+
+/**
+ * Отправить сообщения определённым студентам
+ * @return OK
+ */
+export function useSendMessagesMutation<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, Types.SendMessageToStudentsRequest, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, Types.SendMessageToStudentsRequest, TContext> {
+  const key = sendMessagesMutationKey();
+  
+  const metaContext = useContext(QueryMetaContext);
+  options = addMetaToOptions(options, metaContext);
+  
+  return useMutation({
+    ...options,
+    mutationFn: (body: Types.SendMessageToStudentsRequest) => Client.sendMessages(body),
+    mutationKey: key,
+  });
+}
+  
 export function getMyChatInfoUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/chats/my";
   url_ = url_.replace(/[?&]$/, "");

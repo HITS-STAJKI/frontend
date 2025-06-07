@@ -92,6 +92,8 @@ export interface UserShortDto  {
   id: string;
   /** Адрес электронной почты */
   email: string;
+  /** Дата и время последнего захода в систему */
+  lastLoginDate: Date;
   /** Полное имя пользователя */
   fullName: string;
   [key: string]: any;
@@ -102,7 +104,10 @@ export function deserializeUserShortDto(json: string): UserShortDto {
   return data;
 }
 export function initUserShortDto(_data: UserShortDto) {
-    return _data;
+  if (_data) {
+    _data.lastLoginDate = _data["lastLoginDate"] ? new Date(_data["lastLoginDate"].toString()) : <any>null;
+  }
+  return _data;
 }
 export function serializeUserShortDto(_data: UserShortDto | undefined) {
   if (_data) {
@@ -112,6 +117,7 @@ export function serializeUserShortDto(_data: UserShortDto | undefined) {
 }
 export function prepareSerializeUserShortDto(_data: UserShortDto): UserShortDto {
   const data: Record<string, any> = { ..._data };
+  data["lastLoginDate"] = _data.lastLoginDate && _data.lastLoginDate.toISOString();
   return data as UserShortDto;
 }
 /** Модель редактирования электронной почты пользователя */
@@ -628,10 +634,6 @@ export function prepareSerializeLanguageDto(_data: LanguageDto): LanguageDto {
 }
 /** dto для обновления отбора */
 export interface UpdateInterviewDto  {
-  /** Идентификатор стека */
-  stackId: string;
-  /** Идентификаторы языков */
-  languageIds: string[];
   /** Статус отбора */
   status: UpdateInterviewDtoStatus;
   [key: string]: any;
@@ -643,7 +645,6 @@ export function deserializeUpdateInterviewDto(json: string): UpdateInterviewDto 
 }
 export function initUpdateInterviewDto(_data: UpdateInterviewDto) {
   if (_data) {
-    _data.languageIds = _data["languageIds"];
     _data.status = _data["status"];
   }
   return _data;
@@ -1072,7 +1073,7 @@ export interface ReportDto  {
   /** Время отправки комментария */
   createdAt?: Date;
   /** Время обновления комментария */
-  modifiedAt?: Date;
+  updatedAt?: Date;
   /** Идентификатор файла с отчетом */
   fileId?: string;
   /** Оценка отчета */
@@ -1087,7 +1088,7 @@ export function deserializeReportDto(json: string): ReportDto {
 export function initReportDto(_data: ReportDto) {
   if (_data) {
     _data.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>null;
-    _data.modifiedAt = _data["modifiedAt"] ? new Date(_data["modifiedAt"].toString()) : <any>null;
+    _data.updatedAt = _data["updatedAt"] ? new Date(_data["updatedAt"].toString()) : <any>null;
   }
   return _data;
 }
@@ -1100,7 +1101,7 @@ export function serializeReportDto(_data: ReportDto | undefined) {
 export function prepareSerializeReportDto(_data: ReportDto): ReportDto {
   const data: Record<string, any> = { ..._data };
   data["createdAt"] = _data.createdAt && _data.createdAt.toISOString();
-  data["modifiedAt"] = _data.modifiedAt && _data.modifiedAt.toISOString();
+  data["updatedAt"] = _data.updatedAt && _data.updatedAt.toISOString();
   return data as ReportDto;
 }
 /** dto для создания практики */
@@ -1497,6 +1498,33 @@ export function prepareSerializeSendMessageRequest(_data: SendMessageRequest): S
   const data: Record<string, any> = { ..._data };
   return data as SendMessageRequest;
 }
+export interface SendMessageToStudentsRequest  {
+  /** Идентификаторы студентов */
+  studentIds: string[];
+  content: string;
+  [key: string]: any;
+}
+export function deserializeSendMessageToStudentsRequest(json: string): SendMessageToStudentsRequest {
+  const data = JSON.parse(json) as SendMessageToStudentsRequest;
+  initSendMessageToStudentsRequest(data);
+  return data;
+}
+export function initSendMessageToStudentsRequest(_data: SendMessageToStudentsRequest) {
+  if (_data) {
+    _data.studentIds = _data["studentIds"];
+  }
+  return _data;
+}
+export function serializeSendMessageToStudentsRequest(_data: SendMessageToStudentsRequest | undefined) {
+  if (_data) {
+    _data = prepareSerializeSendMessageToStudentsRequest(_data as SendMessageToStudentsRequest);
+  }
+  return JSON.stringify(_data);
+}
+export function prepareSerializeSendMessageToStudentsRequest(_data: SendMessageToStudentsRequest): SendMessageToStudentsRequest {
+  const data: Record<string, any> = { ..._data };
+  return data as SendMessageToStudentsRequest;
+}
 /** Обновление группы */
 export interface UpdateGroupDto  {
   /** Номер группы */
@@ -1701,10 +1729,12 @@ export function prepareSerializeUserDetailsDto(_data: UserDetailsDto): UserDetai
 export interface PageDto  {
   /** Количество элементов текущей страницы */
   size?: number;
-  /** Общее количество страниц */
-  totalPages?: number;
   /** Номер текущей страницы */
   currentPage?: number;
+  /** Общее количество страниц */
+  totalPages?: number;
+  /** Общее количество элементов */
+  totalElements?: number;
   [key: string]: any;
 }
 export function deserializePageDto(json: string): PageDto {
@@ -1835,6 +1865,28 @@ export function prepareSerializePagedListDtoStudentDto(_data: PagedListDtoStuden
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoStudentDto;
+}
+/** Статистика по найденным студентам */
+export interface StatisticsResponse  {
+  [key: string]: any;
+}
+export function deserializeStatisticsResponse(json: string): StatisticsResponse {
+  const data = JSON.parse(json) as StatisticsResponse;
+  initStatisticsResponse(data);
+  return data;
+}
+export function initStatisticsResponse(_data: StatisticsResponse) {
+    return _data;
+}
+export function serializeStatisticsResponse(_data: StatisticsResponse | undefined) {
+  if (_data) {
+    _data = prepareSerializeStatisticsResponse(_data as StatisticsResponse);
+  }
+  return JSON.stringify(_data);
+}
+export function prepareSerializeStatisticsResponse(_data: StatisticsResponse): StatisticsResponse {
+  const data: Record<string, any> = { ..._data };
+  return data as StatisticsResponse;
 }
 export interface PagedListDtoPracticeDto  {
   items?: PracticeDto[];
@@ -2159,28 +2211,7 @@ export function prepareSerializeChatInfoDto(_data: ChatInfoDto): ChatInfoDto {
   const data: Record<string, any> = { ..._data };
   return data as ChatInfoDto;
 }
-export interface Body  {
-  file: string;
-  [key: string]: any;
-}
-export function deserializeBody(json: string): Body {
-  const data = JSON.parse(json) as Body;
-  initBody(data);
-  return data;
-}
-export function initBody(_data: Body) {
-    return _data;
-}
-export function serializeBody(_data: Body | undefined) {
-  if (_data) {
-    _data = prepareSerializeBody(_data as Body);
-  }
-  return JSON.stringify(_data);
-}
-export function prepareSerializeBody(_data: Body): Body {
-  const data: Record<string, any> = { ..._data };
-  return data as Body;
-}
+/** Роль пользователя */
 export enum UserRole {
     ADMIN = "ADMIN",
     DEAN = "DEAN",
@@ -2194,6 +2225,11 @@ export enum Status {
     PENDING = "PENDING",
     REJECTED = "REJECTED",
     SUCCEED = "SUCCEED",
+}
+export enum Type {
+    LOGO = "LOGO",
+    REPORT = "REPORT",
+    OTHER = "OTHER",
 }
 export enum RoleDtoUserRole {
     ADMIN = "ADMIN",

@@ -116,6 +116,12 @@ export * as ChatControllerQuery from './api-client/ChatControllerQuery';
 
 
 
+export * as StatisticsClient from './api-client/StatisticsClient';
+
+export * as StatisticsQuery from './api-client/StatisticsQuery';
+
+
+
 export * as RoleClient from './api-client/RoleClient';
 
 export * as RoleQuery from './api-client/RoleQuery';
@@ -262,6 +268,7 @@ export function initPersister() {
 
   addResultTypeFactory('FilesClient___getFileMetadata', (data: any) => Types.initFileDto(data));
   addResultTypeFactory('FilesClient___getMyFiles', (data: any) => Types.initPagedListDtoFileDto(data));
+  addResultTypeFactory('FilesClient___getAllFilesByType', (data: any) => Types.initPagedListDtoFileDto(data));
 
 
 
@@ -270,6 +277,8 @@ export function initPersister() {
 
 
   addResultTypeFactory('ChatControllerClient___getMyChatInfo', (data: any) => Types.initChatInfoDto(data));
+
+
 
 
 

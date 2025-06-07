@@ -36,6 +36,13 @@ export type GetMyFilesFilesQueryParameters = {
   sort?: string[] | undefined ;
 }
 
+export type GetAllFilesByTypeFilesQueryParameters = {
+  type: Types.Type ;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
+}
+
 export type DeleteFileFilesQueryParameters = {
   id: string ;
 }
@@ -312,7 +319,7 @@ export function __getMyFiles(context: QueryFunctionContext, axiosConfig?: AxiosR
 
 export function useGetMyFilesQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(dto: GetMyFilesFilesQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 /**
- * Получить свои отчеты
+ * Получить свои файлы
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -347,7 +354,7 @@ export function useGetMyFilesQuery<TSelectData = Types.PagedListDtoFileDto, TErr
   });
 }
 /**
- * Получить свои отчеты
+ * Получить свои файлы
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -360,13 +367,132 @@ export function setGetMyFilesData(queryClient: QueryClient, updater: (data: Type
 }
 
 /**
- * Получить свои отчеты
+ * Получить свои файлы
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
 export function setGetMyFilesDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoFileDto | undefined) => Types.PagedListDtoFileDto) {
+  queryClient.setQueryData(queryKey, updater);
+}
+    
+export function getAllFilesByTypeUrl(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
+  let url_ = getBaseUrl() + "/api/v1/files/all?";
+  if (type === undefined || type === null)
+    throw new Error("The parameter 'type' must be defined and cannot be null.");
+  else
+    url_ += "type=" + encodeURIComponent("" + type) + "&";
+if (page === null)
+    throw new Error("The parameter 'page' cannot be null.");
+else if (page !== undefined)
+    url_ += "page=" + encodeURIComponent("" + page) + "&";
+if (size === null)
+    throw new Error("The parameter 'size' cannot be null.");
+else if (size !== undefined)
+    url_ += "size=" + encodeURIComponent("" + size) + "&";
+if (sort === null)
+    throw new Error("The parameter 'sort' cannot be null.");
+else if (sort !== undefined)
+    sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
+  url_ = url_.replace(/[?&]$/, "");
+  return url_;
+}
+
+let getAllFilesByTypeDefaultOptions: Omit<UseQueryOptions<Types.PagedListDtoFileDto, unknown, Types.PagedListDtoFileDto>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.PagedListDtoFileDto, unknown, Types.PagedListDtoFileDto>, 'queryFn'>> = {
+};
+export function getGetAllFilesByTypeDefaultOptions() {
+  return getAllFilesByTypeDefaultOptions;
+};
+export function setGetAllFilesByTypeDefaultOptions(options: typeof getAllFilesByTypeDefaultOptions) {
+  getAllFilesByTypeDefaultOptions = options;
+}
+
+export function getAllFilesByTypeQueryKey(dto: GetAllFilesByTypeFilesQueryParameters): QueryKey;
+export function getAllFilesByTypeQueryKey(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
+export function getAllFilesByTypeQueryKey(...params: any[]): QueryKey {
+  if (params.length === 1 && isParameterObject(params[0])) {
+    const { type, page, size, sort,  } = params[0] as GetAllFilesByTypeFilesQueryParameters;
+
+    return trimArrayEnd([
+        'FilesClient',
+        'getAllFilesByType',
+        type as any,
+        page as any,
+        size as any,
+        sort as any,
+      ]);
+  } else {
+    return trimArrayEnd([
+        'FilesClient',
+        'getAllFilesByType',
+        ...params
+      ]);
+  }
+}
+export function __getAllFilesByType(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
+  return Client.getAllFilesByType(
+      context.queryKey[2] as Types.Type,       context.queryKey[3] as number | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as string[] | undefined,axiosConfig    );
+}
+
+export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(dto: GetAllFilesByTypeFilesQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+/**
+ * Получить все файлы по типу
+ * @param page (optional) Zero-based page index (0..N)
+ * @param size (optional) The size of the page to be returned
+ * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @return OK
+ */
+export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+  let options: UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData> | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let type: any = undefined;
+  let page: any = undefined;
+  let size: any = undefined;
+  let sort: any = undefined;
+  
+  if (params.length > 0) {
+    if (isParameterObject(params[0])) {
+      ({ type, page, size, sort,  } = params[0] as GetAllFilesByTypeFilesQueryParameters);
+      options = params[1];
+      axiosConfig = params[2];
+    } else {
+      [type, page, size, sort, options, axiosConfig] = params;
+    }
+  }
+
+  const metaContext = useContext(QueryMetaContext);
+  options = addMetaToOptions(options, metaContext);
+
+  return useQuery<Types.PagedListDtoFileDto, TError, TSelectData>({
+    queryFn: axiosConfig ? (context) => __getAllFilesByType(context, axiosConfig) : __getAllFilesByType,
+    queryKey: getAllFilesByTypeQueryKey(type, page, size, sort),
+    ...getAllFilesByTypeDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>,
+    ...options,
+  });
+}
+/**
+ * Получить все файлы по типу
+ * @param page (optional) Zero-based page index (0..N)
+ * @param size (optional) The size of the page to be returned
+ * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @return OK
+ */
+export function setGetAllFilesByTypeData(queryClient: QueryClient, updater: (data: Types.PagedListDtoFileDto | undefined) => Types.PagedListDtoFileDto, type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
+  queryClient.setQueryData(getAllFilesByTypeQueryKey(type, page, size, sort),
+    updater
+  );
+}
+
+/**
+ * Получить все файлы по типу
+ * @param page (optional) Zero-based page index (0..N)
+ * @param size (optional) The size of the page to be returned
+ * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+ * @return OK
+ */
+export function setGetAllFilesByTypeDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoFileDto | undefined) => Types.PagedListDtoFileDto) {
   queryClient.setQueryData(queryKey, updater);
 }
     
@@ -388,7 +514,7 @@ export function deleteFileMutationKey(id: string): MutationKey {
 }
 
 /**
- * Удалить файл отчета
+ * Удалить файл
  * @param id id файла
  * @return OK
  */
@@ -408,7 +534,7 @@ export function useDeleteFileMutation<TContext>(id: string, options?: Omit<UseMu
 type DeleteFile__MutationParameters = DeleteFileFilesQueryParameters
 
 /**
- * Удалить файл отчета
+ * Удалить файл
  * @param id id файла
  * @return OK
  */

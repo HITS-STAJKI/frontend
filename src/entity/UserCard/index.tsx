@@ -4,13 +4,6 @@ import { EditUserButton } from "features/UsersList/UserEditButton";
 import { DeleteUserButton } from "features/UsersList/UserDeleteButton";
 
 export function UserCard({ id, email, fullname, roles }: User) {
-    function handleEdit() {
-    }
-
-    function handleDelete() {
-        console.log(id, fullname);
-    }
-
     return (
         <Card key={id} shadow="sm" style={{ width: '100%', height: '64px', display: 'flex' }} data-role={JSON.stringify(roles)}>
             <Grid grow>
@@ -28,15 +21,15 @@ export function UserCard({ id, email, fullname, roles }: User) {
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         {email}
                     </Text>
-                </Grid.Col>                
+                </Grid.Col>
                 <Grid.Col span={2.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {roles.map(role => roleTranslations[role.userRole]).join(", ")}
+                        {roles.map(role => roleTranslations[role.userRole!]).join(", ")}
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={2} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                    <EditUserButton id={id}/>
-                    <DeleteUserButton id={id}/>
+                    <EditUserButton id={id} />
+                    <DeleteUserButton id={id} />
                 </Grid.Col>
             </Grid>
         </Card>

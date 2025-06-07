@@ -1,14 +1,15 @@
 import { Button, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
+import { useUpdateCurrentUserPasswordMutation } from "services/api/api-client/UserQuery"
 
 type ChangePasswordFormProps = {
     onSuccess: () => void
 }
 
-type EditPasswordType = { 
-    oldPassword: string; 
-    newPassword: string; 
-    repeatNewPassword: string 
+type EditPasswordType = {
+    oldPassword: string;
+    newPassword: string;
+    repeatNewPassword: string
 }
 export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
     const form = useForm({
@@ -18,14 +19,16 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
             repeatNewPassword: '',
         },
         validate: {
-            repeatNewPassword: (value: string, values: EditPasswordType) => 
+            repeatNewPassword: (value: string, values: EditPasswordType) =>
                 value !== values.newPassword ? 'Пароли не совпадают' : null,
         },
     });
-
+    const { mutateAsync } = useUpdateCurrentUserPasswordMutation()
     const onSubmit = (vals: EditPasswordType) => {
-        console.log('Тело запроса', vals);
-        onSuccess();
+        mutateAsync(vals).then(() => {
+            onSuccess();
+        })
+
     };
 
     return (

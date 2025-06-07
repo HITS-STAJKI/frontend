@@ -1,12 +1,12 @@
-import { UserProfileType } from "shared/lib";
 import { ProfileForm } from "./Form";
-import { Title, Badge, Text, Group } from "@mantine/core";
+import { Title, Badge, Text } from "@mantine/core";
 import { ChangePassword } from "features/ChangePassword";
 import { RemoveFromAcadem } from "features/AcademicLeave/RemoveFromAcadem";
 import { SendToAcadem } from "features/AcademicLeave";
+import { UserDetailsDto } from "services/api/api-client.types";
 
 type ProfileBlockProps = {
-    profileData: UserProfileType;
+    profileData: UserDetailsDto;
     mode: "my" | "user";
 };
 
@@ -14,7 +14,6 @@ export const ProfileBlock = ({
     profileData,
     mode,
 }: ProfileBlockProps) => {
-    
     const isStudent = !!profileData.student;
 
     const renderActionButton = () => {
@@ -29,7 +28,7 @@ export const ProfileBlock = ({
                 );
             } else {
                 return (
-                    <SendToAcadem user={profileData}/>
+                    <SendToAcadem user={profileData} />
                 );
             }
         }
@@ -38,7 +37,7 @@ export const ProfileBlock = ({
     };
 
     return (
-        <div style={{ marginTop: '2vh', marginLeft: '4vw', width: '50vw', minWidth: "300px"  }}>
+        <div style={{ marginTop: '2vh', marginLeft: '4vw', width: '50vw', minWidth: "300px" }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Title order={2}>Профиль</Title>
                 {profileData.student?.isGraduated && <Text c="gray" ml="xs">(Выпустился)</Text>}
@@ -57,7 +56,7 @@ export const ProfileBlock = ({
             </div>
 
             <ProfileForm profileInfo={profileData} mod={mode} />
-            
+
         </div>
     )
 }

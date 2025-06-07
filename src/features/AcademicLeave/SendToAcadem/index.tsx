@@ -1,9 +1,10 @@
 import { Button } from "@mantine/core"
+import { UserDetailsDto } from "services/api/api-client.types"
 import { UserProfileType } from "shared/lib"
 import { Modal } from "shared/ui"
 
 type SendToAcademProps = {
-    user: UserProfileType
+    user: UserDetailsDto
 }
 
 export const SendToAcadem = ({ user }: SendToAcademProps) => {
