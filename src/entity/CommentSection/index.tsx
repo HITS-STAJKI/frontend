@@ -33,14 +33,14 @@ export const Comment = ({ content, createdAt, modifiedAt, author, id }: Intervie
                 <Avatar color={AvatarColor[Math.abs(hashCode(id)) % AvatarColor.length]}>
                     {author.fullname[0].toUpperCase()}
                 </Avatar>
-                <Flex direction="column">
+                <Flex direction="column" maw={'32rem'}>
                     <Group gap="xs">
                         <Text fw={500}>{author.fullname}</Text>
                         <Text c="gray" size="sm">
                             {dateFormatter(modifiedAt ?? createdAt)}
                         </Text>
                     </Group>
-                    <Text>{content}</Text>
+                    <Text style={{ wordWrap: 'break-word' }}>{content}</Text>
                 </Flex>
             </Flex>
         </Group>
