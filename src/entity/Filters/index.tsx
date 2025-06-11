@@ -52,7 +52,7 @@ export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: 
 
     useEffect(() => {
         setTimeout(() => {
-            const stacks = GET_STACKS.content;
+            const stacks = GET_STACKS.items;
             const selectData = stacks.map(stack => ({
                 value: stack.id,
                 label: stack.name,
@@ -87,7 +87,7 @@ export function FilterLanguageMultiple({ id, onChangeValue }: { id: string; onCh
     useEffect(() => {
         setTimeout(() => {
             const languages = GET_LANGUAGES;
-            const selectData = languages.content.map(language => ({
+            const selectData = languages.items.map(language => ({
                 value: language.id,
                 label: language.name,
             }));
@@ -120,7 +120,7 @@ export function FilterGroup({ id, onChangeValue }: { id: string; onChangeValue: 
 
     useEffect(() => {
         setTimeout(() => {
-            const groups = GET_GROUPS.content;
+            const groups = GET_GROUPS.items;
             const selectData = groups.map(group => ({
                 value: group.id,
                 label: group.number,
@@ -225,7 +225,7 @@ export function FilterCompanySelect({ id, onChangeValue }: { id: string; onChang
 
     useEffect(() => {
         setTimeout(() => {
-            const companies = GET_COMPANIES.content;
+            const companies = GET_COMPANIES.items;
             const selectData = companies.map(company => ({
                 value: company.id,
                 label: company.name,
@@ -259,7 +259,7 @@ export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChang
 
     useEffect(() => {
         setTimeout(() => {
-            const groups = GET_GROUPS.content;
+            const groups = GET_GROUPS.items;
             const selectData = groups.map(group => ({
                 value: group.id,
                 label: group.number,
