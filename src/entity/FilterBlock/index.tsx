@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Select, Collapse, Flex, Box } from "@mantine/core";
 import { IconX, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 
 {/*<FilterBlockShort availableFilters={[
@@ -23,14 +24,13 @@ import { IconX, IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 
 const pageSizes = [10, 15, 20, 25, 50, 100];
 
-type FilterItem = 
-{
+type FilterItem = {
     id: string;
     label: string;
-    element: (props: 
-        { 
-            onChangeValue: (val: any) => void 
-        }) => React.ReactNode;
+    element: (props: {
+        value: any;
+        onChangeValue: (val: any) => void;
+    }) => React.ReactNode;
 };
 
 
@@ -48,67 +48,86 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
     const [opened, setOpened] = useState(false);
     const [filterValues, setFilterValues] = useState<Record<string, any>>({});
 
-    const handleAddFilter = () => 
-    {
-        if (!selectedFilterId)
-        {
-            return;
-        }
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
-        if (activeFilters.some(f => f.id === selectedFilterId))
-        {
-            return;
-        }
+    useEffect(() => {
+        const initialValues: Record<string, string> = {};
+        const active: FilterItem[] = [];
 
-        const filterToAdd = availableFilters.find(f => f.id === selectedFilterId);
+        availableFilters.forEach((f) => {
+            const value = searchParams.get(f.id);
+            if (value !== null) {
+                initialValues[f.id] = value;
+                active.push(f);
+            }
+        });
 
-        if (filterToAdd) 
-        {
-            setActiveFilters(prev => [...prev, filterToAdd]);
+        setFilterValues(initialValues);
+        setActiveFilters(active);
+        if (active.length > 0) {
             setOpened(true);
         }
 
+        const sizeParam = searchParams.get("size");
+        if (sizeParam) {
+            setSelectedPage(Number(sizeParam));
+        }
+    }, [availableFilters, searchParams]);
+
+    const handleAddFilter = () => {
+        if (!selectedFilterId) return;
+        if (activeFilters.some(f => f.id === selectedFilterId)) return;
+
+        const filterToAdd = availableFilters.find(f => f.id === selectedFilterId);
+        if (filterToAdd) {
+            setActiveFilters(prev => [...prev, filterToAdd]);
+            setOpened(true);
+        }
         setSelectedFilterId(null);
     };
 
-    const handleRemoveFilter = (id: string) => 
-    {
+    const handleRemoveFilter = (id: string) => {
         const updated = activeFilters.filter(f => f.id !== id);
 
-        if (updated.length === 0) 
-        {
+        if (updated.length === 0) {
             setOpened(false);
             setTimeout(() => setActiveFilters([]), 300);
-        } 
-        else
-        {
+        } else {
             setActiveFilters(updated);
         }
 
-        setFilterValues(prev => 
-        {
+        setFilterValues(prev => {
             const copy = { ...prev };
             delete copy[id];
             return copy;
         });
     };
 
-    const handleClear = () => 
-    {
+    const handleClear = () => {
         setOpened(false);
         setTimeout(() => setActiveFilters([]), 300);
         setFilterValues({});
+        navigate(".");
     };
 
     const handleChangePage = (value: string | null) => {
         if (value !== null) {
-        setSelectedPage(Number(value));
+            setSelectedPage(Number(value));
         }
     };
 
-    const handleSearch = () => 
-    {
-        console.log("🔍 Filter values:", filterValues);
+    const handleSearch = () => {
+        const params = new URLSearchParams();
+
+        Object.entries(filterValues).forEach(([key, value]) => {
+            if (value !== null && value !== "") {
+                params.append(key, value);
+            }
+        });
+
+        params.append("size", selectedPage.toString());
+        navigate({ search: params.toString() });
     };
 
     return (
@@ -176,7 +195,7 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
                                     onClick={() => handleRemoveFilter(f.id)}
                                     style={{ alignSelf: "center" }}
                                 >
-                                    <IconX/>
+                                    <IconX />
                                 </Button>
 
                                 <Flex align="center" gap="sm" style={{ flex: 1 }}>
@@ -186,8 +205,12 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
                                     <Box style={{ flex: 1 }}>
                                         {f.element({
                                             onChangeValue: (val: any) => {
-                                                setFilterValues(prev => ({ ...prev, [f.id]: val }));
+                                                setFilterValues(prev => ({
+                                                    ...prev,
+                                                    [f.id]: val,
+                                                }));
                                             },
+                                            value: filterValues[f.id] ?? null,
                                         })}
                                     </Box>
                                 </Flex>
@@ -200,75 +223,93 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
     );
 }
 
-export function FilterBlockShort({ availableFilters }: FilterBlockProps) 
-{
+export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null);
     const [selectedPage, setSelectedPage] = useState<number>(10);
     const [activeFilters, setActiveFilters] = useState<FilterItem[]>([]);
     const [opened, setOpened] = useState(false);
     const [filterValues, setFilterValues] = useState<Record<string, any>>({});
 
-    const handleAddFilter = () => 
-    {
-        if (!selectedFilterId)
-        {
-            return;
-        }
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
 
-        if (activeFilters.some(f => f.id === selectedFilterId))
-        {
-            return;
-        }
+    useEffect(() => {
+        const initialValues: Record<string, string> = {};
+        const active: FilterItem[] = [];
 
-        const filterToAdd = availableFilters.find(f => f.id === selectedFilterId);
+        availableFilters.forEach((f) => {
+            const value = searchParams.get(f.id);
+            if (value !== null) {
+                initialValues[f.id] = value;
+                active.push(f);
+            }
+        });
 
-        if (filterToAdd) 
-        {
-            setActiveFilters(prev => [...prev, filterToAdd]);
+        setFilterValues(initialValues);
+        setActiveFilters(active);
+        if (active.length > 0) {
             setOpened(true);
         }
 
+        const sizeParam = searchParams.get("size");
+        if (sizeParam) {
+            setSelectedPage(Number(sizeParam));
+        }
+    }, [availableFilters, searchParams]);
+
+    const handleAddFilter = () => {
+        if (!selectedFilterId) return;
+        if (activeFilters.some(f => f.id === selectedFilterId)) return;
+
+        const filterToAdd = availableFilters.find(f => f.id === selectedFilterId);
+        if (filterToAdd) {
+            setActiveFilters(prev => [...prev, filterToAdd]);
+            setOpened(true);
+        }
         setSelectedFilterId(null);
     };
 
-    const handleRemoveFilter = (id: string) => 
-    {
+    const handleRemoveFilter = (id: string) => {
         const updated = activeFilters.filter(f => f.id !== id);
 
-        if (updated.length === 0) 
-        {
+        if (updated.length === 0) {
             setOpened(false);
             setTimeout(() => setActiveFilters([]), 300);
-        } 
-        else
-        {
+        } else {
             setActiveFilters(updated);
         }
 
-        setFilterValues(prev => 
-        {
+        setFilterValues(prev => {
             const copy = { ...prev };
             delete copy[id];
             return copy;
         });
     };
 
-    const handleClear = () => 
-    {
+    const handleClear = () => {
         setOpened(false);
         setTimeout(() => setActiveFilters([]), 300);
         setFilterValues({});
+        navigate(".");
     };
 
     const handleChangePage = (value: string | null) => {
         if (value !== null) {
-        setSelectedPage(Number(value));
+            setSelectedPage(Number(value));
         }
     };
 
-    const handleSearch = () => 
-    {
-        console.log("🔍 Filter values:", filterValues);
+    const handleSearch = () => {
+        const params = new URLSearchParams();
+
+        Object.entries(filterValues).forEach(([key, value]) => {
+            if (value !== null && value !== "") {
+                params.append(key, value);
+            }
+        });
+
+        params.append("size", selectedPage.toString());
+        navigate({ search: params.toString() });
     };
 
     return (
@@ -279,7 +320,9 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps)
                         <Select
                             placeholder="Выберите фильтр"
                             value={selectedFilterId}
-                            onChange={setSelectedFilterId}
+                            onChange={val => {
+                                setSelectedFilterId(val);
+                            }}
                             data={availableFilters.map(f => ({ value: f.id, label: f.label }))}
                             styles={{ input: { minWidth: 0 } }}
                         />
@@ -311,9 +354,9 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps)
                             onClick={() => setOpened(o => !o)}
                             px={8}
                             style={{ height: 36 }}
-                            >
-                            {opened ? 
-                                <IconChevronUp size={18} /> : 
+                        >
+                            {opened ?
+                                <IconChevronUp size={18} /> :
                                 <IconChevronDown size={18} />
                             }
                         </Button>
@@ -324,32 +367,38 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps)
             <Collapse in={opened}>
                 <Box pt="sm">
                     <Flex direction="column" gap="sm">
-                        {activeFilters.map(f => (
-                            <Flex key={f.id} align="center" gap="sm">
-                                <Button
-                                    variant="subtle"
-                                    color="red"
-                                    size="xs"
-                                    onClick={() => handleRemoveFilter(f.id)}
-                                    style={{ alignSelf: "center" }}
-                                >
-                                    <IconX/>
-                                </Button>
+                        {activeFilters.map(f => {
+                            return (
+                                <Flex key={f.id} align="center" gap="sm">
+                                    <Button
+                                        variant="subtle"
+                                        color="red"
+                                        size="xs"
+                                        onClick={() => handleRemoveFilter(f.id)}
+                                        style={{ alignSelf: "center" }}
+                                    >
+                                        <IconX />
+                                    </Button>
 
-                                <Flex align="center" gap="sm" style={{ flex: 1 }}>
-                                    <Box style={{ flex: 1, textAlign: "left", paddingRight: 4 }}>
-                                        {f.label}
-                                    </Box>
-                                    <Box style={{ flex: 1 }}>
-                                        {f.element({
-                                            onChangeValue: (val: any) => {
-                                                setFilterValues(prev => ({ ...prev, [f.id]: val }));
-                                            },
-                                        })}
-                                    </Box>
+                                    <Flex align="center" gap="sm" style={{ flex: 1 }}>
+                                        <Box style={{ flex: 1, textAlign: "left", paddingRight: 4 }}>
+                                            {f.label}
+                                        </Box>
+                                        <Box style={{ flex: 1 }}>
+                                            {f.element({
+                                                onChangeValue: (val: any) => {
+                                                    setFilterValues(prev => ({
+                                                        ...prev,
+                                                        [f.id]: val,
+                                                    }));
+                                                },
+                                                value: filterValues[f.id] ?? null,
+                                            })}
+                                        </Box>
+                                    </Flex>
                                 </Flex>
-                            </Flex>
-                        ))}
+                            );
+                        })}
                     </Flex>
                 </Box>
             </Collapse>

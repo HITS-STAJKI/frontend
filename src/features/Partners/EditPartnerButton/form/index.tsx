@@ -4,7 +4,7 @@ import { CompanyUpdate } from "shared/lib"
 import { CompanyPartnerDto } from "services/api/api-client.types"
 import { useParams } from "react-router-dom"
 import { useGetPartnerInfoQuery, useUpdatePartnerInfoMutation } from "services/api/api-client/CompanyPartnersQuery"
-import { useDownloadFileQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery"
+import { useDeleteFileMutation, useDownloadFileQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery"
 import { useEffect, useState } from "react"
 
 type EditPartnerFormProps = {
@@ -14,10 +14,11 @@ type EditPartnerFormProps = {
 
 export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) => {
     const { id } = useParams();
+    
     const form = useForm<CompanyUpdate>({
         initialValues: {
             name: partner.name,
-            description: partner.description
+            description: partner.description,
         },
         validate: {
             name: (value) => (value.trim().length === 0 ? 'Название обязательно' : null),
@@ -35,9 +36,10 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const [fileId, setFileId] = useState<string | undefined>(partner.fileId);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
+    const { mutateAsync: deleteFile, isPending: isDeleting } = useDeleteFileMutation(fileId ?? '');
+
     useEffect(() => {
-        if (fileData?.data) 
-        {
+        if (fileData?.data) {
             const reader = new FileReader();
             reader.onloadend = () => setImageSrc(reader.result as string);
             reader.readAsDataURL(fileData.data);
@@ -47,31 +49,35 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const handleFileChange = async (file: File | null) => {
         if (!file) return;
 
-        try 
-        {
+        try {
             const uploadedFile = await uploadFile({
                 file: {
-                data: file,
-                fileName: file.name,
+                    data: file,
+                    fileName: file.name,
                 },
             });
-            if (uploadedFile?.id) 
-            {
+
+            if (uploadedFile?.id) {
                 setFileId(uploadedFile.id);
                 const reader = new FileReader();
                 reader.onloadend = () => setImageSrc(reader.result as string);
                 reader.readAsDataURL(file);
             }
-        } 
-        catch (e) 
-        {
+        } catch (e) {
             console.error("Ошибка загрузки файла", e);
         }
     };
 
-    const handleRemoveIcon = () => {
-        setFileId(undefined);
-        setImageSrc(null);
+    const handleRemoveIcon = async () => {
+        if (!fileId) return;
+
+        try {
+            await deleteFile();
+            setFileId(undefined);
+            setImageSrc(null);
+        } catch (e) {
+            console.error("Ошибка удаления файла", e);
+        }
     };
 
     const handleEdit = async (vals: CompanyUpdate) => {
@@ -96,6 +102,7 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                 error={form.errors.name}
                 mb="xs"
             />
+
             <Textarea
                 required
                 autosize
@@ -122,13 +129,23 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                         alt="Иконка компании"
                         style={{ maxWidth: 100, maxHeight: 100, objectFit: "contain" }}
                     />
-                    <Button variant="light" color="red" onClick={handleRemoveIcon}>
+                    <Button
+                        variant="light"
+                        color="red"
+                        onClick={handleRemoveIcon}
+                        loading={isDeleting}
+                        disabled={isDeleting}
+                    >
                         Удалить
                     </Button>
                 </Group>
             )}
 
-            <Button type="submit" loading={isUploading} disabled={!form.isValid()}>
+            <Button
+                type="submit"
+                loading={isUploading || isDeleting}
+                disabled={!form.isValid()}
+            >
                 Сохранить
             </Button>
         </form>
