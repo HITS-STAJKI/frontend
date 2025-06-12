@@ -77,6 +77,26 @@ export const SuccedSelection = ({ id }: { id : string }) => {
     )
 }
 
+export const SuccedTeacherSelection = ({ id }: { id : string }) => {
+
+    const handleSucced = (close: () => void) => {
+        console.log(`Тело запроса подтверждения ${id}:`);
+        close()
+    }
+    return (
+        <Modal
+            render={open => 
+            <span color="#1cac78" onClick={() => open()} style={{whiteSpace: 'nowrap',
+             borderRadius: '5px', aspectRatio: '1 / 1', padding: "0px", margin: "0px",  fontSize: '24px', cursor: 'pointer'}}>
+                {"✅"}
+            </span>}
+            content={({ close }) => <Button onClick={() => handleSucced(close)} color='green'>{'Подтвердить'}</Button>}
+            title={'Подтвердить практику студента?'}
+        />
+
+    )
+}
+
 export const CommentSelection = ({ id }: { id : string }) => {
     const [comments, setComments] = useState<InterviewsComment[]>([]);
     const [opened, setOpened] = useState(false);

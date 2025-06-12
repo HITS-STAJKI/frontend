@@ -1,5 +1,5 @@
 import { GET_USER } from "..";
-import { Interview, InterviewPage, InterviewsComment, InterviewsCommentPage } from "../../entities";
+import { Interview, InterviewForTeachers, InterviewPage, InterviewsComment, InterviewsCommentPage, PagedListDtoInterviewDto, User } from "../../entities";
 import { STACK1, STACK2 } from "../Stack"
 import { LANGUAGE1, LANGUAGE2 } from "../Language"
 
@@ -73,6 +73,42 @@ export const GET_INTERVIEWS_COMMENTS: InterviewsCommentPage = {
     pagination: {
         totalPages: 1,
         currentPage: 0,
+        size: 10
+    }
+}
+
+const INTERVIEWFORTEACHER1: InterviewForTeachers = {
+    id: "InterviewForTeachers_id_1",
+    createdAt: "2025-03-28",
+    status: "PENDING",
+    stack: STACK1,
+    languages: [LANGUAGE1, LANGUAGE2],
+        companyPartner: {
+        id: 'some_company_id_1',
+        name: 'some_company_name_1'
+    },
+    student: GET_USER,
+}
+
+const INTERVIEWFORTEACHER2: InterviewForTeachers = {
+    id: "InterviewForTeachers_id_2",
+    createdAt: "2025-03-29",
+    status: "SUCCEED",
+    stack: STACK1,
+    languages: [LANGUAGE1, LANGUAGE2],
+        companyPartner: {
+        id: 'some_company_id_1',
+        name: 'some_company_name_1'
+    },
+    student: GET_USER,
+}
+
+
+export const GET_INTERVIEWFORTEACHER: PagedListDtoInterviewDto = {
+    items: [INTERVIEWFORTEACHER1, INTERVIEWFORTEACHER2, INTERVIEWFORTEACHER1],
+    pagination: {
+        totalPages: 1,
+        currentPage: 1,
         size: 10
     }
 }

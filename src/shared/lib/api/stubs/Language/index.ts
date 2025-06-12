@@ -14,7 +14,7 @@ export const LANGUAGE3: Language = {
 }
 
 export const GET_LANGUAGES: LanguagePage  = {
-    content: [LANGUAGE1, LANGUAGE2, LANGUAGE3],
+    items: [LANGUAGE1, LANGUAGE2, LANGUAGE3],
     pagination: {
         totalPages: 1,
         currentPage: 0,

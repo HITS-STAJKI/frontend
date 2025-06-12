@@ -37,10 +37,11 @@ type FilterItem =
 type FilterBlockProps = 
 {
     availableFilters: FilterItem[];
+    printButton?: boolean;
 };
 
 
-export function FilterBlockFull({ availableFilters }: FilterBlockProps) 
+export function FilterBlockFull({ availableFilters, printButton}: FilterBlockProps) 
 {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null);
     const [selectedPage, setSelectedPage] = useState<number>(10);
@@ -111,6 +112,11 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
         console.log("🔍 Filter values:", filterValues);
     };
 
+    const handlePrint = () => 
+    {
+        console.log("Печать");
+    };
+
     return (
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Flex align="center" justify="space-between">
@@ -145,9 +151,11 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
                     <Button color="red" onClick={handleClear}>
                         Очистить
                     </Button>
-                    <Button color="gray">
-                        Печать
-                    </Button>
+                    {printButton ? (
+                        <Button color="gray" onClick={handlePrint}>
+                            Печать
+                        </Button>) : null
+                    }
                     {activeFilters.length > 0 && (
                         <Button
                             variant="subtle"
@@ -200,7 +208,7 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
     );
 }
 
-export function FilterBlockShort({ availableFilters }: FilterBlockProps) 
+export function FilterBlockShort({ availableFilters, printButton }: FilterBlockProps) 
 {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null);
     const [selectedPage, setSelectedPage] = useState<number>(10);
@@ -271,6 +279,11 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps)
         console.log("🔍 Filter values:", filterValues);
     };
 
+    const handlePrint = () => 
+    {
+        console.log("Печать");
+    };
+
     return (
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Flex align="center" justify="space-between">
@@ -305,6 +318,11 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps)
                     <Button color="red" onClick={handleClear}>
                         Очистить
                     </Button>
+                    {printButton ? (
+                        <Button color="gray" onClick={handlePrint}>
+                            Печать
+                        </Button>) : null
+                    }
                     {activeFilters.length > 0 && (
                         <Button
                             variant="subtle"

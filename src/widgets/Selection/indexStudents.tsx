@@ -1,10 +1,10 @@
 import { Button, Container, Flex, Group, MultiSelect, Text, TextInput, Title } from "@mantine/core";
-import { GET_STACKS, Interview, InterviewPage, InterviewStatus } from "shared/lib";
-import { SelectionComments } from "features";
+import { GET_STACKS, Interview, InterviewPage, InterviewStatus} from "shared/lib";
 import './css.css';
 import { CommentSelection, CreateSelection, DeleteSelection, EditSelection, SuccedSelection } from "./ModuleWindows";
 import { useForm } from "@mantine/form";
 
+// --------------- Student ---------------
 
 export function TitleForm() {
     return (
@@ -46,7 +46,7 @@ export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/)
                             {...form.getInputProps('company')}
                         />
                     <MultiSelect miw={150} style={{ margin:'2%'}}
-                        label="Направлеение"
+                        label="Направление"
                         onChange={(value) => form.setFieldValue('stackId', value)}
                         data={GET_STACKS.items.map(option => {
                             return { value: option.id, label: option.name };
@@ -62,7 +62,7 @@ export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/)
 }
 
 
-export function SelectionList( { page }: { page: InterviewPage }) {
+export function SelectionStudentList( { page }: { page: InterviewPage }) {
     return (
         <Container p={0} fluid style={{width: '100%' }}>
         {page.items.map(card => (

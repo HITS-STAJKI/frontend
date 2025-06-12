@@ -23,7 +23,7 @@ export const GROUP3: Group = {
 }
 
 export const GET_GROUPS: GroupPage = {
-    content: [GROUP1, GROUP2, GROUP3],
+    items: [GROUP1, GROUP2, GROUP3],
     pagination: {
         totalPages: 1,
         currentPage: 0,
