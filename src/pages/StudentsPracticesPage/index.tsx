@@ -20,7 +20,7 @@ export const StudentsPracticesPage = () => {
                     {id: "practiveapprove",label: "Практика подтверждена",element: (props) => <FilterTrueFalseNull id="practiveapprove" onChangeValue={props.onChangeValue} />},
                 ]}/>
                 <PracticesFormUnder studentCount={10}/>
-                <PracticesList content={practices.content} pagination={practices.pagination}/>
+                <PracticesList items={practices.items} pagination={practices.pagination}/>
             </Flex>
         </Container>
     );

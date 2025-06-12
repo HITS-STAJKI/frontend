@@ -1,40 +1,98 @@
-import { Button, TextInput, Textarea } from "@mantine/core"
+import { Button, FileInput, Group, TextInput, Textarea, Image } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { CompanyUpdate } from "shared/lib"
 import { CompanyPartnerDto } from "services/api/api-client.types"
 import { useParams } from "react-router-dom"
 import { useGetPartnerInfoQuery, useUpdatePartnerInfoMutation } from "services/api/api-client/CompanyPartnersQuery"
+import { useDownloadFileQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery"
+import { useEffect, useState } from "react"
 
 type EditPartnerFormProps = {
-    onSuccess: () => void
-    partner: CompanyPartnerDto
-}
+    onSuccess: () => void;
+    partner: CompanyPartnerDto;
+};
 
 export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) => {
-    const { id } = useParams()
+    const { id } = useParams();
     const form = useForm<CompanyUpdate>({
         initialValues: {
             name: partner.name,
-            description: partner.description,
-        }
-    })
-    const { mutateAsync } = useUpdatePartnerInfoMutation(id!)
-    const { refetch } = useGetPartnerInfoQuery(id!)
-    const handleEdit = (vals: CompanyUpdate) => {
-        mutateAsync(vals)
-            .then(() => {
-                refetch()
-                onSuccess()
-            })
+            description: partner.description
+        },
+        validate: {
+            name: (value) => (value.trim().length === 0 ? 'Название обязательно' : null),
+        },
+    });
 
-    }
+    const { mutateAsync: updatePartner } = useUpdatePartnerInfoMutation(id!);
+    const { refetch } = useGetPartnerInfoQuery(id!);
+
+    const { mutateAsync: uploadFile, isPending: isUploading } = useUploadFileMutation();
+    const { data: fileData } = useDownloadFileQuery(partner.fileId ?? '', {
+        enabled: Boolean(partner.fileId),
+    });
+
+    const [fileId, setFileId] = useState<string | undefined>(partner.fileId);
+    const [imageSrc, setImageSrc] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (fileData?.data) 
+        {
+            const reader = new FileReader();
+            reader.onloadend = () => setImageSrc(reader.result as string);
+            reader.readAsDataURL(fileData.data);
+        }
+    }, [fileData]);
+
+    const handleFileChange = async (file: File | null) => {
+        if (!file) return;
+
+        try 
+        {
+            const uploadedFile = await uploadFile({
+                file: {
+                data: file,
+                fileName: file.name,
+                },
+            });
+            if (uploadedFile?.id) 
+            {
+                setFileId(uploadedFile.id);
+                const reader = new FileReader();
+                reader.onloadend = () => setImageSrc(reader.result as string);
+                reader.readAsDataURL(file);
+            }
+        } 
+        catch (e) 
+        {
+            console.error("Ошибка загрузки файла", e);
+        }
+    };
+
+    const handleRemoveIcon = () => {
+        setFileId(undefined);
+        setImageSrc(null);
+    };
+
+    const handleEdit = async (vals: CompanyUpdate) => {
+        const payload: CompanyUpdate & { fileId?: string } = {
+            ...vals,
+            ...(fileId ? { fileId } : {}),
+        };
+
+        console.log("Отправка на сервер:", payload);
+
+        await updatePartner(payload);
+        await refetch();
+        onSuccess();
+    };
 
     return (
         <form onSubmit={form.onSubmit(handleEdit)}>
             <TextInput
                 required
                 label="Название компании"
-                {...form.getInputProps('name')}
+                {...form.getInputProps("name")}
                 error={form.errors.name}
                 mb="xs"
             />
@@ -44,11 +102,35 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                 minRows={2}
                 maxRows={16}
                 label="Описание компании"
-                {...form.getInputProps('description')}
+                {...form.getInputProps("description")}
                 error={form.errors.description}
                 mb="xs"
             />
-            <Button type='submit'>{'Сохранить'}</Button>
+
+            <FileInput
+                label="Иконка компании"
+                accept="image/*"
+                mb="xs"
+                onChange={handleFileChange}
+                disabled={isUploading}
+            />
+
+            {imageSrc && (
+                <Group mb="xs">
+                    <Image
+                        src={imageSrc}
+                        alt="Иконка компании"
+                        style={{ maxWidth: 100, maxHeight: 100, objectFit: "contain" }}
+                    />
+                    <Button variant="light" color="red" onClick={handleRemoveIcon}>
+                        Удалить
+                    </Button>
+                </Group>
+            )}
+
+            <Button type="submit" loading={isUploading} disabled={!form.isValid()}>
+                Сохранить
+            </Button>
         </form>
-    )
-}
+    );
+};

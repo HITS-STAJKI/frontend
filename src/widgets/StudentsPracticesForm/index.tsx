@@ -15,7 +15,7 @@ type SortKey =
     | "isArchived"
     | "isApproved";
 
-export function PracticesList({ content, pagination }: PracticeRequestPage) {
+export function PracticesList({ items, pagination }: PracticeRequestPage) {
     const [sort, setSort] = useState<[SortKey, SortDirection] | null>(null);
 
     //TODO: Функция сортировки
@@ -92,8 +92,8 @@ export function PracticesList({ content, pagination }: PracticeRequestPage) {
                     </Grid>
                 </div>
             </Card>
-            {content.map((practice, localIndex) => {
-                const globalIndex = (pagination.currentPage - 1) * pagination.size + localIndex;
+            {items.map((practice, localIndex) => {
+                const globalIndex = (pagination.currentPage != null && pagination.size != null) ? (pagination.currentPage - 1) * pagination.size + localIndex : -1;
                 return (
                     <FullPracticeCard
                         key={practice.id}

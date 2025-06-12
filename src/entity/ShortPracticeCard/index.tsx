@@ -77,7 +77,7 @@ export function ShortPracticeCard({ id, company, createdAt, isPaid, isArchived, 
                             //TODO: Сделать отображжение кнопок от роли
                         }
                         <ReportShortOpen id={id} />
-                    </Grid.Col>
+                    </Grid.Col> 
                 </Grid>
             </div>
         </Card>
