@@ -2,9 +2,9 @@ import { Button, FileInput, Group, TextInput, Textarea, Image } from "@mantine/c
 import { useForm } from "@mantine/form"
 import { CompanyUpdate } from "shared/lib"
 import { CompanyPartnerDto } from "services/api/api-client.types"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useGetPartnerInfoQuery, useUpdatePartnerInfoMutation } from "services/api/api-client/CompanyPartnersQuery"
-import { useDownloadFileQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery"
+import { useDeleteFileMutation, useDownloadFileQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery"
 import { useEffect, useState } from "react"
 
 type EditPartnerFormProps = {
@@ -14,10 +14,16 @@ type EditPartnerFormProps = {
 
 export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) => {
     const { id } = useParams();
+
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
+
+    const [isFileUploading, setIsFileUploading] = useState(false);
+    
     const form = useForm<CompanyUpdate>({
         initialValues: {
             name: partner.name,
-            description: partner.description
+            description: partner.description,
         },
         validate: {
             name: (value) => (value.trim().length === 0 ? 'Название обязательно' : null),
@@ -25,7 +31,6 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     });
 
     const { mutateAsync: updatePartner } = useUpdatePartnerInfoMutation(id!);
-    const { refetch } = useGetPartnerInfoQuery(id!);
 
     const { mutateAsync: uploadFile, isPending: isUploading } = useUploadFileMutation();
     const { data: fileData } = useDownloadFileQuery(partner.fileId ?? '', {
@@ -35,9 +40,9 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const [fileId, setFileId] = useState<string | undefined>(partner.fileId);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
+
     useEffect(() => {
-        if (fileData?.data) 
-        {
+        if (fileData?.data) {
             const reader = new FileReader();
             reader.onloadend = () => setImageSrc(reader.result as string);
             reader.readAsDataURL(fileData.data);
@@ -47,27 +52,34 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const handleFileChange = async (file: File | null) => {
         if (!file) return;
 
-        try 
-        {
+        setIsFileUploading(true);
+
+        try {
             const uploadedFile = await uploadFile({
                 file: {
-                data: file,
-                fileName: file.name,
+                    data: file,
+                    fileName: file.name,
                 },
             });
-            if (uploadedFile?.id) 
-            {
+
+            if (uploadedFile?.id) {
                 setFileId(uploadedFile.id);
+
                 const reader = new FileReader();
-                reader.onloadend = () => setImageSrc(reader.result as string);
+                reader.onloadend = () => {
+                    setImageSrc(reader.result as string);
+                    setIsFileUploading(false);
+                };
                 reader.readAsDataURL(file);
+            } else {
+                setIsFileUploading(false);
             }
-        } 
-        catch (e) 
-        {
+        } catch (e) {
             console.error("Ошибка загрузки файла", e);
+            setIsFileUploading(false);
         }
     };
+
 
     const handleRemoveIcon = () => {
         setFileId(undefined);
@@ -80,11 +92,15 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
             ...(fileId ? { fileId } : {}),
         };
 
-        console.log("Отправка на сервер:", payload);
-
         await updatePartner(payload);
-        await refetch();
         onSuccess();
+
+        navigate({
+            pathname: window.location.pathname,
+            search: searchParams.toString(),
+        });
+
+        window.location.reload();
     };
 
     return (
@@ -96,6 +112,7 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                 error={form.errors.name}
                 mb="xs"
             />
+
             <Textarea
                 required
                 autosize
@@ -117,18 +134,22 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
 
             {imageSrc && (
                 <Group mb="xs">
-                    <Image
-                        src={imageSrc}
-                        alt="Иконка компании"
-                        style={{ maxWidth: 100, maxHeight: 100, objectFit: "contain" }}
-                    />
-                    <Button variant="light" color="red" onClick={handleRemoveIcon}>
+                    <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }}/>
+                    <Button
+                        variant="light"
+                        color="red"
+                        onClick={handleRemoveIcon}
+                    >
                         Удалить
                     </Button>
                 </Group>
             )}
 
-            <Button type="submit" loading={isUploading} disabled={!form.isValid()}>
+            <Button
+                type="submit"
+                loading={isUploading || isFileUploading}
+                disabled={!form.isValid() || isUploading || isFileUploading}
+            >
                 Сохранить
             </Button>
         </form>

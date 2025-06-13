@@ -1,11 +1,20 @@
 import { Pagination as MPagination, Flex } from "@mantine/core";
-import { useState } from 'react';
+import { useSearchParams } from "react-router-dom";
 import { PagedListDtoShortCompanyPartnerDto } from "services/api/api-client.types";
 
 
 export const Pagination = ({ pagination }: Pick<PagedListDtoShortCompanyPartnerDto, 'pagination'>) => {
-    const [currentPage, setCurrentPage] = useState(pagination);
-    const totalPages = pagination?.totalPages;
+    const totalPages = pagination?.totalPages ?? 1;
+    const currentPage = pagination?.currentPage ?? 0;
+
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const handlePageChange = (page: number) => {
+        const newParams = new URLSearchParams(searchParams.toString());
+        newParams.set('page', (page - 1).toString());
+        setSearchParams(newParams);
+    };
+
     return (
         <Flex
             justify="center"
@@ -18,18 +27,13 @@ export const Pagination = ({ pagination }: Pick<PagedListDtoShortCompanyPartnerD
                 backgroundColor: 'white',
                 padding: '10px 0',
                 boxShadow: '0 -2px 8px rgba(0,0,0,0.05)',
-                zIndex: 1000,
+                zIndex: 100,
             }}
         >
             <MPagination
-                total={totalPages!}
-                value={currentPage?.currentPage! + 1}
-                onChange={(page) => setCurrentPage({
-                    size: currentPage?.size,
-                    totalPages: currentPage?.totalPages,
-                    totalElements: currentPage?.totalElements,
-                    currentPage: page - 1
-                })}
+                total={totalPages}
+                value={currentPage + 1}
+                onChange={handlePageChange}
                 mt="md"
             />
         </Flex>

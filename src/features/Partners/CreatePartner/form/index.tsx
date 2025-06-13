@@ -1,6 +1,7 @@
 import { Button, FileInput, Group, TextInput, Image } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreateCompanyPartnerDto } from "services/api/api-client.types"
 import { useCreatePartnerMutation, useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery"
 import { useUploadFileMutation } from "services/api/api-client/FilesQuery";
@@ -13,6 +14,9 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
     const { mutateAsync: createPartner } = useCreatePartnerMutation();
     const { refetch } = useGetPartnersQuery();
     const { mutateAsync: uploadFile, isPending: isUploading } = useUploadFileMutation();
+
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
 
     const form = useForm<CreateCompanyPartnerDto>({
         initialValues: {
@@ -58,6 +62,11 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
     const onSubmit = async (vals: CreateCompanyPartnerDto) => {
         await createPartner({ ...vals, fileId });
         await refetch();
+
+        const newParams = new URLSearchParams(searchParams.toString());
+        newParams.set("page", "0");
+
+        navigate({ search: newParams.toString() });
         onSuccess();
     };
 
@@ -87,7 +96,7 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
 
             {imageSrc && (
                 <Group mb="xs">
-                    <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, objectFit: 'contain' }} />
+                    <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }}/>
                     <Button variant="light" color="red" onClick={handleRemoveIcon}>
                         Удалить
                     </Button>
