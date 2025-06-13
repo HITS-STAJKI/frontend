@@ -26,12 +26,14 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
             description: partner.description,
         },
         validate: {
-            name: (value) => (value.trim().length === 0 ? 'Название обязательно' : null),
-        },
+        name: (value) =>
+            value.trim().length === 0 ? 'Название обязательно' : null,
+        description: (value) =>
+            value.trim().length === 0 ? 'Описание обязательно' : null
+    },
     });
 
     const { mutateAsync: updatePartner } = useUpdatePartnerInfoMutation(id!);
-
     const { mutateAsync: uploadFile, isPending: isUploading } = useUploadFileMutation();
     const { data: fileData } = useDownloadFileQuery(partner.fileId ?? '', {
         enabled: Boolean(partner.fileId),
@@ -40,6 +42,7 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const [fileId, setFileId] = useState<string | undefined>(partner.fileId);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
+    const { mutateAsync: deleteFile, isPending: isDeleting } = useDeleteFileMutation(fileId!);
 
     useEffect(() => {
         if (fileData?.data) {
@@ -52,9 +55,26 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const handleFileChange = async (file: File | null) => {
         if (!file) return;
 
+        const MAX_SIZE_MB = 25;
+        const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+
+        if (file.size > MAX_SIZE_BYTES) 
+        {
+            alert(`Файл превышает максимально допустимый размер ${MAX_SIZE_MB}MB.`);
+            return;
+        }
+
         setIsFileUploading(true);
 
-        try {
+        try 
+        {
+            if (fileId) 
+            {
+                await deleteFile();
+                setFileId(undefined);
+                setImageSrc(null);
+            }
+
             const uploadedFile = await uploadFile({
                 file: {
                     data: file,
@@ -62,7 +82,8 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                 },
             });
 
-            if (uploadedFile?.id) {
+            if (uploadedFile?.id) 
+            {
                 setFileId(uploadedFile.id);
 
                 const reader = new FileReader();
@@ -71,17 +92,32 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                     setIsFileUploading(false);
                 };
                 reader.readAsDataURL(file);
-            } else {
+            }
+            else 
+            {
                 setIsFileUploading(false);
             }
-        } catch (e) {
+        } 
+        catch (e) 
+        {
             console.error("Ошибка загрузки файла", e);
             setIsFileUploading(false);
         }
     };
 
 
-    const handleRemoveIcon = () => {
+    const handleRemoveIcon = async () => {
+        if (!fileId) return;
+
+        try 
+        {
+            await deleteFile();
+        } 
+        catch (e) 
+        {
+            console.error("Ошибка при удалении файла", e);
+        }
+
         setFileId(undefined);
         setImageSrc(null);
     };
@@ -125,20 +161,32 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
             />
 
             <FileInput
-                label="Иконка компании"
+                label="Иконка компании (до 25MB)"
                 accept="image/*"
                 mb="xs"
                 onChange={handleFileChange}
-                disabled={isUploading}
+                disabled={isUploading || isFileUploading || isDeleting}
             />
 
             {imageSrc && (
                 <Group mb="xs">
-                    <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }}/>
+                    <Image
+                        src={imageSrc}
+                        alt="Иконка компании"
+                        style={{
+                            maxWidth: 100,
+                            maxHeight: 100,
+                            width: 'auto',
+                            height: 'auto',
+                            display: 'block'
+                        }}
+                    />
                     <Button
                         variant="light"
                         color="red"
                         onClick={handleRemoveIcon}
+                        loading={isDeleting}
+                        disabled={isDeleting}
                     >
                         Удалить
                     </Button>
@@ -147,8 +195,8 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
 
             <Button
                 type="submit"
-                loading={isUploading || isFileUploading}
-                disabled={!form.isValid() || isUploading || isFileUploading}
+                loading={isUploading || isFileUploading || isDeleting}
+                disabled={!form.isValid() || isUploading || isFileUploading || isDeleting}
             >
                 Сохранить
             </Button>

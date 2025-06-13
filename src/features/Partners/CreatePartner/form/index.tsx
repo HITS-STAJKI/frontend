@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { CreateCompanyPartnerDto } from "services/api/api-client.types"
 import { useCreatePartnerMutation, useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery"
-import { useUploadFileMutation } from "services/api/api-client/FilesQuery";
+import { useDeleteFileMutationWithParameters, useUploadFileMutation } from "services/api/api-client/FilesQuery";
 
 type CreatePartnerFormProps = {
     onSuccess: () => void;
@@ -27,20 +27,50 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
 
     const [fileId, setFileId] = useState<string | undefined>();
     const [imageSrc, setImageSrc] = useState<string | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    const deleteFileFromServer = async (id: string) => {
+        try 
+        {
+            setIsDeleting(true);
+            const { mutateAsync: deleteFile } = useDeleteFileMutationWithParameters();
+            await deleteFile({ id });
+        } 
+        catch (e) 
+        {
+            console.error("Ошибка при удалении файла:", e);
+        } 
+        finally 
+        {
+            setIsDeleting(false);
+        }
+    };
 
     const handleFileChange = async (file: File | null) => {
         if (!file) return;
 
-        const uploadParams = {
-            file: {
-                data: file,
-                fileName: file.name,
-            },
-        };
+        if (file.size > 25 * 1024 * 1024) 
+        {
+            alert("Файл слишком большой. Максимальный размер — 25 МБ.");
+            return;
+        }
 
-        try {
-            const uploadedFile = await uploadFile(uploadParams);
-            if (uploadedFile?.id) {
+        if (fileId) 
+        {
+            await deleteFileFromServer(fileId);
+        }
+
+        try 
+        {
+            const uploadedFile = await uploadFile({
+                file: {
+                    data: file,
+                    fileName: file.name,
+                },
+            });
+
+            if (uploadedFile?.id) 
+            {
                 setFileId(uploadedFile.id);
 
                 const reader = new FileReader();
@@ -49,12 +79,18 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
                 };
                 reader.readAsDataURL(file);
             }
-        } catch (e) {
+        } 
+        catch (e) 
+        {
             console.error("Ошибка загрузки файла", e);
         }
     };
 
-    const handleRemoveIcon = () => {
+    const handleRemoveIcon = async () => {
+        if (fileId) 
+        {
+            await deleteFileFromServer(fileId);
+        }
         setFileId(undefined);
         setImageSrc(null);
     };
@@ -69,6 +105,9 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
         navigate({ search: newParams.toString() });
         onSuccess();
     };
+
+    const isProcessing = isUploading || isDeleting;
+    const isSubmitDisabled = isProcessing || !form.values.name.trim() || !form.values.description.trim();
 
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
@@ -91,19 +130,23 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
                 accept="image/*"
                 mb="xs"
                 onChange={handleFileChange}
-                disabled={isUploading}
+                disabled={isProcessing}
             />
 
             {imageSrc && (
                 <Group mb="xs">
-                    <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }}/>
-                    <Button variant="light" color="red" onClick={handleRemoveIcon}>
+                    <Image
+                        src={imageSrc}
+                        alt="Иконка компании"
+                        style={{ maxWidth: 100, maxHeight: 100, width: "auto", height: "auto", display: "block" }}
+                    />
+                    <Button variant="light" color="red" onClick={handleRemoveIcon} disabled={isProcessing}>
                         Удалить
                     </Button>
                 </Group>
             )}
 
-            <Button type="submit" loading={isUploading} disabled={!form.values.name.trim()}>
+            <Button type="submit" loading={isProcessing} disabled={isSubmitDisabled}>
                 Сохранить
             </Button>
         </form>
