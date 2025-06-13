@@ -17,6 +17,8 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
 
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+
+    const [isFileUploading, setIsFileUploading] = useState(false);
     
     const form = useForm<CompanyUpdate>({
         initialValues: {
@@ -29,7 +31,6 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     });
 
     const { mutateAsync: updatePartner } = useUpdatePartnerInfoMutation(id!);
-    const { refetch } = useGetPartnerInfoQuery(id!);
 
     const { mutateAsync: uploadFile, isPending: isUploading } = useUploadFileMutation();
     const { data: fileData } = useDownloadFileQuery(partner.fileId ?? '', {
@@ -39,7 +40,6 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const [fileId, setFileId] = useState<string | undefined>(partner.fileId);
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
-    const { mutateAsync: deleteFile, isPending: isDeleting } = useDeleteFileMutation(fileId ?? '');
 
     useEffect(() => {
         if (fileData?.data) {
@@ -52,6 +52,8 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
     const handleFileChange = async (file: File | null) => {
         if (!file) return;
 
+        setIsFileUploading(true);
+
         try {
             const uploadedFile = await uploadFile({
                 file: {
@@ -62,25 +64,26 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
 
             if (uploadedFile?.id) {
                 setFileId(uploadedFile.id);
+
                 const reader = new FileReader();
-                reader.onloadend = () => setImageSrc(reader.result as string);
+                reader.onloadend = () => {
+                    setImageSrc(reader.result as string);
+                    setIsFileUploading(false);
+                };
                 reader.readAsDataURL(file);
+            } else {
+                setIsFileUploading(false);
             }
         } catch (e) {
             console.error("Ошибка загрузки файла", e);
+            setIsFileUploading(false);
         }
     };
 
-    const handleRemoveIcon = async () => {
-        if (!fileId) return;
 
-        try {
-            await deleteFile();
-            setFileId(undefined);
-            setImageSrc(null);
-        } catch (e) {
-            console.error("Ошибка удаления файла", e);
-        }
+    const handleRemoveIcon = () => {
+        setFileId(undefined);
+        setImageSrc(null);
     };
 
     const handleEdit = async (vals: CompanyUpdate) => {
@@ -136,8 +139,6 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                         variant="light"
                         color="red"
                         onClick={handleRemoveIcon}
-                        loading={isDeleting}
-                        disabled={isDeleting}
                     >
                         Удалить
                     </Button>
@@ -146,8 +147,8 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
 
             <Button
                 type="submit"
-                loading={isUploading || isDeleting}
-                disabled={!form.isValid()}
+                loading={isUploading || isFileUploading}
+                disabled={!form.isValid() || isUploading || isFileUploading}
             >
                 Сохранить
             </Button>
