@@ -3,7 +3,6 @@ import { Container } from '@mantine/core';
 import { Pagination } from "shared/ui";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 
 export const PartnerList = () => {
     const [searchParams] = useSearchParams();

@@ -28,7 +28,7 @@ type FilterItem = {
     id: string;
     label: string;
     element: (props: {
-        value: any;
+        initialValue: any;
         onChangeValue: (val: any) => void;
     }) => React.ReactNode;
 };
@@ -210,7 +210,7 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
                                                     [f.id]: val,
                                                 }));
                                             },
-                                            value: filterValues[f.id] ?? null,
+                                            initialValue: filterValues[f.id] ?? null,
                                         })}
                                     </Box>
                                 </Flex>
@@ -392,7 +392,7 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
                                                         [f.id]: val,
                                                     }));
                                                 },
-                                                value: filterValues[f.id] ?? null,
+                                                initialValue: filterValues[f.id] ?? null,
                                             })}
                                         </Box>
                                     </Flex>

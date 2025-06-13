@@ -199,7 +199,7 @@ export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (
     );
 }
 
-export function FilterCompanyName({ id, onChangeValue, value: initialValue = "" }: { id: string; value?: string; onChangeValue: (val: string) => void; }) {
+export function FilterCompanyName({ id, onChangeValue, initialValue = "" }: { id: string; initialValue?: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState(initialValue);
 
     useEffect(() => {
@@ -223,20 +223,21 @@ export function FilterCompanyName({ id, onChangeValue, value: initialValue = "" 
 }
 
 
-export function FilterCompanySelect({ id, onChangeValue, value: initialValue = null }: { id: string; value?: string | null; onChangeValue: (val: string | null) => void; }) {
-    const [value, setValue] = useState<string | null>(initialValue);
+export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: string; initialValue: string | null; onChangeValue: (val: string | null) => void; }) {
     const { data, isLoading } = useGetPartnersQuery();
-
-    useEffect(() => {
-        setValue(initialValue ?? null);
-    }, [initialValue]);
 
     const options = isLoading || !Array.isArray(data?.items)
         ? []
         : data.items.map((partner) => ({
-              value: partner.id,
-              label: partner.name,
-          }));
+            value: partner.id,
+            label: partner.name,
+        }));
+
+    const [value, setValue] = useState<string | null>(initialValue);
+
+    useEffect(() => {
+        setValue(initialValue ?? null);
+    }, [initialValue]);
 
     const handleChange = (val: string | null) => {
         setValue(val);
@@ -256,6 +257,7 @@ export function FilterCompanySelect({ id, onChangeValue, value: initialValue = n
         />
     );
 }
+
 
 export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) 
 {
