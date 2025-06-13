@@ -290,7 +290,6 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
         setOpened(false);
         setTimeout(() => setActiveFilters([]), 300);
         setFilterValues({});
-        navigate(".");
     };
 
     const handleChangePage = (value: string | null) => {
@@ -309,6 +308,7 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
         });
 
         params.append("size", selectedPage.toString());
+        params.append("page", "0");
         navigate({ search: params.toString() });
     };
 
@@ -316,13 +316,11 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Flex align="center" justify="space-between">
                 <Flex align="center" gap="md" style={{ flex: 1, minWidth: 0 }}>
-                    <Box style={{ flex: '0 0 33.33%', minWidth: 0 }}>
+                    <Box style={{ flex: '0 0 50%', minWidth: 0 }}>
                         <Select
                             placeholder="Выберите фильтр"
                             value={selectedFilterId}
-                            onChange={val => {
-                                setSelectedFilterId(val);
-                            }}
+                            onChange={val => setSelectedFilterId(val)}
                             data={availableFilters.map(f => ({ value: f.id, label: f.label }))}
                             styles={{ input: { minWidth: 0 } }}
                         />
@@ -348,57 +346,56 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
                     <Button color="red" onClick={handleClear}>
                         Очистить
                     </Button>
-                    {activeFilters.length > 0 && (
-                        <Button
-                            variant="subtle"
-                            onClick={() => setOpened(o => !o)}
-                            px={8}
-                            style={{ height: 36 }}
-                        >
-                            {opened ?
-                                <IconChevronUp size={18} /> :
-                                <IconChevronDown size={18} />
-                            }
-                        </Button>
-                    )}
+                    <Box style={{ width: 36 }}>
+                        {activeFilters.length > 0 ? (
+                            <Button
+                                variant="subtle"
+                                onClick={() => setOpened(o => !o)}
+                                px={8}
+                                style={{ height: 36 }}
+                            >
+                                {opened ? <IconChevronUp size={18} /> : <IconChevronDown size={18} />}
+                            </Button>
+                        ) : (
+                            <div style={{ width: 36, height: 36, visibility: 'hidden' }} />
+                        )}
+                    </Box>
                 </Flex>
             </Flex>
 
             <Collapse in={opened}>
                 <Box pt="sm">
                     <Flex direction="column" gap="sm">
-                        {activeFilters.map(f => {
-                            return (
-                                <Flex key={f.id} align="center" gap="sm">
-                                    <Button
-                                        variant="subtle"
-                                        color="red"
-                                        size="xs"
-                                        onClick={() => handleRemoveFilter(f.id)}
-                                        style={{ alignSelf: "center" }}
-                                    >
-                                        <IconX />
-                                    </Button>
+                        {activeFilters.map(f => (
+                            <Flex key={f.id} align="center" gap="sm">
+                                <Button
+                                    variant="subtle"
+                                    color="red"
+                                    size="xs"
+                                    onClick={() => handleRemoveFilter(f.id)}
+                                    style={{ alignSelf: "center" }}
+                                >
+                                    <IconX />
+                                </Button>
 
-                                    <Flex align="center" gap="sm" style={{ flex: 1 }}>
-                                        <Box style={{ flex: 1, textAlign: "left", paddingRight: 4 }}>
-                                            {f.label}
-                                        </Box>
-                                        <Box style={{ flex: 1 }}>
-                                            {f.element({
-                                                onChangeValue: (val: any) => {
-                                                    setFilterValues(prev => ({
-                                                        ...prev,
-                                                        [f.id]: val,
-                                                    }));
-                                                },
-                                                initialValue: filterValues[f.id] ?? null,
-                                            })}
-                                        </Box>
-                                    </Flex>
+                                <Flex align="center" gap="sm" style={{ flex: 1 }}>
+                                    <Box style={{ flex: 1, textAlign: "left", paddingRight: 4 }}>
+                                        {f.label}
+                                    </Box>
+                                    <Box style={{ flex: 1 }}>
+                                        {f.element({
+                                            onChangeValue: (val: any) => {
+                                                setFilterValues(prev => ({
+                                                    ...prev,
+                                                    [f.id]: val,
+                                                }));
+                                            },
+                                            initialValue: filterValues[f.id] ?? null,
+                                        })}
+                                    </Box>
                                 </Flex>
-                            );
-                        })}
+                            </Flex>
+                        ))}
                     </Flex>
                 </Box>
             </Collapse>

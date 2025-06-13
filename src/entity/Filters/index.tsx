@@ -325,7 +325,7 @@ export function FilterTrueFalseNull({ id, onChangeValue }: { id: string; onChang
 }
 
 export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: { id: string; onChangeValue: (val: string | null) => void; initialValue?: string | null; }) {
-    const [value, setValue] = useState<string | null>(initialValue);
+    const [value, setValue] = useState<string | null>(initialValue ?? "false");
     const [data, setData] = useState([{ value: "true", label: "Да" }, { value: "false", label: "Нет" }]);
 
     useEffect(() => {

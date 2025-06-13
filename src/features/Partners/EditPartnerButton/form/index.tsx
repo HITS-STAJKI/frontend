@@ -2,7 +2,7 @@ import { Button, FileInput, Group, TextInput, Textarea, Image } from "@mantine/c
 import { useForm } from "@mantine/form"
 import { CompanyUpdate } from "shared/lib"
 import { CompanyPartnerDto } from "services/api/api-client.types"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useGetPartnerInfoQuery, useUpdatePartnerInfoMutation } from "services/api/api-client/CompanyPartnersQuery"
 import { useDeleteFileMutation, useDownloadFileQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery"
 import { useEffect, useState } from "react"
@@ -14,6 +14,9 @@ type EditPartnerFormProps = {
 
 export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) => {
     const { id } = useParams();
+
+    const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     
     const form = useForm<CompanyUpdate>({
         initialValues: {
@@ -86,11 +89,15 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
             ...(fileId ? { fileId } : {}),
         };
 
-        console.log("Отправка на сервер:", payload);
-
         await updatePartner(payload);
-        await refetch();
         onSuccess();
+
+        navigate({
+            pathname: window.location.pathname,
+            search: searchParams.toString(),
+        });
+
+        window.location.reload();
     };
 
     return (
