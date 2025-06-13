@@ -124,11 +124,7 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
 
             {imageSrc && (
                 <Group mb="xs">
-                    <Image
-                        src={imageSrc}
-                        alt="Иконка компании"
-                        style={{ maxWidth: 100, maxHeight: 100, objectFit: "contain" }}
-                    />
+                    <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }}/>
                     <Button
                         variant="light"
                         color="red"

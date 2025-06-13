@@ -31,11 +31,7 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
             <Flex justify="space-between" align="center" mb="md">
                 <Group align="center">
                     {imageSrc && (
-                        <Image
-                            src={imageSrc}
-                            alt="Иконка компании"
-                            style={{ maxWidth: 100, maxHeight: 100, objectFit: 'contain' }}
-                        />
+                        <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }}/>
                     )}
                     <Title order={1}>{partner.name}</Title>
                 </Group>

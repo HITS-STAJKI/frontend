@@ -1,5 +1,5 @@
 import { Partner } from "entity"
-import { Container } from '@mantine/core';
+import { Center, Container, Loader } from '@mantine/core';
 import { Pagination } from "shared/ui";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { useSearchParams } from "react-router-dom";
@@ -12,10 +12,17 @@ export const PartnerList = () => {
     const isNewRaw = searchParams.get("isNew");
     const isNew = isNewRaw === "true" ? true : isNewRaw === "false" ? false : undefined;
     const size = Number(searchParams.get("size") ?? "10");
+    const page = Number(searchParams.get("page") ?? "0");
 
-    const { data, isLoading } = useGetPartnersQuery(id, name, isNew, 0, size);
+    const { data, isLoading } = useGetPartnersQuery(id, name, isNew, page, size);
 
-    if (isLoading) return "Загрузка";
+    if (isLoading) {
+        return (
+            <Center style={{ height: '50vh' }}>
+                <Loader size="lg" />
+            </Center>
+        );
+    }
 
     return (
         <div style={{ paddingBottom: '70px' }}>
