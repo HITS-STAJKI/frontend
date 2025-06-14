@@ -36,7 +36,7 @@ export const GET_INTERVIEWS: InterviewPage = {
 
 const INTERVIEW_COMMENT1: InterviewsComment = {
     id: "interview_comm_id_1",
-    content: "Комментарий 1",
+    content: "Комментарий 1 ssssssssssssssssssssssssss ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss ssssssssss ssssssssssssss ss sssssssssssssssss",
     createdAt: "2025-03-27",
     modifiedAt: "2025-03-27",
     author: GET_USER
@@ -45,6 +45,22 @@ const INTERVIEW_COMMENT2: InterviewsComment = {
     id: "interview_comm_id_2",
     content: "Комментарий 2",
     createdAt: "2025-03-27",
+    modifiedAt: "2025-03-27",
+    author: GET_USER
+}
+
+const INTERVIEW_COMMENT2: InterviewsComment = {
+    id: "interview_comm_id_2",
+    content: "Комментарий 2",
+    createdAt: "2025-03-26",
+    modifiedAt: "2025-03-27",
+    author: GET_USER
+}
+
+const INTERVIEW_COMMENT3: InterviewsComment = {
+    id: "interview_comm_id_3",
+    content: "Комментарий 3",
+    createdAt: "2025-03-28",
     modifiedAt: "2025-03-27",
     author: GET_USER
 }

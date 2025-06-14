@@ -1,9 +1,9 @@
-import { Company }  from "shared/lib"
-import { Card, Flex } from '@mantine/core';
+import { Card } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import { ShortCompanyPartnerDto } from "services/api/api-client.types";
 
 type PartnerProps = {
-    partner: Company; 
+    partner: ShortCompanyPartnerDto;
 }
 
 export const Partner = ({ partner }: PartnerProps) => {
@@ -11,7 +11,7 @@ export const Partner = ({ partner }: PartnerProps) => {
     const navigate = useNavigate();
 
     const handleCardClick = () => {
-        navigate(`/partner/${partner.id}`); 
+        navigate(`/partner/${partner.id}`);
     };
 
     return (

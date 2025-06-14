@@ -1,11 +1,11 @@
 import { Button } from '@mantine/core';
-import { Group } from 'shared/lib';
 import { Modal } from 'shared/ui';
 import { AddStudentInGroupForm } from './form';
 import { StudentCard } from 'entity/StudentCard';
+import { GroupDto } from "services/api/api-client.types";
 
 type ViewStudentsButtonProps = {
-    group: Group;
+    group: GroupDto;
 }
 
 export const EditListOfStudentsButton = ({ group }: ViewStudentsButtonProps) => {
@@ -20,7 +20,7 @@ export const EditListOfStudentsButton = ({ group }: ViewStudentsButtonProps) => 
             content={({ close }) => (
                 <div>
                     <div>
-                        {group.students.map(student => (
+                        {group.students!.map(student => (
                             <StudentCard key={student.id} student={student} />
                         ))}
                     </div>

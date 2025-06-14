@@ -40,7 +40,7 @@ export const GET_PRACTICES: PracticeRequestPage = {
     content: [PRACTICE1, PRACTICE2, PRACTICE3],
     pagination: {
         totalPages: 3,
-        currentPage: 0,
+        currentPage: 1,
         size: 10
     }
 };

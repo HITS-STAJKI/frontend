@@ -1,8 +1,8 @@
 import { Button, Flex, TextInput, Menu, MultiSelect, Select } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { UserList } from "shared/lib/api/entities/User";
-import { Company, Group } from "shared/lib";
 import { UserCard } from "entity/UserCard";
+import { CompanyPartnerDto, GroupDto } from "services/api/api-client.types";
 
 
 function RoleDropdown() {
@@ -11,7 +11,7 @@ function RoleDropdown() {
             <Menu.Target>
                 <Button>Создать пользователя</Button>
             </Menu.Target>
-            <Menu.Dropdown style={{ display: "flex", flexDirection: "row", alignItems: "center", padding: 0}}>
+            <Menu.Dropdown style={{ display: "flex", flexDirection: "row", alignItems: "center", padding: 0 }}>
                 <Menu.Item onClick={() => console.log("Студент")}>Студент</Menu.Item>
                 <Menu.Item onClick={() => console.log("Куратор")}>Куратор</Menu.Item>
                 <Menu.Item onClick={() => console.log("Деканат")}>Деканат</Menu.Item>
@@ -20,7 +20,7 @@ function RoleDropdown() {
     );
 }
 
-export function SearchRolesForm({ groupContent, companyContent }: { groupContent: Group[], companyContent: Pick<Company, 'id' | 'name'>[] }) {
+export function SearchRolesForm({ groupContent, companyContent }: { groupContent: GroupDto[], companyContent: Pick<CompanyPartnerDto, 'id' | 'name'>[] }) {
     const form = useForm({
         initialValues: {
             name: '',
@@ -49,25 +49,30 @@ export function SearchRolesForm({ groupContent, companyContent }: { groupContent
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
             <div style={{ alignSelf: "flex-end" }}>
-                <RoleDropdown/>
+                <RoleDropdown />
             </div>
 
             <form onSubmit={form.onSubmit(handleSearch)}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
                     <TextInput label="Поиск по имени" placeholder="ФИО" {...form.getInputProps('name')} />
-                    <MultiSelect data={roles} {...form.getInputProps('roles')} label="Выберите роль" placeholder="Выберите роли" clearable/>
+                    <MultiSelect data={roles} {...form.getInputProps('roles')} label="Выберите роль" placeholder="Выберите роли" clearable />
                     <Button type="submit">Поиск</Button>
                 </div>
 
                 {form.values.roles.includes("student") && (
                     <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-                        <Select style={{ width: "50%" }} data={groups} {...form.getInputProps('selectedGroup')} label="Выберите группу" placeholder="Группы" clearable/>
-                        <Select style={{ width: "50%" }} data={companies} {...form.getInputProps('selectedStudentCompany')} label="Выберите компанию" placeholder="Компании" clearable/>
+                        <Select style={{ width: "50%" }} data={groups.map(el => {
+                            return {
+                                value: el.value!,
+                                label: el.label!
+                            }
+                        })} {...form.getInputProps('selectedGroup')} label="Выберите группу" placeholder="Группы" clearable />
+                        <Select style={{ width: "50%" }} data={companies} {...form.getInputProps('selectedStudentCompany')} label="Выберите компанию" placeholder="Компании" clearable />
                     </div>
                 )}
 
                 {form.values.roles.includes("curator") && (
-                    <Select style={{ marginTop: "10px", width: "50%" }} data={companies} {...form.getInputProps('selectedCuratorCompany')} label="Выберите компанию" placeholder="Компании" clearable/>
+                    <Select style={{ marginTop: "10px", width: "50%" }} data={companies} {...form.getInputProps('selectedCuratorCompany')} label="Выберите компанию" placeholder="Компании" clearable />
                 )}
             </form>
         </div>
@@ -75,11 +80,11 @@ export function SearchRolesForm({ groupContent, companyContent }: { groupContent
 }
 
 
-export function UsersList({ content }: UserList) {
+export function UsersList({ items }: UserList) {
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
-                {content.map(user => (
-                <UserCard key={user.id} id={user.id} email={user.email} fullname={user.fullname} roles={user.roles}/>
+            {items.map(user => (
+                <UserCard key={user.id} id={user.id!} email={user.email!} fullname={user.fullname!} roles={user.roles!} />
             ))}
         </Flex>
     );

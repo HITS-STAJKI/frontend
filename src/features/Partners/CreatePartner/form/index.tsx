@@ -1,32 +1,21 @@
 import { Button, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { CompanyCreate } from "shared/lib"
+import { CreateCompanyPartnerDto } from "services/api/api-client.types"
+import { useCreatePartnerMutation, useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery"
 
 type CreatePartnerFormProps = {
     onSuccess: () => void
 }
 
 export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
-    const form = useForm<CompanyCreate>({
-        initialValues: {
-            name: '',
-            description: '',
-            curator: {
-                id: '',
-                user: {
-                    id: '',
-                    email: '',
-                    firstName: '',
-                    lastName: '',
-                    roles: []
-                },
-                companyId: ''
-            }
-        }
-    })
-    const onSubmit = (vals: CompanyCreate) => {
-        console.log('Тело запроса', vals)
-        onSuccess()
+    const { mutateAsync } = useCreatePartnerMutation()
+    const { refetch } = useGetPartnersQuery()
+    const form = useForm<CreateCompanyPartnerDto>()
+    const onSubmit = (vals: CreateCompanyPartnerDto) => {
+        mutateAsync(vals).then(() => {
+            refetch()
+            onSuccess()
+        })
     }
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
@@ -42,13 +31,6 @@ export const CreatePartnerForm = ({ onSuccess }: CreatePartnerFormProps) => {
                 key={form.key('description')}
                 mb="xs"
                 {...form.getInputProps('description')}
-            />
-
-            <TextInput
-                label="Куратор"
-                key={form.key('curator')}
-                mb="xs"
-                {...form.getInputProps('curator')}
             />
             <Button type='submit'>{'Сохранить'}</Button>
         </form>

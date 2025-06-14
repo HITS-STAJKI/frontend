@@ -1,16 +1,21 @@
 import { Container, Flex } from "@mantine/core";
-import { useState } from "react";
-import { GET_COMPANIES, GET_GROUPS, GET_USER_PAGE, User } from "shared/lib";
+import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
+import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
+import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { UsersList, SearchRolesForm } from "widgets/RolesForm"
 
 export const RolesPage = () => {
-    const [users, setUsers] = useState<User[]>(GET_USER_PAGE.content);
-
+    const { data, isLoading } = useGetUserListQuery()
+    const { data: groups, isLoading: isLoadingGroups } = useGetGroupsQuery()
+    const { data: partners, isLoading: isLoadingPartners } = useGetPartnersQuery()
+    if (isLoading || isLoadingGroups || isLoadingPartners) {
+        return 'Загрузка'
+    }
     return (
         <Container fluid>
             <Flex direction="column" style={{ width: '75%', margin: '0 auto' }}>
-                <SearchRolesForm groupContent={GET_GROUPS.content} companyContent={GET_COMPANIES.content}/>
-                <UsersList content={users} pagination={GET_USER_PAGE.pagination}/>
+                <SearchRolesForm groupContent={groups?.items!} companyContent={partners?.items!} />
+                <UsersList items={data?.items!} pagination={data?.pagination!} />
             </Flex>
         </Container>
     );

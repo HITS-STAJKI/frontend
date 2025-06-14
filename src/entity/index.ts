@@ -6,3 +6,6 @@ export * from './CommentSection'
 export * from './Group'
 export * from './Partner'
 export * from './PartnerInfo'
+
+export * from './FilterBlock'
+export * from './Filters'

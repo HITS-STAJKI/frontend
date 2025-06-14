@@ -1,32 +1,33 @@
 import { Button, Select } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { Group, StudentUpdate } from "shared/lib"
+import { StudentUpdate } from "shared/lib"
 import { useState } from 'react';
+import { GroupDto } from "services/api/api-client.types";
 
 type AddStudentInGroupFormProps = {
     onSuccess: () => void
-    group: Group
+    group: GroupDto
 }
 
 export const AddStudentInGroupForm = ({ onSuccess, group }: AddStudentInGroupFormProps) => {
     const [isAdding, setIsAdding] = useState(false);
-    
-    const form = useForm<StudentUpdate & {studentId: string}>({
+
+    const form = useForm<StudentUpdate & { studentId: string }>({
         initialValues: {
-            groupId: group.id, 
+            groupId: group.id!,
             studentId: ""
         },
     });
 
-    const handleEdit = (vals: StudentUpdate  & {studentId: string}) => {
+    const handleEdit = (vals: StudentUpdate & { studentId: string }) => {
         console.log("Тело запроса", vals);
         onSuccess();
     };
 
     return (
         <>
-            <Button 
-                color={isAdding ? 'gray' : 'blue'} 
+            <Button
+                color={isAdding ? 'gray' : 'blue'}
                 onClick={() => setIsAdding(prev => !prev)}
             >
                 {isAdding ? 'Скрыть' : 'Добавить студента'}
@@ -36,19 +37,19 @@ export const AddStudentInGroupForm = ({ onSuccess, group }: AddStudentInGroupFor
                     <Select
                         label="Выберите студента"
                         placeholder="Начните вводить имя студента"
-                        data={group.students.map(student => ({
-                            value: student.id,
-                            label: `${student.user.firstName} ${student.user.lastName}`, 
+                        data={group.students!.map(student => ({
+                            value: student.id!,
+                            label: `${student.user.fullname}`,
                         }))}
                         searchable
                         {...form.getInputProps('studentId')}
                     />
-                    <Button 
-                        mt="md" 
+                    <Button
+                        mt="md"
                         mb="md"
                         style={{ float: 'right' }}
                         type='submit'>
-                            {'Сохранить'}
+                        {'Сохранить'}
                     </Button>
                 </form>
             )}
