@@ -17,6 +17,7 @@ export const Group = ({ group }: GroupProps) => {
 
                 <EditListOfStudentsButton group={group} />
                 <MGroup>
+                    <div>{group.studentsCount} учащихся</div>
                     <EditGroupButton group={group} />
                     <DeleteGroupButton group={group} />
                 </MGroup>
