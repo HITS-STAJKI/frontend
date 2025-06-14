@@ -35,8 +35,8 @@ export function LanguageList({ content, type }: (LanguagePage | StackPage) & { t
             <Text style={{ marginBottom: '10px' }}>
                 Найдено {type === 'language' ? 'языков' : 'стеков'}: {content.length}
             </Text>
-            {content.map(card => (
-                <LanguageStackCard key={card.id} type={type} id={card.id} name={card.name} />
+            {content.map((card, index) => (
+                <LanguageStackCard key={card.id} type={type} id={card.id} name={card.name} index={index} />
             ))}
         </Flex>
     );
