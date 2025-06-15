@@ -18,6 +18,7 @@ export const LoginForm = () => {
         mutateAsync(vals).then(tokens => {
             localStorage.setItem("token", tokens.token!)
             localStorage.setItem("exp", tokens.expirationDate?.toString()!)
+        }).then(() => {
             navigate(MY_PROFILE_ROUTE)
         })
     }

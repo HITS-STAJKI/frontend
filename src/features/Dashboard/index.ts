@@ -1,2 +1,2 @@
 export * from './ChartCard'
-export * from './AddNewDashboardCard'
+export * from './Filters'

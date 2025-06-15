@@ -77,7 +77,7 @@ else if (includeArchived !== undefined)
   return url_;
 }
 
-let countStudentsByFilterDefaultOptions: Omit<UseQueryOptions<Types.FileResponse, unknown, Types.FileResponse>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.FileResponse, unknown, Types.FileResponse>, 'queryFn'>> = {
+let countStudentsByFilterDefaultOptions: Omit<UseQueryOptions<Types.StatisticsResponse, unknown, Types.StatisticsResponse>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.StatisticsResponse, unknown, Types.StatisticsResponse>, 'queryFn'>> = {
 };
 export function getCountStudentsByFilterDefaultOptions() {
   return countStudentsByFilterDefaultOptions;
@@ -119,7 +119,7 @@ export function __countStudentsByFilter(context: QueryFunctionContext, axiosConf
       context.queryKey[2] as string | undefined,       context.queryKey[3] as boolean | undefined,       context.queryKey[4] as boolean | undefined,       context.queryKey[5] as string[] | undefined,       context.queryKey[6] as string[] | undefined,       context.queryKey[7] as boolean | undefined,       context.queryKey[8] as boolean | undefined,       context.queryKey[9] as boolean | undefined,       context.queryKey[10] as string[] | undefined,       context.queryKey[11] as boolean | undefined,axiosConfig    );
 }
 
-export function useCountStudentsByFilterQuery<TSelectData = Types.FileResponse, TError = unknown>(dto: CountStudentsByFilterStatisticsQueryParameters, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResponse, TError = unknown>(dto: CountStudentsByFilterStatisticsQueryParameters, options?: Omit<UseQueryOptions<Types.StatisticsResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 /**
  * Получить количество студентов по фильтру
  * @param fullName (optional) ФИО
@@ -134,9 +134,9 @@ export function useCountStudentsByFilterQuery<TSelectData = Types.FileResponse, 
  * @param includeArchived (optional) Включать архивные данные
  * @return OK
  */
-export function useCountStudentsByFilterQuery<TSelectData = Types.FileResponse, TError = unknown>(fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useCountStudentsByFilterQuery<TSelectData = Types.FileResponse, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
-  let options: UseQueryOptions<Types.FileResponse, TError, TSelectData> | undefined = undefined;
+export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResponse, TError = unknown>(fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined, options?: Omit<UseQueryOptions<Types.StatisticsResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResponse, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+  let options: UseQueryOptions<Types.StatisticsResponse, TError, TSelectData> | undefined = undefined;
   let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let fullName: any = undefined;
   let isAcadem: any = undefined;
@@ -162,10 +162,10 @@ export function useCountStudentsByFilterQuery<TSelectData = Types.FileResponse, 
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
 
-  return useQuery<Types.FileResponse, TError, TSelectData>({
+  return useQuery<Types.StatisticsResponse, TError, TSelectData>({
     queryFn: axiosConfig ? (context) => __countStudentsByFilter(context, axiosConfig) : __countStudentsByFilter,
     queryKey: countStudentsByFilterQueryKey(fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, includeArchived),
-    ...countStudentsByFilterDefaultOptions as unknown as Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>,
+    ...countStudentsByFilterDefaultOptions as unknown as Omit<UseQueryOptions<Types.StatisticsResponse, TError, TSelectData>, 'queryKey'>,
     ...options,
   });
 }
@@ -183,7 +183,7 @@ export function useCountStudentsByFilterQuery<TSelectData = Types.FileResponse, 
  * @param includeArchived (optional) Включать архивные данные
  * @return OK
  */
-export function setCountStudentsByFilterData(queryClient: QueryClient, updater: (data: Types.FileResponse | undefined) => Types.FileResponse, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined) {
+export function setCountStudentsByFilterData(queryClient: QueryClient, updater: (data: Types.StatisticsResponse | undefined) => Types.StatisticsResponse, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined) {
   queryClient.setQueryData(countStudentsByFilterQueryKey(fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, includeArchived),
     updater
   );
@@ -203,6 +203,6 @@ export function setCountStudentsByFilterData(queryClient: QueryClient, updater: 
  * @param includeArchived (optional) Включать архивные данные
  * @return OK
  */
-export function setCountStudentsByFilterDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.FileResponse | undefined) => Types.FileResponse) {
+export function setCountStudentsByFilterDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.StatisticsResponse | undefined) => Types.StatisticsResponse) {
   queryClient.setQueryData(queryKey, updater);
 }

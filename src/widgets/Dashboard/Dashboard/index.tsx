@@ -1,15 +1,14 @@
 import { Flex } from "@mantine/core"
-import { AddNewDashboardCard } from "features/Dashboard"
-import { useDashboardContext } from "shared/lib"
+import { ChartCard, FilterRequest, Filters, FilterType } from "features/Dashboard"
+import { useState } from "react"
 
 export const Dashboard = () => {
-    const { elements } = useDashboardContext()
+    const [stats, setStats] = useState<FilterRequest>({})
+    const [main, setMain] = useState<FilterType | undefined>()
     return (
-        <Flex gap='xl'>
-            {elements.map(element => {
-                return element
-            })}
-            <AddNewDashboardCard />
+        <Flex gap='xl' h={'100%'}>
+            <ChartCard {...stats} main={main} />
+            <Filters setStats={setStats} setMain={setMain} main={main} />
         </Flex>
     )
 }
