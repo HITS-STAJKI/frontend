@@ -3,10 +3,10 @@ import { InterviewsCommentPage } from "shared/lib";
 import { CommentCard } from "entity/CommentCard";
 
 
-export function CommentList({ content }: ( InterviewsCommentPage )) {
+export function CommentList({ items }: ( InterviewsCommentPage )) {
     return (
         <Flex wrap="wrap" style={{ width: '100%' }}>
-            {content.map(comment => (
+            {items.map(comment => (
                 <CommentCard key={comment.id} 
                 id={comment.id} 
                 content={comment.content} 

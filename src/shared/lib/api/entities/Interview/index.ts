@@ -30,6 +30,8 @@ export type InterviewCreate = Pick<Interview, 'status'> & {
 
 export type InterviewPage = Page<Interview>
 
+export type PagedListDtoInterviewDto = Page<InterviewForTeachers>
+
 export type SpecificStudentInterviewSearchAndFilter = {
     studentId: string
     sort?: Array<Sort<Interview, keyof Interview>>
@@ -60,3 +62,15 @@ export type InterviewsCommentSearchAndFilter = {
 } & PageFilter
 
 export type InterviewsCommentPage = Page<InterviewsComment>
+
+
+export type InterviewForTeachers = {
+    id: string
+    createdAt: string
+    modifiedAt?: string
+    status: InterviewStatus
+    stack: Stack
+    languages: Array<Language>
+    companyPartner: Pick<Company, 'id' | 'name'>
+    student: User
+}

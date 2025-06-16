@@ -34,14 +34,14 @@ type FilterItem = {
 };
 
 
-type FilterBlockProps = 
-{
-    availableFilters: FilterItem[];
-};
+type FilterBlockProps =
+    {
+        availableFilters: FilterItem[];
+        printButton?: boolean;
+    };
 
 
-export function FilterBlockFull({ availableFilters }: FilterBlockProps) 
-{
+export function FilterBlockFull({ availableFilters, printButton }: FilterBlockProps) {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null);
     const [selectedPage, setSelectedPage] = useState<number>(10);
     const [activeFilters, setActiveFilters] = useState<FilterItem[]>([]);
@@ -164,18 +164,21 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps)
                     <Button color="red" onClick={handleClear}>
                         Очистить
                     </Button>
-                    <Button color="gray">
-                        Печать
-                    </Button>
+                    {printButton ? (
+                        // TODO добавить handleprint
+                        <Button color="gray" >
+                            Печать
+                        </Button>) : null
+                    }
                     {activeFilters.length > 0 && (
                         <Button
                             variant="subtle"
                             onClick={() => setOpened(o => !o)}
                             px={8}
                             style={{ height: 36 }}
-                            >
-                            {opened ? 
-                                <IconChevronUp size={18} /> : 
+                        >
+                            {opened ?
+                                <IconChevronUp size={18} /> :
                                 <IconChevronDown size={18} />
                             }
                         </Button>

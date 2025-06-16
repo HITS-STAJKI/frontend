@@ -1,3 +1,4 @@
+import { RoleDtoUserRole } from "services/api/api-client.types";
 import { User, UserList } from "../../entities";
 
 export const GET_USER: User = {
@@ -7,13 +8,13 @@ export const GET_USER: User = {
     roles: [
         {
             id: 'some_role_uuid',
-            userRole: 'STUDENT'
+            userRole: RoleDtoUserRole.STUDENT
         }
     ]
 }
 
 export const GET_USER_PAGE: UserList = {
-    content: [GET_USER, GET_USER, GET_USER],
+    items: [GET_USER, GET_USER, GET_USER],
     pagination: {
         totalPages : 5,
         currentPage : 0,
