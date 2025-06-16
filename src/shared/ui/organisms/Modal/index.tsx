@@ -17,9 +17,20 @@ type RenderModalProps = {
 
 export const Modal = ({ content, render, title, size }: RenderModalProps) => {
     const [opened, { open, close }] = useDisclosure(false)
+
     return (
         <>
-            <MModal opened={opened} onClose={close} title={title} size={size}>
+            <MModal
+                opened={opened}
+                onClose={close}
+                title={title}
+                centered
+                overlayProps={{
+                    opacity: 0.55,
+                    blur: 3,
+                }}
+                zIndex={300}
+            >
                 {content({ opened, open, close })}
             </MModal>
             {render(open)}

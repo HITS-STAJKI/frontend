@@ -83,7 +83,7 @@ const INTERVIEWFORTEACHER1: InterviewForTeachers = {
     status: "PENDING",
     stack: STACK1,
     languages: [LANGUAGE1, LANGUAGE2],
-        companyPartner: {
+    companyPartner: {
         id: 'some_company_id_1',
         name: 'some_company_name_1'
     },
@@ -96,7 +96,7 @@ const INTERVIEWFORTEACHER2: InterviewForTeachers = {
     status: "SUCCEED",
     stack: STACK1,
     languages: [LANGUAGE1, LANGUAGE2],
-        companyPartner: {
+    companyPartner: {
         id: 'some_company_id_1',
         name: 'some_company_name_1'
     },

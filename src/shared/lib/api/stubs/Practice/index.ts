@@ -37,7 +37,7 @@ export const PRACTICE3: Practice = {
 }
 
 export const GET_PRACTICES: PracticeRequestPage = {
-    content: [PRACTICE1, PRACTICE2, PRACTICE3],
+    items: [PRACTICE1, PRACTICE2, PRACTICE3],
     pagination: {
         totalPages: 3,
         currentPage: 1,
