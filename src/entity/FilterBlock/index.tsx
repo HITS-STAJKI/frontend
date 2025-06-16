@@ -165,7 +165,8 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
                         Очистить
                     </Button>
                     {printButton ? (
-                        <Button color="gray" onClick={handlePrint}>
+                        // TODO добавить handleprint
+                        <Button color="gray" >
                             Печать
                         </Button>) : null
                     }
