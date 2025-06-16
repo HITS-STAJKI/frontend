@@ -1868,6 +1868,8 @@ export function prepareSerializePagedListDtoStudentDto(_data: PagedListDtoStuden
 }
 /** Статистика по найденным студентам */
 export interface StatisticsResponse  {
+  /** Количество найденных студентов */
+  count?: number;
   [key: string]: any;
 }
 export function deserializeStatisticsResponse(json: string): StatisticsResponse {

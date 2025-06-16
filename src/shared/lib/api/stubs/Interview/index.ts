@@ -26,7 +26,7 @@ const INTERVIEW2: Interview = {
 }
 
 export const GET_INTERVIEWS: InterviewPage = {
-    items: [INTERVIEW1, INTERVIEW2, INTERVIEW1],
+    items: [INTERVIEW1, INTERVIEW2],
     pagination: {
         totalPages: 1,
         currentPage: 0,
@@ -48,7 +48,6 @@ const INTERVIEW_COMMENT2: InterviewsComment = {
     modifiedAt: "2025-03-27",
     author: GET_USER
 }
-
 const INTERVIEW_COMMENT3: InterviewsComment = {
     id: "interview_comm_id_3",
     content: "Комментарий 3",
@@ -56,7 +55,6 @@ const INTERVIEW_COMMENT3: InterviewsComment = {
     modifiedAt: "2025-03-27",
     author: GET_USER
 }
-
 const INTERVIEW_COMMENT4: InterviewsComment = {
     id: "interview_comm_id_4",
     content: "Комментарий 4",

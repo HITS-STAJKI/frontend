@@ -279,6 +279,7 @@ export function initPersister() {
   addResultTypeFactory('ChatControllerClient___getMyChatInfo', (data: any) => Types.initChatInfoDto(data));
 
 
+  addResultTypeFactory('StatisticsClient___countStudentsByFilter', (data: any) => Types.initStatisticsResponse(data));
 
 
 

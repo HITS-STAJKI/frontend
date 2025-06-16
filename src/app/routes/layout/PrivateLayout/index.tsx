@@ -18,7 +18,7 @@ export const PrivateLayout = () => {
                 <Menu />
             </AppShell.Navbar>
             <AppShell.Main>
-                <Flex mt='xl'>
+                <Flex mt='xl' h={'90vh'}>
                     <Outlet />
                 </Flex>
             </AppShell.Main>

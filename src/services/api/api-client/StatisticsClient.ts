@@ -27,7 +27,7 @@ import { getAxios, getBaseUrl } from './helpers';
  * @param includeArchived (optional) Включать архивные данные
  * @return OK
  */
-export function countStudentsByFilter(fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.FileResponse> {
+export function countStudentsByFilter(fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.StatisticsResponse> {
     let url_ = getBaseUrl() + "/api/v1/statistics/students/count?";
     if (fullName === null)
         throw new Error("The parameter 'fullName' cannot be null.");
@@ -72,7 +72,6 @@ export function countStudentsByFilter(fullName?: string | undefined, isAcadem?: 
       url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
-        responseType: "blob",
         ..._requestConfigCountStudentsByFilter,
         ...config,
         method: "GET",
@@ -95,7 +94,7 @@ export function countStudentsByFilter(fullName?: string | undefined, isAcadem?: 
     });
 }
 
-function processCountStudentsByFilter(response: AxiosResponse): Promise<Types.FileResponse> {
+function processCountStudentsByFilter(response: AxiosResponse): Promise<Types.StatisticsResponse> {
     const status = response.status;
     let _headers: any = {};
     if (response.headers && typeof response.headers === "object") {
@@ -140,22 +139,18 @@ function processCountStudentsByFilter(response: AxiosResponse): Promise<Types.Fi
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
-    } else if (status === 200 || status === 206) {
-        const contentDisposition = response.headers ? response.headers["content-disposition"] : undefined;
-        let fileNameMatch = contentDisposition ? /filename\*=(?:(\\?['"])(.*?)\1|(?:[^\s]+'.*?')?([^;\n]*))/g.exec(contentDisposition) : undefined;
-        let fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[3] || fileNameMatch[2] : undefined;
-        if (fileName) {
-            fileName = decodeURIComponent(fileName);
-        } else {
-            fileNameMatch = contentDisposition ? /filename="?([^"]*?)"?(;|$)/g.exec(contentDisposition) : undefined;
-            fileName = fileNameMatch && fileNameMatch.length > 1 ? fileNameMatch[1] : undefined;
-        }
-        return Promise.resolve({ fileName: fileName, status: status, data: new Blob([response.data], { type: response.headers["content-type"] }), headers: _headers });
+    } else if (status === 200) {
+        const _responseText = response.data;
+        let result200: any = null;
+        let resultData200  = _responseText;
+        result200 = Types.initStatisticsResponse(resultData200);
+        return Promise.resolve<Types.StatisticsResponse>(result200);
+
     } else if (status !== 200 && status !== 204) {
         const _responseText = response.data;
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
     }
-    return Promise.resolve<Types.FileResponse>(null as any);
+    return Promise.resolve<Types.StatisticsResponse>(null as any);
 }
 let _requestConfigCountStudentsByFilter: Partial<AxiosRequestConfig> | null;
 export function getCountStudentsByFilterRequestConfig() {
