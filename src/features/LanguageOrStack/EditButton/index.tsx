@@ -25,7 +25,7 @@ export const EditLanguageOrStack = ({ id, type, name }: EditLanguageOrStackProps
                 <PencilSvgrepoCom />
             </Button>}
             content={({ close }) => <UpdateLanguageOrStackForm id={id} name={name} onSuccess={close} />}
-            title={'Вы уверены, что хотите удалить данный элемент?'}
+            title={'Вы уверены, что хотите изменить данный элемент?'}
         />
 
     )

@@ -6,24 +6,26 @@ import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 
 export const GroupList = () => {
     const {data, isLoading} = useGetGroupsQuery()
+
+    const currentPage = data?.pagination?.currentPage || 1; 
+    const size = data?.pagination?.size || 10; 
     if(isLoading){
         return 'Загрузка'
     }
     return (
         
         <div style={{ paddingBottom: '70px' }}>
-        <Grid
-            type='container'
-            breakpoints={{ xs: '100px', sm: '200px', md: '500px', lg: '1000px', xl: '1920px' }}
-            mt={'md'}
-        >
-        {data?.items!.map((group) => (
-            <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
-                <Group key={group.id} group={group} />
-            </Grid.Col>
-        ))}
-        </Grid>
-        <Pagination pagination={GET_GROUPS.pagination} />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
+            {data?.items!.map((group, index) => {
+                    const number = (currentPage - 1) * size + index + 1; 
+                    return (
+                        <div key={group.id} style={{ width: '100%', margin: '8px 0' }}>
+                            <Group group={group} number={number} /> 
+                        </div>
+                    );
+                })}
+            </div>
+            <Pagination pagination={GET_GROUPS.pagination} />
         </div>
         
     )
