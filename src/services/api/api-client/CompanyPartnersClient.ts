@@ -397,7 +397,7 @@ function processCreatePartner(response: AxiosResponse): Promise<Types.CompanyPar
  * Получение списка партнеров хитса
  * @param id (optional) Идентификатор компании
  * @param name (optional) Название компании (разрешается частичное совпадение)
- * @param isNew (optional) Только новые компании
+ * @param isNew (optional) Только новые компании (те, в которых никто не проходит практику)
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.

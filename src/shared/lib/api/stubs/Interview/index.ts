@@ -1,5 +1,5 @@
 import { GET_USER } from "..";
-import { Interview, InterviewPage, InterviewsComment, InterviewsCommentPage } from "../../entities";
+import { Interview, InterviewForTeachers, InterviewPage, InterviewsComment, InterviewsCommentPage, PagedListDtoInterviewDto, User } from "../../entities";
 import { STACK1, STACK2 } from "../Stack"
 import { LANGUAGE1, LANGUAGE2 } from "../Language"
 
@@ -25,8 +25,19 @@ const INTERVIEW2: Interview = {
     languages: [LANGUAGE2]
 }
 
+const INTERVIEW3: Interview = {
+    id: "interview_id_3",
+    status: "SUCCEED",
+    stack: STACK2,
+    companyPartner: {
+        id: 'some_company_id_3',
+        name: 'some_company_name_3'
+    },
+    languages: [LANGUAGE2]
+}
+
 export const GET_INTERVIEWS: InterviewPage = {
-    items: [INTERVIEW1, INTERVIEW2, INTERVIEW1],
+    items: [INTERVIEW1, INTERVIEW2, INTERVIEW3],
     pagination: {
         totalPages: 1,
         currentPage: 0,
@@ -49,14 +60,6 @@ const INTERVIEW_COMMENT2: InterviewsComment = {
     author: GET_USER
 }
 
-// const INTERVIEW_COMMENT2: InterviewsComment = {
-//     id: "interview_comm_id_2",
-//     content: "Комментарий 2",
-//     createdAt: "2025-03-26",
-//     modifiedAt: "2025-03-27",
-//     author: GET_USER
-// }
-
 const INTERVIEW_COMMENT3: InterviewsComment = {
     id: "interview_comm_id_3",
     content: "Комментарий 3",
@@ -70,6 +73,42 @@ export const GET_INTERVIEWS_COMMENTS: InterviewsCommentPage = {
     pagination: {
         totalPages: 1,
         currentPage: 0,
+        size: 10
+    }
+}
+
+const INTERVIEWFORTEACHER1: InterviewForTeachers = {
+    id: "InterviewForTeachers_id_1",
+    createdAt: "2025-03-28",
+    status: "PENDING",
+    stack: STACK1,
+    languages: [LANGUAGE1, LANGUAGE2],
+    companyPartner: {
+        id: 'some_company_id_1',
+        name: 'some_company_name_1'
+    },
+    student: GET_USER,
+}
+
+const INTERVIEWFORTEACHER2: InterviewForTeachers = {
+    id: "InterviewForTeachers_id_2",
+    createdAt: "2025-03-29",
+    status: "SUCCEED",
+    stack: STACK1,
+    languages: [LANGUAGE1, LANGUAGE2],
+    companyPartner: {
+        id: 'some_company_id_1',
+        name: 'some_company_name_1'
+    },
+    student: GET_USER,
+}
+
+
+export const GET_INTERVIEWFORTEACHER: PagedListDtoInterviewDto = {
+    items: [INTERVIEWFORTEACHER1, INTERVIEWFORTEACHER2, INTERVIEWFORTEACHER1],
+    pagination: {
+        totalPages: 1,
+        currentPage: 1,
         size: 10
     }
 }

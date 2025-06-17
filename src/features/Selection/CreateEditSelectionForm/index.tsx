@@ -46,9 +46,9 @@ export const CreateSelectionForm = ({ onSuccess, id}: SelectionFormProps) => {
     };
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
-            <SelectForm content={GET_COMPANIES.content} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
-            <SelectForm content={GET_STACKS.content} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
-            <MultiSelectForm content={GET_LANGUAGES.content} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)} />
+            <SelectForm items={GET_COMPANIES.items} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
+            <SelectForm items={GET_STACKS.items} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
+            <MultiSelectForm items={GET_LANGUAGES.items} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)} />
             <Textarea
                 style={{ marginBottom: '15px' }}
                 placeholder={"Напишите комментарий"}
@@ -83,9 +83,9 @@ export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
     };
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
-            <SelectForm content={GET_COMPANIES.content} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
-            <SelectForm content={GET_STACKS.content} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
-            <SelectForm content={statusOptions} label={"Статус"} onChange={(value) => form.setFieldValue('status', value)} />
+            <SelectForm items={GET_COMPANIES.items} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
+            <SelectForm items={GET_STACKS.items} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
+            <SelectForm items={statusOptions} label={"Статус"} onChange={(value) => form.setFieldValue('status', value)} />
             <div style={{ display: 'flex' }}>
                 <Button type='submit' style={{ marginLeft: 'auto' }}>{'Сохранить'}</Button>
             </div>
@@ -94,13 +94,13 @@ export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
 }
 
 type SelectFormProps = {
-    content: Company[] | Stack[] | Language[] | StatusOption[];
+    items: Company[] | Stack[] | Language[] | StatusOption[];
     label: string;
     onChange: (value: string) => void;
     required?: boolean;
 }
 
-export const MultiSelectForm = ({ content, label, onChange, required = true }: SelectFormProps) => {
+export const MultiSelectForm = ({ items, label, onChange, required = true }: SelectFormProps) => {
     return (
         <MultiSelect
         style={{ marginBottom: '15px' }}
@@ -108,7 +108,7 @@ export const MultiSelectForm = ({ content, label, onChange, required = true }: S
         withAsterisk={required}
         placeholder={label}
         onChange={onChange}
-        data={content.map(option => {
+        data={items.map(option => {
             return { value: option.id, label: option.name };
         })}
         required={required}
@@ -116,7 +116,7 @@ export const MultiSelectForm = ({ content, label, onChange, required = true }: S
     );
   };
 
-const SelectForm = ({ content, label, onChange }: SelectFormProps) => {
+const SelectForm = ({ items, label, onChange }: SelectFormProps) => {
     return (
         <Select
         style={{ marginBottom: '15px' }}
@@ -124,7 +124,7 @@ const SelectForm = ({ content, label, onChange }: SelectFormProps) => {
         withAsterisk
         placeholder={label}
         onChange={onChange}
-        data={content.map(option => {
+        data={items.map(option => {
             return { value: option.id, label: option.name };
         })}
         required

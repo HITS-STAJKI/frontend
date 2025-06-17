@@ -15,7 +15,7 @@ export const DeletePartnerButton = ({ partner }: DeletePartnerButtonProps) => {
     const handleDelete = (close: () => void) => {
         mutateAsync().then(() => {
             close()
-            navigate(-1)
+            navigate("/partners")
         })
 
     }

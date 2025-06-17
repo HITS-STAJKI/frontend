@@ -1,10 +1,10 @@
 import { Button, Container, Flex, Group, MultiSelect, Text, TextInput, Title } from "@mantine/core";
-import { GET_STACKS, Interview, InterviewPage, InterviewStatus } from "shared/lib";
-import { SelectionComments } from "features";
+import { GET_STACKS, Interview, InterviewPage, InterviewStatus} from "shared/lib";
 import './css.css';
-import { CreateSelection, DeleteSelection, EditSelection } from "./ModuleWindows";
+import { CommentSelection, CreateSelection, DeleteSelection, EditSelection, SuccedSelection } from "./ModuleWindows";
 import { useForm } from "@mantine/form";
 
+// --------------- Student ---------------
 
 export function TitleForm() {
     return (
@@ -39,16 +39,16 @@ export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/)
     };
     return (
         <Container p={0} fluid style={{width: '100%', border: '1px solid black', marginBottom: '5vh', borderRadius: '2px' }}>
-            <form onSubmit={form.onSubmit(onSubmit)}>
+            <form>
                 <Group gap="xl" wrap="nowrap">
                     <TextInput w={300} style={{margin:'2%'}}
                             label="Название компании" 
                             {...form.getInputProps('company')}
                         />
                     <MultiSelect miw={150} style={{ margin:'2%'}}
-                        label="Направлеение"
+                        label="Направление"
                         onChange={(value) => form.setFieldValue('stackId', value)}
-                        data={GET_STACKS.content.map(option => {
+                        data={GET_STACKS.items.map(option => {
                             return { value: option.id, label: option.name };
                         })}/>
                 </Group>
@@ -62,10 +62,10 @@ export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/)
 }
 
 
-export function SelectionList( { page }: { page: InterviewPage }) {
+export function SelectionStudentList( { page }: { page: InterviewPage }) {
     return (
         <Container p={0} fluid style={{width: '100%' }}>
-        {page.content.map(card => (
+        {page.items.map(card => (
             <SelectionCard key={card.id} selection={card} />
         ))}
         </Container >
@@ -77,22 +77,29 @@ export function SelectionCard({ selection }: { selection: Interview })  {
     return (
         <div style={{ border: '1px solid black', marginBottom: '2vh', borderRadius: '2px'}}>
             <SelectionHeaderCard selection={selection}/>
-            <SelectionComments id={selection.id}/>
+            {/*<SelectionComments id={selection.id}/>*/}
         </div>
     );
 }
 
 export function SelectionHeaderCard( { selection }: { selection: Interview }) {
     return (
-            <Container fluid p={'lg'} style={{padding: '0', borderBottom: '1px solid black'}}>
+            <Container fluid p={'lg'} style={{padding: '0'}}>
                 <Flex justify="space-between">
                     <div>
-                        <Text size="xl" style={{fontWeight: '500'}}>{selection.companyPartner}</Text>
+                        <Text size="xl" style={{fontWeight: '500'}}>{selection.companyPartner.name}</Text>
                         <Text size="xl">Направление: {selection.stack.name}</Text>
                     </div>
                     <div>
                     <Flex wrap="wrap">
-                        <span className={selection.status} style={{marginBottom: '10px', whiteSpace: 'nowrap'}}>{getStatusText(selection.status)}</span>
+                        <span className={selection.status} style={{whiteSpace: 'nowrap'}}>{getStatusText(selection.status)}</span>
+                        {selection.status === "SUCCEED" && (
+                            <>
+                            <span style={{ lineHeight: '1', fontSize: '30px', margin: '0 5px' }}>/</span>
+                            <SuccedSelection id={selection.id} />
+                            </>
+                        )}
+                        <CommentSelection id={selection.id} />
                         <EditSelection id={selection.id} />
                         <DeleteSelection id={selection.id} />
                     </Flex>
