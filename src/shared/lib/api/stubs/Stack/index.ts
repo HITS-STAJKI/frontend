@@ -14,7 +14,7 @@ export const STACK3: Stack = {
 }
 
 export const GET_STACKS: StackPage  = {
-    content: [STACK1, STACK2, STACK3],
+    items: [STACK1, STACK2, STACK3],
     pagination: {
         totalPages: 1,
         currentPage: 0,

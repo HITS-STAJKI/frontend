@@ -42,7 +42,7 @@ export const ReportShortOpen = ({ id }: ReportIdProps) => {
     const fetchComments = async (reportId: string): Promise<InterviewsComment[]> => 
     {
         return new Promise((resolve) => {
-            setTimeout(() => resolve(GET_INTERVIEWS_COMMENTS.content), 1000);
+            setTimeout(() => resolve(GET_INTERVIEWS_COMMENTS.items), 1000);
         });
     };
 

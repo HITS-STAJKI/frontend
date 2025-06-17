@@ -1,16 +1,14 @@
 import { useEffect, useState } from "react";
 import { TextInput, Select, MultiSelect } from "@mantine/core";
 import { GET_GROUPS, GET_COMPANIES, GET_STACKS, GET_LANGUAGES } from "shared/lib";
-import { DateInput  } from "@mantine/dates";
+import { DateInput } from "@mantine/dates";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { CompanyPartnerDto } from "services/api/api-client.types";
 
-export function FilterLanguageName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
-{
+export function FilterLanguageName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState("");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => 
-    {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const val = event.currentTarget.value;
         setValue(val);
         onChangeValue(val);
@@ -26,12 +24,10 @@ export function FilterLanguageName({ id, onChangeValue }: { id: string; onChange
     );
 }
 
-export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
-{
+export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState("");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => 
-    {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const val = event.currentTarget.value;
         setValue(val);
         onChangeValue(val);
@@ -47,14 +43,13 @@ export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (
     );
 }
 
-export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
+export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
     const [value, setValue] = useState<string | null>(null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
-            const stacks = GET_STACKS.content;
+            const stacks = GET_STACKS.items;
             const selectData = stacks.map(stack => ({
                 value: stack.id,
                 label: stack.name,
@@ -81,15 +76,14 @@ export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: 
     );
 }
 
-export function FilterLanguageMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) 
-{
+export function FilterLanguageMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) {
     const [value, setValue] = useState<string[]>([]);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
             const languages = GET_LANGUAGES;
-            const selectData = languages.content.map(language => ({
+            const selectData = languages.items.map(language => ({
                 value: language.id,
                 label: language.name,
             }));
@@ -115,14 +109,13 @@ export function FilterLanguageMultiple({ id, onChangeValue }: { id: string; onCh
     );
 }
 
-export function FilterGroup({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
+export function FilterGroup({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
     const [value, setValue] = useState<string | null>(null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
-            const groups = GET_GROUPS.content;
+            const groups = GET_GROUPS.items;
             const selectData = groups.map(group => ({
                 value: group.id,
                 label: group.number,
@@ -149,18 +142,17 @@ export function FilterGroup({ id, onChangeValue }: { id: string; onChangeValue: 
     );
 }
 
-export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
+export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
     const [value, setValue] = useState<string | null>(null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
-        setData([
-            { value: "PENDING", label: "На рассмотрении" },
-            { value: "REJECTED", label: "Отклонен" },
-            { value: "SUCCEED", label: "Пройден" },
-        ]);
+            setData([
+                { value: "PENDING", label: "На рассмотрении" },
+                { value: "REJECTED", label: "Отклонен" },
+                { value: "SUCCEED", label: "Пройден" },
+            ]);
         }, 300);
     }, []);
 
@@ -181,8 +173,7 @@ export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onCha
     );
 }
 
-export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
+export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
     const [value, setValue] = useState<Date | null>(null);
 
     const handleChange = (date: Date | null) => {
@@ -191,7 +182,7 @@ export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (
     };
 
     return (
-        <DateInput 
+        <DateInput
             id={`filter-${id}`}
             value={value}
             onChange={handleChange}
@@ -259,14 +250,13 @@ export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: s
 }
 
 
-export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) 
-{
+export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) {
     const [value, setValue] = useState<string[]>([]);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
-            const groups = GET_GROUPS.content;
+            const groups = GET_GROUPS.items;
             const selectData = groups.map(group => ({
                 value: group.id,
                 label: group.number,
@@ -293,18 +283,17 @@ export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChang
     );
 }
 
-export function FilterTrueFalseNull({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
+export function FilterTrueFalseNull({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
     const [value, setValue] = useState<string | null>(null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
-        setData([
-            { value: "true", label: "Да" },
-            { value: "false", label: "Нет" },
-            { value: "null", label: "" }
-        ]);
+            setData([
+                { value: "true", label: "Да" },
+                { value: "false", label: "Нет" },
+                { value: "null", label: "" }
+            ]);
         }, 300);
     }, []);
 
@@ -347,21 +336,20 @@ export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: {
     );
 }
 
-export function FilterUserRole({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
+export function FilterUserRole({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
     const [value, setValue] = useState<string | null>(null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
         setTimeout(() => {
-        setData([
-            { value: "ADMIN", label: "Админ" },
-            { value: "DEAN", label: "Деканат" },
-            { value: "CURATOR", label: "Куратор" },
-            { value: "STUDENT", label: "Студент" },
-            { value: "TEACHER", label: "Преподаватель" },
-            { value: "EDUCATIONAL_PROGRAM_LEAD", label: "Руководитель образовательной программы" }
-        ]);
+            setData([
+                { value: "ADMIN", label: "Админ" },
+                { value: "DEAN", label: "Деканат" },
+                { value: "CURATOR", label: "Куратор" },
+                { value: "STUDENT", label: "Студент" },
+                { value: "TEACHER", label: "Преподаватель" },
+                { value: "EDUCATIONAL_PROGRAM_LEAD", label: "Руководитель образовательной программы" }
+            ]);
         }, 300);
     }, []);
 
@@ -381,12 +369,10 @@ export function FilterUserRole({ id, onChangeValue }: { id: string; onChangeValu
     );
 }
 
-export function FilterStackName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
-{
+export function FilterStackName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState("");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => 
-    {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const val = event.currentTarget.value;
         setValue(val);
         onChangeValue(val);
@@ -402,12 +388,10 @@ export function FilterStackName({ id, onChangeValue }: { id: string; onChangeVal
     );
 }
 
-export function FilterGroupName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
-{
+export function FilterGroupName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState("");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => 
-    {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const val = event.currentTarget.value;
         setValue(val);
         onChangeValue(val);

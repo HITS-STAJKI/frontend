@@ -13,7 +13,7 @@ return (
                 </Accordion.Control>
                 <Accordion.Panel>
                     <hr />
-                    <CommentList content={GET_INTERVIEWS_COMMENTS.content} pagination={GET_INTERVIEWS_COMMENTS.pagination} />
+                    <CommentList items={GET_INTERVIEWS_COMMENTS.items} pagination={GET_INTERVIEWS_COMMENTS.pagination} />
                     <CreateCommentForm />
                 </Accordion.Panel>
             </Accordion.Item>
