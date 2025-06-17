@@ -19,11 +19,6 @@ export function UserCard({ id, email, fullname, roles }: User) {
                 </Grid.Col>
                 <Grid.Col span={2.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {email}
-                    </Text>
-                </Grid.Col>
-                <Grid.Col span={2.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                    <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         {roles.map(role => roleTranslations[role.userRole!]).join(", ")}
                     </Text>
                 </Grid.Col>

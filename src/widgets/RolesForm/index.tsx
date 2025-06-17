@@ -84,7 +84,7 @@ export function UsersList({ items }: UserList) {
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
             {items.map(user => (
-                <UserCard key={user.id} id={user.id!} email={user.email!} fullname={user.fullname!} roles={user.roles!} />
+                <UserCard key={user.id} id={user.id!} email={user.email!} fullname={user.fullName!} roles={user.roles!} />
             ))}
         </Flex>
     );
