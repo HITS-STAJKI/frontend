@@ -1,4 +1,4 @@
-import { Button, Flex, TextInput } from "@mantine/core";
+import { Button, Flex, TextInput, Text } from "@mantine/core";
 import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
 import { LanguageStackCard } from "entity";
 import { CreateLanguageOrStackForm } from "features";
@@ -31,9 +31,12 @@ export function SearchForm({ type }: SearchFormProps) {
 
 export function LanguageList({ content, type }: (LanguagePage | StackPage) & { type: 'language' | 'stack' }) {
     return (
-        <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
-            {content.map(card => (
-                <LanguageStackCard key={card.id} type={type} id={card.id} name={card.name} />
+        <Flex direction="column" gap="md" mt="lg" style={{ width: '100%' }}>
+            <Text style={{ marginBottom: '10px' }}>
+                Найдено {type === 'language' ? 'языков' : 'стеков'}: {content.length}
+            </Text>
+            {content.map((card, index) => (
+                <LanguageStackCard key={card.id} type={type} id={card.id} name={card.name} index={index} />
             ))}
         </Flex>
     );
