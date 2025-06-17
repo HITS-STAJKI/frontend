@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { PublicLayout } from "./layout/PublicLayout"
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE, MY_PROFILE_ROUTE, PERSON_PROFILE_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENT_PRACTICES_ROUTE, PRACTICE_ROUTE, STUDENTS_ROUTE, STATISTICS_ROUTE,, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE } from "shared/lib"
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE, MY_PROFILE_ROUTE, PERSON_PROFILE_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENT_PRACTICES_ROUTE, PRACTICE_ROUTE, STUDENTS_ROUTE, STATISTICS_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE } from "shared/lib"
 import { RegistrationPage } from "pages/RegistrationPage"
 import { LoginPage } from "pages/LoginPage"
 
@@ -19,6 +19,8 @@ import { StudentPracticesPage } from "pages/StudentPracticesPage"
 import { StudentsListPage } from "pages/StudentsListPage"
 import { StudentPractice } from "pages/StudentPractice"
 import { Dashboard } from "pages/Dashboard"
+import { SelectionStudentPage } from "pages/SelectionStudentPage"
+import { SelectionTeacherPage } from "pages/SelectionTeacherPage"
 
 export const AppRouter = () => {
     return (
