@@ -9,7 +9,7 @@ export const StackPage = () => {
         <Container style={{ width: '100%' }}>
             <Flex direction="column">
                 <SearchForm type="stack" />
-                <LanguageList content={GET_STACKS.content} pagination={GET_STACKS.pagination} type='stack' />
+                <LanguageList items={GET_STACKS.items} pagination={GET_STACKS.pagination} type='stack' />
             </Flex>
         </Container>
 

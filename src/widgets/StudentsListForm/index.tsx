@@ -1,5 +1,5 @@
 import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea } from "@mantine/core"
-import {  PracticeRequestPage } from "shared/lib";
+import { PracticeRequestPage } from "shared/lib";
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { StudentListCard } from "entity/StudentListCard";
@@ -27,22 +27,17 @@ type SortKey =
     | "company"
     | "status";
 
-export function StudentsListForm({ content, pagination }: PracticeRequestPage) {
+export function StudentsListForm({ items, pagination }: PracticeRequestPage) {
     const [sort, setSort] = useState<[SortKey, SortDirection] | null>(null);
 
     //TODO: Функция сортировки
-    function handleSort(key: SortKey) 
-    {
-        setSort((currentSort) => 
-        {
-            if (currentSort?.[0] === key) 
-            {
-                if (currentSort[1] === "Asc") 
-                {
+    function handleSort(key: SortKey) {
+        setSort((currentSort) => {
+            if (currentSort?.[0] === key) {
+                if (currentSort[1] === "Asc") {
                     return [key, "Desc"];
-                } 
-                else if (currentSort[1] === "Desc") 
-                {
+                }
+                else if (currentSort[1] === "Desc") {
                     return null;
                 }
             }
@@ -50,18 +45,16 @@ export function StudentsListForm({ content, pagination }: PracticeRequestPage) {
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKey }) 
-    {
-        if (!sort || sort[0] !== columnKey)
-        {
+    function SortArrow({ columnKey }: { columnKey: SortKey }) {
+        if (!sort || sort[0] !== columnKey) {
             return null;
         }
-        return sort[1] === "Asc" ? 
-        (
-            <IconChevronUp size={14} style={{ marginLeft: 4 }} />
-        ) : (
-            <IconChevronDown size={14} style={{ marginLeft: 4 }} />
-        );
+        return sort[1] === "Asc" ?
+            (
+                <IconChevronUp size={14} style={{ marginLeft: 4 }} />
+            ) : (
+                <IconChevronDown size={14} style={{ marginLeft: 4 }} />
+            );
     }
 
     return (
@@ -102,8 +95,8 @@ export function StudentsListForm({ content, pagination }: PracticeRequestPage) {
                     </Grid>
                 </div>
             </Card>
-            {content.map((practice, localIndex) => {
-                const globalIndex = (pagination.currentPage - 1) * pagination.size + localIndex;
+            {items.map((practice, localIndex) => {
+                const globalIndex = (pagination.currentPage! - 1) * pagination.size! + localIndex;
                 return (
                     <StudentListCard
                         key={practice.id}
@@ -145,13 +138,13 @@ export function StudentsCommentaryForm() {
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
             <Card style={{ width: '100%', padding: '1rem', border: "1px solid #ccc", borderRadius: 8 }}>
                 <Stack gap="sm" style={{ width: '100%' }}>
-                    <Textarea placeholder="Введите комментарий..." autosize minRows={3} value={value} onChange={(event) => setValue(event.currentTarget.value)} style={{ width: '100%' }}/>
+                    <Textarea placeholder="Введите комментарий..." autosize minRows={3} value={value} onChange={(event) => setValue(event.currentTarget.value)} style={{ width: '100%' }} />
                     <Group justify="flex-end">
                         <Button variant="light" color="gray" onClick={() => setValue('')}>Отмена</Button>
                         <Button color="blue">Отправить</Button>
                     </Group>
                     <Group justify="flex-end" mt="sm">
-                        <Button color="green" variant="filled" style={{textAlign: 'center', flexDirection: 'column', whiteSpace: 'pre-line', padding: '0.75rem'}}>
+                        <Button color="green" variant="filled" style={{ textAlign: 'center', flexDirection: 'column', whiteSpace: 'pre-line', padding: '0.75rem' }}>
                             Экспортировать пользователей
                         </Button>
                     </Group>

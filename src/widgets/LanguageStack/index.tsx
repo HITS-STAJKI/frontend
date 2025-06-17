@@ -29,13 +29,13 @@ export function SearchForm({ type }: SearchFormProps) {
     );
 }
 
-export function LanguageList({ content, type }: (LanguagePage | StackPage) & { type: 'language' | 'stack' }) {
+export function LanguageList({ items, type }: (LanguagePage | StackPage) & { type: 'language' | 'stack' }) {
     return (
         <Flex direction="column" gap="md" mt="lg" style={{ width: '100%' }}>
             <Text style={{ marginBottom: '10px' }}>
-                Найдено {type === 'language' ? 'языков' : 'стеков'}: {content.length}
+                Найдено {type === 'language' ? 'языков' : 'стеков'}: {items.length}
             </Text>
-            {content.map((card, index) => (
+            {items.map((card, index) => (
                 <LanguageStackCard key={card.id} type={type} id={card.id} name={card.name} index={index} />
             ))}
         </Flex>

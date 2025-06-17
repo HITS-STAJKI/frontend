@@ -12,14 +12,14 @@ export const StudentsListPage = () => {
         <Container fluid>
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
                 <FilterBlockShort availableFilters={[
-                    {id: "name",label: "ФИО",element: (props) => <FilterName id="name" onChangeValue={props.onChangeValue} />},
-                    {id: "interviewavailibility",label: "Был ли отбор",element: (props) => <FilterTrueFalseNull id="interviewavailibility" onChangeValue={props.onChangeValue} />},
-                    {id: "company",label: "Компания",element: (props) => <FilterCompanySelect id="company" onChangeValue={props.onChangeValue} />},
-                    {id: "interviewresult",label: "Результат отбора",element: (props) => <FilterInterviewStatus id="interviewresult" onChangeValue={props.onChangeValue} />},
-                ]}/>
-                <StudentsFormUnder studentCount={10}/>
-                <StudentsListForm content={practices.content} pagination={practices.pagination}/>
-                <StudentsCommentaryForm/>
+                    { id: "name", label: "ФИО", element: (props) => <FilterName id="name" onChangeValue={props.onChangeValue} /> },
+                    { id: "interviewavailibility", label: "Был ли отбор", element: (props) => <FilterTrueFalseNull id="interviewavailibility" onChangeValue={props.onChangeValue} /> },
+                    { id: "company", label: "Компания", element: (props) => <FilterCompanySelect id="company" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },
+                    { id: "interviewresult", label: "Результат отбора", element: (props) => <FilterInterviewStatus id="interviewresult" onChangeValue={props.onChangeValue} /> },
+                ]} />
+                <StudentsFormUnder studentCount={10} />
+                <StudentsListForm items={practices.items} pagination={practices.pagination} />
+                <StudentsCommentaryForm />
             </Flex>
         </Container>
     );

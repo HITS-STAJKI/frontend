@@ -8,7 +8,7 @@ export const LanguagePage = () => {
         <Container style={{ width: '100%' }}>
             <Flex direction="column">
                 <SearchForm type="language" />
-                <LanguageList content={GET_LANGUAGES.content} pagination={GET_LANGUAGES.pagination} type='language' />
+                <LanguageList items={GET_LANGUAGES.items} pagination={GET_LANGUAGES.pagination} type='language' />
             </Flex>
         </Container>
 
