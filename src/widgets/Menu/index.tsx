@@ -20,7 +20,7 @@ export const Menu = () => {
 
     ]
     return (
-        <Flex w='100%' h='100%' align='center' gap='lg' mt='md' direction='column' style={{ overflowY: 'scroll' }}>
+        <Flex w='100%' h='100%' align='center' gap='lg' mt='md' direction='column'>
             {routes.map(route =>
                 <MenuItem key={route.to} to={route.to} label={route.label} />)
             }
@@ -37,7 +37,7 @@ export const MenuItem = ({ to, label }: MenuItemProps) => {
     const { pathname } = useLocation()
     return (
         <Link to={to} style={{ textDecoration: 'none', width: '100%', paddingRight: '1rem', paddingLeft: '1rem' }}>
-            <Card w='100%' shadow='sm' withBorder c={pathname === to ? 'blue' : undefined}>{label}</Card>
+            <Card w='100%' shadow='sm' withBorder c={pathname === to ? 'blue' : undefined} p='sm'>{label}</Card>
         </Link>
     )
 }
