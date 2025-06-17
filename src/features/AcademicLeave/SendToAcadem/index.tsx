@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core"
 import { UserDetailsDto } from "services/api/api-client.types"
-import { UserProfileType } from "shared/lib"
+import { useSendStudentToAcademMutation } from "services/api/api-client/StudentQuery"
+import { useGetUserByIdQuery } from "services/api/api-client/UserQuery"
 import { Modal } from "shared/ui"
 
 type SendToAcademProps = {
@@ -8,9 +9,18 @@ type SendToAcademProps = {
 }
 
 export const SendToAcadem = ({ user }: SendToAcademProps) => {
+    const { mutateAsync } = useSendStudentToAcademMutation(user.student?.id!)
+    const { refetch } = useGetUserByIdQuery(user.id)
     //добавить запрос
     const handleDelete = (close: () => void) => {
-        close()
+        mutateAsync()
+            .then(() => {
+                refetch()
+                close()
+            })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     return (
