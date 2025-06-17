@@ -49,7 +49,7 @@ export const ProfileBlock = ({
 
             <div style={{ marginBottom: '1vh' }}>
                 {profileData.dean && <Badge variant="gradient" gradient={{ from: 'red', to: 'orange' }} mr="xs">Деканат</Badge>}
-                {profileData.student?.group !== null && profileData.student?.number !== null && <Badge variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 105 }} mr="xs">{profileData.student?.group.number}</Badge>}
+                {profileData.student && profileData.student?.group !== null && profileData.student?.number !== null && <Badge variant="gradient" gradient={{ from: 'teal', to: 'lime', deg: 105 }} mr="xs">{profileData.student?.group.number}</Badge>}
                 {profileData.curator?.companyPartner.name && <Badge variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} mr="xs">{profileData.curator?.companyPartner.name}</Badge>}
                 {profileData.teacher && <Badge color="grape" mr="xs">Учитель</Badge>}
                 {profileData.educationalProgramLead && <Badge color="yellow" mr="xs">Рук. ОП</Badge>}
