@@ -1,7 +1,7 @@
 import { SelectionTeacherFilters, SelectionFinder, SelectionTeacherList } from "widgets/Selection/indexTeachers"
-import { GET_INTERVIEWFORTEACHER, GET_INTERVIEWS } from "shared/lib";
+import { GET_INTERVIEWFORTEACHER } from "shared/lib";
 import { Container, Flex } from "@mantine/core";
-import { PracticesList } from "widgets/StudentsPracticesForm";
+import { Pagination } from "shared/ui";
 
 export const SelectionTeacherPage = () => {
     return (
@@ -11,6 +11,7 @@ export const SelectionTeacherPage = () => {
                     <SelectionTeacherFilters/>
                     <SelectionFinder studentCount={10}/>
                     <SelectionTeacherList items={GET_INTERVIEWFORTEACHER.items} pagination={GET_INTERVIEWFORTEACHER.pagination}/>
+                    <Pagination pagination={GET_INTERVIEWFORTEACHER.pagination} />
                 </Flex>
             </Container>
         </>

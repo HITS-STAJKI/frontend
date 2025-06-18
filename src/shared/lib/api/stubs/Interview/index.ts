@@ -40,7 +40,7 @@ export const GET_INTERVIEWS: InterviewPage = {
     items: [INTERVIEW1, INTERVIEW2, INTERVIEW3],
     pagination: {
         totalPages: 1,
-        currentPage: 0,
+        currentPage: 1,
         size: 10
     }
 }

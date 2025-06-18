@@ -1,8 +1,9 @@
-import { Group } from "entity"
+import { FilterBlockFull, Group, ImputFilter } from "entity"
 import { GET_GROUPS } from "shared/lib"
-import { Grid } from "@mantine/core";
+import { Grid, TextInput } from "@mantine/core";
 import { Pagination } from "shared/ui";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
+import { useState } from "react";
 
 export const GroupList = () => {
     const {data, isLoading} = useGetGroupsQuery()
@@ -29,4 +30,14 @@ export const GroupList = () => {
         </div>
         
     )
+}
+
+export function GroupFilters() {
+    return (
+        <FilterBlockFull availableFilters={[
+            { id: "number", label: "Номер группы", element: (props) => <ImputFilter id="number" onChangeValue={props.onChangeValue} label={"Введите номер группы"} /> },
+        ]}
+            printButton={false}
+        />
+    );
 }

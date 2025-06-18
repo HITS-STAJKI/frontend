@@ -62,10 +62,10 @@ export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/)
 }
 
 
-export function SelectionStudentList( { page }: { page: InterviewPage }) {
+export function SelectionStudentList( { data }: { data: InterviewPage }) {
     return (
         <Container p={0} fluid style={{width: '100%' }}>
-        {page.items.map(card => (
+        {data.items.map(card => (
             <SelectionCard key={card.id} selection={card} />
         ))}
         </Container >
