@@ -1,8 +1,10 @@
 import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea } from "@mantine/core"
-import {  PracticeRequestPage } from "shared/lib";
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { StudentListCard } from "entity/StudentListCard";
+import { PagedListDtoStudentDto } from "services/api/api-client.types";
+import { useSearchParams } from "react-router-dom";
+import { useSendMessagesMutation } from "services/api/api-client/ChatControllerQuery";
 
 type PracticesFormOverProps = {
     studentName: string,
@@ -20,43 +22,71 @@ export function PracticesFormOver({ studentName, group }: PracticesFormOverProps
     );
 }
 
-type SortDirection = "Asc" | "Desc";
-type SortKey =
-    | "fullName"
-    | "group"
-    | "company"
-    | "status";
+export type SortDirectionStudents = "asc" | "desc";
+export type SortKeyStudents =
+    | "user.fullName"
+    | "group.number"
+    | "user.lastLoginDate";
 
-export function StudentsListForm({ content, pagination }: PracticeRequestPage) {
-    const [sort, setSort] = useState<[SortKey, SortDirection] | null>(null);
+type StudentsListFormProps = PagedListDtoStudentDto & {
+    initialSort: [SortKeyStudents, SortDirectionStudents] | null;
+    selectedStudentIds: string[];
+    setSelectedStudentIds: React.Dispatch<React.SetStateAction<string[]>>;
+};
 
-    //TODO: Функция сортировки
-    function handleSort(key: SortKey) 
+export function StudentsListForm({ items, pagination, initialSort, selectedStudentIds, setSelectedStudentIds }: StudentsListFormProps) {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [sort, setSort] = useState<[SortKeyStudents, SortDirectionStudents] | null>(initialSort);
+
+    function handleSort(key: SortKeyStudents) 
     {
-        setSort((currentSort) => 
-        {
+        setSort((currentSort) => {
+            let newSort: [SortKeyStudents, SortDirectionStudents] | null;
+
             if (currentSort?.[0] === key) 
             {
-                if (currentSort[1] === "Asc") 
+                if (currentSort[1] === "asc") 
                 {
-                    return [key, "Desc"];
+                    newSort = [key, "desc"];
                 } 
-                else if (currentSort[1] === "Desc") 
+                else if (currentSort[1] === "desc") 
                 {
-                    return null;
+                    newSort = null;
+                } 
+                else 
+                {
+                    newSort = [key, "asc"];
                 }
+            } 
+            else 
+            {
+                newSort = [key, "asc"];
             }
-            return [key, "Asc"];
+
+            const updatedParams = new URLSearchParams(searchParams);
+            if (newSort) 
+            {
+                updatedParams.set("sort", newSort[0]);
+                updatedParams.set("sortDirection", newSort[1]);
+            } 
+            else 
+            {
+                updatedParams.delete("sort");
+                updatedParams.delete("sortDirection");
+            }
+
+            setSearchParams(updatedParams);
+            return newSort;
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKey }) 
+    function SortArrow({ columnKey }: { columnKey: SortKeyStudents }) 
     {
         if (!sort || sort[0] !== columnKey)
         {
             return null;
         }
-        return sort[1] === "Asc" ? 
+        return sort[1] === "asc" ? 
         (
             <IconChevronUp size={14} style={{ marginLeft: 4 }} />
         ) : (
@@ -65,58 +95,103 @@ export function StudentsListForm({ content, pagination }: PracticeRequestPage) {
     }
 
     return (
-        <Flex wrap="wrap" gap="md" mt="lg" style={{ width: "100%" }}>
+        <Flex direction="column" gap="md" mt="lg" style={{ width: "100%" }}>
             <Card shadow="sm" style={{ width: "100%", height: "64px", display: "flex" }}>
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                     <Box style={{ width: "40px", textAlign: "center" }} />
                     <Box style={{ width: "40px", textAlign: "center" }} />
                     <Grid style={{ width: "100%" }}>
                         {[
-                            { key: "fullName", label: "Имя студента" },
-                            { key: "group", label: "Группа" },
-                            { key: "company", label: "Компания" },
-                            { key: "status", label: "Статус" }
+                            { key: "user.fullName", label: "Имя студента" },
+                            { key: "group.number", label: "Группа" },
+                            { key: "user.lastLoginDate", label: "Время последнего входа" }
                         ].map(({ key, label }) => (
-                            <Grid.Col key={key} span={3} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Grid.Col
+                                key={key}
+                                span={3}
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "stretch"
+                            }}>
                                 <Button
                                     variant="subtle"
                                     size="sm"
-                                    onClick={() => handleSort(key as SortKey)}
-                                    style=
-                                    {{
+                                    onClick={() => handleSort(key as SortKeyStudents)}
+                                    style={{
                                         display: "flex",
+                                        flexDirection: "row",
                                         alignItems: "center",
-                                        whiteSpace: "nowrap",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        height: "100%",
+                                        color: "black",
+                                        textAlign: "center",
+                                        padding: "8px",
+                                        gap: "4px",
+                                }}>
+                                    <span
+                                        style={{
+                                        display: "-webkit-box",
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: "vertical",
                                         overflow: "hidden",
                                         textOverflow: "ellipsis",
-                                        color: "black",
-                                        width: "100%",
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    {label}
-                                    <SortArrow columnKey={key as SortKey} />
+                                        whiteSpace: "normal",
+                                        lineHeight: "1.2em",
+                                        maxWidth: "100%",
+                                        }}
+                                    >
+                                        {label}
+                                    </span>
+                                    <span style={{ width: "16px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
+                                        <SortArrow columnKey={key as SortKeyStudents} />
+                                    </span>
                                 </Button>
                             </Grid.Col>
                         ))}
+                        <Grid.Col span={3} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                            <Text
+                                size="sm"
+                                style={{
+                                    fontWeight: 500,
+                                    color: "black",
+                                    whiteSpace: "normal",
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    maxWidth: "100%",
+                                }}
+                            >
+                                Количество непрочитанных сообщений
+                            </Text>
+                        </Grid.Col>
                     </Grid>
                 </div>
             </Card>
-            {content.map((practice, localIndex) => {
-                const globalIndex = (pagination.currentPage - 1) * pagination.size + localIndex;
+            {(items ?? []).map((student, localIndex) => {
+                const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
                 return (
                     <StudentListCard
-                        key={practice.id}
-                        id={practice.id}
-                        user={practice.user}
-                        group={practice.group}
-                        company={practice.company}
-                        createdAt={practice.createdAt}
-                        isPaid={practice.isPaid}
-                        isArchived={practice.isArchived}
-                        isApproved={practice.isApproved}
-                        index={globalIndex + 1}
-                        status={"PENDING"}
+                        key = {student.id}
+                        index = {globalIndex + 1}
+                        studentId = {student.id}
+                        userId = {student.user.id}
+                        fullName = {student.user.fullName}
+                        groupNumber = {student.group.number}
+                        lastLoginDate = {student.user.lastLoginDate}
+                        unreadMessagesCount = {student.unreadMessagesCount}
+                        chatId = {student.chatId}
+                        isSelected={selectedStudentIds.includes(student.id)}
+                        onToggleSelect={() => {
+                            setSelectedStudentIds((prev) =>
+                                prev.includes(student.id)
+                                    ? prev.filter((id) => id !== student.id)
+                                    : [...prev, student.id]
+                            );
+                        }}
                     />
                 );
             })}
@@ -138,20 +213,52 @@ export function StudentsFormUnder({ studentCount }: PracticesFormUnderProps) {
     );
 }
 
-export function StudentsCommentaryForm() {
+interface StudentsCommentaryFormProps {
+    selectedStudentIds: string[];
+}
+
+export function StudentsCommentaryForm({ selectedStudentIds }: StudentsCommentaryFormProps) {
     const [value, setValue] = useState('');
+
+    const isSubmitDisabled = value.trim() === '' || selectedStudentIds.length === 0;
+
+    const { mutate, status } = useSendMessagesMutation({
+        onSuccess: () => {
+            setValue('');
+        },
+        onError: (error) => {
+            console.error("Ошибка при отправке сообщения:", error);
+        }
+    });
+
+    const isLoading = status === 'pending';
+
+    const handleSubmit = () => {
+        if (isSubmitDisabled) {
+            return;
+        }
+
+        mutate({
+            content: value.trim(),
+            studentIds: selectedStudentIds,
+        });
+    };
 
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
             <Card style={{ width: '100%', padding: '1rem', border: "1px solid #ccc", borderRadius: 8 }}>
                 <Stack gap="sm" style={{ width: '100%' }}>
-                    <Textarea placeholder="Введите комментарий..." autosize minRows={3} value={value} onChange={(event) => setValue(event.currentTarget.value)} style={{ width: '100%' }}/>
+                    <Textarea placeholder="Введите комментарий..." autosize minRows={3} value={value} onChange={(event) => setValue(event.currentTarget.value)} style={{ width: '100%' }} />
                     <Group justify="flex-end">
-                        <Button variant="light" color="gray" onClick={() => setValue('')}>Отмена</Button>
-                        <Button color="blue">Отправить</Button>
+                        <Button variant="light" color="gray" onClick={() => setValue('')} disabled={isLoading} >
+                            Отмена
+                        </Button>
+                        <Button color="blue" onClick={handleSubmit} disabled={isSubmitDisabled || isLoading} loading={isLoading} >
+                            Отправить
+                        </Button>
                     </Group>
                     <Group justify="flex-end" mt="sm">
-                        <Button color="green" variant="filled" style={{textAlign: 'center', flexDirection: 'column', whiteSpace: 'pre-line', padding: '0.75rem'}}>
+                        <Button color="green" variant="filled" style={{ textAlign: 'center', flexDirection: 'column', whiteSpace: 'pre-line', padding: '0.75rem' }} >
                             Экспортировать пользователей
                         </Button>
                     </Group>

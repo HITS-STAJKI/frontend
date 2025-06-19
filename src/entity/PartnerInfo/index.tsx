@@ -1,7 +1,9 @@
-import { Title, Container, Flex, Group, Image, Text } from '@mantine/core';
+import { Title, Container, Flex, Group, Image, Text, Button } from '@mantine/core';
+import { IconArrowLeft } from '@tabler/icons-react';
 import { DeletePartnerButton } from "features/Partners/DeletePartnerButton";
 import { EditPartnerButton } from "features/Partners/EditPartnerButton";
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CompanyPartnerDto } from "services/api/api-client.types";
 import { useDownloadFileQuery } from 'services/api/api-client/FilesQuery';
 
@@ -11,6 +13,8 @@ type PartnerInfoProps = {
 };
 
 export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
+    const navigate = useNavigate();
+
     const hasFile = Boolean(partner.fileId);
     const { data: fileData } = useDownloadFileQuery(partner.fileId ?? '', {
         enabled: hasFile,
@@ -39,6 +43,9 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
                 <Group>
                     <EditPartnerButton partner={partner} onSuccess={refetch} />
                     <DeletePartnerButton partner={partner} />
+                    <Button variant="outline" leftSection={<IconArrowLeft size={16} />} onClick={() => navigate('/partners')}>
+                        Назад
+                    </Button>
                 </Group>
             </Flex>
 

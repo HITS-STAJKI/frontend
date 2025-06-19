@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { TextInput, Select, MultiSelect } from "@mantine/core";
 import { GET_GROUPS, GET_COMPANIES, GET_STACKS, GET_LANGUAGES } from "shared/lib";
-import { DateInput  } from "@mantine/dates";
+import { DateInput, DateTimePicker  } from "@mantine/dates";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { CompanyPartnerDto } from "services/api/api-client.types";
+import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
+import { useGetStackListQuery } from "services/api/api-client/StackQuery";
 
 export function FilterLanguageName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
 {
@@ -26,12 +28,14 @@ export function FilterLanguageName({ id, onChangeValue }: { id: string; onChange
     );
 }
 
-export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) 
-{
-    const [value, setValue] = useState("");
+export function FilterName({ id, onChangeValue, initialValue = "" }: { id: string; initialValue?: string; onChangeValue: (val: string) => void; }) {
+    const [value, setValue] = useState(initialValue ?? "");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => 
-    {
+    useEffect(() => {
+        setValue(initialValue ?? "");
+    }, [initialValue]);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const val = event.currentTarget.value;
         setValue(val);
         onChangeValue(val);
@@ -181,9 +185,14 @@ export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onCha
     );
 }
 
-export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) 
-{
-    const [value, setValue] = useState<Date | null>(null);
+export function FilterDate({ id, initialValue = null, onChangeValue }: { id: string; initialValue?: string | null; onChangeValue: (val: string | null) => void; }) {
+    const [value, setValue] = useState<Date | null>(
+        initialValue ? new Date(initialValue) : null
+    );
+
+    useEffect(() => {
+        setValue(initialValue ? new Date(initialValue) : null);
+    }, [initialValue]);
 
     const handleChange = (date: Date | null) => {
         setValue(date);
@@ -191,13 +200,39 @@ export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (
     };
 
     return (
-        <DateInput 
+        <DateInput
             id={`filter-${id}`}
             value={value}
             onChange={handleChange}
+            clearable
         />
     );
 }
+
+export function FilterDateTime({ id, initialValue = null, onChangeValue }: { id: string; initialValue?: string | null; onChangeValue: (val: string | null) => void; }) {
+    const [value, setValue] = useState<Date | null>(
+        initialValue ? new Date(initialValue) : null
+    );
+
+    useEffect(() => {
+        setValue(initialValue ? new Date(initialValue) : null);
+    }, [initialValue]);
+
+    const handleChange = (date: Date | null) => {
+        setValue(date);
+        onChangeValue(date ? date.toISOString().slice(0, 19) : null);
+    };
+
+    return (
+        <DateTimePicker
+            id={`filter-${id}`}
+            value={value}
+            onChange={handleChange}
+            clearable
+        />
+    );
+}
+
 
 export function FilterCompanyName({ id, onChangeValue, initialValue = "" }: { id: string; initialValue?: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState(initialValue);
@@ -224,7 +259,7 @@ export function FilterCompanyName({ id, onChangeValue, initialValue = "" }: { id
 
 
 export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: string; initialValue: string | null; onChangeValue: (val: string | null) => void; }) {
-    const { data, isLoading } = useGetPartnersQuery();
+    const { data, isLoading } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000);
 
     const options = isLoading || !Array.isArray(data?.items)
         ? []
@@ -259,22 +294,24 @@ export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: s
 }
 
 
-export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) 
-{
-    const [value, setValue] = useState<string[]>([]);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | null; onChangeValue: (val: string[]) => void; }) {
+    const [value, setValue] = useState<string[] | null>(initialValue);
+
+    const { data, isLoading } = useGetGroupsQuery(undefined, undefined, 0, 1000);
+
+    const options =
+        isLoading || !Array.isArray(data?.items)
+            ? []
+            : data.items
+                .filter((group) => group.id && group.number)
+                .map((group) => ({
+                    value: group.id!,
+                    label: group.number!
+                }));
 
     useEffect(() => {
-        setTimeout(() => {
-            const groups = GET_GROUPS.content;
-            const selectData = groups.map(group => ({
-                value: group.id,
-                label: group.number,
-            }));
-
-            setData(selectData);
-        }, 300);
-    }, []);
+        setValue(initialValue ?? []);
+    }, [initialValue]);
 
     const handleChange = (val: string[]) => {
         setValue(val);
@@ -284,11 +321,89 @@ export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChang
     return (
         <MultiSelect
             id={`filter-${id}`}
-            placeholder="Выберите группу"
-            value={value}
+            placeholder={isLoading ? "Загрузка..." : "Выберите группу"}
+            value={value ?? []}
             onChange={handleChange}
-            data={data}
+            data={options}
             clearable
+            searchable
+            disabled={isLoading}
+        />
+    );
+}
+
+export function FilterCompanyMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | null; onChangeValue: (val: string[]) => void; }) {
+    const [value, setValue] = useState<string[] | null>(initialValue);
+
+    const { data, isLoading } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000);
+
+    const options =
+        isLoading || !Array.isArray(data?.items)
+            ? []
+            : data.items
+                .filter((company) => company.id && company.name)
+                .map((company) => ({
+                    value: company.id!,
+                    label: company.name!
+                }));
+
+    useEffect(() => {
+        setValue(initialValue ?? []);
+    }, [initialValue]);
+
+    const handleChange = (val: string[]) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <MultiSelect
+            id={`filter-${id}`}
+            placeholder={isLoading ? "Загрузка..." : "Выберите компанию"}
+            value={value ?? []}
+            onChange={handleChange}
+            data={options}
+            clearable
+            searchable
+            disabled={isLoading}
+        />
+    );
+}
+
+export function FilterStackMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | null; onChangeValue: (val: string[]) => void; }) {
+    const [value, setValue] = useState<string[] | null>(initialValue);
+
+    const { data, isLoading } = useGetStackListQuery(undefined);
+
+    const options =
+        isLoading || !Array.isArray(data)
+            ? []
+            : data
+                .filter((stack) => stack.id && stack.name)
+                .map((stack) => ({
+                    value: stack.id!,
+                    label: stack.name!
+                }));
+
+    useEffect(() => {
+        setValue(initialValue ?? []);
+    }, [initialValue]);
+
+    const handleChange = (val: string[]) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <MultiSelect
+            id={`filter-${id}`}
+            placeholder={isLoading ? "Загрузка..." : "Выберите направление"}
+            value={value ?? []}
+            onChange={handleChange}
+            data={options}
+            clearable
+            searchable
+            disabled={isLoading}
         />
     );
 }

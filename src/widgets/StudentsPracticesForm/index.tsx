@@ -1,50 +1,78 @@
 import { Button, Flex, Card, Grid, Box, Group, Text } from "@mantine/core"
-import { PracticeRequestPage } from "shared/lib";
 import { FullPracticeCard } from "entity/FullPracticeCard";
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { DateInput } from "@mantine/dates";
+import { PagedListDtoPracticeDto } from "services/api/api-client.types";
+import { useSearchParams } from "react-router-dom";
 
-type SortDirection = "Asc" | "Desc";
-type SortKey =
-    | "userName"
-    | "groupNumber"
-    | "companyName"
+export type SortDirectionAllPractices = "asc" | "desc";
+export type SortKeyAllPractices =
+    | "student.user.fullName"
+    | "student.group.number"
+    | "company.name"
     | "createdAt"
     | "isPaid"
     | "isArchived"
     | "isApproved";
 
-export function PracticesList({ items, pagination }: PracticeRequestPage) {
-    const [sort, setSort] = useState<[SortKey, SortDirection] | null>(null);
+type PagedListDtoPracticeProps = PagedListDtoPracticeDto & {
+    initialSort: [SortKeyAllPractices, SortDirectionAllPractices] | null;
+};
 
-    //TODO: Функция сортировки
-    function handleSort(key: SortKey) 
+export function PracticesList({ items, pagination, initialSort = null }: PagedListDtoPracticeProps) {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [sort, setSort] = useState<[SortKeyAllPractices, SortDirectionAllPractices] | null>(initialSort);
+
+    function handleSort(key: SortKeyAllPractices) 
     {
-        setSort((currentSort) => 
-        {
+        setSort((currentSort) => {
+            let newSort: [SortKeyAllPractices, SortDirectionAllPractices] | null;
+
             if (currentSort?.[0] === key) 
             {
-                if (currentSort[1] === "Asc") 
+                if (currentSort[1] === "asc") 
                 {
-                    return [key, "Desc"];
+                    newSort = [key, "desc"];
                 } 
-                else if (currentSort[1] === "Desc") 
+                else if (currentSort[1] === "desc") 
                 {
-                    return null;
+                    newSort = null;
+                } 
+                else 
+                {
+                    newSort = [key, "asc"];
                 }
+            } 
+            else 
+            {
+                newSort = [key, "asc"];
             }
-            return [key, "Asc"];
+
+            const updatedParams = new URLSearchParams(searchParams);
+            if (newSort) 
+            {
+                updatedParams.set("sort", newSort[0]);
+                updatedParams.set("sortDirection", newSort[1]);
+            } 
+            else 
+            {
+                updatedParams.delete("sort");
+                updatedParams.delete("sortDirection");
+            }
+
+            setSearchParams(updatedParams);
+            return newSort;
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKey }) 
+    function SortArrow({ columnKey }: { columnKey: SortKeyAllPractices }) 
     {
         if (!sort || sort[0] !== columnKey)
         {
             return null;
         }
-        return sort[1] === "Asc" ? 
+        return sort[1] === "asc" ? 
         (
             <IconChevronUp size={14} style={{ marginLeft: 4 }} />
         ) : (
@@ -59,41 +87,30 @@ export function PracticesList({ items, pagination }: PracticeRequestPage) {
                     <Box style={{ width: "40px", textAlign: "center" }} />
                     <Grid style={{ width: "100%" }}>
                         {[
-                            { key: "userName", label: "Студент" },
-                            { key: "groupNumber", label: "Поток" },
-                            { key: "companyName", label: "Компания" },
+                            { key: "student.user.fullName", label: "Студент" },
+                            { key: "student.group.number", label: "Поток" },
+                            { key: "company.name", label: "Компания" },
                             { key: "isPaid", label: "Оплачиваемая" },
                             { key: "isApproved", label: "Подтверждена" },
                             { key: "isArchived", label: "Архивная" },
                             { key: "createdAt", label: "Дата создания" },
                         ].map(({ key, label }) => (
-                            <Grid.Col key={key} span={1.5} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                <Button
-                                    variant="subtle"
-                                    size="sm"
-                                    onClick={() => handleSort(key as SortKey)}
-                                    style=
-                                    {{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        whiteSpace: "nowrap",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        color: "black",
-                                        width: "100%",
-                                        justifyContent: "center",
-                                    }}
-                                >
-                                    {label}
-                                    <SortArrow columnKey={key as SortKey} />
+                            <Grid.Col key={key} span={1.5} style={{ display: "flex", justifyContent: "center", alignItems: "stretch" }}>
+                                <Button variant="subtle" size="sm" onClick={() => handleSort(key as SortKeyAllPractices)} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", width: "100%", height: "100%", color: "black", textAlign: "center", padding: "8px", gap: "4px" }}>
+                                    <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", lineHeight: "1.2em", maxWidth: "100%" }}>
+                                        {label}
+                                    </span>
+                                    <span style={{ width: "16px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
+                                        <SortArrow columnKey={key as SortKeyAllPractices} />
+                                    </span>
                                 </Button>
                             </Grid.Col>
                         ))}
                     </Grid>
                 </div>
             </Card>
-            {items.map((practice, localIndex) => {
-                const globalIndex = (pagination.currentPage != null && pagination.size != null) ? (pagination.currentPage - 1) * pagination.size + localIndex : -1;
+            {(items ?? []).map((practice, localIndex) => {
+                const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
                 return (
                     <FullPracticeCard
                         key={practice.id}
@@ -121,12 +138,10 @@ export function PracticesFormUnder({ studentCount }: PracticesFormUnderProps) {
     const [deadline, setDeadline] = useState<Date | null>(null);
 
     const handleSave = () => {
-        // TODO: обработка сохранения дедлайна
         console.log("Сохраняем дедлайн:", deadline);
     };
 
     const handleConfirm = () => {
-        // TODO: логика подтверждения практик
         console.log("Практики подтверждены");
     };
 

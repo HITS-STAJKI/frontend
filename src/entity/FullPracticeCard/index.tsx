@@ -2,16 +2,17 @@ import { Box, Card, Grid, Text } from "@mantine/core"
 import { Practice, PRACTICE_ROUTE } from "shared/lib";
 import { ReportArchive, ReportDelete, ReportEdit, ReportOpen } from "features/PracticesFullButtons";
 import { useNavigate } from "react-router-dom";
+import { PracticeDto } from "services/api/api-client.types";
 
-interface FullPracticeCardProps extends Practice {
+interface FullPracticeCardProps extends PracticeDto {
   index: number;
 }
 
-export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, isArchived, isApproved, index }: FullPracticeCardProps) {
+export function FullPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate(PRACTICE_ROUTE.replace(':id', id));
+        navigate(PRACTICE_ROUTE.replace(':id', id ?? ''));
     };
     
     return (
@@ -45,17 +46,17 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
             <Grid style={{width: '100%'}}>
                 <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {user.fullname}
+                        {user?.fullName ?? 'Неизвестный пользователь'}
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {group.number}
+                        {group?.number ?? 'Неизвестная группа'}
                     </Text>
                 </Grid.Col>
                  <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {company.name}
+                        {company?.name ?? 'Неизвестная компания'}
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -75,21 +76,22 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
                 </Grid.Col>
                 <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        {new Date(createdAt).toLocaleDateString("ru-RU")}
+                        {createdAt ? new Date(createdAt).toLocaleDateString("ru-RU") : '—'}
                     </Text>
                 </Grid.Col>
                 <Grid.Col span={1.5} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <div
-                        onClick={(e) => e.stopPropagation()}
-                        style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}
-                    >
+                    <div onClick={(e) => e.stopPropagation()} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
                         {
                             //TODO: Сделать отображжение кнопок от роли
                         }
-                        <ReportOpen id={id} />
-                        <ReportEdit id={id} />
-                        <ReportDelete id={id} />
-                        <ReportArchive id={id} />
+                        {id && (
+                            <>
+                                <ReportOpen id={id} />
+                                <ReportEdit id={id} />
+                                <ReportDelete id={id} />
+                                <ReportArchive id={id} />
+                            </>
+                        )}
                     </div>
                 </Grid.Col>
             </Grid>

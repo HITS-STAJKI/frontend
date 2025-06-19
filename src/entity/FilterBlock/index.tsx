@@ -234,35 +234,46 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        const initialValues: Record<string, string> = {};
+        const initialValues: Record<string, any> = {};
         const active: FilterItem[] = [];
 
         availableFilters.forEach((f) => {
-            const value = searchParams.get(f.id);
-            if (value !== null) {
-                initialValues[f.id] = value;
+            const values = searchParams.getAll(f.id);
+            if (values.length > 0) 
+            {
+                initialValues[f.id] = values.length > 1 ? values : values[0];
                 active.push(f);
             }
         });
 
         setFilterValues(initialValues);
         setActiveFilters(active);
-        if (active.length > 0) {
+
+        if (active.length > 0) 
+        {
             setOpened(true);
         }
 
         const sizeParam = searchParams.get("size");
-        if (sizeParam) {
+        if (sizeParam) 
+        {
             setSelectedPage(Number(sizeParam));
         }
     }, [availableFilters, searchParams]);
 
     const handleAddFilter = () => {
-        if (!selectedFilterId) return;
-        if (activeFilters.some(f => f.id === selectedFilterId)) return;
+        if (!selectedFilterId) 
+        {
+            return;
+        }
+        if (activeFilters.some(f => f.id === selectedFilterId)) 
+        {
+            return;
+        }
 
         const filterToAdd = availableFilters.find(f => f.id === selectedFilterId);
-        if (filterToAdd) {
+        if (filterToAdd) 
+        {
             setActiveFilters(prev => [...prev, filterToAdd]);
             setOpened(true);
         }
@@ -272,10 +283,13 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
     const handleRemoveFilter = (id: string) => {
         const updated = activeFilters.filter(f => f.id !== id);
 
-        if (updated.length === 0) {
+        if (updated.length === 0) 
+        {
             setOpened(false);
             setTimeout(() => setActiveFilters([]), 300);
-        } else {
+        } 
+        else 
+        {
             setActiveFilters(updated);
         }
 
@@ -293,7 +307,8 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
     };
 
     const handleChangePage = (value: string | null) => {
-        if (value !== null) {
+        if (value !== null) 
+        {
             setSelectedPage(Number(value));
         }
     };
@@ -302,7 +317,17 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
         const params = new URLSearchParams();
 
         Object.entries(filterValues).forEach(([key, value]) => {
-            if (value !== null && value !== "") {
+            if (Array.isArray(value)) 
+            {
+                value.forEach(val => {
+                    if (val !== null && val !== "") 
+                    {
+                        params.append(key, val);
+                    }
+                });
+            } 
+            else if (value !== null && value !== "") 
+            {
                 params.append(key, value);
             }
         });
