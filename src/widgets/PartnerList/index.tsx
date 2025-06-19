@@ -1,4 +1,4 @@
-import { Partner } from "entity"
+import { Partner, PartnerEmpty } from "entity"
 import { Center, Container, Loader } from '@mantine/core';
 import { Pagination } from "shared/ui";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
@@ -27,9 +27,13 @@ export const PartnerList = () => {
     return (
         <div style={{ paddingBottom: '70px' }}>
             <Container size="100%" mt="3vh">
-                {data?.items?.map((partner) => (
-                    <Partner key={partner.id} partner={partner} />
-                ))}
+                {(!data || !data.items || data.items.length === 0) ? (
+                    <PartnerEmpty />
+                ) : (
+                    data.items.map((partner) => (
+                        <Partner key={partner.id} partner={partner} />
+                    ))
+                )}
                 <Pagination pagination={data?.pagination} />
             </Container>
         </div>

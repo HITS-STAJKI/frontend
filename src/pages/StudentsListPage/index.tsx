@@ -43,24 +43,6 @@ export const StudentsListPage = () => {
 
     const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
 
-    if (isLoading) {
-        return (
-            <Center
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100vw',
-                    height: '100vh',
-                    pointerEvents: 'none',
-                    zIndex: 9999
-                }}
-            >
-                <Loader size="lg" />
-            </Center>
-        );
-    }
-
     return (
         <Container fluid>
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
@@ -76,10 +58,18 @@ export const StudentsListPage = () => {
                     {id: "stackIds",label: "Выберете направление",element: (props) => <FilterStackMultiple id="stackIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} />},
                     {id: "lastLogin",label: "Время последнего захода в систему",element: (props) => <FilterDateTime id="lastLogin" initialValue={props.initialValue} onChangeValue={props.onChangeValue} />},
                 ]}/>
-                <StudentsFormUnder studentCount={data?.pagination?.totalElements ? data?.pagination?.totalElements : 0}/>
-                <StudentsListForm items={data?.items} pagination={data?.pagination} initialSort={sortArray} selectedStudentIds={selectedStudentIds} setSelectedStudentIds={setSelectedStudentIds}/>
-                <StudentsCommentaryForm selectedStudentIds={selectedStudentIds}/>
-                <Pagination pagination={data?.pagination} />
+                {isLoading ? (
+                    <Center style={{ height: 300 }}>
+                        <Loader size="lg" />
+                    </Center>
+                ) : (
+                    <>
+                        <StudentsFormUnder studentCount={data?.pagination?.totalElements ? data?.pagination?.totalElements : 0}/>
+                        <StudentsListForm items={data?.items} pagination={data?.pagination} initialSort={sortArray} selectedStudentIds={selectedStudentIds} setSelectedStudentIds={setSelectedStudentIds}/>
+                        <StudentsCommentaryForm selectedStudentIds={selectedStudentIds}/>
+                        <Pagination pagination={data?.pagination} />
+                    </>
+                )}
             </Flex>
         </Container>
     );

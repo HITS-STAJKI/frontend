@@ -40,6 +40,9 @@ export const StudentPractice = () => {
         );
     }
 
+    console.log('practice:', practice);
+    console.log(practice.company?.curators?.[0].fullName);
+
     return (
         <Container fluid style={{ width: '75%', margin: '0 auto' }}>
             <Flex direction="column" style={{ width: '100%', margin: '0 auto' }} gap="md">
@@ -71,7 +74,7 @@ export const StudentPractice = () => {
                         <Text fw={500}>Компания:</Text>
                         <Text>Название: {practice.company?.name ?? "—"}</Text>
                         <Text size="sm">Описание: {practice.company?.description ?? "—"}</Text>
-                        <Text>Куратор: {practice.company?.curators?.[0]?.user?.fullName ? ` ФИО ${practice.company.curators[0].user.fullName}; Почта ${practice.company.curators[0].user.email}` : " —"} </Text>
+                        <Text>Куратор: {practice.company?.curators?.[0].fullName ? ` ФИО ${practice.company?.curators?.[0].fullName}; Почта ${practice.company.curators[0].email};` : " —"} </Text>
                     </Stack>
                 </Card>
             </Flex>

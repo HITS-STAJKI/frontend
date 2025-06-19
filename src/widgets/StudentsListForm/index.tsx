@@ -1,7 +1,7 @@
 import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea } from "@mantine/core"
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { StudentListCard } from "entity/StudentListCard";
+import { StudentListCard, StudentListCardEmpty } from "entity/StudentListCard";
 import { PagedListDtoStudentDto } from "services/api/api-client.types";
 import { useSearchParams } from "react-router-dom";
 import { useSendMessagesMutation } from "services/api/api-client/ChatControllerQuery";
@@ -95,7 +95,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
     }
 
     return (
-        <Flex direction="column" gap="md" mt="lg" style={{ width: "100%" }}>
+        <Flex wrap="wrap" gap="md" mt="lg" style={{ width: "100%" }}>
             <Card shadow="sm" style={{ width: "100%", height: "64px", display: "flex" }}>
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                     <Box style={{ width: "40px", textAlign: "center" }} />
@@ -171,30 +171,34 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                     </Grid>
                 </div>
             </Card>
-            {(items ?? []).map((student, localIndex) => {
-                const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
-                return (
-                    <StudentListCard
-                        key = {student.id}
-                        index = {globalIndex + 1}
-                        studentId = {student.id}
-                        userId = {student.user.id}
-                        fullName = {student.user.fullName}
-                        groupNumber = {student.group.number}
-                        lastLoginDate = {student.user.lastLoginDate}
-                        unreadMessagesCount = {student.unreadMessagesCount}
-                        chatId = {student.chatId}
-                        isSelected={selectedStudentIds.includes(student.id)}
-                        onToggleSelect={() => {
-                            setSelectedStudentIds((prev) =>
-                                prev.includes(student.id)
-                                    ? prev.filter((id) => id !== student.id)
-                                    : [...prev, student.id]
-                            );
-                        }}
-                    />
-                );
-            })}
+            {(!items || items.length === 0) ? (
+                <StudentListCardEmpty />
+            ) : (
+                (items ?? []).map((student, localIndex) => {
+                    const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
+                    return (
+                        <StudentListCard
+                            key = {student.id}
+                            index = {globalIndex + 1}
+                            studentId = {student.id}
+                            userId = {student.user.id}
+                            fullName = {student.user.fullName}
+                            groupNumber = {student.group.number}
+                            lastLoginDate = {student.user.lastLoginDate}
+                            unreadMessagesCount = {student.unreadMessagesCount}
+                            chatId = {student.chatId}
+                            isSelected={selectedStudentIds.includes(student.id)}
+                            onToggleSelect={() => {
+                                setSelectedStudentIds((prev) =>
+                                    prev.includes(student.id)
+                                        ? prev.filter((id) => id !== student.id)
+                                        : [...prev, student.id]
+                                );
+                            }}
+                        />
+                    );
+                })
+            )}
         </Flex>
     );
 }

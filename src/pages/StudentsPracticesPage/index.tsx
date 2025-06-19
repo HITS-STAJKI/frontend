@@ -52,10 +52,6 @@ export const StudentsPracticesPage = () => {
             </Center>
         );
     }
-    else
-    {
-        console.log(data);
-    }
 
     return (
         <Container fluid>
@@ -69,9 +65,17 @@ export const StudentsPracticesPage = () => {
                     {id: "isArchived",label: "Архивные данные",element: (props) => <FilterTrueFalse id="isArchived" initialValue={props.initialValue} onChangeValue={props.onChangeValue} />},
                     {id: "isPracticeApproved",label: "Практика подтверждена?",element: (props) => <FilterTrueFalse id="isPracticeApproved" initialValue={props.initialValue} onChangeValue={props.onChangeValue} />},
                 ]}/>
-                <PracticesFormUnder studentCount={data?.pagination?.totalElements ?? 0}/>
-                <PracticesList items={data?.items} pagination={data?.pagination} initialSort={sortArray}/>
-                <Pagination pagination={data?.pagination} />
+                {isLoading ? (
+                    <Center style={{ height: 300 }}>
+                        <Loader size="lg" />
+                    </Center>
+                ) : (
+                    <>
+                        <PracticesFormUnder studentCount={data?.pagination?.totalElements ?? 0}/>
+                        <PracticesList items={data?.items} pagination={data?.pagination} initialSort={sortArray}/>
+                        <Pagination pagination={data?.pagination} />
+                    </>
+                )}
             </Flex>
         </Container>
     );

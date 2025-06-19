@@ -64,6 +64,32 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
     );
 }
 
+export function StudentListCardEmpty() {
+    return (
+        <>
+            <Card shadow="sm" style={{ width: '100%', height: '64px', display: 'flex', transition: 'box-shadow 0.2s ease, background-color 0.2s ease', backgroundColor: undefined }} >
+                <div style={{ display: 'flex', alignItems: 'center', height: '100%', width: '100%' }}>
+                    <Box style={{ width: '40px', textAlign: 'center' }}></Box>
+                    <Box style={{ width: '40px', textAlign: 'center' }}></Box>
+                    <Grid style={{ width: '100%' }}>
+                        <Grid.Col style={{ whiteSpace: 'pre', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                            <Text>{"                                                   "}</Text>
+                        </Grid.Col>
+                        <Grid.Col style={{ whiteSpace: 'pre', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                            <Text>{"                                                   "}</Text>
+                        </Grid.Col>
+                        <Grid.Col style={{ whiteSpace: 'pre', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                            <Text>{"                                                   "}</Text>
+                        </Grid.Col>
+                        <Grid.Col style={{ whiteSpace: 'pre', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                            <Text>{"                                                   "}</Text>
+                        </Grid.Col>
+                    </Grid>
+                </div>
+            </Card>
+        </>
+    );
+}
 
 
 

@@ -1,5 +1,5 @@
 import { Button, Flex, Card, Grid, Box, Group, Text } from "@mantine/core"
-import { FullPracticeCard } from "entity/FullPracticeCard";
+import { FullPracticeCard, FullPracticeCardEmpty } from "entity/FullPracticeCard";
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { DateInput } from "@mantine/dates";
@@ -109,7 +109,10 @@ export function PracticesList({ items, pagination, initialSort = null }: PagedLi
                     </Grid>
                 </div>
             </Card>
-            {(items ?? []).map((practice, localIndex) => {
+            {(!items || items.length === 0) ? (
+                <FullPracticeCardEmpty />
+            ) : (
+                (items ?? []).map((practice, localIndex) => {
                 const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
                 return (
                     <FullPracticeCard
@@ -125,7 +128,7 @@ export function PracticesList({ items, pagination, initialSort = null }: PagedLi
                         index={globalIndex + 1}
                     />
                 );
-            })}
+            }))}
         </Flex>
     );
 }

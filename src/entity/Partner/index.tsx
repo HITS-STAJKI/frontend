@@ -55,3 +55,13 @@ export const Partner = ({ partner }: PartnerProps) => {
         </Card>
     )
 }
+
+export const PartnerEmpty = () => {
+    return (
+        <Card shadow="sm" withBorder mb="xs" style={{ cursor: 'pointer' }}>
+            <Group align="center">
+                <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
+            </Group>
+        </Card>
+    )
+}
