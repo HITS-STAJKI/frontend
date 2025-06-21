@@ -17,22 +17,36 @@ export const WithProfileRole = ({
             <Loader />
         </Center>
     }
-    console.log(`roles: ${usersFor.toString()}`)
+    const myRoles: Array<Roles> = []
     const educationalProgramLead = data?.educationalProgramLead !== null
-    if (educationalProgramLead && !!usersFor.find(role => role === Roles.EDUCATION_PROGRAM_LEAD)) {
-        return render
+    if (educationalProgramLead) {
+        myRoles.push(Roles.EDUCATION_PROGRAM_LEAD)
     }
     const dean = data?.dean !== null
-    if (dean && !!usersFor.find(role => role === Roles.DEAN)) {
-        return render
+    if (dean) {
+        myRoles.push(Roles.DEAN)
+    }
+    const curator = data?.curator !== null
+    if (curator) {
+        myRoles.push(Roles.CURATOR)
     }
     const teacher = data?.teacher !== null
-    if (teacher && !!usersFor.find(role => role === Roles.TEACHER)) {
-        return render
+    if (teacher) {
+        myRoles.push(Roles.TEACHER)
     }
     const student = data?.student !== null
-    if (student && !!usersFor.find(role => role === Roles.STUDENT)) {
+    if (student) {
+        myRoles.push(Roles.STUDENT)
+    }
+    console.log(myRoles, usersFor)
+    let flag = false
+    usersFor.forEach(role => {
+        if (myRoles.includes(role))
+            flag = true
+    })
+    if (flag) {
         return render
     }
     return <></>
+
 }
