@@ -2,7 +2,7 @@ import { Modal as MModal } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { ReactNode } from "react"
 
-type ContentProps = {
+export type ContentProps = {
     opened: boolean
     open: () => void
     close: () => void
