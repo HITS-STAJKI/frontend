@@ -1,9 +1,12 @@
 import { Pagination as MPagination, Flex } from "@mantine/core";
 import { useSearchParams } from "react-router-dom";
-import { PagedListDtoShortCompanyPartnerDto } from "services/api/api-client.types";
+import { PagedListDtoInterviewDto, PagedListDtoShortCompanyPartnerDto } from "services/api/api-client.types";
 
+type PaginationProps = 
+    | Pick<PagedListDtoInterviewDto, 'pagination'>
+    | Pick<PagedListDtoShortCompanyPartnerDto, 'pagination'>;
 
-export const Pagination = ({ pagination }: Pick<PagedListDtoShortCompanyPartnerDto, 'pagination'>) => {
+export const Pagination = ({ pagination }: PaginationProps) => {
     const totalPages = pagination?.totalPages ?? 1;
     const currentPage = pagination?.currentPage ?? 0;
 

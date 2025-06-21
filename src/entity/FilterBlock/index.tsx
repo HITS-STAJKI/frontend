@@ -128,6 +128,8 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
 
         params.append("size", selectedPage.toString());
         navigate({ search: params.toString() });
+
+        console.log({ search: params.toString() });
     };
 
     return (
