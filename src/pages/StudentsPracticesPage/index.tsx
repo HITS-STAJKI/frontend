@@ -4,7 +4,7 @@ import { useState } from "react";
 import { GET_PRACTICES, PracticeRequestPage } from "shared/lib";
 import { PracticesFormUnder, PracticesList } from "widgets/StudentsPracticesForm";
 
-export const StudentsPracticesPage = () => {
+const StudentsPracticesPage = () => {
     const [practices, setPractices] = useState<PracticeRequestPage>(GET_PRACTICES);
 
     return (
@@ -25,3 +25,4 @@ export const StudentsPracticesPage = () => {
         </Container>
     );
 };
+export default StudentsPracticesPage

@@ -1,5 +1,5 @@
 import { Button, Flex, Card, Grid, Box, Group, Text } from "@mantine/core"
-import { PracticeRequestPage} from "shared/lib";
+import { PracticeRequestPage } from "shared/lib";
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { ShortPracticeCard } from "entity/ShortPracticeCard";
@@ -28,22 +28,17 @@ type SortKey =
     | "isArchived"
     | "isApproved";
 
-export function PracticesList({ content, pagination }: PracticeRequestPage) {
+export function PracticesList({ items, pagination }: PracticeRequestPage) {
     const [sort, setSort] = useState<[SortKey, SortDirection] | null>(null);
 
     //TODO: Функция сортировки
-    function handleSort(key: SortKey) 
-    {
-        setSort((currentSort) => 
-        {
-            if (currentSort?.[0] === key) 
-            {
-                if (currentSort[1] === "Asc") 
-                {
+    function handleSort(key: SortKey) {
+        setSort((currentSort) => {
+            if (currentSort?.[0] === key) {
+                if (currentSort[1] === "Asc") {
                     return [key, "Desc"];
-                } 
-                else if (currentSort[1] === "Desc") 
-                {
+                }
+                else if (currentSort[1] === "Desc") {
                     return null;
                 }
             }
@@ -51,18 +46,16 @@ export function PracticesList({ content, pagination }: PracticeRequestPage) {
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKey }) 
-    {
-        if (!sort || sort[0] !== columnKey)
-        {
+    function SortArrow({ columnKey }: { columnKey: SortKey }) {
+        if (!sort || sort[0] !== columnKey) {
             return null;
         }
-        return sort[1] === "Asc" ? 
-        (
-            <IconChevronUp size={14} style={{ marginLeft: 4 }} />
-        ) : (
-            <IconChevronDown size={14} style={{ marginLeft: 4 }} />
-        );
+        return sort[1] === "Asc" ?
+            (
+                <IconChevronUp size={14} style={{ marginLeft: 4 }} />
+            ) : (
+                <IconChevronDown size={14} style={{ marginLeft: 4 }} />
+            );
     }
 
     return (
@@ -100,16 +93,16 @@ export function PracticesList({ content, pagination }: PracticeRequestPage) {
                                 </Button>
                             </Grid.Col>
                         ))}
-                        <Grid.Col span={2} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                            <Text size="sm" style={{fontWeight: 500, color: "black", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}}>
+                        <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <Text size="sm" style={{ fontWeight: 500, color: "black", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                                 Отчёт
                             </Text>
                         </Grid.Col>
                     </Grid>
                 </div>
             </Card>
-            {content.map((practice, localIndex) => {
-                const globalIndex = (pagination.currentPage - 1) * pagination.size + localIndex;
+            {items.map((practice, localIndex) => {
+                const globalIndex = (pagination.currentPage! - 1) * pagination.size! + localIndex;
                 return (
                     <ShortPracticeCard
                         key={practice.id}

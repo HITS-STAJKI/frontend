@@ -3,7 +3,7 @@ import { PartnerInfo } from 'entity';
 import { useParams } from 'react-router-dom';
 import { useGetPartnerInfoQuery } from 'services/api/api-client/CompanyPartnersQuery';
 
-export const ConcretePartnerPage = () => {
+const ConcretePartnerPage = () => {
     const { id } = useParams();
     const { data, isLoading, refetch } = useGetPartnerInfoQuery(id!);
 
@@ -23,3 +23,5 @@ export const ConcretePartnerPage = () => {
         </Container>
     );
 };
+
+export default ConcretePartnerPage

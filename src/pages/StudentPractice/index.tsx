@@ -4,7 +4,7 @@ import { Practice, PRACTICE1 } from "shared/lib";
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useNavigate } from "react-router-dom";
 
-export const StudentPractice = () => {
+const StudentPractice = () => {
     const [practice, setPractice] = useState<Practice>(PRACTICE1);
     const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export const StudentPractice = () => {
                         <Text>Группа: {practice.group.number}</Text>
                     </Stack>
                 </Card>
-                <Card shadow="sm" padding="md" style={{ width: "100%"}}>
+                <Card shadow="sm" padding="md" style={{ width: "100%" }}>
                     <Stack gap="xs">
                         <Text fw={500}>Практика:</Text>
                         <Text>Создана: {new Date(practice.createdAt).toLocaleDateString()}</Text>
@@ -34,7 +34,7 @@ export const StudentPractice = () => {
                         <Text>Архивная: {practice.isArchived ? "Да" : "Нет"}</Text>
                     </Stack>
                 </Card>
-                <Card shadow="sm" padding="md" style={{ width: "100%"}}>
+                <Card shadow="sm" padding="md" style={{ width: "100%" }}>
                     <Stack gap="xs">
                         <Text fw={500}>Компания:</Text>
                         <Text>Название: {practice.company.name}</Text>
@@ -46,3 +46,4 @@ export const StudentPractice = () => {
         </Container>
     );
 };
+export default StudentPractice

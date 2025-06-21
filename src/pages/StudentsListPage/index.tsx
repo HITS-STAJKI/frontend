@@ -4,7 +4,7 @@ import { useState } from "react";
 import { GET_PRACTICES, GET_STUDENT, PracticeRequestPage, Student } from "shared/lib";
 import { StudentsCommentaryForm, StudentsFormUnder, StudentsListForm } from "widgets/StudentsListForm";
 
-export const StudentsListPage = () => {
+const StudentsListPage = () => {
     const [practices, setPractices] = useState<PracticeRequestPage>(GET_PRACTICES);
     const [student, setStudent] = useState<Student>(GET_STUDENT);
 
@@ -24,3 +24,4 @@ export const StudentsListPage = () => {
         </Container>
     );
 };
+export default StudentsListPage

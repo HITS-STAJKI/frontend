@@ -3,7 +3,7 @@ import { GroupSearchBlock } from "widgets/GroupSearchBlock"
 import { Container, Flex, Title } from '@mantine/core';
 import { CreateGroup } from "features/Group";
 
-export const GroupsPage = () => {
+const GroupsPage = () => {
     return (
         <Container w={'100%'} fluid>
             <Title order={1}>Группы</Title>
@@ -17,3 +17,5 @@ export const GroupsPage = () => {
         </Container>
     )
 }
+
+export default GroupsPage

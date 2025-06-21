@@ -3,7 +3,7 @@ import { SearchForm } from "../../widgets/LanguageStack";
 import { Container, Flex } from "@mantine/core";
 import { GET_STACKS } from "../../shared/lib/api/stubs/";
 
-export const StackPage = () => {
+const StackPage = () => {
 
     return (
         <Container style={{ width: '100%' }}>
@@ -15,3 +15,5 @@ export const StackPage = () => {
 
     );
 };
+
+export default StackPage

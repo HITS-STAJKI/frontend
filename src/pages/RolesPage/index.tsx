@@ -4,7 +4,7 @@ import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { UsersList, SearchRolesForm } from "widgets/RolesForm"
 
-export const RolesPage = () => {
+const RolesPage = () => {
     const { data, isLoading } = useGetUserListQuery()
     const { data: groups, isLoading: isLoadingGroups } = useGetGroupsQuery()
     const { data: partners, isLoading: isLoadingPartners } = useGetPartnersQuery()
@@ -20,3 +20,5 @@ export const RolesPage = () => {
         </Container>
     );
 };
+
+export default RolesPage

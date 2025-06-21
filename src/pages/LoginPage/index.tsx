@@ -1,7 +1,9 @@
 import { LoginForm } from "widgets/LoginForm"
 
-export const LoginPage = () => {
+const LoginPage = () => {
     return (
         <LoginForm />
     )
 }
+
+export default LoginPage

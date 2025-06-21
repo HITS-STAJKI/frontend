@@ -1,26 +1,28 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { PublicLayout } from "./layout/PublicLayout"
 import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE, MY_PROFILE_ROUTE, PERSON_PROFILE_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENT_PRACTICES_ROUTE, PRACTICE_ROUTE, STUDENTS_ROUTE, STATISTICS_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE } from "shared/lib"
-import { RegistrationPage } from "pages/RegistrationPage"
-import { LoginPage } from "pages/LoginPage"
 
-import { LanguagePage } from "../../pages/LanguagePage";
-import { StackPage } from "../../pages/StackPage";
 import { PrivateLayout } from "./layout/PrivateLayout"
-import { InterviewReportPage } from "pages/InterviewReportPage"
-import { RolesPage } from "pages/RolesPage"
-import { GroupsPage } from "pages/GroupsPage"
-import { PartnersPage } from "pages/PartnersPage"
-import { ConcretePartnerPage } from "pages/ConcretePartnerPage"
-import { MyProfilePage } from "pages/MyProfilePage"
-import { UserProfilePage } from "pages/UserProfilePage"
-import { StudentsPracticesPage } from "pages/StudentsPracticesPage"
-import { StudentPracticesPage } from "pages/StudentPracticesPage"
-import { StudentsListPage } from "pages/StudentsListPage"
-import { StudentPractice } from "pages/StudentPractice"
-import { Dashboard } from "pages/Dashboard"
-import { SelectionStudentPage } from "pages/SelectionStudentPage"
-import { SelectionTeacherPage } from "pages/SelectionTeacherPage"
+import { lazy } from "react"
+
+const LoginPage = lazy(() => import('pages/LoginPage'))
+const RegistrationPage = lazy(() => import('pages/RegistrationPage'))
+const LanguagePage = lazy(() => import('../../pages/LanguagePage'))
+const StackPage = lazy(() => import('../../pages/StackPage'))
+const InterviewReportPage = lazy(() => import('pages/InterviewReportPage'))
+const RolesPage = lazy(() => import('pages/RolesPage'))
+const GroupsPage = lazy(() => import('pages/GroupsPage'))
+const PartnersPage = lazy(() => import('pages/PartnersPage'))
+const ConcretePartnerPage = lazy(() => import('pages/ConcretePartnerPage'))
+const MyProfilePage = lazy(() => import('pages/MyProfilePage'))
+const UserProfilePage = lazy(() => import('pages/UserProfilePage'))
+const StudentsPracticesPage = lazy(() => import('pages/StudentsPracticesPage'))
+const StudentPracticesPage = lazy(() => import('pages/StudentPracticesPage'))
+const StudentsListPage = lazy(() => import('pages/StudentsListPage'))
+const Dashboard = lazy(() => import('pages/Dashboard'))
+const SelectionStudentPage = lazy(() => import('pages/SelectionStudentPage'))
+const SelectionTeacherPage = lazy(() => import('pages/SelectionTeacherPage'))
+const StudentPractice = lazy(() => import('pages/StudentPractice'))
 
 export const AppRouter = () => {
     return (
