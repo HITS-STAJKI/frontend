@@ -1,9 +1,10 @@
-import { Center, Container, Flex, Loader } from "@mantine/core";
+import { Card, Center, Container, Flex, Loader, Text } from "@mantine/core";
 import { FilterBlockShort, FilterCompanyMultiple, FilterDateTime, FilterGroupMultiple, FilterName, FilterStackMultiple, FilterTrueFalse, } from "entity";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useGetAllStudentsQuery } from "services/api/api-client/StudentQuery";
 import { Pagination } from "shared/ui";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { SortDirectionStudents, SortKeyStudents, StudentsCommentaryForm, StudentsFormUnder, StudentsListForm } from "widgets/StudentsListForm";
 
 export const StudentsListPage = () => {
@@ -39,12 +40,12 @@ export const StudentsListPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
 
-    const { data, isLoading } = useGetAllStudentsQuery(page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin);
+    const { data, isLoading, isError, error } = useGetAllStudentsQuery(page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin);
 
     const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
 
     return (
-        <Container fluid>
+        <div style={{ width: '100%'}}>
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
                 <FilterBlockShort availableFilters={[
                     {id: "fullName",label: "ФИО",element: (props) => <FilterName id="fullName" initialValue={props.initialValue} onChangeValue={props.onChangeValue} />},
@@ -62,15 +63,21 @@ export const StudentsListPage = () => {
                     <Center style={{ height: 300 }}>
                         <Loader size="lg" />
                     </Center>
+                ) : isError ? (
+                    <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6, width: '100%' }}>
+                        <Text color="red" size="sm" style={{ textAlign: 'center' }}>
+                            Ошибка: {getErrorMessage(error)}
+                        </Text>
+                    </Card>
                 ) : (
                     <>
-                        <StudentsFormUnder studentCount={data?.pagination?.totalElements ? data?.pagination?.totalElements : 0}/>
-                        <StudentsListForm items={data?.items} pagination={data?.pagination} initialSort={sortArray} selectedStudentIds={selectedStudentIds} setSelectedStudentIds={setSelectedStudentIds}/>
-                        <StudentsCommentaryForm selectedStudentIds={selectedStudentIds}/>
+                        <StudentsFormUnder studentCount={data?.pagination?.totalElements ?? 0} />
+                        <StudentsListForm items={data?.items} pagination={data?.pagination} initialSort={sortArray} selectedStudentIds={selectedStudentIds} setSelectedStudentIds={setSelectedStudentIds} />
+                        <StudentsCommentaryForm selectedStudentIds={selectedStudentIds} />
                         <Pagination pagination={data?.pagination} />
                     </>
                 )}
             </Flex>
-        </Container>
+        </div>
     );
 };

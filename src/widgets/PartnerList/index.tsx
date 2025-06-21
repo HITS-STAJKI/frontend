@@ -1,8 +1,9 @@
-import { Partner, PartnerEmpty } from "entity"
-import { Center, Container, Loader } from '@mantine/core';
+import { Partner } from "entity"
+import { Card, Center, Container, Loader, Text } from '@mantine/core';
 import { Pagination } from "shared/ui";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { useSearchParams } from "react-router-dom";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
 export const PartnerList = () => {
     const [searchParams] = useSearchParams();
@@ -14,7 +15,7 @@ export const PartnerList = () => {
     const size = Number(searchParams.get("size") ?? "10");
     const page = Number(searchParams.get("page") ?? "0");
 
-    const { data, isLoading } = useGetPartnersQuery(id, name, isNew, page, size);
+    const { data, isLoading, error } = useGetPartnersQuery(id, name, isNew, page, size);
 
     if (isLoading) {
         return (
@@ -24,17 +25,39 @@ export const PartnerList = () => {
         );
     }
 
+    if (error) {
+        console.log('Ошибка запроса:', error);
+        return (
+            <Container size="100%" mt="3vh">
+                <Card withBorder padding="lg" radius="md" shadow="sm" bg="red.1">
+                    <Text ta="center" size="lg" color="red">
+                        Произошла ошибка при загрузке списка компаний:
+                    </Text>
+                    <Text ta="center" size="sm" color="red">
+                        {getErrorMessage(error)}
+                    </Text>
+                </Card>
+            </Container>
+        );
+    }
+
     return (
         <div style={{ paddingBottom: '70px' }}>
             <Container size="100%" mt="3vh">
-                {(!data || !data.items || data.items.length === 0) ? (
-                    <PartnerEmpty />
+                {(data?.items && data.items.length > 0) ? (
+                    <>
+                        {data.items.map((partner) => (
+                            <Partner key={partner.id} partner={partner} />
+                        ))}
+                        <Pagination pagination={data.pagination} />
+                    </>
                 ) : (
-                    data.items.map((partner) => (
-                        <Partner key={partner.id} partner={partner} />
-                    ))
+                    <Card withBorder padding="lg" radius="md" shadow="sm">
+                        <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
+                            Компаний нет
+                        </Text>
+                    </Card>
                 )}
-                <Pagination pagination={data?.pagination} />
             </Container>
         </div>
     );

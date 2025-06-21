@@ -2,6 +2,7 @@ import { Button, Card, Container, Flex, Group, Stack, Title, Text, Center, Loade
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCurrentStudentPracticeQuery } from "services/api/api-client/PracticeQuery";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
 export const StudentPractice = () => {
     const navigate = useNavigate();
@@ -25,9 +26,16 @@ export const StudentPractice = () => {
     if (isError) 
     {
         return (
-            <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
-                <div>Ошибка при загрузке данных: {String(error)}</div>;
-            </Center>
+            <Container w="90%" fluid>
+                <Card withBorder padding="lg" radius="md" shadow="sm" mt="xl" bg="red.1">
+                    <Text ta="center" size="lg" color="red">
+                        Ошибка при загрузке данных: 
+                    </Text>
+                    <Text ta="center" size="sm" color="red">
+                        {getErrorMessage(error)}
+                    </Text>
+                </Card>
+            </Container>
         );
     }
 
@@ -39,9 +47,6 @@ export const StudentPractice = () => {
             </Center>
         );
     }
-
-    console.log('practice:', practice);
-    console.log(practice.company?.curators?.[0].fullName);
 
     return (
         <Container fluid style={{ width: '75%', margin: '0 auto' }}>

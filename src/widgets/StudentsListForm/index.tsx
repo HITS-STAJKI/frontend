@@ -1,10 +1,11 @@
 import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea } from "@mantine/core"
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { StudentListCard, StudentListCardEmpty } from "entity/StudentListCard";
+import { StudentListCard } from "entity/StudentListCard";
 import { PagedListDtoStudentDto } from "services/api/api-client.types";
 import { useSearchParams } from "react-router-dom";
 import { useSendMessagesMutation } from "services/api/api-client/ChatControllerQuery";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
 type PracticesFormOverProps = {
     studentName: string,
@@ -108,7 +109,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                         ].map(({ key, label }) => (
                             <Grid.Col
                                 key={key}
-                                span={3}
+                                span={2.5}
                                 style={{
                                     display: "flex",
                                     justifyContent: "center",
@@ -150,7 +151,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                                 </Button>
                             </Grid.Col>
                         ))}
-                        <Grid.Col span={3} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <Grid.Col span={2.5} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                             <Text
                                 size="sm"
                                 style={{
@@ -168,25 +169,24 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                                 Количество непрочитанных сообщений
                             </Text>
                         </Grid.Col>
+                        <Grid.Col span={2}></Grid.Col>
                     </Grid>
                 </div>
             </Card>
-            {(!items || items.length === 0) ? (
-                <StudentListCardEmpty />
-            ) : (
-                (items ?? []).map((student, localIndex) => {
+            {(items && items.length > 0) ? (
+                items.map((student, localIndex) => {
                     const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
                     return (
                         <StudentListCard
-                            key = {student.id}
-                            index = {globalIndex + 1}
-                            studentId = {student.id}
-                            userId = {student.user.id}
-                            fullName = {student.user.fullName}
-                            groupNumber = {student.group.number}
-                            lastLoginDate = {student.user.lastLoginDate}
-                            unreadMessagesCount = {student.unreadMessagesCount}
-                            chatId = {student.chatId}
+                            key={student.id}
+                            index={globalIndex + 1}
+                            studentId={student.id}
+                            userId={student.user.id}
+                            fullName={student.user.fullName}
+                            groupNumber={student.group.number}
+                            lastLoginDate={student.user.lastLoginDate}
+                            unreadMessagesCount={student.unreadMessagesCount}
+                            chatId={student.chatId}
                             isSelected={selectedStudentIds.includes(student.id)}
                             onToggleSelect={() => {
                                 setSelectedStudentIds((prev) =>
@@ -198,6 +198,12 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                         />
                     );
                 })
+            ) : (
+                <Card withBorder padding="lg" radius="md" shadow="sm" style={{width: '100%'}}>
+                    <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
+                        Студентов нет
+                    </Text>
+                </Card>
             )}
         </Flex>
     );
@@ -211,7 +217,7 @@ export function StudentsFormUnder({ studentCount }: PracticesFormUnderProps) {
     return (
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Group justify="space-between" align="center">
-                <Text>Найдено студентов: {studentCount}</Text>
+                <Text>Найдено практик: {studentCount}</Text>
             </Group>
         </Box>
     );
@@ -223,25 +229,29 @@ interface StudentsCommentaryFormProps {
 
 export function StudentsCommentaryForm({ selectedStudentIds }: StudentsCommentaryFormProps) {
     const [value, setValue] = useState('');
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const isSubmitDisabled = value.trim() === '' || selectedStudentIds.length === 0;
 
     const { mutate, status } = useSendMessagesMutation({
         onSuccess: () => {
             setValue('');
+            setErrorMessage(null);
         },
         onError: (error) => {
             console.error("Ошибка при отправке сообщения:", error);
+            setErrorMessage(getErrorMessage(error));
         }
     });
 
     const isLoading = status === 'pending';
 
     const handleSubmit = () => {
-        if (isSubmitDisabled) {
+        if (isSubmitDisabled) 
+        {
             return;
         }
-
+        setErrorMessage(null);
         mutate({
             content: value.trim(),
             studentIds: selectedStudentIds,
@@ -252,17 +262,35 @@ export function StudentsCommentaryForm({ selectedStudentIds }: StudentsCommentar
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
             <Card style={{ width: '100%', padding: '1rem', border: "1px solid #ccc", borderRadius: 8 }}>
                 <Stack gap="sm" style={{ width: '100%' }}>
-                    <Textarea placeholder="Введите комментарий..." autosize minRows={3} value={value} onChange={(event) => setValue(event.currentTarget.value)} style={{ width: '100%' }} />
+                    <Textarea
+                        placeholder="Введите комментарий..."
+                        autosize
+                        minRows={3}
+                        value={value}
+                        onChange={(event) => setValue(event.currentTarget.value)}
+                        style={{ width: '100%' }}
+                    />
                     <Group justify="flex-end">
-                        <Button variant="light" color="gray" onClick={() => setValue('')} disabled={isLoading} >
+                        <Button variant="light" color="gray" onClick={() => setValue('')} disabled={isLoading}>
                             Отмена
                         </Button>
-                        <Button color="blue" onClick={handleSubmit} disabled={isSubmitDisabled || isLoading} loading={isLoading} >
+                        <Button color="blue" onClick={handleSubmit} disabled={isSubmitDisabled || isLoading} loading={isLoading}>
                             Отправить
                         </Button>
                     </Group>
+
+                    {errorMessage && (
+                        <Text color="red" size="sm" style={{ marginTop: 8, textAlign: 'center' }}>
+                            {errorMessage}
+                        </Text>
+                    )}
+
                     <Group justify="flex-end" mt="sm">
-                        <Button color="green" variant="filled" style={{ textAlign: 'center', flexDirection: 'column', whiteSpace: 'pre-line', padding: '0.75rem' }} >
+                        <Button
+                            color="green"
+                            variant="filled"
+                            style={{ textAlign: 'center', flexDirection: 'column', whiteSpace: 'pre-line', padding: '0.75rem' }}
+                        >
                             Экспортировать пользователей
                         </Button>
                     </Group>

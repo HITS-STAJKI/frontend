@@ -1,9 +1,10 @@
-import { Center, Container, Flex, Loader } from "@mantine/core";
-import { FilterBlockShort, FilterCompanySelect, FilterGroup, FilterGroupMultiple, FilterName, FilterTrueFalse, FilterTrueFalseNull } from "entity";
+import { Card, Center, Container, Flex, Loader, Text } from "@mantine/core";
+import { FilterBlockShort, FilterCompanySelect, FilterGroupMultiple, FilterName, FilterTrueFalse } from "entity";
 import { useSearchParams } from "react-router-dom";
 import { useGetAllPracticesQuery } from "services/api/api-client/PracticeQuery";
 import { PracticesFormUnder, PracticesList, SortDirectionAllPractices, SortKeyAllPractices } from "widgets/StudentsPracticesForm";
 import { Pagination } from "shared/ui";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
 export const StudentsPracticesPage = () => {
     const [searchParams] = useSearchParams();
@@ -33,29 +34,13 @@ export const StudentsPracticesPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
 
-    const { data, isLoading } = useGetAllPracticesQuery(studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort);
+    const { data, isLoading, isError, error, refetch } = useGetAllPracticesQuery(studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort);
 
-    if (isLoading) {
-        return (
-            <Center
-                style={{
-                    position: 'fixed',
-                    top: 0,
-                    left: 0,
-                    width: '100vw',
-                    height: '100vh',
-                    pointerEvents: 'none',
-                    zIndex: 9999
-                }}
-            >
-                <Loader size="lg" />
-            </Center>
-        );
-    }
+    console.log(data);
 
     return (
-        <Container fluid>
-            <Flex direction="column" style={{ width: '100%', margin: '0 auto' }} gap="md">
+        <div style={{ width: '100%'}}>
+            <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
                 <FilterBlockShort availableFilters={[
                     {id: "studentName",label: "ФИО",element: (props) => <FilterName id="studentName" initialValue={props.initialValue} onChangeValue={props.onChangeValue} />},
                     {id: "groupIds",label: "Выберете группу",element: (props) => <FilterGroupMultiple id="groupIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} />},
@@ -69,14 +54,20 @@ export const StudentsPracticesPage = () => {
                     <Center style={{ height: 300 }}>
                         <Loader size="lg" />
                     </Center>
+                ) : isError ? (
+                    <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6, width: '100%' }}>
+                        <Text color="red" size="sm" style={{ textAlign: 'center' }}>
+                            Ошибка: {getErrorMessage(error)}
+                        </Text>
+                    </Card>
                 ) : (
                     <>
                         <PracticesFormUnder studentCount={data?.pagination?.totalElements ?? 0}/>
-                        <PracticesList items={data?.items} pagination={data?.pagination} initialSort={sortArray}/>
+                        <PracticesList items={data?.items} pagination={data?.pagination} initialSort={sortArray} onRefresh={refetch}/>
                         <Pagination pagination={data?.pagination} />
                     </>
                 )}
             </Flex>
-        </Container>
+        </div>
     );
 };

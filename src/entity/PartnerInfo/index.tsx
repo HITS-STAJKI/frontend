@@ -16,26 +16,47 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
     const navigate = useNavigate();
 
     const hasFile = Boolean(partner.fileId);
-    const { data: fileData } = useDownloadFileQuery(partner.fileId ?? '', {
+    const { data: fileData, error: downloadError, isError: isDownloadError } = useDownloadFileQuery(partner.fileId ?? '', {
         enabled: hasFile,
     });
 
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     useEffect(() => {
-        if (fileData?.data) {
+        if (fileData?.data) 
+        {
             const reader = new FileReader();
             reader.onloadend = () => setImageSrc(reader.result as string);
             reader.readAsDataURL(fileData.data);
         }
     }, [fileData]);
 
+    const getErrorMessage = (error: unknown): string => {
+        if (!error) 
+        {
+            return 'Неизвестная ошибка';
+        }
+        if (typeof error === 'object' && error !== null) 
+        {
+            const err = error as any;
+            if (err.message) 
+            {
+                return err.message;
+            }
+            if (err.response?.data?.message) 
+            {
+                return err.response.data.message;
+            }
+        }
+        return 'Произошла ошибка при загрузке файла';
+    };
+
     return (
         <Container w="100%">
             <Flex justify="space-between" align="center" mb="md">
                 <Group align="center">
                     {imageSrc && (
-                        <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }}/>
+                        <Image src={imageSrc} alt="Иконка компании" style={{ maxWidth: 100, maxHeight: 100, width: 'auto', height: 'auto', display: 'block' }} />
                     )}
                     <Title order={1}>{partner.name}</Title>
                 </Group>
@@ -50,6 +71,14 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
             </Flex>
 
             <Text>{partner.description}</Text>
+
+            {isDownloadError && (
+                <Container mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6 }}>
+                    <Text color="red" size="sm" style={{ textAlign: 'center' }}>
+                        Ошибка при загрузке файла: {getErrorMessage(downloadError)}
+                    </Text>
+                </Container>
+            )}
         </Container>
     );
 };

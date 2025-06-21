@@ -1,14 +1,15 @@
 import { Box, Card, Grid, Text } from "@mantine/core"
-import { Practice, PRACTICE_ROUTE } from "shared/lib";
+import { PRACTICE_ROUTE } from "shared/lib";
 import { ReportArchive, ReportDelete, ReportEdit, ReportOpen } from "features/PracticesFullButtons";
 import { useNavigate } from "react-router-dom";
 import { PracticeDto } from "services/api/api-client.types";
 
 interface FullPracticeCardProps extends PracticeDto {
-  index: number;
+    index: number;
+    onRefresh?: () => void;
 }
 
-export function FullPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index }: FullPracticeCardProps) {
+export function FullPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index, onRefresh }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -18,29 +19,35 @@ export function FullPracticeCard({ id, user, group, company, stack, createdAt, i
             navigate(PRACTICE_ROUTE.replace(':id', studentRole.id));
         }
     };
+
+    const isCardClickable = isApproved && !isArchived;
     
     return (
-        <Card key={id}
+        <Card
+            key={id}
             shadow="sm"
-            style={{
-                width: '100%',
-                height: '64px',
-                display: 'flex',
-                cursor: 'pointer',
-                transition: 'box-shadow 0.2s ease, background-color 0.2s ease',
-            }}
-            onClick={handleClick}
-            onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') handleClick();
-            }}
-            tabIndex={0}
+            style={{ width: '100%', height: '64px', display: 'flex', cursor: isCardClickable ? 'pointer' : 'default', transition: 'box-shadow 0.2s ease, background-color 0.2s ease' }}
+            onClick={isCardClickable ? handleClick : undefined}
+            onKeyDown={isCardClickable ? (e) => {
+                if (e.key === 'Enter' || e.key === ' ') 
+                {
+                    handleClick();
+                }
+            } : undefined}
+            tabIndex={isCardClickable ? 0 : -1}
             onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = '#f9f9f9';
+                if (isCardClickable) 
+                {
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
+                    (e.currentTarget as HTMLDivElement).style.backgroundColor = '#f9f9f9';
+                }
             }}
             onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.boxShadow = '';
-                (e.currentTarget as HTMLDivElement).style.backgroundColor = '';
+                if (isCardClickable) 
+                {
+                    (e.currentTarget as HTMLDivElement).style.boxShadow = '';
+                    (e.currentTarget as HTMLDivElement).style.backgroundColor = '';
+                }
             }}
         >
             <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
@@ -90,59 +97,13 @@ export function FullPracticeCard({ id, user, group, company, stack, createdAt, i
                             }
                             {id && (
                                 <>
-                                    <ReportOpen id={id} />
-                                    <ReportEdit id={id} />
-                                    <ReportDelete id={id} />
-                                    <ReportArchive id={id} />
+                                    <ReportOpen practiceId={id} />
+                                    <ReportEdit id={id} initialValue={isPaid} onSuccess={onRefresh} />
+                                    <ReportDelete id={id} onSuccess={onRefresh} />
+                                    <ReportArchive id={id} onSuccess={onRefresh} />
                                 </>
                             )}
                         </div>
-                    </Grid.Col>
-                </Grid>
-            </div>
-        </Card>
-    );
-}
-
-export function FullPracticeCardEmpty() { 
-    return (
-        <Card
-            shadow="sm"
-            style={{
-                width: '100%',
-                height: '64px',
-                display: 'flex',
-            }}
-            tabIndex={0}
-        >
-            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                <Box style={{ width: '40px', textAlign: 'center' }}>
-                    <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                </Box>
-                <Grid style={{width: '100%'}}>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>                
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={1.5} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
                     </Grid.Col>
                 </Grid>
             </div>

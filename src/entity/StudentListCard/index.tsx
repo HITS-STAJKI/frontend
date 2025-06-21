@@ -1,9 +1,7 @@
-import { Box, Card, Center, Checkbox, Container, Flex, Grid, Loader, Modal, Space, Stack, Text, Title } from "@mantine/core"
-import { useEffect, useRef, useState } from "react";
-import { Comment } from "entity"
-import { CreateCommentForm } from "features/CreateCommentForm";
-import { GET_INTERVIEWS_COMMENTS, InterviewsComment } from "shared/lib";
-import { useGetMessagesListQuery } from "services/api/api-client/Messages_in_chatQuery";
+import { Box, Button, Card, Checkbox, Grid, Modal, Text } from "@mantine/core"
+import { useState } from "react";
+import { CommentSectionAlt } from "entity"
+import { useNavigate } from "react-router-dom";
 
 interface StudentProps {
     index: number,
@@ -19,6 +17,7 @@ interface StudentProps {
 }
 
 export function StudentListCard({ index, studentId, userId, fullName, groupNumber, lastLoginDate, unreadMessagesCount, chatId, isSelected, onToggleSelect }: StudentProps) {
+    const navigate = useNavigate();
     const [modalOpened, setModalOpened] = useState(false);
 
     const handleCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -39,21 +38,26 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
                         <Checkbox size="sm" checked={isSelected} onChange={onToggleSelect} onClick={(e) => e.stopPropagation()} />
                     </Box>
                     <Grid style={{ width: '100%' }}>
-                        <Grid.Col span={3} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                        <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{fullName}</Text>
                         </Grid.Col>
-                        <Grid.Col span={3} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                        <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{groupNumber}</Text>
                         </Grid.Col>
-                        <Grid.Col span={3} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                        <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                 {lastLoginDate ? lastLoginDate.toLocaleString() : ''}
                             </Text>
                         </Grid.Col>
-                        <Grid.Col span={3} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
+                        <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                                 {unreadMessagesCount ? (unreadMessagesCount > 9 ? '9+' : unreadMessagesCount) : 0}
                             </Text>
+                        </Grid.Col>
+                        <Grid.Col span={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Button variant="outline" onClick={(e) => { e.stopPropagation(); navigate(`/practices/student/${studentId}`); }}>
+                                Практика
+                            </Button>
                         </Grid.Col>
                     </Grid>
                 </div>
@@ -84,6 +88,9 @@ export function StudentListCardEmpty() {
                         <Grid.Col style={{ whiteSpace: 'pre', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                             <Text>{"                                                   "}</Text>
                         </Grid.Col>
+                        <Grid.Col span={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text>{"                                                   "}</Text>
+                        </Grid.Col>
                     </Grid>
                 </div>
             </Card>
@@ -101,46 +108,9 @@ interface StudentCommentsModalProps {
 }
 
 export function StudentCommentsModal({ opened, onClose, chatId }: StudentCommentsModalProps) {
-    const { data, isLoading, error, refetch } = useGetMessagesListQuery(chatId, 0, 10000, undefined, { enabled: opened });
-    const comments = data?.items ?? [];
-
-    const commentsRef = useRef<HTMLDivElement>(null);
-
-    const scrollToBottom = () => {
-        if (commentsRef.current) 
-        {
-            commentsRef.current.scrollTop = commentsRef.current.scrollHeight;
-        }
-    };
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [comments, opened]);
-
     return (
         <Modal opened={opened} onClose={onClose} size="lg" title={<Text fw={700} size="xl">Комментарии</Text>} centered >
-            <Flex direction="column" style={{ width: '100%', height: '70vh' }} gap="md">
-                {isLoading ? (
-                    <Center style={{ height: '50vh' }}>
-                        <Loader size="lg" />
-                    </Center>
-                ) : (
-                    <>
-                        <Box ref={commentsRef} style={{ flex: 1, overflowY: 'auto' }}>
-                            <Space h="md" />
-                            <Stack gap="sm">
-                                {!error && comments.slice().reverse().map(comment => (
-                                    <Comment key={comment.id} {...comment} id={comment.id ?? ''} chatId={chatId} onMessageUpdate={() => { setTimeout(() => { refetch().then(scrollToBottom); }, 1500); }}/>
-                                ))}
-                            </Stack>
-                            <Space h="md" />
-                        </Box>
-                        <Box style={{ borderTop: '1px solid #eee', paddingTop: 12 }}>
-                            <CreateCommentForm id={chatId} onMessageSent={() => { setTimeout(() => { refetch().then(scrollToBottom); }, 1500); }} />
-                        </Box>
-                    </>
-                )}
-            </Flex>
+            <CommentSectionAlt chatId={chatId} height="70vh" />
         </Modal>
     );
 }

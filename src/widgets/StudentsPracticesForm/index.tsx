@@ -1,10 +1,13 @@
-import { Button, Flex, Card, Grid, Box, Group, Text } from "@mantine/core"
-import { FullPracticeCard, FullPracticeCardEmpty } from "entity/FullPracticeCard";
+import { Button, Flex, Card, Grid, Box, Group, Text, Modal, Select, Loader } from "@mantine/core"
+import { FullPracticeCard } from "entity/FullPracticeCard";
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { DateInput } from "@mantine/dates";
 import { PagedListDtoPracticeDto } from "services/api/api-client.types";
 import { useSearchParams } from "react-router-dom";
+import { useApproveStudentPractices_1Mutation } from "services/api/api-client/PracticeQuery";
+import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
 export type SortDirectionAllPractices = "asc" | "desc";
 export type SortKeyAllPractices =
@@ -18,9 +21,10 @@ export type SortKeyAllPractices =
 
 type PagedListDtoPracticeProps = PagedListDtoPracticeDto & {
     initialSort: [SortKeyAllPractices, SortDirectionAllPractices] | null;
+    onRefresh?: () => void;
 };
 
-export function PracticesList({ items, pagination, initialSort = null }: PagedListDtoPracticeProps) {
+export function PracticesList({ items, pagination, initialSort = null, onRefresh }: PagedListDtoPracticeProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [sort, setSort] = useState<[SortKeyAllPractices, SortDirectionAllPractices] | null>(initialSort);
 
@@ -95,9 +99,42 @@ export function PracticesList({ items, pagination, initialSort = null }: PagedLi
                             { key: "isArchived", label: "Архивная" },
                             { key: "createdAt", label: "Дата создания" },
                         ].map(({ key, label }) => (
-                            <Grid.Col key={key} span={1.5} style={{ display: "flex", justifyContent: "center", alignItems: "stretch" }}>
-                                <Button variant="subtle" size="sm" onClick={() => handleSort(key as SortKeyAllPractices)} style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center", width: "100%", height: "100%", color: "black", textAlign: "center", padding: "8px", gap: "4px" }}>
-                                    <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", lineHeight: "1.2em", maxWidth: "100%" }}>
+                            <Grid.Col
+                                key={key}
+                                span={1.5}
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "stretch"
+                            }}>
+                                <Button
+                                    variant="subtle"
+                                    size="sm"
+                                    onClick={() => handleSort(key as SortKeyAllPractices)}
+                                    style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        height: "100%",
+                                        color: "black",
+                                        textAlign: "center",
+                                        padding: "8px",
+                                        gap: "4px",
+                                }}>
+                                    <span
+                                        style={{
+                                        display: "-webkit-box",
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: "vertical",
+                                        overflow: "hidden",
+                                        textOverflow: "ellipsis",
+                                        whiteSpace: "normal",
+                                        lineHeight: "1.2em",
+                                        maxWidth: "100%",
+                                        }}
+                                    >
                                         {label}
                                     </span>
                                     <span style={{ width: "16px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
@@ -106,67 +143,136 @@ export function PracticesList({ items, pagination, initialSort = null }: PagedLi
                                 </Button>
                             </Grid.Col>
                         ))}
+                        <Grid.Col span={1.5}></Grid.Col>
                     </Grid>
                 </div>
             </Card>
             {(!items || items.length === 0) ? (
-                <FullPracticeCardEmpty />
+                <Card withBorder padding="lg" radius="md" shadow="sm" style={{width: '100%'}}>
+                    <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
+                        Практик нет
+                    </Text>
+                </Card>
             ) : (
                 (items ?? []).map((practice, localIndex) => {
-                const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
-                return (
-                    <FullPracticeCard
-                        key={practice.id}
-                        id={practice.id}
-                        user={practice.user}
-                        group={practice.group}
-                        company={practice.company}
-                        createdAt={practice.createdAt}
-                        isPaid={practice.isPaid}
-                        isArchived={practice.isArchived}
-                        isApproved={practice.isApproved}
-                        index={globalIndex + 1}
-                    />
-                );
-            }))}
+                    const globalIndex = ((pagination?.currentPage ?? 0)) * (pagination?.size ?? 10) + localIndex;
+                    return (
+                        <FullPracticeCard
+                            key={practice.id}
+                            id={practice.id}
+                            user={practice.user}
+                            group={practice.group}
+                            company={practice.company}
+                            createdAt={practice.createdAt}
+                            isPaid={practice.isPaid}
+                            isArchived={practice.isArchived}
+                            isApproved={practice.isApproved}
+                            index={globalIndex + 1}
+                            onRefresh={onRefresh}
+                        />
+                    );
+                })
+            )}
         </Flex>
     );
 }
 
 type PracticesFormUnderProps = {
-  studentCount: number;
+    studentCount: number;
+    onSuccess?: () => void;
 };
 
-export function PracticesFormUnder({ studentCount }: PracticesFormUnderProps) {
+export function PracticesFormUnder({ studentCount, onSuccess }: PracticesFormUnderProps) {
     const [deadline, setDeadline] = useState<Date | null>(null);
+    const [modalOpened, setModalOpened] = useState(false);
+    const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
+
+    const { mutate: approvePractices, isPending, isError: isApproveError, error: approveError } = useApproveStudentPractices_1Mutation(selectedCompanyId ?? "", {
+        onSuccess: () => {
+            onSuccess?.();
+            setModalOpened(false);
+            setSelectedCompanyId(null);
+        }
+    });
+
+    const { data, isLoading, isError: isCompanyError, error: companyError } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000);
+    
+    const options = isLoading || !Array.isArray(data?.items) ? []
+        : data.items.map((partner) => ({
+            value: partner.id,
+            label: partner.name,
+        }));
+
+
+    const handleChange = (val: string | null) => {
+        setSelectedCompanyId(val);
+    };
 
     const handleSave = () => {
         console.log("Сохраняем дедлайн:", deadline);
     };
 
-    const handleConfirm = () => {
-        console.log("Практики подтверждены");
+    const handleOpenModal = () => {
+        setModalOpened(true);
+    };
+
+    const handleConfirmInModal = () => {
+        if (selectedCompanyId) 
+        {
+            approvePractices();
+        }
     };
 
     return (
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Group justify="space-between" align="center">
-                <Text>Найдено студентов: {studentCount}</Text>
+                <Text>Найдено практик: {studentCount}</Text>
                 <Group>
-                    <Button color="green" onClick={handleConfirm}>
+                    <Button color="green" onClick={handleOpenModal}>
                         Подтвердить практики
                     </Button>
                     <Text>Дедлайн прикрепления отчета:</Text>
-                    <DateInput
-                        value={deadline}
-                        onChange={setDeadline}
-                        placeholder="Выберите дату"
-                    />
+                    <DateInput value={deadline} onChange={setDeadline} placeholder="Выберите дату" />
                     <Button color="blue" onClick={handleSave}>
                         Сохранить
                     </Button>
                 </Group>
             </Group>
+
+            <Modal opened={modalOpened} onClose={() => setModalOpened(false)} title="Подтвердить практики" centered >
+                <Text mb="sm">Выберите компанию, для которой нужно подтвердить практики:</Text>
+                <Select
+                    placeholder={isLoading ? "Загрузка..." : "Выберите компанию"}
+                    value={selectedCompanyId}
+                    onChange={handleChange}
+                    data={options}
+                    clearable
+                    searchable
+                    disabled={isLoading}
+                />
+                {isApproveError && (
+                    <Card mt="md" p="md" style={{ backgroundColor: "#ffe6e6", borderRadius: 6, width: "100%" }} >
+                        <Text color="red" size="sm" style={{ textAlign: "center" }}>
+                            Ошибка: {getErrorMessage(approveError)}
+                        </Text>
+                    </Card>
+                )}
+                {isCompanyError && (
+                    <Card mt="md" p="md" style={{ backgroundColor: "#ffe6e6", borderRadius: 6, width: "100%" }} >
+                        <Text color="red" size="sm" style={{ textAlign: "center" }}>
+                            Ошибка: {getErrorMessage(companyError)}
+                        </Text>
+                    </Card>
+                )}
+                <Group mt="lg" justify="flex-end">
+                    <Button variant="default" onClick={() => setModalOpened(false)}>
+                        Отмена
+                    </Button>
+                    <Button color="green"onClick={handleConfirmInModal}disabled={!selectedCompanyId || isPending}>
+                        {isPending ? <Loader size="xs" /> : "Подтвердить"}
+                    </Button>
+                </Group>
+            </Modal>
         </Box>
     );
 }
