@@ -131,7 +131,7 @@ const fields: Array<{ value: string | null, field: (setStats: React.Dispatch<Rea
     },
     {
         value: 'hasInterviews', field: (setStats) => <Select label='Проходил собеседования' data={[
-            { value: '', label: '--' },
+            { value: 'none', label: '--' },
             { value: 'true', label: 'Да' },
             { value: 'false', label: 'Нет' },
         ]}

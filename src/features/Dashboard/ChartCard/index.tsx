@@ -134,13 +134,6 @@ export const ChartCard = ({
     if (isLoading || isLoadingGroups || isLoadingCompany || isLoadingStack) {
         return 'Загрузка'
     }
-    console.log(filters.map(filter => {
-        return {
-            main: dataGroups?.items?.find(item => item.id === filter.main)?.number || dataCompany?.items?.find(item => item.id === filter.main)?.name || dataStack?.find(item => item.id === filter.main)?.name || filter.main,
-            key: dataGroups?.items?.find(item => item.id === filter.main)?.number || dataCompany?.items?.find(item => item.id === filter.main)?.name || dataStack?.find(item => item.id === filter.main)?.name || filter.key,
-            value: filter.value
-        }
-    }))
     return (
         <Flex flex={"2"} style={{ flexGrow: 1 }} p={'lg'} direction={'column'}>
             <Title>Всего результатов {data?.count}</Title>
