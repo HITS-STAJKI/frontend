@@ -19,7 +19,7 @@ export const LoginForm = () => {
             localStorage.setItem("token", tokens.token!)
             localStorage.setItem("exp", tokens.expirationDate?.toString()!)
         }).then(() => {
-            navigate(MY_PROFILE_ROUTE)
+            location.href = MY_PROFILE_ROUTE
         })
     }
     return (

@@ -1,9 +1,10 @@
 import { ProfileForm } from "./Form";
-import { Title, Badge, Text } from "@mantine/core";
+import { Title, Badge, Text, Button } from "@mantine/core";
 import { ChangePassword } from "features/ChangePassword";
 import { RemoveFromAcadem } from "features/AcademicLeave/RemoveFromAcadem";
 import { SendToAcadem } from "features/AcademicLeave";
 import { UserDetailsDto } from "services/api/api-client.types";
+import { Logout } from "features";
 
 type ProfileBlockProps = {
     profileData: UserDetailsDto;
@@ -42,8 +43,9 @@ export const ProfileBlock = ({
                 <Title order={2}>Профиль</Title>
                 {profileData.student?.isGraduated && <Text c="gray" ml="xs">(Выпустился)</Text>}
                 {profileData.student?.isAcadem && <Text c="red" ml="xs">(В академе)</Text>}
-                <div style={{ marginLeft: 'auto' }}>
+                <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
                     {renderActionButton()}
+                    {mode === 'user' ? <Button>Управление ролями</Button> : <Logout />}
                 </div>
             </div>
 
