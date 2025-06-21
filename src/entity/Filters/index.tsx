@@ -24,6 +24,25 @@ export function FilterLanguageName({ id, onChangeValue }: { id: string; onChange
     );
 }
 
+export function ImputFilter({ id, onChangeValue, label }: { id: string; onChangeValue: (val: string) => void; label: string}) {
+    const [value, setValue] = useState("");
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const val = event.currentTarget.value;
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <TextInput
+            id={`filter-${id}`}
+            placeholder= {label}
+            value={value}
+            onChange={handleChange}
+        />
+    );
+}
+
 export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState("");
 

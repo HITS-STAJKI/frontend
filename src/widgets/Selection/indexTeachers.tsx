@@ -16,11 +16,11 @@ export function SelectionTeacherFilters() {
     return (
         <FilterBlockFull availableFilters={[
             { id: "name", label: "ФИО", element: (props) => <FilterName id="name" onChangeValue={props.onChangeValue} /> },
-            { id: "company", label: "Компания", element: (props) => <FilterSelect items={GET_COMPANIES.items} id="company" onChangeValue={props.onChangeValue} /> },
-            { id: "stackId", label: "Направление", element: (props) => <FilterSelect items={GET_STACKS.items} id="reportavailibility" onChangeValue={props.onChangeValue} /> },
+            { id: "company", label: "Компания", element: (props) => <FilterSelect items={GET_COMPANIES.items} id="company" onChangeValue={props.onChangeValue} label="Выберите компанию" /> },
+            { id: "stackId", label: "Направление", element: (props) => <FilterSelect items={GET_STACKS.items} id="reportavailibility" onChangeValue={props.onChangeValue} label="Выберите направление"/> },
             { id: "languageIds", label: "Языки программирования", element: (props) => <FilterMultiSelect items={GET_LANGUAGES.items} id="languageIds" onChangeValue={props.onChangeValue} /> },
-            { id: "group", label: "Группа", element: (props) => <FilterSelect items={convertGroupsToGroupsWithName(GET_GROUPS.items)} id="group" onChangeValue={props.onChangeValue} /> },
-            { id: "status", label: "Статус", element: (props) => <FilterSelect items={[STATUS1, STATUS2, STATUS3]} id="group" onChangeValue={props.onChangeValue} /> },
+            { id: "group", label: "Группа", element: (props) => <FilterSelect items={convertGroupsToGroupsWithName(GET_GROUPS.items)} id="group" onChangeValue={props.onChangeValue} label="Выберите группу" /> },
+            { id: "status", label: "Статус", element: (props) => <FilterSelect items={[STATUS1, STATUS2, STATUS3]} id="group" onChangeValue={props.onChangeValue} label="Выберите статус" /> },
             { id: "dateFrom", label: "Дата от", element: (props) => <FilterDate id="dateFrom" onChangeValue={props.onChangeValue} /> },
             { id: "dateTo", label: "Дата до", element: (props) => <FilterDate id="dateTo" onChangeValue={props.onChangeValue} /> },
         ]}
@@ -39,6 +39,7 @@ interface FilterSelectProps {
     id: string;
     items: Stack[] | GroupWithName[] | StatusWithID[];
     onChangeValue: (val: string | null) => void;
+    label: string;
 }
 
 export function FilterMultiSelect({ id, items, onChangeValue }: FilterMultySelectProps) {
@@ -75,7 +76,7 @@ export function FilterMultiSelect({ id, items, onChangeValue }: FilterMultySelec
     );
 }
 
-export function FilterSelect({ id, items, onChangeValue }: FilterSelectProps) {
+export function FilterSelect({ id, items, onChangeValue, label }: FilterSelectProps) {
     const [value, setValue] = useState<string | null>(null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
@@ -98,7 +99,7 @@ export function FilterSelect({ id, items, onChangeValue }: FilterSelectProps) {
     return (
         <Select
             id={`filter-${id}`}
-            placeholder="Выберите"
+            placeholder={label}
             value={value}
             onChange={handleChange}
             data={data}
