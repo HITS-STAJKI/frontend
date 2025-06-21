@@ -80,12 +80,26 @@ export function SearchRolesForm({ groupContent, companyContent }: { groupContent
 }
 
 
-export function UsersList({ items }: UserList) {
+export function UsersList({ items, pagination }: UserList) {
+
+    const currentPage = pagination.currentPage || 1; 
+    const size = pagination.size || 10; 
+
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
-            {items.map(user => (
-                <UserCard key={user.id} id={user.id!} email={user.email!} fullname={user.fullname!} roles={user.roles!} />
-            ))}
+            {items.map((user, index) => {
+                const number = (currentPage - 1) * size + index + 1;
+                return (
+                    <UserCard 
+                        key={user.id} 
+                        id={user.id!} 
+                        email={user.email!} 
+                        fullname={user.fullName!} 
+                        roles={user.roles!}
+                        number={number} // Передаем номер в карточку
+                    />
+                );
+            })}
         </Flex>
     );
 };

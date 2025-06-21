@@ -2,6 +2,7 @@ import { Container, Flex } from "@mantine/core";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
+import { Pagination } from "shared/ui";
 import { UsersList, SearchRolesForm } from "widgets/RolesForm"
 
 export const RolesPage = () => {
@@ -16,6 +17,7 @@ export const RolesPage = () => {
             <Flex direction="column" style={{ width: '75%', margin: '0 auto' }}>
                 <SearchRolesForm groupContent={groups?.items!} companyContent={partners?.items!} />
                 <UsersList items={data?.items!} pagination={data?.pagination!} />
+                <Pagination pagination={data?.pagination} />
             </Flex>
         </Container>
     );
