@@ -30,7 +30,7 @@ export const RolesPage = () => {
     return (
         <Container fluid>
             <Flex direction="column" style={{ width: '75%', margin: '0 auto',  minWidth: '900px' }}>
-                <SearchRolesForm onSearch={handleSearch} />
+                <SearchRolesForm onSearch={handleSearch} initialValues={searchParams} />
                 {data?.items?.length === 0 ? (
                     <Text>Пользователи не найдены</Text>
                 ) : (

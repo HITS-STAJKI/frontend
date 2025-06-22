@@ -5,14 +5,18 @@ import { UserCard } from "entity/UserCard";
 import { CompanyPartnerDto, GroupDto, UserRole } from "services/api/api-client.types";
 
 
-export function SearchRolesForm({ onSearch }: { onSearch: (values: {
+export function SearchRolesForm({ onSearch, initialValues }: { onSearch: (values: {
     name?: string;
     role?: UserRole;
-}) => void }) {
+}) => void;
+initialValues?: {
+    name?: string;
+    role?: UserRole;
+}; }) {
     const form = useForm({
         initialValues: {
-            name: '',
-            role: undefined as UserRole | undefined,
+            name: initialValues?.name || '',
+            role: initialValues?.role || undefined as UserRole | undefined,
         },
     });
 
