@@ -11,10 +11,11 @@ import { useCreateStudentMutation } from "services/api/api-client/StudentQuery";
 import { useCreateCuratorMutation } from "services/api/api-client/CuratorQuery";
 import { useCreateDeanMutation } from "services/api/api-client/DeanQuery";
 import { useCreateTeacherMutation } from "services/api/api-client/TeacherQuery";
+import { useCreateProgramLeadMutation } from "services/api/api-client/Educational_program_leadQuery";
 
 
 function RoleDropdown() {
-    const [type, setType] = useState<'STUDENT' | 'TEACHER' | 'CURATOR' | 'DEAN' | undefined>(undefined)
+    const [type, setType] = useState<'STUDENT' | 'TEACHER' | 'CURATOR' | 'DEAN' | 'EDUCATIONALPROGRAMLEAD' | undefined>(undefined)
     return (
         <>
             <Menu position="left-start">
@@ -26,6 +27,7 @@ function RoleDropdown() {
                     <Menu.Item onClick={() => setType('DEAN')}>Деканат</Menu.Item>
                     <Menu.Item onClick={() => setType('TEACHER')}>Преподаватель</Menu.Item>
                     <Menu.Item onClick={() => setType('CURATOR')}>Куратор</Menu.Item>
+                    <Menu.Item onClick={() => setType('EDUCATIONALPROGRAMLEAD')}>Руководитель образовательной программы</Menu.Item>
                 </Menu.Dropdown>
 
             </Menu>
@@ -49,13 +51,14 @@ type AddUserRoleForm = {
     userId?: string
 }
 
-const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'CURATOR' | 'DEAN', returnFn: () => void }) => {
+const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'CURATOR' | 'DEAN' | 'EDUCATIONALPROGRAMLEAD', returnFn: () => void }) => {
     const form = useForm<AddUserRoleForm>()
     const { data, isLoading } = type === 'STUDENT' ? useGetGroupsQuery(undefined, undefined, 0, 1000000000) : useGetPartnersQuery(undefined, undefined, undefined, 0, 10000000)
     const { mutateAsync: mutateStudent } = useCreateStudentMutation(form.getValues().userId || '')
     const { mutateAsync: mutateDean } = useCreateDeanMutation()
     const { mutateAsync: mutateCurator } = useCreateCuratorMutation()
     const { mutateAsync: mutateTeacher } = useCreateTeacherMutation()
+    const { mutateAsync: mutateLead } = useCreateProgramLeadMutation()
     const { refetch } = useGetUserListQuery()
     const onSubmit = (vals: AddUserRoleForm) => {
         switch (type) {
@@ -85,13 +88,18 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
                     returnFn()
                 })
                 break
+            case 'EDUCATIONALPROGRAMLEAD':
+                mutateLead({ userId: vals.userId! }).then(() => {
+                    returnFn()
+                })
+                break
         }
 
 
     }
     return (
         <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={form.onSubmit(onSubmit)}>
-            <Title>Выдать пользователю роль: {type === 'STUDENT' ? 'студент' : type === 'CURATOR' ? 'куратор' : type === 'DEAN' ? 'декан' : 'преподаватель'}</Title>
+            <Title>Выдать пользователю роль: {type === 'STUDENT' ? 'студент' : type === 'CURATOR' ? 'куратор' : type === 'DEAN' ? 'декан' : type === 'TEACHER' ? 'преподаватель' : 'руководитель образовательной программы'}</Title>
             <UserSelect key={form.key('userId')} {...form.getInputProps('userId')} label={'Пользователь'} />
             {type === 'STUDENT' ? (
                 <Select key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {

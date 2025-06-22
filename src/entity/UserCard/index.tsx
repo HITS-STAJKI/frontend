@@ -36,5 +36,6 @@ const roleTranslations: Record<string, string> = {
     DEAN: "Декан",
     CURATOR: "Куратор",
     STUDENT: "Студент",
-    TEACHER: "Преподаватель"
+    TEACHER: "Преподаватель",
+    EDUCATIONAL_PROGRAM_LEAD: "Руководитель образовательной программы"
 };

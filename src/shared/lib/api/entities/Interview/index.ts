@@ -3,6 +3,7 @@ import { DeleteMessage, Page, PageFilter, Sort } from "../Common"
 import { Stack } from "../Stack"
 import { Language } from '../Language';
 import { Company } from '../Company';
+import { InterviewDto, UserDto } from 'services/api/api-client.types';
 
 export type InterviewStatus = "PENDING" | "REJECTED" | "SUCCEED"
 
@@ -30,7 +31,7 @@ export type InterviewCreate = Pick<Interview, 'status'> & {
 
 export type InterviewPage = Page<Interview>
 
-export type PagedListDtoInterviewDto = Page<InterviewForTeachers>
+export type PagedListDtoInterviewDto = Page<InterviewDto>
 
 export type SpecificStudentInterviewSearchAndFilter = {
     studentId: string
@@ -72,5 +73,5 @@ export type InterviewForTeachers = {
     stack: Stack
     languages: Array<Language>
     companyPartner: Pick<Company, 'id' | 'name'>
-    student: User
+    student: UserDto
 }

@@ -1,7 +1,7 @@
 import { Card, Flex } from "@mantine/core"
 import { ReactNode, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { GROUPS_ROUTE, INTERVIEW_REPORT, LANGUAGES_ROUTE, MY_PROFILE_ROUTE, PARTNERS_ROUTE, PRACTICE_ROUTE, Roles, ROLES_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE, STACKS_ROUTE, STATISTICS_ROUTE, STUDENT_PRACTICES_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENTS_ROUTE, WithProfileRole } from "shared/lib"
+import { GROUPS_ROUTE, INTERVIEW_REPORT, LANGUAGES_ROUTE, MY_PROFILE_ROUTE, PARTNERS_ROUTE, Roles, ROLES_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE, STACKS_ROUTE, STATISTICS_ROUTE, STUDENT_PRACTICES_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENTS_ROUTE, WithProfileRole } from "shared/lib"
 
 export const Menu = () => {
     const routes: Array<MenuItemProps> = [
@@ -20,7 +20,7 @@ export const Menu = () => {
         { to: STUDENTS_PRACTICES_ROUTE, label: 'Практики студентов', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
         { to: STUDENTS_ROUTE, label: 'Студенты', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
         { to: SELECTION_FOR_STUDENT_ROUTE, label: 'Мои собеседования', userFor: [Roles.STUDENT] },
-        { to: SELECTION_FOR_TEACHER_ROUTE, label: 'Собеседования студентов', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.CURATOR] },
+        { to: SELECTION_FOR_TEACHER_ROUTE, label: 'Собеседования студентов', userFor: [Roles.EDUCATION_PROGRAM_LEAD] },
     ]
     return (
         <Flex w='100%' h='100%' align='center' gap='lg' mt='md' direction='column' style={{ overflowY: 'auto' }}>

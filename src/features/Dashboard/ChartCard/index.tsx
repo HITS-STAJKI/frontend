@@ -81,7 +81,12 @@ export const ChartCard = ({
                     value.forEach(data => {
                         getStats({ key: key as keyof FilterRequest, value: data, add: data }, { key: main, value: datas[main] }).then(data321 => {
                             if (data321 !== undefined)
-                                setFilters(prev => [...prev, { ...data321 }])
+                                if (data321.value === 0) {
+                                    setFilters([])
+                                }
+                                else {
+                                    setFilters(prev => [...prev, { ...data321 }])
+                                }
                         })
                     })
                 }
@@ -89,7 +94,12 @@ export const ChartCard = ({
                     datas[main].forEach(maind => {
                         getStats({ key: key as keyof FilterRequest, value }, { key: main, value: maind, add: maind }).then(data321 => {
                             if (data321 !== undefined)
-                                setFilters(prev => [...prev, { ...data321 }])
+                                if (data321.value === 0) {
+                                    setFilters([])
+                                }
+                                else {
+                                    setFilters(prev => [...prev, { ...data321 }])
+                                }
                         })
                     })
                 }
@@ -99,7 +109,12 @@ export const ChartCard = ({
                             datas[main].forEach(maind => {
                                 getStats({ key: key as keyof FilterRequest, value: data, add: data }, { key: main, value: maind, add: maind }).then(data321 => {
                                     if (data321 !== undefined)
-                                        setFilters(prev => [...prev, { ...data321 }])
+                                        if (data321.value === 0) {
+                                            setFilters([])
+                                        }
+                                        else {
+                                            setFilters(prev => [...prev, { ...data321 }])
+                                        }
                                 })
                             })
                     })
@@ -107,7 +122,12 @@ export const ChartCard = ({
                 else {
                     getStats({ key: key as keyof FilterRequest, value }, { key: main, value: datas[main] }).then(data321 => {
                         if (data321 !== undefined)
-                            setFilters(prev => [...prev, { ...data321 }])
+                            if (data321.value === 0) {
+                                setFilters([])
+                            }
+                            else {
+                                setFilters(prev => [...prev, { ...data321 }])
+                            }
                     })
                 }
 

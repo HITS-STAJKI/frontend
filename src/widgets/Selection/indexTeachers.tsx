@@ -8,6 +8,7 @@ import { GroupWithName, STATUS1, STATUS3, STATUS2, StatusWithID, convertGroupsTo
 import { FullPracticeCard } from "entity/FullPracticeCard";
 import { useNavigate } from "react-router-dom";
 import { CommentSelection, SuccedSelection, SuccedTeacherSelection } from "./ModuleWindows";
+import { useGetUserByIdQuery } from "services/api/api-client/UserQuery";
 
 
 // --------------- Teacher ---------------
@@ -17,7 +18,7 @@ export function SelectionTeacherFilters() {
         <FilterBlockFull availableFilters={[
             { id: "name", label: "ФИО", element: (props) => <FilterName id="name" onChangeValue={props.onChangeValue} /> },
             { id: "company", label: "Компания", element: (props) => <FilterSelect items={GET_COMPANIES.items} id="company" onChangeValue={props.onChangeValue} label="Выберите компанию" /> },
-            { id: "stackId", label: "Направление", element: (props) => <FilterSelect items={GET_STACKS.items} id="reportavailibility" onChangeValue={props.onChangeValue} label="Выберите направление"/> },
+            { id: "stackId", label: "Направление", element: (props) => <FilterSelect items={GET_STACKS.items} id="reportavailibility" onChangeValue={props.onChangeValue} label="Выберите направление" /> },
             { id: "languageIds", label: "Языки программирования", element: (props) => <FilterMultiSelect items={GET_LANGUAGES.items} id="languageIds" onChangeValue={props.onChangeValue} /> },
             { id: "group", label: "Группа", element: (props) => <FilterSelect items={convertGroupsToGroupsWithName(GET_GROUPS.items)} id="group" onChangeValue={props.onChangeValue} label="Выберите группу" /> },
             { id: "status", label: "Статус", element: (props) => <FilterSelect items={[STATUS1, STATUS2, STATUS3]} id="group" onChangeValue={props.onChangeValue} label="Выберите статус" /> },
@@ -238,13 +239,13 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoIntervie
                 </div>
             </Card>
             {items.map((interview, localIndex) => {
-                const globalIndex = (pagination.currentPage - 1) * pagination.size + localIndex;
+                const globalIndex = (pagination.currentPage!) * pagination.size! + localIndex;
                 return (
                     <SelectionTeacherCard
                         key={interview.id}
                         id={interview.id}
                         stack={interview.stack}
-                        createdAt={interview.createdAt}
+                        createdAt={interview.createdAt.toDateString()}
                         languages={interview.languages}
                         status={interview.status}
                         companyPartner={interview.companyPartner}
@@ -259,12 +260,13 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoIntervie
 
 interface FullInterviewCardProps extends InterviewForTeachers {
     index: number;
+    group: string
 }
 
 
 export function SelectionTeacherCard({ id, student, companyPartner, createdAt, languages, stack, status, index }: FullInterviewCardProps) {
     const navigate = useNavigate();
-
+    const { data } = useGetUserByIdQuery(student.id!)
     const handleClick = () => {
         console.log("Открыли модалку");
     };
@@ -301,12 +303,12 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                 <Grid style={{ width: '100%', height: '100%' }}>
                     <Grid.Col span={2.9} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {student.fullname}
+                            {student.fullName}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {"-"}
+                            {data?.student?.group.number}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>

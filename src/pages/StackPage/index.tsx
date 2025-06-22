@@ -1,15 +1,20 @@
 import { LanguageList } from "../../widgets/LanguageStack";
 import { SearchForm } from "../../widgets/LanguageStack";
-import { Container, Flex } from "@mantine/core";
-import { GET_STACKS } from "../../shared/lib/api/stubs/";
+import { Center, Container, Flex, Loader } from "@mantine/core";
+import { useGetStackListQuery } from "services/api/api-client/StackQuery";
 
 const StackPage = () => {
-
+    const { data, isLoading } = useGetStackListQuery()
+    if (isLoading) {
+        return <Center>
+            <Loader />
+        </Center>
+    }
     return (
         <Container style={{ width: '100%' }}>
             <Flex direction="column">
                 <SearchForm type="stack" />
-                <LanguageList items={GET_STACKS.items} pagination={GET_STACKS.pagination} type='stack' />
+                <LanguageList items={data!} type='stack' />
             </Flex>
         </Container>
 

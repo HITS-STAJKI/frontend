@@ -232,7 +232,7 @@ export function initPersister() {
 
   addResultTypeFactory('PracticeClient___getCurrentStudentPractice', (data: any) => Types.initPracticeDto(data));
   addResultTypeFactory('PracticeClient___getMyPractice', (data: any) => Types.initPracticeDto(data));
-  addResultTypeFactory('PracticeClient___getStudentPractices', (data: any) => Types.initPagedListDtoPracticeDto(data));
+  addResultTypeFactory('PracticeClient___getStudentPractices', (data: any) => Types.initPagedPracticesDto(data));
   addResultTypeFactory('PracticeClient___getPracticeRequests', (data: any) => Types.initPagedListDtoPracticeDto(data));
   addResultTypeFactory('PracticeClient___getAllPractices', (data: any) => Types.initPagedListDtoPracticeDto(data));
 

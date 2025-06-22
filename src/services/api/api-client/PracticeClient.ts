@@ -874,7 +874,7 @@ function processGetMyPractice(response: AxiosResponse): Promise<Types.PracticeDt
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function getStudentPractices(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoPracticeDto> {
+export function getStudentPractices(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedPracticesDto> {
     let url_ = getBaseUrl() + "/api/v1/practice/list?";
       if (id === undefined || id === null)
         throw new Error("The parameter 'id' must be defined and cannot be null.");
@@ -917,7 +917,7 @@ export function getStudentPractices(id: string, page?: number | undefined, size?
     });
 }
 
-function processGetStudentPractices(response: AxiosResponse): Promise<Types.PagedListDtoPracticeDto> {
+function processGetStudentPractices(response: AxiosResponse): Promise<Types.PagedPracticesDto> {
     const status = response.status;
     let _headers: any = {};
     if (response.headers && typeof response.headers === "object") {
@@ -966,14 +966,14 @@ function processGetStudentPractices(response: AxiosResponse): Promise<Types.Page
         const _responseText = response.data;
         let result200: any = null;
         let resultData200  = _responseText;
-        result200 = Types.initPagedListDtoPracticeDto(resultData200);
-        return Promise.resolve<Types.PagedListDtoPracticeDto>(result200);
+        result200 = Types.initPagedPracticesDto(resultData200);
+        return Promise.resolve<Types.PagedPracticesDto>(result200);
 
     } else if (status !== 200 && status !== 204) {
         const _responseText = response.data;
         return throwException("An unexpected server error occurred.", status, _responseText, _headers);
     }
-    return Promise.resolve<Types.PagedListDtoPracticeDto>(null as any);
+    return Promise.resolve<Types.PagedPracticesDto>(null as any);
 }
 
 /**
