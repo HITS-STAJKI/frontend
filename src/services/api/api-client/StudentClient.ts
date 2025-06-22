@@ -496,6 +496,104 @@ function processCreateStudent(response: AxiosResponse): Promise<Types.StudentDto
 }
 
 /**
+ * Получение информации о студентах по id
+ * @return OK
+ */
+export function getStudentsByIds(body: string[], config?: AxiosRequestConfig | undefined): Promise<Types.StudentDto[]> {
+    let url_ = getBaseUrl() + "/api/v1/student/list/ids";
+      url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = JSON.stringify(body);
+
+    let options_: AxiosRequestConfig = {
+        ..._requestConfigGetStudentsByIds,
+        ...config,
+        data: content_,
+        method: "POST",
+        url: url_,
+        headers: {
+            ..._requestConfigGetStudentsByIds?.headers,
+            "Content-Type": "application/json",
+            "Accept": "*/*",
+            ...config?.headers,
+        }
+    };
+
+    return getAxios().request(options_).catch((_error: any) => {
+        if (isAxiosError(_error) && _error.response) {
+            return _error.response;
+        } else {
+            throw _error;
+        }
+    }).then((_response: AxiosResponse) => {
+        return processGetStudentsByIds(_response);
+    });
+}
+
+function processGetStudentsByIds(response: AxiosResponse): Promise<Types.StudentDto[]> {
+    const status = response.status;
+    let _headers: any = {};
+    if (response.headers && typeof response.headers === "object") {
+        for (let k in response.headers) {
+            if (response.headers.hasOwnProperty(k)) {
+                _headers[k] = response.headers[k];
+            }
+        }
+    }
+    if (status === 409) {
+        const _responseText = response.data;
+        let result409: any = null;
+        let resultData409  = _responseText;
+        result409 = Types.initErrorResponse(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+
+    } else if (status === 400) {
+        const _responseText = response.data;
+        let result400: any = null;
+        let resultData400  = _responseText;
+        result400 = Types.initErrorResponse(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+
+    } else if (status === 500) {
+        const _responseText = response.data;
+        let result500: any = null;
+        let resultData500  = _responseText;
+        result500 = Types.initErrorResponse(resultData500);
+        return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
+    } else if (status === 404) {
+        const _responseText = response.data;
+        let result404: any = null;
+        let resultData404  = _responseText;
+        result404 = Types.initErrorResponse(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+
+    } else if (status === 200) {
+        const _responseText = response.data;
+        let result200: any = null;
+        let resultData200  = _responseText;
+        if (Array.isArray(resultData200)) {
+              result200 = resultData200.map(item => 
+                Types.initStudentDto(item)
+              );
+            }
+        return Promise.resolve<Types.StudentDto[]>(result200);
+
+    } else if (status !== 200 && status !== 204) {
+        const _responseText = response.data;
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+    }
+    return Promise.resolve<Types.StudentDto[]>(null as any);
+}
+
+/**
  * Импорт студентов из Excel-файла
  * @param file (optional) 
  * @return OK
@@ -905,6 +1003,17 @@ export function setCreateStudentRequestConfig(value: Partial<AxiosRequestConfig>
 }
 export function patchCreateStudentRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
   _requestConfigCreateStudent = patch(_requestConfigCreateStudent ?? {});
+}
+
+let _requestConfigGetStudentsByIds: Partial<AxiosRequestConfig> | null;
+export function getGetStudentsByIdsRequestConfig() {
+  return _requestConfigGetStudentsByIds;
+}
+export function setGetStudentsByIdsRequestConfig(value: Partial<AxiosRequestConfig>) {
+  _requestConfigGetStudentsByIds = value;
+}
+export function patchGetStudentsByIdsRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
+  _requestConfigGetStudentsByIds = patch(_requestConfigGetStudentsByIds ?? {});
 }
 
 let _requestConfigImportStudents: Partial<AxiosRequestConfig> | null;

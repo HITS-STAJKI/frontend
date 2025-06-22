@@ -1633,6 +1633,7 @@ export interface StudentShortDto  {
   isAcadem: boolean;
   isGraduated: boolean;
   group: GroupShortDto;
+  chatId: string;
   [key: string]: any;
 }
 export function deserializeStudentShortDto(json: string): StudentShortDto {
@@ -1868,6 +1869,8 @@ export function prepareSerializePagedListDtoStudentDto(_data: PagedListDtoStuden
 }
 /** Статистика по найденным студентам */
 export interface StatisticsResponse  {
+  /** Количество найденных студентов */
+  count?: number;
   [key: string]: any;
 }
 export function deserializeStatisticsResponse(json: string): StatisticsResponse {
@@ -1924,6 +1927,36 @@ export function prepareSerializePagedListDtoPracticeDto(_data: PagedListDtoPract
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoPracticeDto;
+}
+/** dto списка практик с информацией о студенте */
+export interface PagedPracticesDto  {
+  student?: StudentDto;
+  practices?: PagedListDtoPracticeDto;
+  [key: string]: any;
+}
+export function deserializePagedPracticesDto(json: string): PagedPracticesDto {
+  const data = JSON.parse(json) as PagedPracticesDto;
+  initPagedPracticesDto(data);
+  return data;
+}
+export function initPagedPracticesDto(_data: PagedPracticesDto) {
+  if (_data) {
+    _data.student = _data["student"] && initStudentDto(_data["student"]);
+    _data.practices = _data["practices"] && initPagedListDtoPracticeDto(_data["practices"]);
+  }
+  return _data;
+}
+export function serializePagedPracticesDto(_data: PagedPracticesDto | undefined) {
+  if (_data) {
+    _data = prepareSerializePagedPracticesDto(_data as PagedPracticesDto);
+  }
+  return JSON.stringify(_data);
+}
+export function prepareSerializePagedPracticesDto(_data: PagedPracticesDto): PagedPracticesDto {
+  const data: Record<string, any> = { ..._data };
+  data["student"] = _data.student && prepareSerializeStudentDto(_data.student);
+  data["practices"] = _data.practices && prepareSerializePagedListDtoPracticeDto(_data.practices);
+  return data as PagedPracticesDto;
 }
 export interface PagedListDtoShortCompanyPartnerDto  {
   items?: ShortCompanyPartnerDto[];

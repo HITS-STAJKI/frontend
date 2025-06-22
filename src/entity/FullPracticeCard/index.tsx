@@ -12,8 +12,9 @@ interface FullPracticeCardProps extends PracticeDto {
 export function FullPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index, onRefresh }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
+    const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
+
     const handleClick = () => {
-        const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
         if (studentRole?.id) 
         {
             navigate(PRACTICE_ROUTE.replace(':id', studentRole.id));
@@ -96,12 +97,22 @@ export function FullPracticeCard({ id, user, group, company, stack, createdAt, i
                                 //TODO: Сделать отображжение кнопок от роли
                             }
                             {id && (
-                                <>
-                                    <ReportOpen practiceId={id} />
-                                    <ReportEdit id={id} initialValue={isPaid} onSuccess={onRefresh} />
-                                    <ReportDelete id={id} onSuccess={onRefresh} />
-                                    <ReportArchive id={id} onSuccess={onRefresh} />
-                                </>
+                                <Grid.Col span={12} onClick={(e) => e.stopPropagation()}>
+                                    <Box style={{ display: "flex", gap: 8, justifyContent: "center", alignItems: "center", width: "100%" }} >
+                                        <Box style={{ visibility: id && studentRole ? "visible" : "hidden" }}>
+                                            <ReportOpen practiceId={id!} studentId={studentRole?.id!} />
+                                        </Box>
+                                        <Box style={{ visibility: id ? "visible" : "hidden" }}>
+                                            <ReportEdit id={id!} initialValue={isPaid} onSuccess={onRefresh} />
+                                        </Box>
+                                        <Box style={{ visibility: id ? "visible" : "hidden" }}>
+                                            <ReportDelete id={id!} onSuccess={onRefresh} />
+                                        </Box>
+                                        <Box style={{ visibility: id ? "visible" : "hidden" }}>
+                                            <ReportArchive id={id!} onSuccess={onRefresh} />
+                                        </Box>
+                                    </Box>
+                                </Grid.Col>
                             )}
                         </div>
                     </Grid.Col>

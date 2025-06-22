@@ -84,7 +84,7 @@ export const CommentSectionAlt = ({ chatId, height = '50vh' }: CommentSectionAlt
                     )}
                     <Box ref={commentsRef} style={{ flex: 1, overflowY: 'auto' }}>
                         <Space h="md" />
-                        <Stack gap="sm">
+                        <Stack gap="sm" style={{width: '100%'}}>
                             {!error && comments.slice().reverse().map(comment => (
                                 <Comment
                                     key={comment.id}
@@ -160,7 +160,7 @@ export const Comment = ({ id, content, senderId, isRead, isEdited, sentAt, modif
                 <Indicator disabled={isRead} size={10} offset={4} position="top-end" color="blue">
                     <Avatar color={AvatarColor[Math.abs(hashCode(id ?? '')) % AvatarColor.length]}>{author?.fullName?.[0]?.toUpperCase() ?? '?'}</Avatar>
                 </Indicator>
-                <Flex direction="column" maw="32rem" style={{ flex: 1 }}>
+                <Flex direction="column" maw="90%" style={{ flex: 1 }}>
                     <Group justify="space-between">
                         <Group gap="xs">
                             <Text fw={500}>{isLoading ? 'Загрузка...' : author?.fullName ?? 'Неизвестный'}</Text>

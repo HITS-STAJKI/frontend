@@ -314,6 +314,36 @@ return useMutation({
 });
 }
   
+export function getStudentsByIdsUrl(): string {
+  let url_ = getBaseUrl() + "/api/v1/student/list/ids";
+  url_ = url_.replace(/[?&]$/, "");
+  return url_;
+}
+
+export function getStudentsByIdsMutationKey(): MutationKey {
+  return trimArrayEnd([
+      'StudentClient',
+      'getStudentsByIds',
+    ]);
+}
+
+/**
+ * Получение информации о студентах по id
+ * @return OK
+ */
+export function useGetStudentsByIdsMutation<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto[], unknown, string[], TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StudentDto[], unknown, string[], TContext> {
+  const key = getStudentsByIdsMutationKey();
+  
+  const metaContext = useContext(QueryMetaContext);
+  options = addMetaToOptions(options, metaContext);
+  
+  return useMutation({
+    ...options,
+    mutationFn: (body: string[]) => Client.getStudentsByIds(body),
+    mutationKey: key,
+  });
+}
+  
 export function importStudentsUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/student/import";
   url_ = url_.replace(/[?&]$/, "");

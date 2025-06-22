@@ -55,6 +55,8 @@ export const StudentPracticesPage = () => {
     const studentName = practicesData?.student?.user?.fullName ?? '—';
     const groupNumber = practicesData?.student?.group?.number ?? '—';
 
+    console.log(practicesData);
+
     return (
         <div style={{ width: '100%'}}>
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">

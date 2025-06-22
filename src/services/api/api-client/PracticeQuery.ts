@@ -624,7 +624,7 @@ else if (sort !== undefined)
   return url_;
 }
 
-let getStudentPracticesDefaultOptions: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, unknown, Types.PagedListDtoPracticeDto>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.PagedListDtoPracticeDto, unknown, Types.PagedListDtoPracticeDto>, 'queryFn'>> = {
+let getStudentPracticesDefaultOptions: Omit<UseQueryOptions<Types.PagedPracticesDto, unknown, Types.PagedPracticesDto>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.PagedPracticesDto, unknown, Types.PagedPracticesDto>, 'queryFn'>> = {
 };
 export function getGetStudentPracticesDefaultOptions() {
   return getStudentPracticesDefaultOptions;
@@ -660,7 +660,7 @@ export function __getStudentPractices(context: QueryFunctionContext, axiosConfig
       context.queryKey[2] as string,       context.queryKey[3] as number | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as string[] | undefined,axiosConfig    );
 }
 
-export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(dto: GetStudentPracticesPracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetStudentPracticesQuery<TSelectData = Types.PagedPracticesDto, TError = unknown>(dto: GetStudentPracticesPracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 /**
  * Получить список практик студента
  * @param id Id студента
@@ -669,9 +669,9 @@ export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPrac
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
-  let options: UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData> | undefined = undefined;
+export function useGetStudentPracticesQuery<TSelectData = Types.PagedPracticesDto, TError = unknown>(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetStudentPracticesQuery<TSelectData = Types.PagedPracticesDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+  let options: UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData> | undefined = undefined;
   let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let id: any = undefined;
   let page: any = undefined;
@@ -691,10 +691,10 @@ export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPrac
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
 
-  return useQuery<Types.PagedListDtoPracticeDto, TError, TSelectData>({
+  return useQuery<Types.PagedPracticesDto, TError, TSelectData>({
     queryFn: axiosConfig ? (context) => __getStudentPractices(context, axiosConfig) : __getStudentPractices,
     queryKey: getStudentPracticesQueryKey(id, page, size, sort),
-    ...getStudentPracticesDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>,
+    ...getStudentPracticesDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData>, 'queryKey'>,
     ...options,
   });
 }
@@ -706,7 +706,7 @@ export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPrac
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function setGetStudentPracticesData(queryClient: QueryClient, updater: (data: Types.PagedListDtoPracticeDto | undefined) => Types.PagedListDtoPracticeDto, id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
+export function setGetStudentPracticesData(queryClient: QueryClient, updater: (data: Types.PagedPracticesDto | undefined) => Types.PagedPracticesDto, id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
   queryClient.setQueryData(getStudentPracticesQueryKey(id, page, size, sort),
     updater
   );
@@ -720,7 +720,7 @@ export function setGetStudentPracticesData(queryClient: QueryClient, updater: (d
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function setGetStudentPracticesDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoPracticeDto | undefined) => Types.PagedListDtoPracticeDto) {
+export function setGetStudentPracticesDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedPracticesDto | undefined) => Types.PagedPracticesDto) {
   queryClient.setQueryData(queryKey, updater);
 }
     

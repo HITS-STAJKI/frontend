@@ -11,12 +11,14 @@ import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { IconDownload } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { ReportId } from "services/api/api-client.types";
+import { useGetStudentsByIdsMutation } from "services/api/api-client/StudentQuery";
 
 type ReportIdProps = {
     practiceId: string;
+    studentId: string;
 };
 
-export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps & { opened: boolean; onClose: () => void }) => {
+export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: ReportIdProps & { opened: boolean; onClose: () => void }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const { data: report, isLoading: reportLoading, isError: isReportError, error: reportError } = useGetPracticeReportQuery(practiceId, { enabled: opened });
@@ -25,6 +27,18 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
 
     const [grade, setGrade] = useState<string | null>(report?.grade?.toString() ?? null);
     const [originalGrade, setOriginalGrade] = useState<string | null>(report?.grade?.toString() ?? null);
+
+    const [chatId, setChatId] = useState<string | null>(null);
+
+    const [mutationError, setMutationError] = useState<string | null>(null);
+
+    const uploadMutation = useUploadFileMutation();
+    const attachMutation = useAttachFileToReportMutationWithParameters();
+    const unattachMutation = useUnattachFileFromReportMutationWithParameters();
+    const deleteMutation = useDeleteFileMutationWithParameters();
+    const setGradeMutation = useSetGradeMutationWithParameters();
+    const getStudentMutation = useGetStudentsByIdsMutation();
+
 
     useEffect(() => {
         if (report?.grade !== undefined && report?.grade !== null) 
@@ -35,12 +49,28 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
         }
     }, [report]);
 
+    useEffect(() => {
+        if (opened && studentId) 
+        {
+            setMutationError(null);
+            getStudentMutation.mutateAsync([studentId])
+                .then((res) => {
+                    const student = res?.[0];
+                    setChatId(student?.chatId ?? null);
+                })
+                .catch((err) => {
+                    const msg = getErrorMessage(err);
+                    setMutationError(`Ошибка получения chatId: ${msg}`);
+                });
+        }
+    }, [opened, studentId]);
 
-    const uploadMutation = useUploadFileMutation();
-    const attachMutation = useAttachFileToReportMutationWithParameters();
-    const unattachMutation = useUnattachFileFromReportMutationWithParameters();
-    const deleteMutation = useDeleteFileMutationWithParameters();
-    const setGradeMutation = useSetGradeMutationWithParameters();
+    useEffect(() => {
+        if (!opened) 
+        {
+            setMutationError(null);
+        }
+    }, [opened]);
 
     const handleDownload = () => {
         if (report?.fileId) 
@@ -50,19 +80,13 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
         }
     };
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) 
-        {
-            setSelectedFile(e.target.files[0]);
-        }
-    };
-
     const handleAttach = async () => {
         if (!selectedFile || !report)
         {
             return;
         }
 
+        setMutationError(null);
         try 
         {
             const data = await selectedFile.arrayBuffer();
@@ -87,7 +111,8 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
         } 
         catch (err) 
         {
-            console.error("Ошибка прикрепления файла:", err);
+            const msg = getErrorMessage(err);
+            setMutationError(`Ошибка прикрепления файла: ${msg}`);
         }
     };
 
@@ -97,6 +122,7 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
             return;
         }
 
+        setMutationError(null);
         try 
         {
             await unattachMutation.mutateAsync({ reportId: { reportId: report.id } });
@@ -123,7 +149,8 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
         } 
         catch (err) 
         {
-            console.error("Ошибка замены файла:", err);
+            const msg = getErrorMessage(err);
+            setMutationError(`Ошибка замены файла: ${msg}`);
         }
     };
 
@@ -134,6 +161,7 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
     const handleGradeSubmit = async () => {
         if (!report || !grade) return;
 
+        setMutationError(null);
         try 
         {
             await setGradeMutation.mutateAsync({
@@ -144,7 +172,8 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
         } 
         catch (err) 
         {
-            console.error("Ошибка при сохранении оценки:", err);
+            const msg = getErrorMessage(err);
+            setMutationError(`Ошибка изменения оценки: ${msg}`);
         }
     };
 
@@ -237,12 +266,25 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
                                 </>
                             )
                         )}
+                        {mutationError && (
+                            <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6' }}>
+                                <Text color="red" size="sm" style={{ textAlign: 'center' }}>
+                                    {mutationError}
+                                </Text>
+                            </Card>
+                        )}
                     </Group>
                     <Flex direction="column" style={{ width: '100%' }} gap="md" mb="md" align="center">
-                        <div style={{ width: '80%' }}>
+                        <div style={{ width: '95%' }}>
                             <Text size="xl" mb="md"> Комментарии </Text>
                             <Space h="md" />
-                            <CommentSectionAlt chatId="chatId" height="50vh" />
+                            {chatId ? (
+                                <CommentSectionAlt chatId={chatId} height="50vh" />
+                            ) : (
+                                <Center style={{ height: '50vh' }}>
+                                    <Loader size="lg" />
+                                </Center>
+                            )}
                         </div>
                     </Flex>
                     <Group style={{ justifyContent: 'space-between', marginBottom: '1rem' }}>
@@ -254,7 +296,7 @@ export const ReportOpenModal = ({ practiceId, opened, onClose }: ReportIdProps &
     );
 };
 
-export const ReportOpen = ({ practiceId }: ReportIdProps) => {
+export const ReportOpen = ({ practiceId, studentId }: ReportIdProps) => {
     const [opened, { open, close }] = useDisclosure(false);
 
     return (
@@ -267,7 +309,7 @@ export const ReportOpen = ({ practiceId }: ReportIdProps) => {
                 </Button>
             </Tooltip>
 
-            <ReportOpenModal practiceId={practiceId} opened={opened} onClose={close} />
+            <ReportOpenModal practiceId={practiceId} studentId={studentId} opened={opened} onClose={close} />
         </>
     );
 };

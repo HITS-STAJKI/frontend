@@ -11,8 +11,9 @@ interface FullPracticeCardProps extends PracticeDto {
 export function ShortPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
+    const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
+
     const handleClick = () => {
-        const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
         if (studentRole?.id) 
         {
             navigate(PRACTICE_ROUTE.replace(':id', studentRole.id));
@@ -83,39 +84,7 @@ export function ShortPracticeCard({ id, user, group, company, stack, createdAt, 
                         {
                             //TODO: Сделать отображжение кнопок от роли
                         }
-                        { id && <ReportShortOpen id={id} /> }
-                    </Grid.Col> 
-                </Grid>
-            </div>
-        </Card>
-    );
-}
-
-export function ShortPracticeCardEmpty() { 
-    return (
-        <Card shadow="sm" style={{ width: '100%', height: '64px', display: 'flex', cursor: 'pointer', transition: 'box-shadow 0.2s ease, background-color 0.2s ease' }}>
-            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                <Box style={{ width: '40px', textAlign: 'center' }}>
-                    <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                </Box>
-                <Grid style={{width: '100%'}}>
-                    <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>                
-                    <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
-                    </Grid.Col>
-                    <Grid.Col span={2} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }} onClick={(e) => e.stopPropagation()} >
-                        <Text style={{ whiteSpace: 'pre' }}>{"                                                                                        "}</Text>
+                        { id && studentRole && <ReportShortOpen id={id} studentId={studentRole?.id}/> }
                     </Grid.Col> 
                 </Grid>
             </div>

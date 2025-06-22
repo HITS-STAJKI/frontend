@@ -217,7 +217,7 @@ export function StudentsFormUnder({ studentCount }: PracticesFormUnderProps) {
     return (
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Group justify="space-between" align="center">
-                <Text>Найдено практик: {studentCount}</Text>
+                <Text>Найдено студентов: {studentCount}</Text>
             </Group>
         </Box>
     );

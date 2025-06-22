@@ -11,9 +11,10 @@ import { downloadFileUrl } from "services/api/api-client/FilesQuery";
 
 type ReportIdProps = {
     id: string;
+    studentId: string;
 };
 
-export const ReportShortOpen = ({ id }: ReportIdProps) => {
+export const ReportShortOpen = ({ id, studentId }: ReportIdProps) => {
     const [opened, setOpened] = useState(false);
     const [buttonState, setButtonState] = useState<'attach' | 'edit' | 'document'>();
     
@@ -82,7 +83,7 @@ export const ReportShortOpen = ({ id }: ReportIdProps) => {
         <>
             {renderOpenButton()}
 
-            {id && ( <ReportOpenModal practiceId={id} opened={opened} onClose={() => setOpened(false)} />)}
+            {id && ( <ReportOpenModal practiceId={id} studentId={studentId} opened={opened} onClose={() => setOpened(false)} />)}
         </>
     );
 };
