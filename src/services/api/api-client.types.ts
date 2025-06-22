@@ -1633,6 +1633,7 @@ export interface StudentShortDto  {
   isAcadem: boolean;
   isGraduated: boolean;
   group: GroupShortDto;
+  chatId: string;
   [key: string]: any;
 }
 export function deserializeStudentShortDto(json: string): StudentShortDto {

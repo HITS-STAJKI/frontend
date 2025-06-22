@@ -1,30 +1,67 @@
-import { Container, Flex } from "@mantine/core";
-import { FilterBlockShort, FilterCompanySelect, FilterGroup, FilterName, FilterTrueFalseNull } from "entity";
-import { useState } from "react";
-import { GET_PRACTICES, GET_STUDENT, PracticeRequestPage, Student } from "shared/lib";
-import { PracticesFormOver, PracticesFormUnder, PracticesList } from "widgets/StudentPracticesForm";
+import { Card, Center, Flex, Loader, Text } from "@mantine/core";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useGetStudentPracticesQuery } from "services/api/api-client/PracticeQuery";
+import { PracticesFormOver, PracticesList, SortDirectionStudentPractices, SortKeyStudentPractices } from "widgets/StudentPracticesForm";
+import { Pagination } from "shared/ui";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
-const StudentPracticesPage = () => {
-    const [practices, setPractices] = useState<PracticeRequestPage>(GET_PRACTICES);
-    const [student, setStudent] = useState<Student>(GET_STUDENT);
+export const StudentPracticesPage = () => {
+    const [searchParams] = useSearchParams();
+    const { id } = useParams<{ id: string }>();
+
+    const page = Number(searchParams.get("page") ?? "0");
+
+    const sortParam = searchParams.get("sort") as SortKeyStudentPractices | null;
+    const sortDirectionParam = searchParams.get("sortDirection") as SortDirectionStudentPractices | null;
+
+    const sortArray: [SortKeyStudentPractices, SortDirectionStudentPractices] | null =
+        sortParam && sortDirectionParam ? [sortParam, sortDirectionParam] : null;
+
+    const sort: string[] | undefined = sortArray
+        ? [sortArray[1], sortArray[0]]
+        : undefined;
+
+    const { data: practicesData, isLoading, isError, error } = useGetStudentPracticesQuery(id as string, page, 20, sort);
+
+    if (isLoading) {
+        return (
+            <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
+                <Loader size="lg" />
+            </Center>
+        );
+    }
+
+    if (isError) {
+        return (
+            <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6, width: '100%' }}>
+                <Text color="red" size="sm" style={{ textAlign: 'center' }}>
+                    Ошибка: {getErrorMessage(error)}
+                </Text>
+            </Card>
+        );
+    }
+
+    if (!practicesData) {
+        return (
+            <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
+                <Text>Нет данных</Text>
+            </Center>
+        );
+    }
+
+    const studentName = practicesData?.student?.user?.fullName ?? '—';
+    const groupNumber = practicesData?.student?.group?.number ?? '—';
+
+    console.log(practicesData);
 
     return (
-        <Container fluid>
+        <div style={{ width: '100%' }}>
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
-                <PracticesFormOver studentName={student.user.fullname} group={student.group.number} />
-                <FilterBlockShort availableFilters={[
-                    { id: "name", label: "ФИО", element: (props) => <FilterName id="name" onChangeValue={props.onChangeValue} /> },
-                    { id: "company", label: "Компания", element: (props) => <FilterCompanySelect id="company" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },
-                    { id: "group", label: "Группа", element: (props) => <FilterGroup id="group" onChangeValue={props.onChangeValue} /> },
-                    { id: "reportavailibility", label: "Отчёт по практике", element: (props) => <FilterTrueFalseNull id="reportavailibility" onChangeValue={props.onChangeValue} /> },
-                    { id: "reportapproved", label: "Отчёт подтверждён", element: (props) => <FilterTrueFalseNull id="reportapproved" onChangeValue={props.onChangeValue} /> },
-                    { id: "archive", label: "Архивная", element: (props) => <FilterTrueFalseNull id="archive" onChangeValue={props.onChangeValue} /> },
-                    { id: "practiveapprove", label: "Практика подтверждена", element: (props) => <FilterTrueFalseNull id="practiveapprove" onChangeValue={props.onChangeValue} /> },
-                ]} />
-                <PracticesFormUnder studentCount={10} />
-                <PracticesList items={practices.items} pagination={practices.pagination} />
+                <PracticesFormOver studentName={studentName} group={groupNumber} />
+                <PracticesList items={practicesData?.practices?.items} pagination={practicesData?.practices?.pagination} initialSort={sortArray} />
+                <Pagination pagination={practicesData?.practices?.pagination} />
             </Flex>
-        </Container>
+        </div>
     );
 };
 export default StudentPracticesPage

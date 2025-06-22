@@ -1,12 +1,13 @@
 import { PartnerList } from "widgets/PartnerList"
-import { Container, Flex, Title } from '@mantine/core';
+import { Flex, Title } from '@mantine/core';
 import { CreatePartner } from "features/Partners";
 import { FilterBlockShort, FilterCompanyName, FilterCompanySelect, FilterTrueFalse } from "entity";
 
 const PartnersPage = () => {
     return (
-        <Container w={'75%'} fluid>
-            <Flex justify='space-between' align='flex-end' w={'100%'} mb="md">
+        <div style={{ width: '100%'}}>
+            <Flex direction="column" style={{ width: '75%', margin: '0 auto' }} gap="md">
+                <Flex justify='space-between' align='flex-end' w={'100%'} mb="md">
                 <Title order={1}>Компании-партнеры</Title>
                 <CreatePartner />
             </Flex>
@@ -16,7 +17,8 @@ const PartnersPage = () => {
                 { id: "isNew", label: "Только новые компании", element: (props) => <FilterTrueFalse id="isNew" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
             ]} />
             <PartnerList />
-        </Container>
+            </Flex>
+        </div>
     )
 }
 

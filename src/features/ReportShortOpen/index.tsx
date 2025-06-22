@@ -1,73 +1,76 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Space, Stack, Title, Group, Flex } from "@mantine/core";
 import { Modal } from '@mantine/core';
-import { DocSvgrepoCom } from "assets/icons";
 
 import { Comment } from "entity";
 import { GET_INTERVIEWS_COMMENTS, InterviewsComment } from "shared/lib";
 import { CreateCommentForm } from "features/CreateCommentForm";
+import { ReportOpenModal } from "features/PracticesFullButtons";
+import { useGetPracticeReportQuery } from "services/api/api-client/Practice_reportsQuery";
+import { downloadFileUrl } from "services/api/api-client/FilesQuery";
 
 type ReportIdProps = {
     id: string;
+    studentId: string;
 };
 
-export const ReportShortOpen = ({ id }: ReportIdProps) => {
+export const ReportShortOpen = ({ id, studentId }: ReportIdProps) => {
     const [opened, setOpened] = useState(false);
-    const [comments, setComments] = useState<InterviewsComment[]>([]);
-
     const [buttonState, setButtonState] = useState<'attach' | 'edit' | 'document'>();
 
-    useEffect(() => 
-    {
-        if (opened) 
-        {
-            fetchComments(id).then(data =>
-            {
-                setComments(data);
-            });
-        }
-    }, [opened, id]);
+    const { data: report, isLoading: reportLoading } = useGetPracticeReportQuery(id ?? '', {
+        enabled: !!id,
+    });
 
-    useEffect(() => 
-    {
-        {
-            //TODO: Сделать отображжение кнопок от роли
+    useEffect(() => {
+        if (id) {
+            // TODO: Сделать отображение кнопок от роли
+            const states: ('attach' | 'edit' | 'document')[] = ['attach', 'edit', 'document'];
+            const randomState = states[Math.floor(Math.random() * states.length)];
+            setButtonState(randomState);
         }
-        
-        const states: ('attach' | 'edit' | 'document')[] = ['attach', 'edit', 'document'];
-        const randomState = states[Math.floor(Math.random() * states.length)];
-        setButtonState(randomState);
-    }, []);
+        else {
+            setButtonState('attach');
+        }
+    }, [id]);
 
-    const fetchComments = async (reportId: string): Promise<InterviewsComment[]> => 
-    {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(GET_INTERVIEWS_COMMENTS.items), 1000);
-        });
+    const handleDownload = () => {
+        if (report?.fileId) {
+            const url = downloadFileUrl(report.fileId);
+            window.open(url, '_blank');
+        }
     };
 
     const renderOpenButton = () => {
-        switch (buttonState) {
-        case 'attach':
+        if (!id) {
             return (
-                <Button color="green"  size="sm" onClick={() => setOpened(true)}>
+                <Button color="green" size="sm" onClick={() => setOpened(true)}>
                     Прикрепить
                 </Button>
             );
-        case 'edit':
-            return (
-                <Button variant="light" size="sm" onClick={() => setOpened(true)}>
-                    Изменить
-                </Button>
-            );
-        case 'document':
-            return (
-                <Button component="a" href="/path/to/file.pdf" target="_blank" size="sm" rel="noopener noreferrer" variant="default">
-                    Документ
-                </Button>
-            );
-        default:
-            return null;
+        }
+
+        switch (buttonState) {
+            case 'attach':
+                return (
+                    <Button color="green" size="sm" onClick={() => setOpened(true)}>
+                        Прикрепить
+                    </Button>
+                );
+            case 'edit':
+                return (
+                    <Button variant="light" size="sm" onClick={() => setOpened(true)}>
+                        Изменить
+                    </Button>
+                );
+            case 'document':
+                return (
+                    <Button size="sm" variant="default" onClick={handleDownload} disabled={reportLoading || !report?.fileId}>
+                        {reportLoading ? 'Загрузка...' : 'Документ'}
+                    </Button>
+                );
+            default:
+                return null;
         }
     };
 
@@ -75,38 +78,7 @@ export const ReportShortOpen = ({ id }: ReportIdProps) => {
         <>
             {renderOpenButton()}
 
-            <Modal opened={opened} onClose={() => setOpened(false)} title={<Title order={2}>Отчёт</Title>} size="xl">
-                <Group style={{ justifyContent: 'space-between', marginBottom: '1rem' }}>
-                {/* Тут оставил фиксированные кнопки для примера, нужно сделать условными */}
-                    <Button color="green" size="xs">
-                        Прикрепить
-                    </Button>
-                    <Button component="a" href="/path/to/file.pdf"  download variant="outline" size="xs" color="blue">
-                        Скачать файл
-                    </Button>
-                </Group>
-
-                <Flex direction="column" style={{ width: '100%' }} gap="md" mb="md">
-                    <Container fluid w="100%">
-                        <Title order={3}>Комментарии</Title>
-                        <Space h="md" />
-                        <Stack>
-                            {comments.map(comment => (
-                                <Comment key={comment.id} {...comment} id={comment.id} />
-                            ))}
-                        </Stack>
-                        <Space h="md" />
-                        <CreateCommentForm id={'some_id'} />
-                    </Container>
-                </Flex>
-
-                <Group style={{ justifyContent: 'space-between', marginBottom: '1rem' }}>
-                    <Button variant="light" onClick={() => setOpened(false)}>
-                        Отменить
-                    </Button>
-                    <Button color="blue">Сохранить</Button>
-                </Group>
-            </Modal>
+            {id && (<ReportOpenModal practiceId={id} studentId={studentId} opened={opened} onClose={() => setOpened(false)} />)}
         </>
     );
 };

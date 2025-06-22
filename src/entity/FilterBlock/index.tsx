@@ -40,8 +40,7 @@ type FilterBlockProps =
         printButton?: boolean;
     };
 
-
-export function FilterBlockFull({ availableFilters, printButton }: FilterBlockProps) {
+export function FilterBlockFull({ availableFilters }: FilterBlockProps) {
     const [selectedFilterId, setSelectedFilterId] = useState<string | null>(null);
     const [selectedPage, setSelectedPage] = useState<number>(10);
     const [activeFilters, setActiveFilters] = useState<FilterItem[]>([]);
@@ -52,19 +51,20 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        const initialValues: Record<string, string> = {};
+        const initialValues: Record<string, any> = {};
         const active: FilterItem[] = [];
 
         availableFilters.forEach((f) => {
-            const value = searchParams.get(f.id);
-            if (value !== null) {
-                initialValues[f.id] = value;
+            const values = searchParams.getAll(f.id);
+            if (values.length > 0) {
+                initialValues[f.id] = values.length > 1 ? values : values[0];
                 active.push(f);
             }
         });
 
         setFilterValues(initialValues);
         setActiveFilters(active);
+
         if (active.length > 0) {
             setOpened(true);
         }
@@ -76,8 +76,12 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
     }, [availableFilters, searchParams]);
 
     const handleAddFilter = () => {
-        if (!selectedFilterId) return;
-        if (activeFilters.some(f => f.id === selectedFilterId)) return;
+        if (!selectedFilterId) {
+            return;
+        }
+        if (activeFilters.some(f => f.id === selectedFilterId)) {
+            return;
+        }
 
         const filterToAdd = availableFilters.find(f => f.id === selectedFilterId);
         if (filterToAdd) {
@@ -93,7 +97,8 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
         if (updated.length === 0) {
             setOpened(false);
             setTimeout(() => setActiveFilters([]), 300);
-        } else {
+        }
+        else {
             setActiveFilters(updated);
         }
 
@@ -108,7 +113,6 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
         setOpened(false);
         setTimeout(() => setActiveFilters([]), 300);
         setFilterValues({});
-        navigate(".");
     };
 
     const handleChangePage = (value: string | null) => {
@@ -121,12 +125,20 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
         const params = new URLSearchParams();
 
         Object.entries(filterValues).forEach(([key, value]) => {
-            if (value !== null && value !== "") {
+            if (Array.isArray(value)) {
+                value.forEach(val => {
+                    if (val !== null && val !== "") {
+                        params.append(key, val);
+                    }
+                });
+            }
+            else if (value !== null && value !== "") {
                 params.append(key, value);
             }
         });
 
         params.append("size", selectedPage.toString());
+        params.append("page", "0");
         navigate({ search: params.toString() });
 
         console.log({ search: params.toString() });
@@ -136,11 +148,11 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Flex align="center" justify="space-between">
                 <Flex align="center" gap="md" style={{ flex: 1, minWidth: 0 }}>
-                    <Box style={{ flex: '0 0 33.33%', minWidth: 0 }}>
+                    <Box style={{ flex: '0 0 50%', minWidth: 0 }}>
                         <Select
                             placeholder="Выберите фильтр"
                             value={selectedFilterId}
-                            onChange={setSelectedFilterId}
+                            onChange={val => setSelectedFilterId(val)}
                             data={availableFilters.map(f => ({ value: f.id, label: f.label }))}
                             styles={{ input: { minWidth: 0 } }}
                         />
@@ -166,25 +178,23 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
                     <Button color="red" onClick={handleClear}>
                         Очистить
                     </Button>
-                    {printButton ? (
-                        // TODO добавить handleprint
-                        <Button color="gray" >
-                            Печать
-                        </Button>) : null
-                    }
-                    {activeFilters.length > 0 && (
-                        <Button
-                            variant="subtle"
-                            onClick={() => setOpened(o => !o)}
-                            px={8}
-                            style={{ height: 36 }}
-                        >
-                            {opened ?
-                                <IconChevronUp size={18} /> :
-                                <IconChevronDown size={18} />
-                            }
-                        </Button>
-                    )}
+                    <Button color="gray">
+                        Печать
+                    </Button>
+                    <Box style={{ width: 36 }}>
+                        {activeFilters.length > 0 ? (
+                            <Button
+                                variant="subtle"
+                                onClick={() => setOpened(o => !o)}
+                                px={8}
+                                style={{ height: 36 }}
+                            >
+                                {opened ? <IconChevronUp size={18} /> : <IconChevronDown size={18} />}
+                            </Button>
+                        ) : (
+                            <div style={{ width: 36, height: 36, visibility: 'hidden' }} />
+                        )}
+                    </Box>
                 </Flex>
             </Flex>
 
@@ -202,7 +212,6 @@ export function FilterBlockFull({ availableFilters, printButton }: FilterBlockPr
                                 >
                                     <IconX />
                                 </Button>
-
                                 <Flex align="center" gap="sm" style={{ flex: 1 }}>
                                     <Box style={{ flex: 1, textAlign: "left", paddingRight: 4 }}>
                                         {f.label}
@@ -239,19 +248,20 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
-        const initialValues: Record<string, string> = {};
+        const initialValues: Record<string, any> = {};
         const active: FilterItem[] = [];
 
         availableFilters.forEach((f) => {
-            const value = searchParams.get(f.id);
-            if (value !== null) {
-                initialValues[f.id] = value;
+            const values = searchParams.getAll(f.id);
+            if (values.length > 0) {
+                initialValues[f.id] = values.length > 1 ? values : values[0];
                 active.push(f);
             }
         });
 
         setFilterValues(initialValues);
         setActiveFilters(active);
+
         if (active.length > 0) {
             setOpened(true);
         }
@@ -263,8 +273,12 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
     }, [availableFilters, searchParams]);
 
     const handleAddFilter = () => {
-        if (!selectedFilterId) return;
-        if (activeFilters.some(f => f.id === selectedFilterId)) return;
+        if (!selectedFilterId) {
+            return;
+        }
+        if (activeFilters.some(f => f.id === selectedFilterId)) {
+            return;
+        }
 
         const filterToAdd = availableFilters.find(f => f.id === selectedFilterId);
         if (filterToAdd) {
@@ -280,7 +294,8 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
         if (updated.length === 0) {
             setOpened(false);
             setTimeout(() => setActiveFilters([]), 300);
-        } else {
+        }
+        else {
             setActiveFilters(updated);
         }
 
@@ -307,7 +322,14 @@ export function FilterBlockShort({ availableFilters }: FilterBlockProps) {
         const params = new URLSearchParams();
 
         Object.entries(filterValues).forEach(([key, value]) => {
-            if (value !== null && value !== "") {
+            if (Array.isArray(value)) {
+                value.forEach(val => {
+                    if (val !== null && val !== "") {
+                        params.append(key, val);
+                    }
+                });
+            }
+            else if (value !== null && value !== "") {
                 params.append(key, value);
             }
         });
