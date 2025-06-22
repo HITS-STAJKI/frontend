@@ -188,17 +188,14 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
             ) : (
                 <div style={{ width: '100%' }}>
                     <Group style={{ width: '80%', margin: '0 auto', justifyContent: 'space-between', marginBottom: '1rem' }} align="center" >
-                        <Group style={{ alignItems: 'center' }}>
-                            <Text style={{ maxWidth: 100, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', flexShrink: 0, }} >
-                                Отчет
-                            </Text>
+                        <Flex align="center" gap="sm" style={{ width: '100%' }}>
+                            <Text style={{ flex: '1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700 }} > Отчет:</Text>
                             <FileInput
                                 accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                mb="xs"
                                 onChange={(file) => setSelectedFile(file)}
                                 disabled={uploadMutation.isPending || deleteMutation.isPending}
-                                style={{ flexGrow: 1, minWidth: 0 }}
                                 label={null}
+                                style={{  flex: '2', minWidth: 0 }}
                             />
                             {!report?.fileId ? (
                                 <Button
@@ -206,6 +203,10 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                     size="xs"
                                     onClick={handleAttach}
                                     disabled={!selectedFile || uploadMutation.isPending}
+                                    style={{
+                                        flex: '1',
+                                        whiteSpace: 'nowrap',
+                                    }}
                                 >
                                     {uploadMutation.isPending ? 'Загрузка...' : 'Прикрепить'}
                                 </Button>
@@ -215,12 +216,13 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                     variant="default"
                                     color="gray"
                                     onClick={handleReplace}
-                                    disabled={!selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending}
+                                    disabled={ !selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending }
+                                    style={{ flex: '1', whiteSpace: 'nowrap' }}
                                 >
                                     {(uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending) ? 'Заменяется...' : 'Изменить'}
                                 </Button>
                             )}
-                            </Group>
+                        </Flex>
                         {report?.fileId && (
                             fileLoading ? (
                                 <Loader size="xs" />
@@ -276,7 +278,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                     </Group>
                     <Flex direction="column" style={{ width: '100%' }} gap="md" mb="md" align="center">
                         <div style={{ width: '95%' }}>
-                            <Text size="xl" mb="md"> Комментарии </Text>
+                            <Text size="xl" mb="md">Комментарии:</Text>
                             <Space h="md" />
                             {chatId ? (
                                 <CommentSectionAlt chatId={chatId} height="50vh" />
@@ -287,8 +289,8 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                             )}
                         </div>
                     </Flex>
-                    <Group style={{ justifyContent: 'space-between', marginBottom: '1rem' }}>
-                        <Button variant="light" onClick={onClose}>Отменить</Button>
+                    <Group style={{ justifyContent: 'space-between' }}>
+                        <Button variant="light" onClick={onClose} style={{width: '100%'}}>Отменить</Button>
                     </Group>
                 </div>
             )}

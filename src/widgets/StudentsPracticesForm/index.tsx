@@ -183,7 +183,6 @@ type PracticesFormUnderProps = {
 };
 
 export function PracticesFormUnder({ studentCount, onSuccess }: PracticesFormUnderProps) {
-    const [deadline, setDeadline] = useState<Date | null>(null);
     const [modalOpened, setModalOpened] = useState(false);
     const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
 
@@ -208,10 +207,6 @@ export function PracticesFormUnder({ studentCount, onSuccess }: PracticesFormUnd
         setSelectedCompanyId(val);
     };
 
-    const handleSave = () => {
-        console.log("Сохраняем дедлайн:", deadline);
-    };
-
     const handleOpenModal = () => {
         setModalOpened(true);
     };
@@ -230,11 +225,6 @@ export function PracticesFormUnder({ studentCount, onSuccess }: PracticesFormUnd
                 <Group>
                     <Button color="green" onClick={handleOpenModal}>
                         Подтвердить практики
-                    </Button>
-                    <Text>Дедлайн прикрепления отчета:</Text>
-                    <DateInput value={deadline} onChange={setDeadline} placeholder="Выберите дату" />
-                    <Button color="blue" onClick={handleSave}>
-                        Сохранить
                     </Button>
                 </Group>
             </Group>
