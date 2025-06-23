@@ -17,7 +17,7 @@ const axiosInstance = axios.create({
   headers: {
     Authorization: `Bearer ${window.localStorage.getItem('token')}`,
   },
-});
+})
 
 QueryFactory.setAxiosFactory(() => axiosInstance);
 

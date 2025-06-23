@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -19,21 +20,21 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type UnattachFileFromReportPractice_reportsQueryParameters = {
-  reportId: Types.ReportId ;
+  reportId: Types.ReportId;
 }
 
 export type AttachFileToReportPractice_reportsQueryParameters = {
-  reportId: Types.ReportId ;
-  fileId: string ;
+  reportId: Types.ReportId;
+  fileId: string;
 }
 
 export type SetGradePractice_reportsQueryParameters = {
-  reportId: Types.ReportId ;
-  grade: number ;
+  reportId: Types.ReportId;
+  grade: number;
 }
 
 export type GetPracticeReportPractice_reportsQueryParameters = {
-  practiceId: string ;
+  practiceId: string;
 }
 
 export function unattachFileFromReportUrl(reportId: Types.ReportId): string {
@@ -48,10 +49,10 @@ export function unattachFileFromReportUrl(reportId: Types.ReportId): string {
 
 export function unattachFileFromReportMutationKey(reportId: Types.ReportId): MutationKey {
   return trimArrayEnd([
-      'Practice_reportsClient',
-      'unattachFileFromReport',
-      reportId as any,
-    ]);
+    'Practice_reportsClient',
+    'unattachFileFromReport',
+    reportId as any,
+  ]);
 }
 
 /**
@@ -61,17 +62,17 @@ export function unattachFileFromReportMutationKey(reportId: Types.ReportId): Mut
  */
 export function useUnattachFileFromReportMutation<TContext>(reportId: Types.ReportId, options?: Omit<UseMutationOptions<Types.ReportDto, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.ReportDto, unknown, void, TContext> {
   const key = unattachFileFromReportMutationKey(reportId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.unattachFileFromReport(reportId),
     mutationKey: key,
   });
 }
-  
+
 type UnattachFileFromReport__MutationParameters = UnattachFileFromReportPractice_reportsQueryParameters
 
 /**
@@ -79,19 +80,19 @@ type UnattachFileFromReport__MutationParameters = UnattachFileFromReportPractice
  * @param reportId Идентификатор отчета
  * @return OK
  */
-export function useUnattachFileFromReportMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.ReportDto, unknown, UnattachFileFromReport__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UnattachFileFromReportPractice_reportsQueryParameters}): UseMutationResult<Types.ReportDto, unknown, UnattachFileFromReport__MutationParameters, TContext> {
+export function useUnattachFileFromReportMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.ReportDto, unknown, UnattachFileFromReport__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UnattachFileFromReportPractice_reportsQueryParameters }): UseMutationResult<Types.ReportDto, unknown, UnattachFileFromReport__MutationParameters, TContext> {
   const key = unattachFileFromReportMutationKey(options?.parameters?.reportId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: UnattachFileFromReport__MutationParameters) => Client.unattachFileFromReport(data.reportId ?? options?.parameters?.reportId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: UnattachFileFromReport__MutationParameters) => Client.unattachFileFromReport(data.reportId ?? options?.parameters?.reportId!),
+    mutationKey: key,
+  });
 }
-  
+
 export function attachFileToReportUrl(reportId: Types.ReportId, fileId: string): string {
   let url_ = getBaseUrl() + "/api/v1/report/file/attach?";
   if (reportId === undefined || reportId === null)
@@ -108,11 +109,11 @@ export function attachFileToReportUrl(reportId: Types.ReportId, fileId: string):
 
 export function attachFileToReportMutationKey(reportId: Types.ReportId, fileId: string): MutationKey {
   return trimArrayEnd([
-      'Practice_reportsClient',
-      'attachFileToReport',
-      reportId as any,
-      fileId as any,
-    ]);
+    'Practice_reportsClient',
+    'attachFileToReport',
+    reportId as any,
+    fileId as any,
+  ]);
 }
 
 /**
@@ -123,17 +124,17 @@ export function attachFileToReportMutationKey(reportId: Types.ReportId, fileId: 
  */
 export function useAttachFileToReportMutation<TContext>(reportId: Types.ReportId, fileId: string, options?: Omit<UseMutationOptions<Types.ReportDto, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.ReportDto, unknown, void, TContext> {
   const key = attachFileToReportMutationKey(reportId, fileId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.attachFileToReport(reportId, fileId),
     mutationKey: key,
   });
 }
-  
+
 type AttachFileToReport__MutationParameters = AttachFileToReportPractice_reportsQueryParameters
 
 /**
@@ -142,19 +143,19 @@ type AttachFileToReport__MutationParameters = AttachFileToReportPractice_reports
  * @param fileId Идентификатор файла
  * @return OK
  */
-export function useAttachFileToReportMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.ReportDto, unknown, AttachFileToReport__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: AttachFileToReportPractice_reportsQueryParameters}): UseMutationResult<Types.ReportDto, unknown, AttachFileToReport__MutationParameters, TContext> {
+export function useAttachFileToReportMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.ReportDto, unknown, AttachFileToReport__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: AttachFileToReportPractice_reportsQueryParameters }): UseMutationResult<Types.ReportDto, unknown, AttachFileToReport__MutationParameters, TContext> {
   const key = attachFileToReportMutationKey(options?.parameters?.reportId!, options?.parameters?.fileId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: AttachFileToReport__MutationParameters) => Client.attachFileToReport(data.reportId ?? options?.parameters?.reportId!, data.fileId ?? options?.parameters?.fileId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: AttachFileToReport__MutationParameters) => Client.attachFileToReport(data.reportId ?? options?.parameters?.reportId!, data.fileId ?? options?.parameters?.fileId!),
+    mutationKey: key,
+  });
 }
-  
+
 export function setGradeUrl(reportId: Types.ReportId, grade: number): string {
   let url_ = getBaseUrl() + "/api/v1/report/grade?";
   if (reportId === undefined || reportId === null)
@@ -171,11 +172,11 @@ export function setGradeUrl(reportId: Types.ReportId, grade: number): string {
 
 export function setGradeMutationKey(reportId: Types.ReportId, grade: number): MutationKey {
   return trimArrayEnd([
-      'Practice_reportsClient',
-      'setGrade',
-      reportId as any,
-      grade as any,
-    ]);
+    'Practice_reportsClient',
+    'setGrade',
+    reportId as any,
+    grade as any,
+  ]);
 }
 
 /**
@@ -186,17 +187,17 @@ export function setGradeMutationKey(reportId: Types.ReportId, grade: number): Mu
  */
 export function useSetGradeMutation<TContext>(reportId: Types.ReportId, grade: number, options?: Omit<UseMutationOptions<Types.ReportDto, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.ReportDto, unknown, void, TContext> {
   const key = setGradeMutationKey(reportId, grade);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.setGrade(reportId, grade),
     mutationKey: key,
   });
 }
-  
+
 type SetGrade__MutationParameters = SetGradePractice_reportsQueryParameters
 
 /**
@@ -205,19 +206,19 @@ type SetGrade__MutationParameters = SetGradePractice_reportsQueryParameters
  * @param grade Оценка отчета
  * @return OK
  */
-export function useSetGradeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.ReportDto, unknown, SetGrade__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: SetGradePractice_reportsQueryParameters}): UseMutationResult<Types.ReportDto, unknown, SetGrade__MutationParameters, TContext> {
+export function useSetGradeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.ReportDto, unknown, SetGrade__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: SetGradePractice_reportsQueryParameters }): UseMutationResult<Types.ReportDto, unknown, SetGrade__MutationParameters, TContext> {
   const key = setGradeMutationKey(options?.parameters?.reportId!, options?.parameters?.grade!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: SetGrade__MutationParameters) => Client.setGrade(data.reportId ?? options?.parameters?.reportId!, data.grade ?? options?.parameters?.grade!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: SetGrade__MutationParameters) => Client.setGrade(data.reportId ?? options?.parameters?.reportId!, data.grade ?? options?.parameters?.grade!),
+    mutationKey: key,
+  });
 }
-  
+
 export function getPracticeReportUrl(practiceId: string): string {
   let url_ = getBaseUrl() + "/api/v1/report?";
   if (practiceId === undefined || practiceId === null)
@@ -240,24 +241,24 @@ export function setGetPracticeReportDefaultOptions(options: typeof getPracticeRe
 export function getPracticeReportQueryKey(practiceId: string): QueryKey;
 export function getPracticeReportQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { practiceId,  } = params[0] as GetPracticeReportPractice_reportsQueryParameters;
+    const { practiceId, } = params[0] as GetPracticeReportPractice_reportsQueryParameters;
 
     return trimArrayEnd([
-        'Practice_reportsClient',
-        'getPracticeReport',
-        practiceId as any,
-      ]);
+      'Practice_reportsClient',
+      'getPracticeReport',
+      practiceId as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'Practice_reportsClient',
-        'getPracticeReport',
-        ...params
-      ]);
+      'Practice_reportsClient',
+      'getPracticeReport',
+      ...params
+    ]);
   }
 }
 export function __getPracticeReport(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getPracticeReport(
-      context.queryKey[2] as string,axiosConfig    );
+    context.queryKey[2] as string, axiosConfig);
 }
 
 export function useGetPracticeReportQuery<TSelectData = Types.ReportDto, TError = unknown>(dto: GetPracticeReportPractice_reportsQueryParameters, options?: Omit<UseQueryOptions<Types.ReportDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -267,14 +268,14 @@ export function useGetPracticeReportQuery<TSelectData = Types.ReportDto, TError 
  * @return OK
  */
 export function useGetPracticeReportQuery<TSelectData = Types.ReportDto, TError = unknown>(practiceId: string, options?: Omit<UseQueryOptions<Types.ReportDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetPracticeReportQuery<TSelectData = Types.ReportDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetPracticeReportQuery<TSelectData = Types.ReportDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.ReportDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let practiceId: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ practiceId,  } = params[0] as GetPracticeReportPractice_reportsQueryParameters);
+      ({ practiceId, } = params[0] as GetPracticeReportPractice_reportsQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

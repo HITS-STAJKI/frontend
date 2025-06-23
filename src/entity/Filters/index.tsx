@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { TextInput, Select, MultiSelect } from "@mantine/core";
-import { GET_GROUPS, GET_COMPANIES, GET_STACKS, GET_LANGUAGES } from "shared/lib";
-import { DateInput } from "@mantine/dates";
+import { DateInput, DateTimePicker } from "@mantine/dates";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
-import { CompanyPartnerDto } from "services/api/api-client.types";
+import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
+import { useGetStackListQuery } from "services/api/api-client/StackQuery";
+import { useGetLanguageListQuery } from "services/api/api-client/Programming_languageQuery";
 
 export function FilterLanguageName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState("");
@@ -24,27 +25,12 @@ export function FilterLanguageName({ id, onChangeValue }: { id: string; onChange
     );
 }
 
-export function ImputFilter({ id, onChangeValue, label }: { id: string; onChangeValue: (val: string) => void; label: string}) {
-    const [value, setValue] = useState("");
+export function FilterName({ id, onChangeValue, initialValue = "" }: { id: string; initialValue?: string; onChangeValue: (val: string) => void; }) {
+    const [value, setValue] = useState(initialValue ?? "");
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const val = event.currentTarget.value;
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <TextInput
-            id={`filter-${id}`}
-            placeholder= {label}
-            value={value}
-            onChange={handleChange}
-        />
-    );
-}
-
-export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
-    const [value, setValue] = useState("");
+    useEffect(() => {
+        setValue(initialValue ?? "");
+    }, [initialValue]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const val = event.currentTarget.value;
@@ -62,21 +48,14 @@ export function FilterName({ id, onChangeValue }: { id: string; onChangeValue: (
     );
 }
 
-export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+export function FilterInterviewStatus({ id, onChangeValue, initialValue }: { id: string; initialValue: string | null; onChangeValue: (val: string | null) => void; }) {
+    const [value, setValue] = useState<string | null>(initialValue);
 
-    useEffect(() => {
-        setTimeout(() => {
-            const stacks = GET_STACKS.items;
-            const selectData = stacks.map(stack => ({
-                value: stack.id,
-                label: stack.name,
-            }));
-
-            setData(selectData);
-        }, 300);
-    }, []);
+    const options = [
+        { value: "PENDING", label: "На рассмотрении" },
+        { value: "REJECTED", label: "Отклонен" },
+        { value: "SUCCEED", label: "Пройден" }
+    ];
 
     const handleChange = (val: string | null) => {
         setValue(val);
@@ -86,118 +65,27 @@ export function FilterStack({ id, onChangeValue }: { id: string; onChangeValue: 
     return (
         <Select
             id={`filter-${id}`}
-            placeholder="Выберите направление"
+            placeholder={"Выберите статус"}
             value={value}
             onChange={handleChange}
-            data={data}
+            data={options}
             clearable
         />
     );
 }
 
-export function FilterLanguageMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) {
-    const [value, setValue] = useState<string[]>([]);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+export function FilterDate({ id, initialValue = null, onChangeValue }: { id: string; initialValue?: string | null; onChangeValue: (val: string | null) => void; }) {
+    const [value, setValue] = useState<Date | null>(
+        initialValue ? new Date(initialValue) : null
+    );
 
     useEffect(() => {
-        setTimeout(() => {
-            const languages = GET_LANGUAGES;
-            const selectData = languages.items.map(language => ({
-                value: language.id,
-                label: language.name,
-            }));
-
-            setData(selectData);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string[]) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <MultiSelect
-            id={`filter-${id}`}
-            placeholder="Выберите технологии"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterGroup({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            const groups = GET_GROUPS.items;
-            const selectData = groups.map(group => ({
-                value: group.id,
-                label: group.number,
-            }));
-
-            setData(selectData);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`}
-            placeholder="Выберите группу"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setData([
-                { value: "PENDING", label: "На рассмотрении" },
-                { value: "REJECTED", label: "Отклонен" },
-                { value: "SUCCEED", label: "Пройден" },
-            ]);
-        }, 300);
-    }, []);
-
-    const handleChange = (val: string | null) => {
-        setValue(val);
-        onChangeValue(val);
-    };
-
-    return (
-        <Select
-            id={`filter-${id}`}
-            placeholder="Выберите статус"
-            value={value}
-            onChange={handleChange}
-            data={data}
-            clearable
-        />
-    );
-}
-
-export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
-    const [value, setValue] = useState<Date | null>(null);
+        setValue(initialValue ? new Date(initialValue) : null);
+    }, [initialValue]);
 
     const handleChange = (date: Date | null) => {
         setValue(date);
-        onChangeValue(date ? date.toISOString() : null);
+        onChangeValue(date ? date.toISOString().slice(0, 19) : null);
     };
 
     return (
@@ -205,9 +93,35 @@ export function FilterDate({ id, onChangeValue }: { id: string; onChangeValue: (
             id={`filter-${id}`}
             value={value}
             onChange={handleChange}
+            clearable
         />
     );
 }
+
+export function FilterDateTime({ id, initialValue = null, onChangeValue }: { id: string; initialValue?: string | null; onChangeValue: (val: string | null) => void; }) {
+    const [value, setValue] = useState<Date | null>(
+        initialValue ? new Date(initialValue) : null
+    );
+
+    useEffect(() => {
+        setValue(initialValue ? new Date(initialValue) : null);
+    }, [initialValue]);
+
+    const handleChange = (date: Date | null) => {
+        setValue(date);
+        onChangeValue(date ? date.toISOString().slice(0, 19) : null);
+    };
+
+    return (
+        <DateTimePicker
+            id={`filter-${id}`}
+            value={value}
+            onChange={handleChange}
+            clearable
+        />
+    );
+}
+
 
 export function FilterCompanyName({ id, onChangeValue, initialValue = "" }: { id: string; initialValue?: string; onChangeValue: (val: string) => void; }) {
     const [value, setValue] = useState(initialValue);
@@ -233,8 +147,43 @@ export function FilterCompanyName({ id, onChangeValue, initialValue = "" }: { id
 }
 
 
+export function FilterStack({ id, onChangeValue, initialValue }: { id: string; initialValue: string | null; onChangeValue: (val: string | null) => void; }) {
+    const { data, isLoading } = useGetStackListQuery(undefined);
+
+    const options = isLoading || !Array.isArray(data)
+        ? []
+        : data?.map((stack) => ({
+            value: stack.id,
+            label: stack.name,
+        }));
+
+    const [value, setValue] = useState<string | null>(initialValue);
+
+    useEffect(() => {
+        setValue(initialValue ?? null);
+    }, [initialValue]);
+
+    const handleChange = (val: string | null) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <Select
+            id={`filter-${id}`}
+            placeholder={isLoading ? "Загрузка..." : "Выберите стэк"}
+            value={value}
+            onChange={handleChange}
+            data={options}
+            clearable
+            searchable
+            disabled={isLoading}
+        />
+    );
+}
+
 export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: string; initialValue: string | null; onChangeValue: (val: string | null) => void; }) {
-    const { data, isLoading } = useGetPartnersQuery();
+    const { data, isLoading } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000);
 
     const options = isLoading || !Array.isArray(data?.items)
         ? []
@@ -268,22 +217,70 @@ export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: s
     );
 }
 
+export function FilterGroupSelect({ id, onChangeValue, initialValue }: { id: string; initialValue: string | null; onChangeValue: (val: string | null) => void; }) {
+    const { data, isLoading } = useGetGroupsQuery(undefined, undefined, 0, 10000000000);
 
-export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChangeValue: (val: string[]) => void; }) {
-    const [value, setValue] = useState<string[]>([]);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+    const options = isLoading || !Array.isArray(data?.items)
+        ? []
+        : data.items.map((group) => ({
+            value: group.id!,
+            label: group.number!,
+        }));
+
+    const [value, setValue] = useState<string | null>(initialValue);
 
     useEffect(() => {
-        setTimeout(() => {
-            const groups = GET_GROUPS.items;
-            const selectData = groups.map(group => ({
-                value: group.id,
-                label: group.number,
-            }));
+        setValue(initialValue ?? null);
+    }, [initialValue]);
 
-            setData(selectData);
-        }, 300);
-    }, []);
+    const handleChange = (val: string | null) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <Select
+            id={`filter-${id}`}
+            placeholder={isLoading ? "Загрузка..." : "Выберите группу"}
+            value={value}
+            onChange={handleChange}
+            data={options}
+            clearable
+            searchable
+            disabled={isLoading}
+        />
+    );
+}
+
+
+export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | string | null; onChangeValue: (val: string[]) => void; }) {
+    const normalizeValue = (val: string[] | string | null): string[] => {
+        if (Array.isArray(val)) {
+            return val;
+        }
+        if (typeof val === "string") {
+            return [val];
+        }
+        return [];
+    };
+
+    const [value, setValue] = useState<string[]>(normalizeValue(initialValue));
+
+    const { data, isLoading } = useGetGroupsQuery(undefined, undefined, 0, 1000);
+
+    const options =
+        isLoading || !Array.isArray(data?.items)
+            ? []
+            : data.items
+                .filter((group) => group.id && group.number)
+                .map((group) => ({
+                    value: group.id!,
+                    label: group.number!
+                }));
+
+    useEffect(() => {
+        setValue(normalizeValue(initialValue));
+    }, [initialValue]);
 
     const handleChange = (val: string[]) => {
         setValue(val);
@@ -293,11 +290,157 @@ export function FilterGroupMultiple({ id, onChangeValue }: { id: string; onChang
     return (
         <MultiSelect
             id={`filter-${id}`}
-            placeholder="Выберите группу"
+            placeholder={isLoading ? "Загрузка..." : "Выберите группу"}
             value={value}
             onChange={handleChange}
-            data={data}
+            data={options}
             clearable
+            searchable
+            disabled={isLoading}
+        />
+    );
+}
+
+export function FilterCompanyMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | string | null; onChangeValue: (val: string[]) => void; }) {
+    const normalizeValue = (val: string[] | string | null): string[] => {
+        if (Array.isArray(val)) {
+            return val;
+        }
+        if (typeof val === "string") {
+            return [val];
+        }
+        return [];
+    };
+
+    const [value, setValue] = useState<string[]>(normalizeValue(initialValue));
+
+    const { data, isLoading } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000);
+
+    const options =
+        isLoading || !Array.isArray(data?.items)
+            ? []
+            : data.items
+                .filter((company) => company.id && company.name)
+                .map((company) => ({
+                    value: company.id!,
+                    label: company.name!
+                }));
+
+    useEffect(() => {
+        setValue(normalizeValue(initialValue));
+    }, [initialValue]);
+
+    const handleChange = (val: string[]) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <MultiSelect
+            id={`filter-${id}`}
+            placeholder={isLoading ? "Загрузка..." : "Выберите компанию"}
+            value={value ?? []}
+            onChange={handleChange}
+            data={options}
+            clearable
+            searchable
+            disabled={isLoading}
+        />
+    );
+}
+
+export function FilterStackMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | string | null; onChangeValue: (val: string[]) => void; }) {
+    const normalizeValue = (val: string[] | string | null): string[] => {
+        if (Array.isArray(val)) {
+            return val;
+        }
+        if (typeof val === "string") {
+            return [val];
+        }
+        return [];
+    };
+
+    const [value, setValue] = useState<string[]>(normalizeValue(initialValue));
+
+    const { data, isLoading } = useGetStackListQuery(undefined);
+
+    const options =
+        isLoading || !Array.isArray(data)
+            ? []
+            : data
+                .filter((stack) => stack.id && stack.name)
+                .map((stack) => ({
+                    value: stack.id!,
+                    label: stack.name!
+                }));
+
+    useEffect(() => {
+        setValue(normalizeValue(initialValue));
+    }, [initialValue]);
+
+    const handleChange = (val: string[]) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <MultiSelect
+            id={`filter-${id}`}
+            placeholder={isLoading ? "Загрузка..." : "Выберите направление"}
+            value={value ?? []}
+            onChange={handleChange}
+            data={options}
+            clearable
+            searchable
+            disabled={isLoading}
+        />
+    );
+}
+
+export function FilterLanguageMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | string | null; onChangeValue: (val: string[]) => void; }) {
+    const normalizeValue = (val: string[] | string | null): string[] => {
+        if (Array.isArray(val)) {
+            return val;
+        }
+        if (typeof val === "string") {
+            return [val];
+        }
+        return [];
+    };
+
+    const [value, setValue] = useState<string[]>(normalizeValue(initialValue));
+
+    const { data, isLoading } = useGetLanguageListQuery(undefined);
+
+    const options =
+        isLoading || !Array.isArray(data)
+            ? []
+            : data
+                .filter((stack) => stack.id && stack.name)
+                .map((stack) => ({
+                    value: stack.id!,
+                    label: stack.name!
+                }));
+
+    useEffect(() => {
+        setValue(normalizeValue(initialValue));
+    }, [initialValue]);
+
+    const handleChange = (val: string[]) => {
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <MultiSelect
+            id={`filter-${id}`}
+            placeholder={isLoading ? "Загрузка..." : "Выберите язык программирования"}
+            value={value ?? []}
+            onChange={handleChange}
+            data={options}
+            clearable
+            searchable
+            disabled={isLoading}
         />
     );
 }
@@ -334,7 +477,6 @@ export function FilterTrueFalseNull({ id, onChangeValue }: { id: string; onChang
 
 export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: { id: string; onChangeValue: (val: string | null) => void; initialValue?: string | null; }) {
     const [value, setValue] = useState<string | null>(initialValue ?? "false");
-    const [data, setData] = useState([{ value: "true", label: "Да" }, { value: "false", label: "Нет" }]);
 
     useEffect(() => {
         onChangeValue(initialValue);
@@ -350,7 +492,7 @@ export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: {
             id={`filter-${id}`}
             value={value}
             onChange={handleChange}
-            data={data}
+            data={[{ value: "true", label: "Да" }, { value: "false", label: "Нет" }]}
         />
     );
 }

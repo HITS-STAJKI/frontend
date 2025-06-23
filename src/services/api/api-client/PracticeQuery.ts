@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -19,57 +20,57 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type GetCurrentStudentPracticePracticeQueryParameters = {
-  id: string ;
+  id: string;
 }
 
 export type UpdatePracticePracticeQueryParameters = {
-  id: string ;
+  id: string;
 }
 
 export type ArchiveStudentPracticePracticeQueryParameters = {
-  id: string ;
+  id: string;
 }
 
 export type ArchiveStudentPracticesByGroupPracticeQueryParameters = {
-  groupId: string ;
+  groupId: string;
 }
 
 export type ApproveStudentPracticePracticeQueryParameters = {
-  id: string ;
+  id: string;
 }
 
 export type ApproveStudentPracticesPracticeQueryParameters = {
-  id: string[] ;
+  id: string[];
 }
 
 export type ApproveStudentPractices_1PracticeQueryParameters = {
-  companyId: string ;
+  companyId: string;
 }
 
 export type GetStudentPracticesPracticeQueryParameters = {
-  id: string ;
-  page?: number | undefined ;
-  size?: number | undefined ;
-  sort?: string[] | undefined ;
+  id: string;
+  page?: number | undefined;
+  size?: number | undefined;
+  sort?: string[] | undefined;
 }
 
 export type GetPracticeRequestsPracticeQueryParameters = {
-  page?: number | undefined ;
-  size?: number | undefined ;
-  sort?: string[] | undefined ;
+  page?: number | undefined;
+  size?: number | undefined;
+  sort?: string[] | undefined;
 }
 
 export type GetAllPracticesPracticeQueryParameters = {
-  studentName?: string | undefined ;
-  groupIds?: string[] | undefined ;
-  companyId?: string | undefined ;
-  hasReport?: boolean | undefined ;
-  isReportApproved?: boolean | undefined ;
-  isArchived?: boolean | undefined ;
-  isPracticeApproved?: boolean | undefined ;
-  page?: number | undefined ;
-  size?: number | undefined ;
-  sort?: string[] | undefined ;
+  studentName?: string | undefined;
+  groupIds?: string[] | undefined;
+  companyId?: string | undefined;
+  hasReport?: boolean | undefined;
+  isReportApproved?: boolean | undefined;
+  isArchived?: boolean | undefined;
+  isPracticeApproved?: boolean | undefined;
+  page?: number | undefined;
+  size?: number | undefined;
+  sort?: string[] | undefined;
 }
 
 export function getCurrentStudentPracticeUrl(id: string): string {
@@ -94,24 +95,24 @@ export function setGetCurrentStudentPracticeDefaultOptions(options: typeof getCu
 export function getCurrentStudentPracticeQueryKey(id: string): QueryKey;
 export function getCurrentStudentPracticeQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { id,  } = params[0] as GetCurrentStudentPracticePracticeQueryParameters;
+    const { id, } = params[0] as GetCurrentStudentPracticePracticeQueryParameters;
 
     return trimArrayEnd([
-        'PracticeClient',
-        'getCurrentStudentPractice',
-        id as any,
-      ]);
+      'PracticeClient',
+      'getCurrentStudentPractice',
+      id as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'PracticeClient',
-        'getCurrentStudentPractice',
-        ...params
-      ]);
+      'PracticeClient',
+      'getCurrentStudentPractice',
+      ...params
+    ]);
   }
 }
 export function __getCurrentStudentPractice(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getCurrentStudentPractice(
-      context.queryKey[2] as string,axiosConfig    );
+    context.queryKey[2] as string, axiosConfig);
 }
 
 export function useGetCurrentStudentPracticeQuery<TSelectData = Types.PracticeDto, TError = unknown>(dto: GetCurrentStudentPracticePracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -121,14 +122,14 @@ export function useGetCurrentStudentPracticeQuery<TSelectData = Types.PracticeDt
  * @return OK
  */
 export function useGetCurrentStudentPracticeQuery<TSelectData = Types.PracticeDto, TError = unknown>(id: string, options?: Omit<UseQueryOptions<Types.PracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetCurrentStudentPracticeQuery<TSelectData = Types.PracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetCurrentStudentPracticeQuery<TSelectData = Types.PracticeDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PracticeDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let id: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ id,  } = params[0] as GetCurrentStudentPracticePracticeQueryParameters);
+      ({ id, } = params[0] as GetCurrentStudentPracticePracticeQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -165,7 +166,7 @@ export function setGetCurrentStudentPracticeData(queryClient: QueryClient, updat
 export function setGetCurrentStudentPracticeDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PracticeDto | undefined) => Types.PracticeDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-    
+
 export function updatePracticeUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/practice?";
   if (id === undefined || id === null)
@@ -178,10 +179,10 @@ export function updatePracticeUrl(id: string): string {
 
 export function updatePracticeMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'updatePractice',
-      id as any,
-    ]);
+    'PracticeClient',
+    'updatePractice',
+    id as any,
+  ]);
 }
 
 /**
@@ -191,17 +192,17 @@ export function updatePracticeMutationKey(id: string): MutationKey {
  */
 export function useUpdatePracticeMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, Types.UpdatePracticeDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.PracticeDto, unknown, Types.UpdatePracticeDto, TContext> {
   const key = updatePracticeMutationKey(id);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.UpdatePracticeDto) => Client.updatePractice(id, body),
     mutationKey: key,
   });
 }
-  
+
 type UpdatePractice__MutationParameters = UpdatePracticePracticeQueryParameters & {
   body: Types.UpdatePracticeDto;
 }
@@ -211,19 +212,19 @@ type UpdatePractice__MutationParameters = UpdatePracticePracticeQueryParameters 
  * @param id Id практики
  * @return OK
  */
-export function useUpdatePracticeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, UpdatePractice__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdatePracticePracticeQueryParameters}): UseMutationResult<Types.PracticeDto, unknown, UpdatePractice__MutationParameters, TContext> {
+export function useUpdatePracticeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, UpdatePractice__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdatePracticePracticeQueryParameters }): UseMutationResult<Types.PracticeDto, unknown, UpdatePractice__MutationParameters, TContext> {
   const key = updatePracticeMutationKey(options?.parameters?.id!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: UpdatePractice__MutationParameters) => Client.updatePractice(data.id ?? options?.parameters?.id!, data.body),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: UpdatePractice__MutationParameters) => Client.updatePractice(data.id ?? options?.parameters?.id!, data.body),
+    mutationKey: key,
+  });
 }
-  
+
 export function createStudentPracticeUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/practice";
   url_ = url_.replace(/[?&]$/, "");
@@ -232,9 +233,9 @@ export function createStudentPracticeUrl(): string {
 
 export function createStudentPracticeMutationKey(): MutationKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'createStudentPractice',
-    ]);
+    'PracticeClient',
+    'createStudentPractice',
+  ]);
 }
 
 /**
@@ -243,17 +244,17 @@ export function createStudentPracticeMutationKey(): MutationKey {
  */
 export function useCreateStudentPracticeMutation<TContext>(options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, Types.CreatePracticeDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.PracticeDto, unknown, Types.CreatePracticeDto, TContext> {
   const key = createStudentPracticeMutationKey();
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.CreatePracticeDto) => Client.createStudentPractice(body),
     mutationKey: key,
   });
 }
-  
+
 export function archiveStudentPracticeUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/practice/archive?";
   if (id === undefined || id === null)
@@ -266,10 +267,10 @@ export function archiveStudentPracticeUrl(id: string): string {
 
 export function archiveStudentPracticeMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'archiveStudentPractice',
-      id as any,
-    ]);
+    'PracticeClient',
+    'archiveStudentPractice',
+    id as any,
+  ]);
 }
 
 /**
@@ -279,17 +280,17 @@ export function archiveStudentPracticeMutationKey(id: string): MutationKey {
  */
 export function useArchiveStudentPracticeMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.PracticeDto, unknown, void, TContext> {
   const key = archiveStudentPracticeMutationKey(id);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.archiveStudentPractice(id),
     mutationKey: key,
   });
 }
-  
+
 type ArchiveStudentPractice__MutationParameters = ArchiveStudentPracticePracticeQueryParameters
 
 /**
@@ -297,19 +298,19 @@ type ArchiveStudentPractice__MutationParameters = ArchiveStudentPracticePractice
  * @param id Id практики
  * @return OK
  */
-export function useArchiveStudentPracticeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, ArchiveStudentPractice__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ArchiveStudentPracticePracticeQueryParameters}): UseMutationResult<Types.PracticeDto, unknown, ArchiveStudentPractice__MutationParameters, TContext> {
+export function useArchiveStudentPracticeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, ArchiveStudentPractice__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ArchiveStudentPracticePracticeQueryParameters }): UseMutationResult<Types.PracticeDto, unknown, ArchiveStudentPractice__MutationParameters, TContext> {
   const key = archiveStudentPracticeMutationKey(options?.parameters?.id!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: ArchiveStudentPractice__MutationParameters) => Client.archiveStudentPractice(data.id ?? options?.parameters?.id!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: ArchiveStudentPractice__MutationParameters) => Client.archiveStudentPractice(data.id ?? options?.parameters?.id!),
+    mutationKey: key,
+  });
 }
-  
+
 export function archiveStudentPracticesByGroupUrl(groupId: string): string {
   let url_ = getBaseUrl() + "/api/v1/practice/archiveAll?";
   if (groupId === undefined || groupId === null)
@@ -322,10 +323,10 @@ export function archiveStudentPracticesByGroupUrl(groupId: string): string {
 
 export function archiveStudentPracticesByGroupMutationKey(groupId: string): MutationKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'archiveStudentPracticesByGroup',
-      groupId as any,
-    ]);
+    'PracticeClient',
+    'archiveStudentPracticesByGroup',
+    groupId as any,
+  ]);
 }
 
 /**
@@ -335,17 +336,17 @@ export function archiveStudentPracticesByGroupMutationKey(groupId: string): Muta
  */
 export function useArchiveStudentPracticesByGroupMutation<TContext>(groupId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = archiveStudentPracticesByGroupMutationKey(groupId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.archiveStudentPracticesByGroup(groupId),
     mutationKey: key,
   });
 }
-  
+
 type ArchiveStudentPracticesByGroup__MutationParameters = ArchiveStudentPracticesByGroupPracticeQueryParameters
 
 /**
@@ -353,19 +354,19 @@ type ArchiveStudentPracticesByGroup__MutationParameters = ArchiveStudentPractice
  * @param groupId Id группы
  * @return OK
  */
-export function useArchiveStudentPracticesByGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, ArchiveStudentPracticesByGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ArchiveStudentPracticesByGroupPracticeQueryParameters}): UseMutationResult<Types.Response, unknown, ArchiveStudentPracticesByGroup__MutationParameters, TContext> {
+export function useArchiveStudentPracticesByGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, ArchiveStudentPracticesByGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ArchiveStudentPracticesByGroupPracticeQueryParameters }): UseMutationResult<Types.Response, unknown, ArchiveStudentPracticesByGroup__MutationParameters, TContext> {
   const key = archiveStudentPracticesByGroupMutationKey(options?.parameters?.groupId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: ArchiveStudentPracticesByGroup__MutationParameters) => Client.archiveStudentPracticesByGroup(data.groupId ?? options?.parameters?.groupId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: ArchiveStudentPracticesByGroup__MutationParameters) => Client.archiveStudentPracticesByGroup(data.groupId ?? options?.parameters?.groupId!),
+    mutationKey: key,
+  });
 }
-  
+
 export function approveStudentPracticeUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/practice/approve?";
   if (id === undefined || id === null)
@@ -378,10 +379,10 @@ export function approveStudentPracticeUrl(id: string): string {
 
 export function approveStudentPracticeMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'approveStudentPractice',
-      id as any,
-    ]);
+    'PracticeClient',
+    'approveStudentPractice',
+    id as any,
+  ]);
 }
 
 /**
@@ -391,17 +392,17 @@ export function approveStudentPracticeMutationKey(id: string): MutationKey {
  */
 export function useApproveStudentPracticeMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.PracticeDto, unknown, void, TContext> {
   const key = approveStudentPracticeMutationKey(id);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.approveStudentPractice(id),
     mutationKey: key,
   });
 }
-  
+
 type ApproveStudentPractice__MutationParameters = ApproveStudentPracticePracticeQueryParameters
 
 /**
@@ -409,19 +410,19 @@ type ApproveStudentPractice__MutationParameters = ApproveStudentPracticePractice
  * @param id Id студента
  * @return OK
  */
-export function useApproveStudentPracticeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, ApproveStudentPractice__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ApproveStudentPracticePracticeQueryParameters}): UseMutationResult<Types.PracticeDto, unknown, ApproveStudentPractice__MutationParameters, TContext> {
+export function useApproveStudentPracticeMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.PracticeDto, unknown, ApproveStudentPractice__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ApproveStudentPracticePracticeQueryParameters }): UseMutationResult<Types.PracticeDto, unknown, ApproveStudentPractice__MutationParameters, TContext> {
   const key = approveStudentPracticeMutationKey(options?.parameters?.id!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: ApproveStudentPractice__MutationParameters) => Client.approveStudentPractice(data.id ?? options?.parameters?.id!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: ApproveStudentPractice__MutationParameters) => Client.approveStudentPractice(data.id ?? options?.parameters?.id!),
+    mutationKey: key,
+  });
 }
-  
+
 export function approveStudentPracticesUrl(id: string[]): string {
   let url_ = getBaseUrl() + "/api/v1/practice/approveMany?";
   if (id === undefined || id === null)
@@ -434,10 +435,10 @@ export function approveStudentPracticesUrl(id: string[]): string {
 
 export function approveStudentPracticesMutationKey(id: string[]): MutationKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'approveStudentPractices',
-      id as any,
-    ]);
+    'PracticeClient',
+    'approveStudentPractices',
+    id as any,
+  ]);
 }
 
 /**
@@ -447,17 +448,17 @@ export function approveStudentPracticesMutationKey(id: string[]): MutationKey {
  */
 export function useApproveStudentPracticesMutation<TContext>(id: string[], options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = approveStudentPracticesMutationKey(id);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.approveStudentPractices(id),
     mutationKey: key,
   });
 }
-  
+
 type ApproveStudentPractices__MutationParameters = ApproveStudentPracticesPracticeQueryParameters
 
 /**
@@ -465,19 +466,19 @@ type ApproveStudentPractices__MutationParameters = ApproveStudentPracticesPracti
  * @param id Id практик
  * @return OK
  */
-export function useApproveStudentPracticesMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, ApproveStudentPractices__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ApproveStudentPracticesPracticeQueryParameters}): UseMutationResult<Types.Response, unknown, ApproveStudentPractices__MutationParameters, TContext> {
+export function useApproveStudentPracticesMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, ApproveStudentPractices__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ApproveStudentPracticesPracticeQueryParameters }): UseMutationResult<Types.Response, unknown, ApproveStudentPractices__MutationParameters, TContext> {
   const key = approveStudentPracticesMutationKey(options?.parameters?.id!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: ApproveStudentPractices__MutationParameters) => Client.approveStudentPractices(data.id ?? options?.parameters?.id!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: ApproveStudentPractices__MutationParameters) => Client.approveStudentPractices(data.id ?? options?.parameters?.id!),
+    mutationKey: key,
+  });
 }
-  
+
 export function approveStudentPractices_1Url(companyId: string): string {
   let url_ = getBaseUrl() + "/api/v1/practice/approveAll?";
   if (companyId === undefined || companyId === null)
@@ -490,10 +491,10 @@ export function approveStudentPractices_1Url(companyId: string): string {
 
 export function approveStudentPractices_1MutationKey(companyId: string): MutationKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'approveStudentPractices_1',
-      companyId as any,
-    ]);
+    'PracticeClient',
+    'approveStudentPractices_1',
+    companyId as any,
+  ]);
 }
 
 /**
@@ -503,17 +504,17 @@ export function approveStudentPractices_1MutationKey(companyId: string): Mutatio
  */
 export function useApproveStudentPractices_1Mutation<TContext>(companyId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = approveStudentPractices_1MutationKey(companyId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.approveStudentPractices_1(companyId),
     mutationKey: key,
   });
 }
-  
+
 type ApproveStudentPractices_1__MutationParameters = ApproveStudentPractices_1PracticeQueryParameters
 
 /**
@@ -521,19 +522,19 @@ type ApproveStudentPractices_1__MutationParameters = ApproveStudentPractices_1Pr
  * @param companyId Id компании-партнера
  * @return OK
  */
-export function useApproveStudentPractices_1MutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, ApproveStudentPractices_1__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ApproveStudentPractices_1PracticeQueryParameters}): UseMutationResult<Types.Response, unknown, ApproveStudentPractices_1__MutationParameters, TContext> {
+export function useApproveStudentPractices_1MutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, ApproveStudentPractices_1__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ApproveStudentPractices_1PracticeQueryParameters }): UseMutationResult<Types.Response, unknown, ApproveStudentPractices_1__MutationParameters, TContext> {
   const key = approveStudentPractices_1MutationKey(options?.parameters?.companyId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: ApproveStudentPractices_1__MutationParameters) => Client.approveStudentPractices_1(data.companyId ?? options?.parameters?.companyId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: ApproveStudentPractices_1__MutationParameters) => Client.approveStudentPractices_1(data.companyId ?? options?.parameters?.companyId!),
+    mutationKey: key,
+  });
 }
-  
+
 export function getMyPracticeUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/practice/my";
   url_ = url_.replace(/[?&]$/, "");
@@ -552,13 +553,13 @@ export function setGetMyPracticeDefaultOptions(options: typeof getMyPracticeDefa
 export function getMyPracticeQueryKey(): QueryKey;
 export function getMyPracticeQueryKey(...params: any[]): QueryKey {
   return trimArrayEnd([
-      'PracticeClient',
-      'getMyPractice',
-    ]);
+    'PracticeClient',
+    'getMyPractice',
+  ]);
 }
 export function __getMyPractice(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getMyPractice(
-axiosConfig    );
+    axiosConfig);
 }
 
 /**
@@ -566,10 +567,10 @@ axiosConfig    );
  * @return OK
  */
 export function useGetMyPracticeQuery<TSelectData = Types.PracticeDto, TError = unknown>(options?: Omit<UseQueryOptions<Types.PracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetMyPracticeQuery<TSelectData = Types.PracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetMyPracticeQuery<TSelectData = Types.PracticeDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PracticeDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
-  
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+
 
   options = params[0] as any;
   axiosConfig = params[1] as any;
@@ -588,7 +589,7 @@ export function useGetMyPracticeQuery<TSelectData = Types.PracticeDto, TError = 
  * Получение информации о практике студентом
  * @return OK
  */
-export function setGetMyPracticeData(queryClient: QueryClient, updater: (data: Types.PracticeDto | undefined) => Types.PracticeDto, ) {
+export function setGetMyPracticeData(queryClient: QueryClient, updater: (data: Types.PracticeDto | undefined) => Types.PracticeDto,) {
   queryClient.setQueryData(getMyPracticeQueryKey(),
     updater
   );
@@ -601,30 +602,30 @@ export function setGetMyPracticeData(queryClient: QueryClient, updater: (data: T
 export function setGetMyPracticeDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PracticeDto | undefined) => Types.PracticeDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-    
+
 export function getStudentPracticesUrl(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/practice/list?";
   if (id === undefined || id === null)
     throw new Error("The parameter 'id' must be defined and cannot be null.");
   else
     url_ += "id=" + encodeURIComponent("" + id) + "&";
-if (page === null)
+  if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-else if (page !== undefined)
+  else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-if (size === null)
+  if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-else if (size !== undefined)
+  else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-if (sort === null)
+  if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-else if (sort !== undefined)
+  else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
-let getStudentPracticesDefaultOptions: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, unknown, Types.PagedListDtoPracticeDto>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.PagedListDtoPracticeDto, unknown, Types.PagedListDtoPracticeDto>, 'queryFn'>> = {
+let getStudentPracticesDefaultOptions: Omit<UseQueryOptions<Types.PagedPracticesDto, unknown, Types.PagedPracticesDto>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.PagedPracticesDto, unknown, Types.PagedPracticesDto>, 'queryFn'>> = {
 };
 export function getGetStudentPracticesDefaultOptions() {
   return getStudentPracticesDefaultOptions;
@@ -637,30 +638,30 @@ export function getStudentPracticesQueryKey(dto: GetStudentPracticesPracticeQuer
 export function getStudentPracticesQueryKey(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getStudentPracticesQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { id, page, size, sort,  } = params[0] as GetStudentPracticesPracticeQueryParameters;
+    const { id, page, size, sort, } = params[0] as GetStudentPracticesPracticeQueryParameters;
 
     return trimArrayEnd([
-        'PracticeClient',
-        'getStudentPractices',
-        id as any,
-        page as any,
-        size as any,
-        sort as any,
-      ]);
+      'PracticeClient',
+      'getStudentPractices',
+      id as any,
+      page as any,
+      size as any,
+      sort as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'PracticeClient',
-        'getStudentPractices',
-        ...params
-      ]);
+      'PracticeClient',
+      'getStudentPractices',
+      ...params
+    ]);
   }
 }
 export function __getStudentPractices(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getStudentPractices(
-      context.queryKey[2] as string,       context.queryKey[3] as number | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as string[] | undefined,axiosConfig    );
+    context.queryKey[2] as string, context.queryKey[3] as number | undefined, context.queryKey[4] as number | undefined, context.queryKey[5] as string[] | undefined, axiosConfig);
 }
 
-export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(dto: GetStudentPracticesPracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetStudentPracticesQuery<TSelectData = Types.PagedPracticesDto, TError = unknown>(dto: GetStudentPracticesPracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 /**
  * Получить список практик студента
  * @param id Id студента
@@ -669,18 +670,18 @@ export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPrac
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
-  let options: UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+export function useGetStudentPracticesQuery<TSelectData = Types.PagedPracticesDto, TError = unknown>(id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetStudentPracticesQuery<TSelectData = Types.PagedPracticesDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+  let options: UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData> | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let id: any = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ id, page, size, sort,  } = params[0] as GetStudentPracticesPracticeQueryParameters);
+      ({ id, page, size, sort, } = params[0] as GetStudentPracticesPracticeQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -691,10 +692,10 @@ export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPrac
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
 
-  return useQuery<Types.PagedListDtoPracticeDto, TError, TSelectData>({
+  return useQuery<Types.PagedPracticesDto, TError, TSelectData>({
     queryFn: axiosConfig ? (context) => __getStudentPractices(context, axiosConfig) : __getStudentPractices,
     queryKey: getStudentPracticesQueryKey(id, page, size, sort),
-    ...getStudentPracticesDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>,
+    ...getStudentPracticesDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedPracticesDto, TError, TSelectData>, 'queryKey'>,
     ...options,
   });
 }
@@ -706,7 +707,7 @@ export function useGetStudentPracticesQuery<TSelectData = Types.PagedListDtoPrac
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function setGetStudentPracticesData(queryClient: QueryClient, updater: (data: Types.PagedListDtoPracticeDto | undefined) => Types.PagedListDtoPracticeDto, id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
+export function setGetStudentPracticesData(queryClient: QueryClient, updater: (data: Types.PagedPracticesDto | undefined) => Types.PagedPracticesDto, id: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
   queryClient.setQueryData(getStudentPracticesQueryKey(id, page, size, sort),
     updater
   );
@@ -720,23 +721,23 @@ export function setGetStudentPracticesData(queryClient: QueryClient, updater: (d
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function setGetStudentPracticesDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoPracticeDto | undefined) => Types.PagedListDtoPracticeDto) {
+export function setGetStudentPracticesDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedPracticesDto | undefined) => Types.PagedPracticesDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-    
+
 export function getPracticeRequestsUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/practice/list/unapproved?";
-if (page === null)
+  if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-else if (page !== undefined)
+  else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-if (size === null)
+  if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-else if (size !== undefined)
+  else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-if (sort === null)
+  if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-else if (sort !== undefined)
+  else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -755,26 +756,26 @@ export function getPracticeRequestsQueryKey(dto: GetPracticeRequestsPracticeQuer
 export function getPracticeRequestsQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getPracticeRequestsQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort,  } = params[0] as GetPracticeRequestsPracticeQueryParameters;
+    const { page, size, sort, } = params[0] as GetPracticeRequestsPracticeQueryParameters;
 
     return trimArrayEnd([
-        'PracticeClient',
-        'getPracticeRequests',
-        page as any,
-        size as any,
-        sort as any,
-      ]);
+      'PracticeClient',
+      'getPracticeRequests',
+      page as any,
+      size as any,
+      sort as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'PracticeClient',
-        'getPracticeRequests',
-        ...params
-      ]);
+      'PracticeClient',
+      'getPracticeRequests',
+      ...params
+    ]);
   }
 }
 export function __getPracticeRequests(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getPracticeRequests(
-      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,axiosConfig    );
+    context.queryKey[2] as number | undefined, context.queryKey[3] as number | undefined, context.queryKey[4] as string[] | undefined, axiosConfig);
 }
 
 export function useGetPracticeRequestsQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(dto: GetPracticeRequestsPracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -786,16 +787,16 @@ export function useGetPracticeRequestsQuery<TSelectData = Types.PagedListDtoPrac
  * @return OK
  */
 export function useGetPracticeRequestsQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetPracticeRequestsQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetPracticeRequestsQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort,  } = params[0] as GetPracticeRequestsPracticeQueryParameters);
+      ({ page, size, sort, } = params[0] as GetPracticeRequestsPracticeQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -836,48 +837,48 @@ export function setGetPracticeRequestsData(queryClient: QueryClient, updater: (d
 export function setGetPracticeRequestsDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoPracticeDto | undefined) => Types.PagedListDtoPracticeDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-    
+
 export function getAllPracticesUrl(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/practice/list/all?";
-if (studentName === null)
+  if (studentName === null)
     throw new Error("The parameter 'studentName' cannot be null.");
-else if (studentName !== undefined)
+  else if (studentName !== undefined)
     url_ += "studentName=" + encodeURIComponent("" + studentName) + "&";
-if (groupIds === null)
+  if (groupIds === null)
     throw new Error("The parameter 'groupIds' cannot be null.");
-else if (groupIds !== undefined)
+  else if (groupIds !== undefined)
     groupIds && groupIds.forEach(item => { url_ += "groupIds=" + encodeURIComponent("" + item) + "&"; });
-if (companyId === null)
+  if (companyId === null)
     throw new Error("The parameter 'companyId' cannot be null.");
-else if (companyId !== undefined)
+  else if (companyId !== undefined)
     url_ += "companyId=" + encodeURIComponent("" + companyId) + "&";
-if (hasReport === null)
+  if (hasReport === null)
     throw new Error("The parameter 'hasReport' cannot be null.");
-else if (hasReport !== undefined)
+  else if (hasReport !== undefined)
     url_ += "hasReport=" + encodeURIComponent("" + hasReport) + "&";
-if (isReportApproved === null)
+  if (isReportApproved === null)
     throw new Error("The parameter 'isReportApproved' cannot be null.");
-else if (isReportApproved !== undefined)
+  else if (isReportApproved !== undefined)
     url_ += "isReportApproved=" + encodeURIComponent("" + isReportApproved) + "&";
-if (isArchived === null)
+  if (isArchived === null)
     throw new Error("The parameter 'isArchived' cannot be null.");
-else if (isArchived !== undefined)
+  else if (isArchived !== undefined)
     url_ += "isArchived=" + encodeURIComponent("" + isArchived) + "&";
-if (isPracticeApproved === null)
+  if (isPracticeApproved === null)
     throw new Error("The parameter 'isPracticeApproved' cannot be null.");
-else if (isPracticeApproved !== undefined)
+  else if (isPracticeApproved !== undefined)
     url_ += "isPracticeApproved=" + encodeURIComponent("" + isPracticeApproved) + "&";
-if (page === null)
+  if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-else if (page !== undefined)
+  else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-if (size === null)
+  if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-else if (size !== undefined)
+  else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-if (sort === null)
+  if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-else if (sort !== undefined)
+  else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -896,33 +897,33 @@ export function getAllPracticesQueryKey(dto: GetAllPracticesPracticeQueryParamet
 export function getAllPracticesQueryKey(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getAllPracticesQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort,  } = params[0] as GetAllPracticesPracticeQueryParameters;
+    const { studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort, } = params[0] as GetAllPracticesPracticeQueryParameters;
 
     return trimArrayEnd([
-        'PracticeClient',
-        'getAllPractices',
-        studentName as any,
-        groupIds as any,
-        companyId as any,
-        hasReport as any,
-        isReportApproved as any,
-        isArchived as any,
-        isPracticeApproved as any,
-        page as any,
-        size as any,
-        sort as any,
-      ]);
+      'PracticeClient',
+      'getAllPractices',
+      studentName as any,
+      groupIds as any,
+      companyId as any,
+      hasReport as any,
+      isReportApproved as any,
+      isArchived as any,
+      isPracticeApproved as any,
+      page as any,
+      size as any,
+      sort as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'PracticeClient',
-        'getAllPractices',
-        ...params
-      ]);
+      'PracticeClient',
+      'getAllPractices',
+      ...params
+    ]);
   }
 }
 export function __getAllPractices(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getAllPractices(
-      context.queryKey[2] as string | undefined,       context.queryKey[3] as string[] | undefined,       context.queryKey[4] as string | undefined,       context.queryKey[5] as boolean | undefined,       context.queryKey[6] as boolean | undefined,       context.queryKey[7] as boolean | undefined,       context.queryKey[8] as boolean | undefined,       context.queryKey[9] as number | undefined,       context.queryKey[10] as number | undefined,       context.queryKey[11] as string[] | undefined,axiosConfig    );
+    context.queryKey[2] as string | undefined, context.queryKey[3] as string[] | undefined, context.queryKey[4] as string | undefined, context.queryKey[5] as boolean | undefined, context.queryKey[6] as boolean | undefined, context.queryKey[7] as boolean | undefined, context.queryKey[8] as boolean | undefined, context.queryKey[9] as number | undefined, context.queryKey[10] as number | undefined, context.queryKey[11] as string[] | undefined, axiosConfig);
 }
 
 export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(dto: GetAllPracticesPracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -941,9 +942,9 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
  * @return OK
  */
 export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let studentName: any = undefined;
   let groupIds: any = undefined;
   let companyId: any = undefined;
@@ -954,10 +955,10 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort,  } = params[0] as GetAllPracticesPracticeQueryParameters);
+      ({ studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort, } = params[0] as GetAllPracticesPracticeQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

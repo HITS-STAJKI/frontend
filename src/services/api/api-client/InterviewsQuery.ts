@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -19,42 +20,42 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type GetInterviewInterviewsQueryParameters = {
-  interviewId: string ;
+  interviewId: string;
 }
 
 export type UpdateInterviewInterviewsQueryParameters = {
-  interviewId: string ;
+  interviewId: string;
 }
 
 export type DeleteInterviewInterviewsQueryParameters = {
-  interviewId: string ;
+  interviewId: string;
 }
 
 export type GetInterviewListInterviewsQueryParameters = {
-  studentName?: string | undefined ;
-  partnerId?: string | undefined ;
-  stackId?: string | undefined ;
-  languageIds?: string[] | undefined ;
-  studentGroupId?: string | undefined ;
-  status?: Types.Status | undefined ;
-  modifiedAtFrom?: Date | undefined ;
-  modifiedAtTo?: Date | undefined ;
-  page?: number | undefined ;
-  size?: number | undefined ;
-  sort?: string[] | undefined ;
+  studentName?: string | undefined;
+  partnerId?: string | undefined;
+  stackId?: string | undefined;
+  languageIds?: string[] | undefined;
+  studentGroupId?: string | undefined;
+  status?: Types.Status | undefined;
+  modifiedAtFrom?: Date | undefined;
+  modifiedAtTo?: Date | undefined;
+  page?: number | undefined;
+  size?: number | undefined;
+  sort?: string[] | undefined;
 }
 
 export type GetInterviewList_1InterviewsQueryParameters = {
-  page?: number | undefined ;
-  size?: number | undefined ;
-  sort?: string[] | undefined ;
+  page?: number | undefined;
+  size?: number | undefined;
+  sort?: string[] | undefined;
 }
 
 export function getInterviewUrl(interviewId: string): string {
   let url_ = getBaseUrl() + "/api/v1/interview/{interviewId}";
-if (interviewId === undefined || interviewId === null)
-  throw new Error("The parameter 'interviewId' must be defined.");
-url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
+  if (interviewId === undefined || interviewId === null)
+    throw new Error("The parameter 'interviewId' must be defined.");
+  url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
@@ -71,24 +72,24 @@ export function setGetInterviewDefaultOptions(options: typeof getInterviewDefaul
 export function getInterviewQueryKey(interviewId: string): QueryKey;
 export function getInterviewQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { interviewId,  } = params[0] as GetInterviewInterviewsQueryParameters;
+    const { interviewId, } = params[0] as GetInterviewInterviewsQueryParameters;
 
     return trimArrayEnd([
-        'InterviewsClient',
-        'getInterview',
-        interviewId as any,
-      ]);
+      'InterviewsClient',
+      'getInterview',
+      interviewId as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'InterviewsClient',
-        'getInterview',
-        ...params
-      ]);
+      'InterviewsClient',
+      'getInterview',
+      ...params
+    ]);
   }
 }
 export function __getInterview(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getInterview(
-      context.queryKey[2] as string,axiosConfig    );
+    context.queryKey[2] as string, axiosConfig);
 }
 
 export function useGetInterviewQuery<TSelectData = Types.InterviewDto, TError = unknown>(dto: GetInterviewInterviewsQueryParameters, options?: Omit<UseQueryOptions<Types.InterviewDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -98,14 +99,14 @@ export function useGetInterviewQuery<TSelectData = Types.InterviewDto, TError = 
  * @return OK
  */
 export function useGetInterviewQuery<TSelectData = Types.InterviewDto, TError = unknown>(interviewId: string, options?: Omit<UseQueryOptions<Types.InterviewDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetInterviewQuery<TSelectData = Types.InterviewDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetInterviewQuery<TSelectData = Types.InterviewDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.InterviewDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let interviewId: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ interviewId,  } = params[0] as GetInterviewInterviewsQueryParameters);
+      ({ interviewId, } = params[0] as GetInterviewInterviewsQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -142,22 +143,22 @@ export function setGetInterviewData(queryClient: QueryClient, updater: (data: Ty
 export function setGetInterviewDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.InterviewDto | undefined) => Types.InterviewDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-    
+
 export function updateInterviewUrl(interviewId: string): string {
   let url_ = getBaseUrl() + "/api/v1/interview/{interviewId}";
-if (interviewId === undefined || interviewId === null)
-  throw new Error("The parameter 'interviewId' must be defined.");
-url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
+  if (interviewId === undefined || interviewId === null)
+    throw new Error("The parameter 'interviewId' must be defined.");
+  url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updateInterviewMutationKey(interviewId: string): MutationKey {
   return trimArrayEnd([
-      'InterviewsClient',
-      'updateInterview',
-      interviewId as any,
-    ]);
+    'InterviewsClient',
+    'updateInterview',
+    interviewId as any,
+  ]);
 }
 
 /**
@@ -167,17 +168,17 @@ export function updateInterviewMutationKey(interviewId: string): MutationKey {
  */
 export function useUpdateInterviewMutation<TContext>(interviewId: string, options?: Omit<UseMutationOptions<Types.InterviewDto, unknown, Types.UpdateInterviewDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.InterviewDto, unknown, Types.UpdateInterviewDto, TContext> {
   const key = updateInterviewMutationKey(interviewId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.UpdateInterviewDto) => Client.updateInterview(interviewId, body),
     mutationKey: key,
   });
 }
-  
+
 type UpdateInterview__MutationParameters = UpdateInterviewInterviewsQueryParameters & {
   body: Types.UpdateInterviewDto;
 }
@@ -187,34 +188,34 @@ type UpdateInterview__MutationParameters = UpdateInterviewInterviewsQueryParamet
  * @param interviewId Id отбора
  * @return OK
  */
-export function useUpdateInterviewMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.InterviewDto, unknown, UpdateInterview__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateInterviewInterviewsQueryParameters}): UseMutationResult<Types.InterviewDto, unknown, UpdateInterview__MutationParameters, TContext> {
+export function useUpdateInterviewMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.InterviewDto, unknown, UpdateInterview__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateInterviewInterviewsQueryParameters }): UseMutationResult<Types.InterviewDto, unknown, UpdateInterview__MutationParameters, TContext> {
   const key = updateInterviewMutationKey(options?.parameters?.interviewId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: UpdateInterview__MutationParameters) => Client.updateInterview(data.interviewId ?? options?.parameters?.interviewId!, data.body),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: UpdateInterview__MutationParameters) => Client.updateInterview(data.interviewId ?? options?.parameters?.interviewId!, data.body),
+    mutationKey: key,
+  });
 }
-  
+
 export function deleteInterviewUrl(interviewId: string): string {
   let url_ = getBaseUrl() + "/api/v1/interview/{interviewId}";
-if (interviewId === undefined || interviewId === null)
-  throw new Error("The parameter 'interviewId' must be defined.");
-url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
+  if (interviewId === undefined || interviewId === null)
+    throw new Error("The parameter 'interviewId' must be defined.");
+  url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deleteInterviewMutationKey(interviewId: string): MutationKey {
   return trimArrayEnd([
-      'InterviewsClient',
-      'deleteInterview',
-      interviewId as any,
-    ]);
+    'InterviewsClient',
+    'deleteInterview',
+    interviewId as any,
+  ]);
 }
 
 /**
@@ -224,17 +225,17 @@ export function deleteInterviewMutationKey(interviewId: string): MutationKey {
  */
 export function useDeleteInterviewMutation<TContext>(interviewId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deleteInterviewMutationKey(interviewId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.deleteInterview(interviewId),
     mutationKey: key,
   });
 }
-  
+
 type DeleteInterview__MutationParameters = DeleteInterviewInterviewsQueryParameters
 
 /**
@@ -242,19 +243,19 @@ type DeleteInterview__MutationParameters = DeleteInterviewInterviewsQueryParamet
  * @param interviewId Id отбора
  * @return OK
  */
-export function useDeleteInterviewMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteInterview__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteInterviewInterviewsQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteInterview__MutationParameters, TContext> {
+export function useDeleteInterviewMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteInterview__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteInterviewInterviewsQueryParameters }): UseMutationResult<Types.Response, unknown, DeleteInterview__MutationParameters, TContext> {
   const key = deleteInterviewMutationKey(options?.parameters?.interviewId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: DeleteInterview__MutationParameters) => Client.deleteInterview(data.interviewId ?? options?.parameters?.interviewId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: DeleteInterview__MutationParameters) => Client.deleteInterview(data.interviewId ?? options?.parameters?.interviewId!),
+    mutationKey: key,
+  });
 }
-  
+
 export function createInterviewUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/interview";
   url_ = url_.replace(/[?&]$/, "");
@@ -263,9 +264,9 @@ export function createInterviewUrl(): string {
 
 export function createInterviewMutationKey(): MutationKey {
   return trimArrayEnd([
-      'InterviewsClient',
-      'createInterview',
-    ]);
+    'InterviewsClient',
+    'createInterview',
+  ]);
 }
 
 /**
@@ -274,62 +275,62 @@ export function createInterviewMutationKey(): MutationKey {
  */
 export function useCreateInterviewMutation<TContext>(options?: Omit<UseMutationOptions<Types.InterviewDto, unknown, Types.CreateInterviewDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.InterviewDto, unknown, Types.CreateInterviewDto, TContext> {
   const key = createInterviewMutationKey();
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.CreateInterviewDto) => Client.createInterview(body),
     mutationKey: key,
   });
 }
-  
+
 export function getInterviewListUrl(studentName?: string | undefined, partnerId?: string | undefined, stackId?: string | undefined, languageIds?: string[] | undefined, studentGroupId?: string | undefined, status?: Types.Status | undefined, modifiedAtFrom?: Date | undefined, modifiedAtTo?: Date | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/interview/program-lead/list?";
-if (studentName === null)
+  if (studentName === null)
     throw new Error("The parameter 'studentName' cannot be null.");
-else if (studentName !== undefined)
+  else if (studentName !== undefined)
     url_ += "studentName=" + encodeURIComponent("" + studentName) + "&";
-if (partnerId === null)
+  if (partnerId === null)
     throw new Error("The parameter 'partnerId' cannot be null.");
-else if (partnerId !== undefined)
+  else if (partnerId !== undefined)
     url_ += "partnerId=" + encodeURIComponent("" + partnerId) + "&";
-if (stackId === null)
+  if (stackId === null)
     throw new Error("The parameter 'stackId' cannot be null.");
-else if (stackId !== undefined)
+  else if (stackId !== undefined)
     url_ += "stackId=" + encodeURIComponent("" + stackId) + "&";
-if (languageIds === null)
+  if (languageIds === null)
     throw new Error("The parameter 'languageIds' cannot be null.");
-else if (languageIds !== undefined)
+  else if (languageIds !== undefined)
     languageIds && languageIds.forEach(item => { url_ += "languageIds=" + encodeURIComponent("" + item) + "&"; });
-if (studentGroupId === null)
+  if (studentGroupId === null)
     throw new Error("The parameter 'studentGroupId' cannot be null.");
-else if (studentGroupId !== undefined)
+  else if (studentGroupId !== undefined)
     url_ += "studentGroupId=" + encodeURIComponent("" + studentGroupId) + "&";
-if (status === null)
+  if (status === null)
     throw new Error("The parameter 'status' cannot be null.");
-else if (status !== undefined)
+  else if (status !== undefined)
     url_ += "status=" + encodeURIComponent("" + status) + "&";
-if (modifiedAtFrom === null)
+  if (modifiedAtFrom === null)
     throw new Error("The parameter 'modifiedAtFrom' cannot be null.");
-else if (modifiedAtFrom !== undefined)
+  else if (modifiedAtFrom !== undefined)
     url_ += "modifiedAtFrom=" + encodeURIComponent(modifiedAtFrom ? "" + modifiedAtFrom.toISOString() : "") + "&";
-if (modifiedAtTo === null)
+  if (modifiedAtTo === null)
     throw new Error("The parameter 'modifiedAtTo' cannot be null.");
-else if (modifiedAtTo !== undefined)
+  else if (modifiedAtTo !== undefined)
     url_ += "modifiedAtTo=" + encodeURIComponent(modifiedAtTo ? "" + modifiedAtTo.toISOString() : "") + "&";
-if (page === null)
+  if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-else if (page !== undefined)
+  else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-if (size === null)
+  if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-else if (size !== undefined)
+  else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-if (sort === null)
+  if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-else if (sort !== undefined)
+  else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -348,34 +349,34 @@ export function getInterviewListQueryKey(dto: GetInterviewListInterviewsQueryPar
 export function getInterviewListQueryKey(studentName?: string | undefined, partnerId?: string | undefined, stackId?: string | undefined, languageIds?: string[] | undefined, studentGroupId?: string | undefined, status?: Types.Status | undefined, modifiedAtFrom?: Date | undefined, modifiedAtTo?: Date | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getInterviewListQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { studentName, partnerId, stackId, languageIds, studentGroupId, status, modifiedAtFrom, modifiedAtTo, page, size, sort,  } = params[0] as GetInterviewListInterviewsQueryParameters;
+    const { studentName, partnerId, stackId, languageIds, studentGroupId, status, modifiedAtFrom, modifiedAtTo, page, size, sort, } = params[0] as GetInterviewListInterviewsQueryParameters;
 
     return trimArrayEnd([
-        'InterviewsClient',
-        'getInterviewList',
-        studentName as any,
-        partnerId as any,
-        stackId as any,
-        languageIds as any,
-        studentGroupId as any,
-        status as any,
-        modifiedAtFrom as any,
-        modifiedAtTo as any,
-        page as any,
-        size as any,
-        sort as any,
-      ]);
+      'InterviewsClient',
+      'getInterviewList',
+      studentName as any,
+      partnerId as any,
+      stackId as any,
+      languageIds as any,
+      studentGroupId as any,
+      status as any,
+      modifiedAtFrom as any,
+      modifiedAtTo as any,
+      page as any,
+      size as any,
+      sort as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'InterviewsClient',
-        'getInterviewList',
-        ...params
-      ]);
+      'InterviewsClient',
+      'getInterviewList',
+      ...params
+    ]);
   }
 }
 export function __getInterviewList(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getInterviewList(
-      context.queryKey[2] as string | undefined,       context.queryKey[3] as string | undefined,       context.queryKey[4] as string | undefined,       context.queryKey[5] as string[] | undefined,       context.queryKey[6] as string | undefined,       context.queryKey[7] as Types.Status | undefined,       context.queryKey[8] as Date | undefined,       context.queryKey[9] as Date | undefined,       context.queryKey[10] as number | undefined,       context.queryKey[11] as number | undefined,       context.queryKey[12] as string[] | undefined,axiosConfig    );
+    context.queryKey[2] as string | undefined, context.queryKey[3] as string | undefined, context.queryKey[4] as string | undefined, context.queryKey[5] as string[] | undefined, context.queryKey[6] as string | undefined, context.queryKey[7] as Types.Status | undefined, context.queryKey[8] as Date | undefined, context.queryKey[9] as Date | undefined, context.queryKey[10] as number | undefined, context.queryKey[11] as number | undefined, context.queryKey[12] as string[] | undefined, axiosConfig);
 }
 
 export function useGetInterviewListQuery<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(dto: GetInterviewListInterviewsQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoInterviewDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -395,9 +396,9 @@ export function useGetInterviewListQuery<TSelectData = Types.PagedListDtoIntervi
  * @return OK
  */
 export function useGetInterviewListQuery<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(studentName?: string | undefined, partnerId?: string | undefined, stackId?: string | undefined, languageIds?: string[] | undefined, studentGroupId?: string | undefined, status?: Types.Status | undefined, modifiedAtFrom?: Date | undefined, modifiedAtTo?: Date | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoInterviewDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetInterviewListQuery<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetInterviewListQuery<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoInterviewDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let studentName: any = undefined;
   let partnerId: any = undefined;
   let stackId: any = undefined;
@@ -409,10 +410,10 @@ export function useGetInterviewListQuery<TSelectData = Types.PagedListDtoIntervi
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ studentName, partnerId, stackId, languageIds, studentGroupId, status, modifiedAtFrom, modifiedAtTo, page, size, sort,  } = params[0] as GetInterviewListInterviewsQueryParameters);
+      ({ studentName, partnerId, stackId, languageIds, studentGroupId, status, modifiedAtFrom, modifiedAtTo, page, size, sort, } = params[0] as GetInterviewListInterviewsQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -469,20 +470,20 @@ export function setGetInterviewListData(queryClient: QueryClient, updater: (data
 export function setGetInterviewListDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoInterviewDto | undefined) => Types.PagedListDtoInterviewDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-    
+
 export function getInterviewList_1Url(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/interview/list?";
-if (page === null)
+  if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-else if (page !== undefined)
+  else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-if (size === null)
+  if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-else if (size !== undefined)
+  else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-if (sort === null)
+  if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-else if (sort !== undefined)
+  else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -501,26 +502,26 @@ export function getInterviewList_1QueryKey(dto: GetInterviewList_1InterviewsQuer
 export function getInterviewList_1QueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getInterviewList_1QueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort,  } = params[0] as GetInterviewList_1InterviewsQueryParameters;
+    const { page, size, sort, } = params[0] as GetInterviewList_1InterviewsQueryParameters;
 
     return trimArrayEnd([
-        'InterviewsClient',
-        'getInterviewList_1',
-        page as any,
-        size as any,
-        sort as any,
-      ]);
+      'InterviewsClient',
+      'getInterviewList_1',
+      page as any,
+      size as any,
+      sort as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'InterviewsClient',
-        'getInterviewList_1',
-        ...params
-      ]);
+      'InterviewsClient',
+      'getInterviewList_1',
+      ...params
+    ]);
   }
 }
 export function __getInterviewList_1(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getInterviewList_1(
-      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,axiosConfig    );
+    context.queryKey[2] as number | undefined, context.queryKey[3] as number | undefined, context.queryKey[4] as string[] | undefined, axiosConfig);
 }
 
 export function useGetInterviewList_1Query<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(dto: GetInterviewList_1InterviewsQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoInterviewDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -532,16 +533,16 @@ export function useGetInterviewList_1Query<TSelectData = Types.PagedListDtoInter
  * @return OK
  */
 export function useGetInterviewList_1Query<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoInterviewDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetInterviewList_1Query<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetInterviewList_1Query<TSelectData = Types.PagedListDtoInterviewDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoInterviewDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort,  } = params[0] as GetInterviewList_1InterviewsQueryParameters);
+      ({ page, size, sort, } = params[0] as GetInterviewList_1InterviewsQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

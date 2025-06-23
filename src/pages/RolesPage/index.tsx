@@ -1,15 +1,12 @@
-import { Container, Flex, Select, Text, TextInput, Title } from "@mantine/core";
+import { Container, Flex, Text, Title } from "@mantine/core";
 import { FilterBlockShort, FilterUserName, FilterUserRole } from "entity";
-import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { UserRole } from "services/api/api-client.types";
-import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
-import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { Pagination } from "shared/ui";
-import { UsersList } from "widgets/RolesForm"
+import { RoleDropdown, UsersList } from "widgets/RolesForm"
 
-export const RolesPage = () => {
+const RolesPage = () => {
     const [searchParams] = useSearchParams();
 
     const nameParam = searchParams.get('name') || undefined;
@@ -20,7 +17,7 @@ export const RolesPage = () => {
         fullName: nameParam,
         userRole: roleParam,
         size: Number(sizeParam),
-        page: 0 
+        page: 0
     });
 
     if (isLoading) {
@@ -28,20 +25,21 @@ export const RolesPage = () => {
     }
     return (
         <Container fluid>
-            <Flex direction="column" style={{ width: '75%', margin: '0 auto',  minWidth: '900px' }}>
+            <Flex direction="column" style={{ width: '75%', margin: '0 auto', minWidth: '900px' }}>
                 <Flex justify="space-between" align="flex-end" mb="md">
                     <Title order={1}>Пользователи</Title>
+                    <RoleDropdown />
                 </Flex>
-                <FilterBlockShort 
+                <FilterBlockShort
                     availableFilters={[
                         {
                             id: "name",
                             label: "ФИО пользователя",
                             element: (props) => (
-                                <FilterUserName 
-                                    id="name" 
-                                    initialValue={props.initialValue} 
-                                    onChangeValue={props.onChangeValue} 
+                                <FilterUserName
+                                    id="name"
+                                    initialValue={props.initialValue}
+                                    onChangeValue={props.onChangeValue}
                                 />
                             )
                         },
@@ -49,10 +47,10 @@ export const RolesPage = () => {
                             id: "role",
                             label: "Роль пользователя",
                             element: (props) => (
-                                <FilterUserRole 
-                                    id="role" 
-                                    initialValue={searchParams.get('role')} 
-                                    onChangeValue={props.onChangeValue} 
+                                <FilterUserRole
+                                    id="role"
+                                    initialValue={searchParams.get('role')}
+                                    onChangeValue={props.onChangeValue}
                                 />
                             )
                         }
@@ -62,9 +60,9 @@ export const RolesPage = () => {
                     <Text>Пользователи не найдены</Text>
                 ) : (
                     <>
-                        <UsersList 
-                            items={data?.items!} 
-                            pagination={data?.pagination!} 
+                        <UsersList
+                            items={data?.items!}
+                            pagination={data?.pagination!}
                         />
                         <Pagination pagination={data?.pagination} />
                     </>
@@ -73,3 +71,5 @@ export const RolesPage = () => {
         </Container>
     );
 };
+
+export default RolesPage

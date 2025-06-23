@@ -1,12 +1,11 @@
 import { GroupFilters, GroupList } from "widgets/GroupList"
-import { GroupSearchBlock } from "widgets/GroupSearchBlock"
 import { Container, Flex, Title } from '@mantine/core';
 import { CreateGroup } from "features/Group";
 
-export const GroupsPage = () => {
+const GroupsPage = () => {
     return (
         <Container w={'100%'} fluid>
-            <Flex justify="space-between" align="center" w={'100%'}  style={{ marginBottom: '2vh' }}>
+            <Flex justify="space-between" align="center" w={'100%'} style={{ marginBottom: '2vh' }}>
                 <Title order={1}>Группы</Title>
                 <CreateGroup />
             </Flex>
@@ -17,3 +16,5 @@ export const GroupsPage = () => {
         </Container>
     )
 }
+
+export default GroupsPage

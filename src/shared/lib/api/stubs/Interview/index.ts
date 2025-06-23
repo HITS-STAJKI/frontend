@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GET_USER } from "..";
 import { Interview, InterviewForTeachers, InterviewPage, InterviewsComment, InterviewsCommentPage, PagedListDtoInterviewDto, User } from "../../entities";
 import { STACK1, STACK2 } from "../Stack"
@@ -105,7 +106,7 @@ const INTERVIEWFORTEACHER2: InterviewForTeachers = {
 
 
 export const GET_INTERVIEWFORTEACHER: PagedListDtoInterviewDto = {
-    items: [INTERVIEWFORTEACHER1, INTERVIEWFORTEACHER2, INTERVIEWFORTEACHER1],
+    items: [],
     pagination: {
         totalPages: 1,
         currentPage: 1,

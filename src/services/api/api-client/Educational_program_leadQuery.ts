@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -26,9 +27,9 @@ export function createProgramLeadUrl(): string {
 
 export function createProgramLeadMutationKey(): MutationKey {
   return trimArrayEnd([
-      'Educational_program_leadClient',
-      'createProgramLead',
-    ]);
+    'Educational_program_leadClient',
+    'createProgramLead',
+  ]);
 }
 
 /**
@@ -37,10 +38,10 @@ export function createProgramLeadMutationKey(): MutationKey {
  */
 export function useCreateProgramLeadMutation<TContext>(options?: Omit<UseMutationOptions<Types.EducationalProgramLeadDto, unknown, Types.EducationalProgramLeadCreateDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.EducationalProgramLeadDto, unknown, Types.EducationalProgramLeadCreateDto, TContext> {
   const key = createProgramLeadMutationKey();
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.EducationalProgramLeadCreateDto) => Client.createProgramLead(body),

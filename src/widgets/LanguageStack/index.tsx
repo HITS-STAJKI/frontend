@@ -1,10 +1,10 @@
 import { Button, Flex, TextInput, Text } from "@mantine/core";
-import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
 import { LanguageStackCard } from "entity";
 import { CreateLanguageOrStackForm } from "features";
 import { Modal } from "shared/ui";
 import { useState } from "react";
 import { useDebouncedCallback } from "@mantine/hooks";
+import { LanguageDto, StackDto } from "services/api/api-client.types";
 
 
 interface SearchFormProps {
@@ -45,14 +45,14 @@ export function SearchForm({ type, onSearch }: SearchFormProps) {
     );
 }
 
-export function LanguageList({ items, type }: (LanguagePage | StackPage) & { type: 'language' | 'stack' }) {
+export function LanguageList({ items, type }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' }) {
     return (
         <Flex direction="column" gap="md" mt="lg" style={{ width: '100%' }}>
             <Text style={{ marginBottom: '10px' }}>
                 Найдено {type === 'language' ? 'языков' : 'стеков'}: {items.length}
             </Text>
-            {items.map((card, index) => (
-                <LanguageStackCard key={card.id} type={type} id={card.id} name={card.name} index={index} />
+            {items.map((item, index) => (
+                <LanguageStackCard key={item.id} type={type} id={item.id} name={item.name} index={index} />
             ))}
         </Flex>
     );

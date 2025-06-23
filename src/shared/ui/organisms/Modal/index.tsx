@@ -2,7 +2,7 @@ import { Modal as MModal } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks"
 import { ReactNode } from "react"
 
-type ContentProps = {
+export type ContentProps = {
     opened: boolean
     open: () => void
     close: () => void
@@ -30,6 +30,7 @@ export const Modal = ({ content, render, title, size = 'md' }: RenderModalProps)
                     blur: 3,
                 }}
                 zIndex={300}
+                size={size}
             >
                 {content({ opened, open, close })}
             </MModal>

@@ -1,7 +1,11 @@
-import { Button, MultiSelect, Textarea, Select } from "@mantine/core";
+import { Button, MultiSelect, Select, Center, Loader, SelectProps } from "@mantine/core";
 import { useForm } from "@mantine/form"
-import { Company, GET_STACKS, GET_COMPANIES, Language, Stack } from "shared/lib";
-import { GET_LANGUAGES } from "shared/lib/api/stubs/Language";
+import { CreateInterviewDtoStatus, UpdateInterviewDtoStatus } from "services/api/api-client.types";
+import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
+import { useCreateInterviewMutation, useGetInterviewList_1Query, useGetInterviewQuery, useUpdateInterviewMutation } from "services/api/api-client/InterviewsQuery";
+import { useGetLanguageListQuery } from "services/api/api-client/Programming_languageQuery";
+import { useGetStackListQuery } from "services/api/api-client/StackQuery";
+import { Company, Language, Stack } from "shared/lib";
 
 type SelectionFormProps = {
     onSuccess: () => void;
@@ -20,19 +24,16 @@ const statusOptions: StatusOption[] = [
 ];
 
 type EditFormValues = {
-    companyId: string;
-    stackId: string;
-    status: string;
+    status: UpdateInterviewDtoStatus;
 };
 
-export const CreateSelectionForm = ({ onSuccess, id}: SelectionFormProps) => {
-    const form = useForm({
+export const CreateSelectionForm = ({ onSuccess, }: SelectionFormProps) => {
+    const form = useForm<{ companyId: string, stackId: string, languageId: string[] }>({
         mode: 'uncontrolled',
         initialValues: {
             companyId: '',
             stackId: '',
-            comment: '',
-            languageId: ''
+            languageId: []
         },
         validate: {
             companyId: (value) => (value ? null : 'Это поле обязательно'),
@@ -40,22 +41,27 @@ export const CreateSelectionForm = ({ onSuccess, id}: SelectionFormProps) => {
             languageId: (value) => (value ? null : 'Это поле обязательно'),
         }
     });
-    const onSubmit = (vals: { comment: string }) => {
-        console.log(`Тело запроса создания для ${id}:`, vals); // Тело запроса для создания
-        onSuccess(); // Успешная отправка
+    const { data: dataStacks, isLoading: isLoadingStacks } = useGetStackListQuery()
+    const { data: dataLanguages, isLoading: isLoadingLanguages } = useGetLanguageListQuery()
+    const { data: dataCompany, isLoading: isLoadingPartners } = useGetPartnersQuery(undefined, undefined, undefined, 0, 100000000)
+    const { mutateAsync } = useCreateInterviewMutation()
+    const { refetch } = useGetInterviewList_1Query()
+    if (isLoadingStacks || isLoadingLanguages || isLoadingPartners) {
+        return <Center>
+            <Loader />
+        </Center>
+    }
+    const onSubmit = (vals: { companyId: string, stackId: string, languageId: Array<string> }) => {
+        mutateAsync({ languageIds: vals.languageId, companyPartnerId: vals.companyId, stackId: vals.stackId, status: CreateInterviewDtoStatus.PENDING }).then(() => {
+            refetch()
+            onSuccess();
+        })
     };
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
-            <SelectForm items={GET_COMPANIES.items} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
-            <SelectForm items={GET_STACKS.items} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
-            <MultiSelectForm items={GET_LANGUAGES.items} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)} />
-            <Textarea
-                style={{ marginBottom: '15px' }}
-                placeholder={"Напишите комментарий"}
-                key={form.key('comment')}
-                mb="xs"
-                {...form.getInputProps('comment')}
-            />
+            <SelectForm items={dataCompany?.items!} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value!)} />
+            <SelectForm items={dataStacks!} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value!)} />
+            <MultiSelectForm items={dataLanguages!} label={"Языки"} onChangeMulti={(value) => form.setFieldValue('languageId', value!)} />
             <div style={{ display: 'flex' }}>
                 <Button type='submit' style={{ marginLeft: 'auto' }}>{'Сохранить'}</Button>
             </div>
@@ -64,28 +70,34 @@ export const CreateSelectionForm = ({ onSuccess, id}: SelectionFormProps) => {
 }
 
 export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
+    const { mutateAsync } = useUpdateInterviewMutation(id)
+    const { refetch } = useGetInterviewList_1Query()
+    const { data, isLoading, refetch: refetchData } = useGetInterviewQuery(id)
     const form = useForm<EditFormValues>({
         mode: 'uncontrolled',
         initialValues: {
-            companyId: '',
-            stackId: '',
-            status: ''
+            status: (data?.status as unknown as UpdateInterviewDtoStatus) || UpdateInterviewDtoStatus.PENDING
         },
         validate: {
-            companyId: (value) => (value ? null : 'Это поле обязательно'),
-            stackId: (value) => (value ? null : 'Это поле обязательно'),
             status: (value) => (value ? null : 'Это поле обязательно'),
         }
     });
+    if (isLoading) {
+        return <Center>
+            <Loader />
+        </Center>
+    }
     const onSubmit = (vals: EditFormValues) => {
-        console.log(`Тело запроса изменения для ${id}:`, vals); // Тело запроса для изменения
-        onSuccess(); // Успешная отправка
+        mutateAsync(vals).then(() => {
+            refetch()
+            refetchData()
+            onSuccess()
+        })
+
     };
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
-            <SelectForm items={GET_COMPANIES.items} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
-            <SelectForm items={GET_STACKS.items} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
-            <SelectForm items={statusOptions} label={"Статус"} onChange={(value) => form.setFieldValue('status', value)} />
+            <SelectForm items={statusOptions} label={"Статус"} defaultValue={data?.status} onChange={(value) => form.setFieldValue('status', value as unknown as UpdateInterviewDtoStatus)} />
             <div style={{ display: 'flex' }}>
                 <Button type='submit' style={{ marginLeft: 'auto' }}>{'Сохранить'}</Button>
             </div>
@@ -96,38 +108,42 @@ export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
 type SelectFormProps = {
     items: Company[] | Stack[] | Language[] | StatusOption[];
     label: string;
-    onChange: (value: string) => void;
+    onChange?: SelectProps['onChange']
+    onChangeMulti?: (value: string[]) => void
     required?: boolean;
+    defaultValue?: string | string[]
 }
 
-export const MultiSelectForm = ({ items, label, onChange, required = true }: SelectFormProps) => {
+export const MultiSelectForm = ({ items, label, onChangeMulti, required = true, defaultValue }: SelectFormProps) => {
     return (
         <MultiSelect
-        style={{ marginBottom: '15px' }}
-        label={label}
-        withAsterisk={required}
-        placeholder={label}
-        onChange={onChange}
-        data={items.map(option => {
-            return { value: option.id, label: option.name };
-        })}
-        required={required}
-      />
+            style={{ marginBottom: '15px' }}
+            label={label}
+            withAsterisk={required}
+            placeholder={label}
+            defaultValue={Array.isArray(defaultValue) ? defaultValue : undefined}
+            onChange={onChangeMulti}
+            data={items.map(option => {
+                return { value: option.id, label: option.name };
+            })}
+            required={required}
+        />
     );
-  };
+};
 
-const SelectForm = ({ items, label, onChange }: SelectFormProps) => {
+const SelectForm = ({ items, label, onChange, defaultValue }: SelectFormProps) => {
     return (
         <Select
-        style={{ marginBottom: '15px' }}
-        label={label}
-        withAsterisk
-        placeholder={label}
-        onChange={onChange}
-        data={items.map(option => {
-            return { value: option.id, label: option.name };
-        })}
-        required
-      />
+            style={{ marginBottom: '15px' }}
+            label={label}
+            withAsterisk
+            defaultValue={!Array.isArray(defaultValue) ? defaultValue : undefined}
+            placeholder={label}
+            onChange={onChange}
+            data={items.map(option => {
+                return { value: option.id, label: option.name };
+            })}
+            required
+        />
     );
 };

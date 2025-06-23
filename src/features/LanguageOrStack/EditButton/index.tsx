@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Button } from "@mantine/core"
 import { PencilSvgrepoCom } from "assets/icons"
 import { Modal } from "shared/ui"

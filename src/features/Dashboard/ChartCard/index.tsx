@@ -3,6 +3,9 @@ import { ResponsiveBar } from '@nivo/bar'
 import { useCountStudentsByFilterQuery } from "services/api/api-client/StatisticsQuery"
 import { useData } from "./hook"
 import { useEffect, useState } from "react"
+import { useGetGroupsQuery } from "services/api/api-client/GroupQuery"
+import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery"
+import { useGetStackListQuery } from "services/api/api-client/StackQuery"
 
 export type FilterType = 'fullname' | 'isAcadem' | 'isGraduated' | 'groupIds' | 'companyIds' | 'isOnPractice' | 'hasPracticeRequest' | 'hasInterviews' | 'stackIds' | 'includeArchived'
 
@@ -78,7 +81,12 @@ export const ChartCard = ({
                     value.forEach(data => {
                         getStats({ key: key as keyof FilterRequest, value: data, add: data }, { key: main, value: datas[main] }).then(data321 => {
                             if (data321 !== undefined)
-                                setFilters(prev => [...prev, { ...data321 }])
+                                if (data321.value === 0) {
+                                    setFilters([])
+                                }
+                                else {
+                                    setFilters(prev => [...prev, { ...data321 }])
+                                }
                         })
                     })
                 }
@@ -86,7 +94,12 @@ export const ChartCard = ({
                     datas[main].forEach(maind => {
                         getStats({ key: key as keyof FilterRequest, value }, { key: main, value: maind, add: maind }).then(data321 => {
                             if (data321 !== undefined)
-                                setFilters(prev => [...prev, { ...data321 }])
+                                if (data321.value === 0) {
+                                    setFilters([])
+                                }
+                                else {
+                                    setFilters(prev => [...prev, { ...data321 }])
+                                }
                         })
                     })
                 }
@@ -96,7 +109,12 @@ export const ChartCard = ({
                             datas[main].forEach(maind => {
                                 getStats({ key: key as keyof FilterRequest, value: data, add: data }, { key: main, value: maind, add: maind }).then(data321 => {
                                     if (data321 !== undefined)
-                                        setFilters(prev => [...prev, { ...data321 }])
+                                        if (data321.value === 0) {
+                                            setFilters([])
+                                        }
+                                        else {
+                                            setFilters(prev => [...prev, { ...data321 }])
+                                        }
                                 })
                             })
                     })
@@ -104,7 +122,12 @@ export const ChartCard = ({
                 else {
                     getStats({ key: key as keyof FilterRequest, value }, { key: main, value: datas[main] }).then(data321 => {
                         if (data321 !== undefined)
-                            setFilters(prev => [...prev, { ...data321 }])
+                            if (data321.value === 0) {
+                                setFilters([])
+                            }
+                            else {
+                                setFilters(prev => [...prev, { ...data321 }])
+                            }
                     })
                 }
 
@@ -125,16 +148,22 @@ export const ChartCard = ({
         includeArchived,
         main
     ])
-    if (isLoading) {
+    const { data: dataGroups, isLoading: isLoadingGroups } = useGetGroupsQuery(undefined, undefined, 0, 100000000,)
+    const { data: dataCompany, isLoading: isLoadingCompany } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000000000)
+    const { data: dataStack, isLoading: isLoadingStack } = useGetStackListQuery()
+    if (isLoading || isLoadingGroups || isLoadingCompany || isLoadingStack) {
         return 'Загрузка'
     }
-    console.log(filters)
     return (
         <Flex flex={"2"} style={{ flexGrow: 1 }} p={'lg'} direction={'column'}>
             <Title>Всего результатов {data?.count}</Title>
             <div style={{ width: '100%', height: '100%' }}>
                 {filters.length > 0 && <ResponsiveBar data={filters.map(filter => {
-                    return { main: filter.main, key: filter.key, value: filter.value }
+                    return {
+                        main: dataGroups?.items?.find(item => item.id === filter.main)?.number || dataCompany?.items?.find(item => item.id === filter.main)?.name || dataStack?.find(item => item.id === filter.main)?.name || filter.main,
+                        key: filter.key,
+                        value: filter.value
+                    }
                 })}
                     indexBy={'main'}
                     legends={[

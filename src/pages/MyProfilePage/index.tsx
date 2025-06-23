@@ -1,8 +1,14 @@
+import { useEffect } from "react";
 import { useGetCurrentUserQuery } from "services/api/api-client/UserQuery";
 import { ProfileBlock } from "widgets/ProfileBlock"
 
-export const MyProfilePage = () => {
+const MyProfilePage = () => {
     const { data, isLoading } = useGetCurrentUserQuery()
+    useEffect(() => {
+        if (data !== undefined) {
+            localStorage.setItem('userId', data.id)
+        }
+    }, [data])
     if (isLoading) {
         return 'Загрузка'
     }
@@ -12,3 +18,5 @@ export const MyProfilePage = () => {
         </>
     )
 }
+
+export default MyProfilePage
