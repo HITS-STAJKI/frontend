@@ -2,18 +2,34 @@ import { Button, Flex, TextInput, Text } from "@mantine/core";
 import { LanguageStackCard } from "entity";
 import { CreateLanguageOrStackForm } from "features";
 import { Modal } from "shared/ui";
+import { useState } from "react";
+import { useDebouncedCallback } from "@mantine/hooks";
 import { LanguageDto, StackDto } from "services/api/api-client.types";
 
 
 interface SearchFormProps {
     type: 'language' | 'stack'; // что создавать
+    onSearch?: (query: string) => void;
 }
 
-export function SearchForm({ type }: SearchFormProps) {
+export function SearchForm({ type, onSearch }: SearchFormProps) {
+
+    const [searchValue, setSearchValue] = useState('');
+
+    // Обработчик изменения ввода с debounce (чтобы не делать запрос на каждое нажатие)
+    const handleSearchChange = useDebouncedCallback((value: string) => {
+        onSearch?.(value);
+    }, 300);
+
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <TextInput
                 placeholder={type === 'language' ? "Поиск языка..." : "Поиск стека..."}
+                value={searchValue}
+                onChange={(e) => {
+                    setSearchValue(e.target.value);
+                    handleSearchChange(e.target.value);
+                }}
             />
             <Modal
                 render={open => <Button onClick={() => open()}>{type === 'language' ? 'Создать язык' : 'Создать стек'}</Button>}

@@ -2,7 +2,7 @@ import { Button, Flex, TextInput, Menu, MultiSelect, Select, SelectProps, Title,
 import { useForm } from "@mantine/form"
 import { UserList } from "shared/lib/api/entities/User";
 import { UserCard } from "entity/UserCard";
-import { CompanyPartnerDto, GroupDto } from "services/api/api-client.types";
+import { CompanyPartnerDto, GroupDto, UserRole } from "services/api/api-client.types";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { forwardRef, useState } from "react";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
@@ -116,72 +116,95 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
     )
 }
 
-export function SearchRolesForm({ groupContent, companyContent }: { groupContent: GroupDto[], companyContent: Pick<CompanyPartnerDto, 'id' | 'name'>[] }) {
+export function SearchRolesForm({ onSearch, initialValues }: {
+    onSearch: (values: {
+        name?: string;
+        role?: UserRole;
+    }) => void;
+    initialValues?: {
+        name?: string;
+        role?: UserRole;
+    };
+}) {
     const form = useForm({
         initialValues: {
-            name: '',
-            roles: [] as ('student' | 'curator' | 'dean')[],
-            selectedGroup: null,
-            selectedStudentCompany: null,
-            selectedCuratorCompany: null,
-        },
-        validate: {
-            name: (value) => (value.length < 2 ? 'Имя слишком короткое' : null),
+            name: initialValues?.name || '',
+            role: initialValues?.role || undefined as UserRole | undefined,
         },
     });
 
     const roles = [
-        { value: "student", label: "Студент" },
-        { value: "curator", label: "Куратор" },
-        { value: "dean", label: "Деканат" }
+        { value: "STUDENT", label: "Студент" },
+        { value: "CURATOR", label: "Куратор" },
+        { value: "DEAN", label: "Деканат" },
+        { value: "TEACHER", label: "Преподаватель" },
+        { value: "EDUCATIONAL_PROGRAM_LEAD", label: "Руководитель ОП" },
     ];
-    const groups = groupContent.map(group => ({ value: group.id, label: group.number }));
-    const companies = companyContent.map(company => ({ value: company.id, label: company.name }));
 
-    function handleSearch() {
-        console.log("Поиск выполнен!");
+    function handleSearch(values: typeof form.values) {
+        const searchParams: {
+            name?: string;
+            role?: UserRole;
+        } = {};
+
+        if (values.name.trim()) searchParams.name = values.name;
+        if (values.role) searchParams.role = values.role;
+        console.log("yyy")
+
+        onSearch(searchParams);
     }
 
     return (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-            <div style={{ alignSelf: "flex-end" }}>
-                <RoleDropdown />
-            </div>
 
             <form onSubmit={form.onSubmit(handleSearch)}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
                     <TextInput label="Поиск по имени" placeholder="ФИО" {...form.getInputProps('name')} />
-                    <MultiSelect data={roles} {...form.getInputProps('roles')} label="Выберите роль" placeholder="Выберите роли" clearable />
-                    <Button type="submit">Поиск</Button>
+                    <Select
+                        data={roles}
+                        value={form.values.role}
+                        onChange={(value) => form.setFieldValue('role',
+                            value as UserRole | undefined
+                        )}
+                        label="Роль пользователя"
+                        placeholder="Все роли"
+                        clearable
+                        style={{ width: "250px" }}
+                    />
+
+                    <Button
+                        type="submit"
+                        style={{ marginBottom: "4px", height: "36px" }}
+                    >
+                        Поиск
+                    </Button>
                 </div>
 
-                {form.values.roles.includes("student") && (
-                    <div style={{ marginTop: "10px", display: "flex", gap: "10px" }}>
-                        <Select style={{ width: "50%" }} data={groups.map(el => {
-                            return {
-                                value: el.value!,
-                                label: el.label!
-                            }
-                        })} {...form.getInputProps('selectedGroup')} label="Выберите группу" placeholder="Группы" clearable />
-                        <Select style={{ width: "50%" }} data={companies} {...form.getInputProps('selectedStudentCompany')} label="Выберите компанию" placeholder="Компании" clearable />
-                    </div>
-                )}
 
-                {form.values.roles.includes("curator") && (
-                    <Select style={{ marginTop: "10px", width: "50%" }} data={companies} {...form.getInputProps('selectedCuratorCompany')} label="Выберите компанию" placeholder="Компании" clearable />
-                )}
             </form>
         </div>
     );
 }
 
 
-export function UsersList({ items }: UserList) {
+export function UsersList({ items, pagination }: UserList) {
+
+    const currentPage = pagination.currentPage || 1;
+    const size = pagination.size || 10;
+
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
-            {items.map(user => (
-                <UserCard key={user.id} id={user.id!} email={user.email!} fullname={user.fullName!} roles={user.roles!} />
-            ))}
+            {items.map((user, index) => {
+                const number = (currentPage - 1) * size + index + 1;
+                return <UserCard
+                    key={user.id}
+                    id={user.id!}
+                    email={user.email!}
+                    fullname={user.fullName!}
+                    roles={user.roles!}
+                    number={number} // Передаем номер в карточку
+                />
+            })}
         </Flex>
     );
 };
