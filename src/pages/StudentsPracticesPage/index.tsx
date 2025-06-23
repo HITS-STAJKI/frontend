@@ -12,7 +12,7 @@ export const StudentsPracticesPage = () => {
     const studentName = searchParams.get("studentName") ?? undefined;
     const groupIds = searchParams.getAll("groupIds") ?? undefined;
     const companyId = searchParams.get("companyId") ?? undefined;
-    const hasReportRaw = searchParams.get("ishasReportAcadem");
+    const hasReportRaw = searchParams.get("hasReport");
     const hasReport = hasReportRaw === "true" ? true : hasReportRaw === "false" ? false : undefined;
     const isReportApprovedRaw = searchParams.get("isReportApproved");
     const isReportApproved = isReportApprovedRaw === "true" ? true : isReportApprovedRaw === "false" ? false : undefined;

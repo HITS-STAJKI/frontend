@@ -187,8 +187,20 @@ export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: s
 }
 
 
-export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | null; onChangeValue: (val: string[]) => void; }) {
-    const [value, setValue] = useState<string[] | null>(initialValue);
+export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | string | null; onChangeValue: (val: string[]) => void; }) {
+    const normalizeValue = (val: string[] | string | null): string[] => {
+        if (Array.isArray(val))
+        {
+            return val;
+        }
+        if (typeof val === "string") 
+        {
+            return [val];
+        }
+        return [];
+    };
+
+    const [value, setValue] = useState<string[]>(normalizeValue(initialValue));
 
     const { data, isLoading } = useGetGroupsQuery(undefined, undefined, 0, 1000);
 
@@ -203,7 +215,7 @@ export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { 
                 }));
 
     useEffect(() => {
-        setValue(initialValue ?? []);
+        setValue(normalizeValue(initialValue));
     }, [initialValue]);
 
     const handleChange = (val: string[]) => {
@@ -215,7 +227,7 @@ export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { 
         <MultiSelect
             id={`filter-${id}`}
             placeholder={isLoading ? "Загрузка..." : "Выберите группу"}
-            value={value ?? []}
+            value={value}
             onChange={handleChange}
             data={options}
             clearable
@@ -225,8 +237,20 @@ export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { 
     );
 }
 
-export function FilterCompanyMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | null; onChangeValue: (val: string[]) => void; }) {
-    const [value, setValue] = useState<string[] | null>(initialValue);
+export function FilterCompanyMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | string | null; onChangeValue: (val: string[]) => void; }) {
+    const normalizeValue = (val: string[] | string | null): string[] => {
+        if (Array.isArray(val))
+        {
+            return val;
+        }
+        if (typeof val === "string") 
+        {
+            return [val];
+        }
+        return [];
+    };
+
+    const [value, setValue] = useState<string[]>(normalizeValue(initialValue));
 
     const { data, isLoading } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000);
 
@@ -241,7 +265,7 @@ export function FilterCompanyMultiple({ id, initialValue = [], onChangeValue }: 
                 }));
 
     useEffect(() => {
-        setValue(initialValue ?? []);
+        setValue(normalizeValue(initialValue));
     }, [initialValue]);
 
     const handleChange = (val: string[]) => {
@@ -263,8 +287,20 @@ export function FilterCompanyMultiple({ id, initialValue = [], onChangeValue }: 
     );
 }
 
-export function FilterStackMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | null; onChangeValue: (val: string[]) => void; }) {
-    const [value, setValue] = useState<string[] | null>(initialValue);
+export function FilterStackMultiple({ id, initialValue = [], onChangeValue }: { id: string; initialValue: string[] | string | null; onChangeValue: (val: string[]) => void; }) {
+    const normalizeValue = (val: string[] | string | null): string[] => {
+        if (Array.isArray(val))
+        {
+            return val;
+        }
+        if (typeof val === "string") 
+        {
+            return [val];
+        }
+        return [];
+    };
+
+    const [value, setValue] = useState<string[]>(normalizeValue(initialValue));
 
     const { data, isLoading } = useGetStackListQuery(undefined);
 
@@ -279,7 +315,7 @@ export function FilterStackMultiple({ id, initialValue = [], onChangeValue }: { 
                 }));
 
     useEffect(() => {
-        setValue(initialValue ?? []);
+        setValue(normalizeValue(initialValue));
     }, [initialValue]);
 
     const handleChange = (val: string[]) => {
