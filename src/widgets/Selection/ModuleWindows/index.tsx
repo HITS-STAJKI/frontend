@@ -1,4 +1,4 @@
-import { Button, Container, Flex, Select, Space } from "@mantine/core";
+import { Button, Container, Flex, Select, Space, Text, Card } from "@mantine/core";
 import { Modal } from "shared/ui";
 import { CreateSelectionForm, EditSelectionForm } from "features/Selection/CreateEditSelectionForm";
 import { PencilSvgrepoCom, TrashSvgrepoCom, SvgCommentIcon } from "assets/icons";
@@ -6,6 +6,8 @@ import { CommentSectionAlt } from "entity";
 import { useApproveStudentPracticeMutation, useCreateStudentPracticeMutation } from "services/api/api-client/PracticeQuery";
 import { useGetInterviewListQuery } from "services/api/api-client/InterviewsQuery";
 import { useForm } from "@mantine/form";
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
+import { useState } from "react";
 
 
 export function CreateSelection({ id }: { id: string }) {
@@ -96,30 +98,50 @@ export const SuccedSelection = ({ id }: { id: string }) => {
 }
 
 export const SuccedTeacherSelection = ({ id }: { id: string }) => {
-    const { mutateAsync } = useApproveStudentPracticeMutation(id)
-    const { refetch } = useGetInterviewListQuery()
-    const handleSucced = (close: () => void) => {
-        console.log(`"${id}"`)
-        mutateAsync().then(() => {
-            refetch()
-        }).then(() => close())
+    const [error, setError] = useState<unknown>(null);
+    const [loading, setLoading] = useState(false);
 
-    }
+    const mutation = useApproveStudentPracticeMutation(id);
+
+    const handleSucced = async (close: () => void) => {
+        setLoading(true);
+        setError(null);
+        try {
+            await mutation.mutateAsync();
+            close();
+        }
+        catch (err) {
+            setError(err);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+
     return (
-        <Modal
-            render={open =>
-                <span color="#1cac78" onClick={() => open()} style={{
-                    whiteSpace: 'nowrap',
-                    borderRadius: '5px', aspectRatio: '1 / 1', padding: "0px", margin: "0px", fontSize: '24px', cursor: 'pointer'
-                }}>
-                    {"✅"}
-                </span>}
-            content={({ close }) => <Button onClick={() => handleSucced(close)} color='green'>{'Подтвердить'}</Button>}
-            title={'Подтвердить практику студента?'}
+        <Modal render={(open) => (
+            <span onClick={() => open()} style={{ whiteSpace: "nowrap", borderRadius: "5px", aspectRatio: "1 / 1", padding: "0px", margin: "0px", fontSize: "24px", cursor: "pointer" }} >
+                ✅
+            </span>
+        )}
+            content={({ close }) => (
+                <>
+                    {error && (
+                        <Card mt="md" p="md" style={{ backgroundColor: "#ffe6e6", borderRadius: 6, width: "100%" }} >
+                            <Text color="red" size="sm" style={{ textAlign: "center" }}>
+                                Ошибка: {getErrorMessage(error)}
+                            </Text>
+                        </Card>
+                    )}
+                    <Button mt="md" fullWidth onClick={() => handleSucced(close)} color="green" loading={loading} disabled={loading} >
+                        Подтвердить
+                    </Button>
+                </>
+            )}
+            title="Подтвердить практику студента?"
         />
-
-    )
-}
+    );
+};
 
 export const CommentSelection = ({ id }: { id: string }) => {
     return (
