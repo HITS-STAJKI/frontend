@@ -1,4 +1,3 @@
-// @ts-ignore
 import { Button, Container, Flex, Group, MultiSelect, Text, TextInput, Title } from "@mantine/core";
 import { GET_STACKS, Interview, InterviewStatus } from "shared/lib";
 import './css.css';

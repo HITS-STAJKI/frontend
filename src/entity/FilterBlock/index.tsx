@@ -158,7 +158,7 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps) {
                         />
                     </Box>
                     <Box style={{ flex: '0 0 auto' }}>
-                        <Button onClick={handleAddFilter}>
+                        <Button onClick={handleAddFilter} type='button'>
                             Добавить
                         </Button>
                     </Box>
@@ -172,13 +172,13 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps) {
                         data={pageSizes.map(size => ({ value: size.toString(), label: size.toString() }))}
                         styles={{ input: { minWidth: 0 } }}
                     />
-                    <Button color="green" onClick={handleSearch}>
+                    <Button color="green" onClick={handleSearch} type='button'>
                         Поиск
                     </Button>
-                    <Button color="red" onClick={handleClear}>
+                    <Button color="red" onClick={handleClear} type='button'>
                         Очистить
                     </Button>
-                    <Button color="gray">
+                    <Button color="gray" type='button'>
                         Печать
                     </Button>
                     <Box style={{ width: 36 }}>
@@ -188,6 +188,7 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps) {
                                 onClick={() => setOpened(o => !o)}
                                 px={8}
                                 style={{ height: 36 }}
+                                type='button'
                             >
                                 {opened ? <IconChevronUp size={18} /> : <IconChevronDown size={18} />}
                             </Button>
@@ -204,6 +205,7 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps) {
                         {activeFilters.map(f => (
                             <Flex key={f.id} align="center" gap="sm">
                                 <Button
+                                    type='button'
                                     variant="subtle"
                                     color="red"
                                     size="xs"
