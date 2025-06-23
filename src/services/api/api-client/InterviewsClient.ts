@@ -438,11 +438,11 @@ export function getInterviewList(studentName?: string | undefined, partnerId?: s
     if (modifiedAtFrom === null)
         throw new Error("The parameter 'modifiedAtFrom' cannot be null.");
     else if (modifiedAtFrom !== undefined)
-        url_ += "modifiedAtFrom=" + encodeURIComponent(modifiedAtFrom ? "" + modifiedAtFrom.toISOString() : "") + "&";
+        url_ += "modifiedAtFrom=" + encodeURIComponent(modifiedAtFrom ? "" + modifiedAtFrom : "") + "&";
     if (modifiedAtTo === null)
         throw new Error("The parameter 'modifiedAtTo' cannot be null.");
     else if (modifiedAtTo !== undefined)
-        url_ += "modifiedAtTo=" + encodeURIComponent(modifiedAtTo ? "" + modifiedAtTo.toISOString() : "") + "&";
+        url_ += "modifiedAtTo=" + encodeURIComponent(modifiedAtTo ? "" + modifiedAtTo : "") + "&";
     if (page === null)
         throw new Error("The parameter 'page' cannot be null.");
     else if (page !== undefined)

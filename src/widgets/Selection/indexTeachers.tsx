@@ -1,31 +1,21 @@
 import { Box, Button, Card, Flex, Grid, Group, MultiSelect, Select, Text, } from "@mantine/core";
-import { GET_COMPANIES, GET_GROUPS, GET_LANGUAGES, GET_STACKS, InterviewForTeachers, InterviewStatus, Language, PagedListDtoInterviewDto, Stack } from "shared/lib";
+import { InterviewForTeachers, InterviewStatus, Language, Stack } from "shared/lib";
 import './css.css';
 import { useEffect, useState } from "react";
-import { FilterBlockFull, FilterName } from "entity";
 import { DateInput } from "@mantine/dates";
-import { GroupWithName, STATUS1, STATUS3, STATUS2, StatusWithID, convertGroupsToGroupsWithName } from "./newTypes";
+import { GroupWithName, StatusWithID } from "./newTypes";
 import { CommentSelection } from "./ModuleWindows";
 import { useGetUserByIdQuery } from "services/api/api-client/UserQuery";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
+import { useSearchParams } from "react-router-dom";
+import { PagedListDtoPracticeDto } from "services/api/api-client.types";
 
 
 // --------------- Teacher ---------------
 
 export function SelectionTeacherFilters() {
     return (
-        <FilterBlockFull availableFilters={[
-            { id: "name", label: "ФИО", element: (props) => <FilterName id="name" onChangeValue={props.onChangeValue} /> },
-            { id: "company", label: "Компания", element: (props) => <FilterSelect items={GET_COMPANIES.items} id="company" onChangeValue={props.onChangeValue} label="Выберите компанию" /> },
-            { id: "stackId", label: "Направление", element: (props) => <FilterSelect items={GET_STACKS.items} id="reportavailibility" onChangeValue={props.onChangeValue} label="Выберите направление" /> },
-            { id: "languageIds", label: "Языки программирования", element: (props) => <FilterMultiSelect items={GET_LANGUAGES.items} id="languageIds" onChangeValue={props.onChangeValue} /> },
-            { id: "group", label: "Группа", element: (props) => <FilterSelect items={convertGroupsToGroupsWithName(GET_GROUPS.items)} id="group" onChangeValue={props.onChangeValue} label="Выберите группу" /> },
-            { id: "status", label: "Статус", element: (props) => <FilterSelect items={[STATUS1, STATUS2, STATUS3]} id="group" onChangeValue={props.onChangeValue} label="Выберите статус" /> },
-            { id: "dateFrom", label: "Дата от", element: (props) => <FilterDate id="dateFrom" onChangeValue={props.onChangeValue} /> },
-            { id: "dateTo", label: "Дата до", element: (props) => <FilterDate id="dateTo" onChangeValue={props.onChangeValue} /> },
-        ]}
-            printButton={true}
-        />
+        <></>
     );
 }
 
@@ -143,39 +133,63 @@ export function SelectionFinder({ studentCount }: PracticesFormUnderProps) {
     );
 }
 
-type SortDirection = "Asc" | "Desc";
-type SortKey =
-    | "userName"
-    | "groupNumber"
-    | "companyName"
+export type SortDirectionST = "asc" | "desc";
+export type SortKeyST =
+    | "student.user.fullName"
+    | "student.group.number"
+    | "company.name"
     | "createdAt"
     | "isPaid"
     | "isArchived"
     | "isApproved";
+type PagedListDtoPracticeSTProps = PagedListDtoPracticeDto & {
+    initialSort: [SortKeyST, SortDirectionST] | null;
+    onRefresh?: () => void;
+};
 
-export function SelectionTeacherList({ items, pagination }: PagedListDtoInterviewDto) {
-    const [sort, setSort] = useState<[SortKey, SortDirection] | null>(null);
+export function SelectionTeacherList({ items, pagination }: PagedListDtoPracticeSTProps) {
+    const [sort, setSort] = useState<[SortKeyST, SortDirectionST] | null>(null);
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    //TODO: Функция сортировки
-    function handleSort(key: SortKey) {
+    function handleSort(key: SortKeyST) {
         setSort((currentSort) => {
+            let newSort: [SortKeyST, SortDirectionST] | null;
+
             if (currentSort?.[0] === key) {
-                if (currentSort[1] === "Asc") {
-                    return [key, "Desc"];
+                if (currentSort[1] === "asc") {
+                    newSort = [key, "desc"];
                 }
-                else if (currentSort[1] === "Desc") {
-                    return null;
+                else if (currentSort[1] === "desc") {
+                    newSort = null;
+                }
+                else {
+                    newSort = [key, "asc"];
                 }
             }
-            return [key, "Asc"];
+            else {
+                newSort = [key, "asc"];
+            }
+
+            const updatedParams = new URLSearchParams(searchParams);
+            if (newSort) {
+                updatedParams.set("sort", newSort[0]);
+                updatedParams.set("sortDirection", newSort[1]);
+            }
+            else {
+                updatedParams.delete("sort");
+                updatedParams.delete("sortDirection");
+            }
+
+            setSearchParams(updatedParams);
+            return newSort;
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKey }) {
+    function SortArrow({ columnKey }: { columnKey: SortKeyST }) {
         if (!sort || sort[0] !== columnKey) {
             return null;
         }
-        return sort[1] === "Asc" ?
+        return sort[1] === "asc" ?
             (
                 <IconChevronUp size={14} style={{ marginLeft: 4 }} />
             ) : (
@@ -190,9 +204,9 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoIntervie
                     <Box style={{ width: "40px", textAlign: "center" }} />
                     <Grid style={{ width: "100%" }}>
                         {[
-                            { key: "userName", label: "ФИО", span: 2.9 },
-                            { key: "groupNumber", label: "Поток", span: 1.5 },
-                            { key: "companyName", label: "Компания", span: 1.5 },
+                            { key: "student.user.fullName", label: "ФИО", span: 2.9 },
+                            { key: "student.group.number", label: "Поток", span: 1.5 },
+                            { key: "company.name", label: "Компания", span: 1.5 },
                             { key: "isPaid", label: "Направление", span: 1.5 },
                             { key: "isApproved", label: "Технологии", span: 1.5 },
                             { key: "isArchived", label: "Статус", span: 1.6 },
@@ -202,7 +216,7 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoIntervie
                                 <Button
                                     variant="subtle"
                                     size="sm"
-                                    onClick={() => handleSort(key as SortKey)}
+                                    onClick={() => handleSort(key as SortKeyST)}
                                     style={{
                                         display: "flex",
                                         alignItems: "center",
@@ -215,7 +229,7 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoIntervie
                                     }}
                                 >
                                     {label}
-                                    <SortArrow columnKey={key as SortKey} />
+                                    <SortArrow columnKey={key as SortKeyST} />
                                 </Button>
                             </Grid.Col>
                         ))}
@@ -223,14 +237,14 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoIntervie
                     <Box style={{ width: "40px", textAlign: "center" }} />
                 </div>
             </Card>
-            {items.map((interview, localIndex) => {
-                const globalIndex = (pagination.currentPage!) * pagination.size! + localIndex;
+            {items?.map((interview, localIndex) => {
+                const globalIndex = (pagination?.currentPage!) * pagination?.size! + localIndex;
                 return (
                     <SelectionTeacherCard
                         key={interview.id}
-                        id={interview.id}
-                        stack={interview.stack}
-                        createdAt={interview.createdAt.toDateString()}
+                        id={interview.id!}
+                        stack={interview.stack!}
+                        createdAt={interview?.createdAt?.toDateString()!}
                         languages={interview.languages}
                         status={interview.status}
                         companyPartner={interview.companyPartner}
