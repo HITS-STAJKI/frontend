@@ -2,13 +2,14 @@ import { Box, Button, Card, Flex, Grid, Group, MultiSelect, Select, Text, } from
 import { GET_COMPANIES, GET_GROUPS, GET_LANGUAGES, GET_STACKS, Interview, InterviewForTeachers, InterviewPage, InterviewStatus, Language, PagedListDtoInterviewDto, Stack } from "shared/lib";
 import './css.css';
 import { useEffect, useState } from "react";
-import { FilterBlockFull, FilterBlockShort, FilterName } from "entity";
+import { FilterBlockFull, FilterName } from "entity";
 import { DateInput } from "@mantine/dates";
 import { GroupWithName, STATUS1, STATUS3, STATUS2, StatusWithID, convertGroupsToGroupsWithName } from "./newTypes";
-import { FullPracticeCard } from "entity/FullPracticeCard";
 import { useNavigate } from "react-router-dom";
 import { CommentSelection, SuccedSelection, SuccedTeacherSelection } from "./ModuleWindows";
 import { useGetUserByIdQuery } from "services/api/api-client/UserQuery";
+import { RoleDtoUserRole } from "services/api/api-client.types";
+import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 
 
 // --------------- Teacher ---------------
@@ -135,24 +136,10 @@ type PracticesFormUnderProps = {
 };
 
 export function SelectionFinder({ studentCount }: PracticesFormUnderProps) {
-    const [deadline, setDeadline] = useState<Date | null>(null);
-
-    const chooseData = () => {
-        console.log("Дедлайн выбора компании установлен:", deadline);
-    };
-
     return (
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Group justify="space-between" align="center">
                 <Text>Найдено студентов: {studentCount}</Text>
-                <Group>
-                    <Text>Дедлайн выбора компании:</Text>
-                    <DateInput value={deadline} onChange={setDeadline} placeholder="Выберите дату"
-                    />
-                    <Button color="blue" onClick={chooseData}>
-                        Сохранить
-                    </Button>
-                </Group>
             </Group>
         </Box>
     );
@@ -260,12 +247,10 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoIntervie
 
 interface FullInterviewCardProps extends InterviewForTeachers {
     index: number;
-    group: string
 }
 
 
 export function SelectionTeacherCard({ id, student, companyPartner, createdAt, languages, stack, status, index }: FullInterviewCardProps) {
-    const navigate = useNavigate();
     const { data } = useGetUserByIdQuery(student.id!)
     const handleClick = () => {
         console.log("Открыли модалку");
@@ -330,8 +315,8 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             <span className={status} style={{ whiteSpace: 'nowrap', transform: 'scale(0.8)' }}>{getStatusText(status)}</span>
                         </Text>
-                        {status === "SUCCEED" && (<SuccedTeacherSelection id={id} />
-                        )}
+                        {/* {status === "SUCCEED" && (<SuccedTeacherSelection id={student.roles?.find(role => role.userRole === RoleDtoUserRole.STUDENT)?.id!} />
+                        )} */}
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>

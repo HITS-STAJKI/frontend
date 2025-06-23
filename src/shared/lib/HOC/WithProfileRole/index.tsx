@@ -38,7 +38,6 @@ export const WithProfileRole = ({
     if (student) {
         myRoles.push(Roles.STUDENT)
     }
-    console.log(myRoles, usersFor)
     let flag = false
     usersFor.forEach(role => {
         if (myRoles.includes(role))

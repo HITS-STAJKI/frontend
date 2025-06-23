@@ -1,4 +1,4 @@
-import { Button, Container, Flex, Space, Stack, Title } from "@mantine/core";
+import { Button, Container, Flex, Select, Space, Stack, Title } from "@mantine/core";
 import { Modal } from "shared/ui";
 import { CreateSelectionForm, EditSelectionForm } from "features/Selection/CreateEditSelectionForm";
 import { PencilSvgrepoCom, TrashSvgrepoCom, SvgCommentIcon } from "assets/icons";
@@ -6,13 +6,18 @@ import { CreateCommentForm } from "features/CreateCommentForm";
 import { useEffect, useState } from "react";
 import { GET_INTERVIEWS_COMMENTS, InterviewsComment } from "shared/lib";
 import { Comment } from "entity";
+import { useApproveStudentPracticeMutation, useCreateStudentPracticeMutation } from "services/api/api-client/PracticeQuery";
+import { useGetInterviewListQuery } from "services/api/api-client/InterviewsQuery";
+import { useForm } from "@mantine/form";
 
 
-export function CreateSelection({ id }: { id : string }) {
+export function CreateSelection({ id }: { id: string }) {
     return (
         <Modal
-            render={open => <Button onClick={() => open()} style={{ padding: '0', 
-                minWidth: '9rem'}}>{"Создать отбор"}</Button>}
+            render={open => <Button onClick={() => open()} style={{
+                padding: '0',
+                minWidth: '9rem'
+            }}>{"Создать отбор"}</Button>}
             content={({ close }) => (
                 <CreateSelectionForm
                     onSuccess={() => close()}
@@ -24,11 +29,13 @@ export function CreateSelection({ id }: { id : string }) {
     );
 }
 
-export function EditSelection({ id }: { id : string }) {
+export function EditSelection({ id }: { id: string }) {
     return (
         <Modal
-            render={open => <Button onClick={() => open()} style={{ padding: '0', 
-                aspectRatio: '1 / 1', marginInline: '10px' }}>{<PencilSvgrepoCom fontSize={'30'}/>}</Button>}
+            render={open => <Button onClick={() => open()} style={{
+                padding: '0',
+                aspectRatio: '1 / 1', marginInline: '10px'
+            }}>{<PencilSvgrepoCom fontSize={'30'} />}</Button>}
             content={({ close }) => (
                 <EditSelectionForm
                     onSuccess={() => close()}
@@ -40,7 +47,7 @@ export function EditSelection({ id }: { id : string }) {
     );
 }
 
-export const DeleteSelection = ({ id }: { id : string }) => {
+export const DeleteSelection = ({ id }: { id: string }) => {
 
     const handleDelete = (close: () => void) => {
         console.log(`Тело запроса удаления ${id}:`);
@@ -49,7 +56,7 @@ export const DeleteSelection = ({ id }: { id : string }) => {
     return (
         <Modal
             render={open => <Button color="red" onClick={() => open()} style={{ aspectRatio: '1 / 1', padding: 0 }}>
-                <TrashSvgrepoCom fontSize={'27'}/>
+                <TrashSvgrepoCom fontSize={'27'} />
             </Button>}
             content={({ close }) => <Button onClick={() => handleDelete(close)} color='red'>{'Удалить'}</Button>}
             title={'Вы уверены, что хотите удалить данный отбор?'}
@@ -58,38 +65,58 @@ export const DeleteSelection = ({ id }: { id : string }) => {
     )
 }
 
-export const SuccedSelection = ({ id }: { id : string }) => {
+export const SuccedSelection = ({ id }: { id: string }) => {
 
+    const form = useForm<{ isPaid: 'true' | 'false' }>({
+        initialValues: {
+            isPaid: 'false'
+        }
+    })
+    const { mutateAsync } = useCreateStudentPracticeMutation()
     const handleSucced = (close: () => void) => {
-        console.log(`Тело запроса подтверждения ${id}:`);
-        close()
+        return ({ isPaid }: { isPaid: 'true' | 'false' }) => {
+            mutateAsync({ interviewId: id, isPaid: isPaid === "true" ? true : false }).then(() => {
+                close()
+            })
+        }
     }
     return (
         <Modal
-            render={open => 
-            <Button color="#1cac78" onClick={() => open()} className={"PRACTICE"}>
-                {"Пройти практику"}
-            </Button>}
-            content={({ close }) => <Button onClick={() => handleSucced(close)} color='green'>{'Подтвердить'}</Button>}
+            render={open =>
+                <Button color="#1cac78" onClick={() => open()} className={"PRACTICE"}>
+                    {"Пройти практику"}
+                </Button>}
+            content={({ close }) =>
+                <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={form.onSubmit(handleSucced(close))}>
+                    <Select data={[{ value: 'true', label: 'Оплачиваемая' }, { value: 'false', label: 'Не оплачиваемая' }]} defaultValue={'true'} key={form.key('isPaid')} {...form.getInputProps('isPaid')} />
+                    <Button type='submit' color='green'>{'Подтвердить'}</Button>
+                </form>
+            }
             title={'Вы уверены, что хотите проходить практику здесь?'}
         />
 
     )
 }
 
-export const SuccedTeacherSelection = ({ id }: { id : string }) => {
-
+export const SuccedTeacherSelection = ({ id }: { id: string }) => {
+    const { mutateAsync } = useApproveStudentPracticeMutation(id)
+    const { refetch } = useGetInterviewListQuery()
     const handleSucced = (close: () => void) => {
-        console.log(`Тело запроса подтверждения ${id}:`);
-        close()
+        console.log(`"${id}"`)
+        mutateAsync().then(() => {
+            refetch()
+        }).then(() => close())
+
     }
     return (
         <Modal
-            render={open => 
-            <span color="#1cac78" onClick={() => open()} style={{whiteSpace: 'nowrap',
-             borderRadius: '5px', aspectRatio: '1 / 1', padding: "0px", margin: "0px",  fontSize: '24px', cursor: 'pointer'}}>
-                {"✅"}
-            </span>}
+            render={open =>
+                <span color="#1cac78" onClick={() => open()} style={{
+                    whiteSpace: 'nowrap',
+                    borderRadius: '5px', aspectRatio: '1 / 1', padding: "0px", margin: "0px", fontSize: '24px', cursor: 'pointer'
+                }}>
+                    {"✅"}
+                </span>}
             content={({ close }) => <Button onClick={() => handleSucced(close)} color='green'>{'Подтвердить'}</Button>}
             title={'Подтвердить практику студента?'}
         />
@@ -97,22 +124,20 @@ export const SuccedTeacherSelection = ({ id }: { id : string }) => {
     )
 }
 
-export const CommentSelection = ({ id }: { id : string }) => {
+export const CommentSelection = ({ id }: { id: string }) => {
     const [comments, setComments] = useState<InterviewsComment[]>([]);
     const [opened, setOpened] = useState(false);
 
     useEffect(() => {
         if (opened) {
             console.log(`Отправляем запрос на получение комментариев ${id}:`);
-            fetchComments(id).then(data =>
-            {
+            fetchComments(id).then(data => {
                 setComments(data);
             });
         }
     }, [opened, id]);
 
-    const fetchComments = async (reportId: string): Promise<InterviewsComment[]> => 
-    {
+    const fetchComments = async (reportId: string): Promise<InterviewsComment[]> => {
         return new Promise((resolve) => {
             setTimeout(() => resolve(GET_INTERVIEWS_COMMENTS.items), 1000);
         });
@@ -120,8 +145,10 @@ export const CommentSelection = ({ id }: { id : string }) => {
 
     return (
         <Modal
-            render={open => <Button color="green" onClick={() => {open(); setOpened(true)}} style={{ padding: '0', 
-                aspectRatio: '1 / 1'}}>{<SvgCommentIcon fontSize={'30'}/>}</Button>}
+            render={open => <Button color="green" onClick={() => { open(); setOpened(true) }} style={{
+                padding: '0',
+                aspectRatio: '1 / 1'
+            }}>{<SvgCommentIcon fontSize={'30'} />}</Button>}
             content={({ close }) => (
                 <Flex direction="column" style={{ width: '100%' }} gap="md" mb="md">
                     <Container fluid w="100%">

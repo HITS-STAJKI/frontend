@@ -1,4 +1,4 @@
-import { Anchor, Button, Card, Center, FileInput, Loader, Select, Space, Text, Tooltip } from "@mantine/core"
+import { Button, Card, Center, FileInput, Loader, Select, Space, Text, Tooltip } from "@mantine/core"
 import { DocSvgrepoCom } from "assets/icons"
 
 import { useDisclosure } from '@mantine/hooks';
@@ -6,7 +6,7 @@ import { Modal, Group, Flex } from '@mantine/core';
 
 import { CommentSectionAlt } from "entity"
 import { useAttachFileToReportMutationWithParameters, useGetPracticeReportQuery, useSetGradeMutationWithParameters, useUnattachFileFromReportMutationWithParameters } from "services/api/api-client/Practice_reportsQuery";
-import { downloadFileUrl, useDeleteFileMutationWithParameters, useGetFileMetadataQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery";
+import { useDeleteFileMutationWithParameters, useGetFileMetadataQuery, useUploadFileMutation } from "services/api/api-client/FilesQuery";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { IconDownload } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -70,10 +70,33 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
         }
     }, [opened]);
 
-    const handleDownload = () => {
+    const handleDownload = async () => {
         if (report?.fileId) {
-            const url = downloadFileUrl(report.fileId);
-            window.open(url, '_blank');
+            try {
+
+                const response = await fetch(`https://tomcat.sonya.jij.li/internship/api/v1/files/${report.fileId}/download`, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+                if (!response.ok) {
+                    throw new Error('Не удалось скачать файл')
+                }
+                const blob = await response.blob()
+                const url = window.URL.createObjectURL(blob)
+                console.log(url, fileMetadata)
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileMetadata?.name!;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+            }
+            catch {
+                setMutationError('Не удалось скачать файл')
+            }
         }
     };
 
@@ -84,11 +107,10 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
 
         setMutationError(null);
         try {
-            const data = await selectedFile.arrayBuffer();
             const fileParameter = {
                 file:
                 {
-                    data: new Uint8Array(data),
+                    data: selectedFile,
                     fileName: selectedFile.name,
                 }
             };
@@ -119,11 +141,10 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
             await unattachMutation.mutateAsync({ reportId: { reportId: report.id } });
             await deleteMutation.mutateAsync({ id: report.fileId });
 
-            const data = await selectedFile.arrayBuffer();
             const fileParameter = {
                 file:
                 {
-                    data: new Uint8Array(data),
+                    data: selectedFile,
                     fileName: selectedFile.name,
                 }
             };
@@ -174,12 +195,12 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                 </Card>
             ) : (
                 <div style={{ width: '100%' }}>
-                    <Group style={{ width: '80%', margin: '0 auto', justifyContent: 'space-between', marginBottom: '1rem' }} align="center" >
+                    <Group style={{ width: '80%', margin: '0 auto', justifyContent: 'space-between', marginBottom: '1rem' }} align="end" >
                         <div>
                             {JSON.stringify(report)}
                         </div>
                         <Button style={{ width: '100%' }} color='green'>Выставить оценку за практику</Button>
-                        <Flex align="center" gap="sm" style={{ width: '100%' }}>
+                        <Flex align='center' gap="sm" style={{ width: '100%' }}>
                             <Text style={{ flex: '1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700 }} > Отчет:</Text>
                             <FileInput
                                 accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -217,7 +238,6 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                     >
                                         {(uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending) ? 'Заменяется...' : 'Изменить'}
                                     </Button>
-                                    <Anchor href={`https://tomcat.sonya.jij.li/internship/api/v1/files/${report?.fileId}/download`} target='_blank'>Скачать файл</Anchor>
                                 </>
                             ))}
 
@@ -242,7 +262,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                     >
                                         {fileMetadata?.name ?? 'Скачать файл'}
                                     </Button>
-                                    <Flex align="center" gap="sm" mt="sm">
+                                    <Flex align="end" gap="sm" mt="sm">
                                         <Select
                                             label="Оценка за отчёт"
                                             placeholder="Выберите оценку"
