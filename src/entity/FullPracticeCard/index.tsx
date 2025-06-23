@@ -1,5 +1,5 @@
 import { Box, Card, Grid, Text } from "@mantine/core"
-import { PRACTICE_ROUTE } from "shared/lib";
+import { PRACTICE_ROUTE, Roles, WithProfileRole } from "shared/lib";
 import { ReportArchive, ReportDelete, ReportEdit, ReportOpen } from "features/PracticesFullButtons";
 import { useNavigate } from "react-router-dom";
 import { PracticeDto } from "services/api/api-client.types";
@@ -98,15 +98,21 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
                                         <Box style={{ visibility: id && studentRole ? "visible" : "hidden" }}>
                                             <ReportOpen practiceId={id!} studentId={studentRole?.id!} />
                                         </Box>
-                                        <Box style={{ visibility: id ? "visible" : "hidden" }}>
-                                            <ReportEdit id={id!} initialValue={isPaid} onSuccess={onRefresh} />
-                                        </Box>
-                                        <Box style={{ visibility: id ? "visible" : "hidden" }}>
-                                            <ReportDelete id={id!} onSuccess={onRefresh} />
-                                        </Box>
-                                        <Box style={{ visibility: id ? "visible" : "hidden" }}>
-                                            <ReportArchive id={id!} onSuccess={onRefresh} />
-                                        </Box>
+                                        <WithProfileRole
+                                            render={<>
+                                                <Box style={{ visibility: id ? "visible" : "hidden" }}>
+                                                    <ReportEdit id={id!} initialValue={isPaid} onSuccess={onRefresh} />
+                                                </Box>
+                                                <Box style={{ visibility: id ? "visible" : "hidden" }}>
+                                                    <ReportDelete id={id!} onSuccess={onRefresh} />
+                                                </Box>
+                                                <Box style={{ visibility: id ? "visible" : "hidden" }}>
+                                                    <ReportArchive id={id!} onSuccess={onRefresh} />
+                                                </Box>
+                                            </>
+                                            }
+                                            usersFor={[Roles.DEAN]}
+                                        />
                                     </Box>
                                 </Grid.Col>
                             )}

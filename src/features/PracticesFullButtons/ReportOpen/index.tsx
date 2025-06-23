@@ -196,49 +196,50 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
             ) : (
                 <div style={{ width: '100%' }}>
                     <Group style={{ width: '80%', margin: '0 auto', justifyContent: 'space-between', marginBottom: '1rem' }} align="end" >
-                        <Button style={{ width: '100%' }} color='green'>Выставить оценку за практику</Button>
-                        <Flex align='center' gap="sm" style={{ width: '100%' }}>
-                            <Text style={{ flex: '1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700 }} > Отчет:</Text>
-                            <FileInput
-                                accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                onChange={(file) => setSelectedFile(file)}
-                                disabled={uploadMutation.isPending || deleteMutation.isPending}
-                                label={null}
-                                style={{ flex: '2', minWidth: 0 }}
-                            />
-                            {report?.grade === null && (!report?.fileId ? (
-                                <WithProfileRole render={
-                                    <Button
-                                        color="green"
-                                        size="xs"
-                                        onClick={handleAttach}
-                                        disabled={!selectedFile || uploadMutation.isPending}
-                                        style={{
-                                            flex: '1',
-                                            whiteSpace: 'nowrap',
-                                        }}
-                                    >
-                                        {uploadMutation.isPending ? 'Загрузка...' : 'Прикрепить'}
-                                    </Button>
-                                }
-                                    usersFor={[Roles.STUDENT]}
-                                />
-                            ) : (
-                                <>
-                                    <Button
-                                        size="xs"
-                                        variant="default"
-                                        color="gray"
-                                        onClick={handleReplace}
-                                        disabled={!selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending}
-                                        style={{ flex: '1', whiteSpace: 'nowrap' }}
-                                    >
-                                        {(uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending) ? 'Заменяется...' : 'Изменить'}
-                                    </Button>
-                                </>
-                            ))}
+                        <WithProfileRole
+                            render={
+                                <Flex align='center' gap="sm" style={{ width: '100%' }}>
+                                    <Text style={{ flex: '1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700 }} > Отчет:</Text>
+                                    <FileInput
+                                        accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        onChange={(file) => setSelectedFile(file)}
+                                        disabled={uploadMutation.isPending || deleteMutation.isPending}
+                                        label={null}
+                                        style={{ flex: '2', minWidth: 0 }}
+                                    />
+                                    {report?.grade === null && (!report?.fileId ? (
+                                        <Button
+                                            color="green"
+                                            size="xs"
+                                            onClick={handleAttach}
+                                            disabled={!selectedFile || uploadMutation.isPending}
+                                            style={{
+                                                flex: '1',
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            {uploadMutation.isPending ? 'Загрузка...' : 'Прикрепить'}
+                                        </Button>
+                                    ) : (
+                                        <>
+                                            <Button
+                                                size="xs"
+                                                variant="default"
+                                                color="gray"
+                                                onClick={handleReplace}
+                                                disabled={!selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending}
+                                                style={{ flex: '1', whiteSpace: 'nowrap' }}
+                                            >
+                                                {(uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending) ? 'Заменяется...' : 'Изменить'}
+                                            </Button>
+                                        </>
+                                    ))}
 
-                        </Flex>
+                                </Flex>
+                            }
+                            usersFor={[Roles.STUDENT]}
+                        />
+
                         {report?.fileId && (
                             fileLoading ? (
                                 <Loader size="xs" />
