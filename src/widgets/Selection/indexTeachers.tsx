@@ -1,14 +1,12 @@
 import { Box, Button, Card, Flex, Grid, Group, MultiSelect, Select, Text, } from "@mantine/core";
-import { GET_COMPANIES, GET_GROUPS, GET_LANGUAGES, GET_STACKS, Interview, InterviewForTeachers, InterviewPage, InterviewStatus, Language, PagedListDtoInterviewDto, Stack } from "shared/lib";
+import { GET_COMPANIES, GET_GROUPS, GET_LANGUAGES, GET_STACKS, InterviewForTeachers, InterviewStatus, Language, PagedListDtoInterviewDto, Stack } from "shared/lib";
 import './css.css';
 import { useEffect, useState } from "react";
 import { FilterBlockFull, FilterName } from "entity";
 import { DateInput } from "@mantine/dates";
 import { GroupWithName, STATUS1, STATUS3, STATUS2, StatusWithID, convertGroupsToGroupsWithName } from "./newTypes";
-import { useNavigate } from "react-router-dom";
-import { CommentSelection, SuccedSelection, SuccedTeacherSelection } from "./ModuleWindows";
+import { CommentSelection } from "./ModuleWindows";
 import { useGetUserByIdQuery } from "services/api/api-client/UserQuery";
-import { RoleDtoUserRole } from "services/api/api-client.types";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 
 
@@ -268,7 +266,7 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                 return "";
         }
     };
-
+    console.log(data)
     return (
         <Card key={id}
             shadow="sm"
@@ -332,7 +330,7 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                     </Grid.Col>
                 </Grid>
                 <Box style={{ width: '40px', textAlign: 'center' }}>
-                    <CommentSelection id={id} />
+                    <CommentSelection id={data?.student?.chatId!} />
                 </Box>
             </div>
         </Card>

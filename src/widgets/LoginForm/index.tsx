@@ -1,8 +1,7 @@
 import { Button, Container, Flex, PasswordInput, TextInput, Title } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { LoginFormProps } from "./types"
-import { useGetCurrentUserQuery, useLoginMutation } from "services/api/api-client/UserQuery"
-import { useNavigate } from "react-router-dom"
+import { useLoginMutation } from "services/api/api-client/UserQuery"
 import { MY_PROFILE_ROUTE } from "shared/lib"
 
 export const LoginForm = () => {
@@ -13,19 +12,13 @@ export const LoginForm = () => {
         }
     })
     const { mutateAsync } = useLoginMutation()
-    const navigate = useNavigate()
-    const getUser = useGetCurrentUserQuery();
     const onFormSubmit = async (vals: LoginFormProps) => {
         mutateAsync(vals).then((tokens) => {
             localStorage.setItem("token", tokens.token!);
             localStorage.setItem("exp", tokens.expirationDate?.toString()!);
-            getUser.refetch().then(res => res.data).then(user => {
-                if (user?.id) {
-                    localStorage.setItem("userId", user.id);
-                }
-            })
+
         }).then(() => {
-            setTimeout(() => navigate(MY_PROFILE_ROUTE), 2)
+            location.href = MY_PROFILE_ROUTE
         }).catch((err) => {
             console.error("Ошибка входа:", err)
         })

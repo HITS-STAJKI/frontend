@@ -1,4 +1,4 @@
-import { Card, Center, Container, Flex, Loader, Text } from "@mantine/core";
+import { Card, Center, Flex, Loader, Text } from "@mantine/core";
 import { FilterBlockShort, FilterCompanyMultiple, FilterDateTime, FilterGroupMultiple, FilterName, FilterStackMultiple, FilterTrueFalse, } from "entity";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";

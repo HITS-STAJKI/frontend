@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -19,60 +20,60 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type SendStudentToAcademStudentQueryParameters = {
-  studentId: string ;
+  studentId: string;
 }
 
 export type ReturnStudentFromAcademStudentQueryParameters = {
-  studentId: string ;
+  studentId: string;
 }
 
 export type UpdateStudentStudentQueryParameters = {
-  id: string ;
+  id: string;
 }
 
 export type CreateStudentStudentQueryParameters = {
-  userId: string ;
+  userId: string;
 }
 
 export type ImportStudentsStudentMutationParameters = {
-  file?: Types.FileParameter | undefined ;
+  file?: Types.FileParameter | undefined;
 }
 
 export type GetAllStudentsStudentQueryParameters = {
-  page?: number | undefined ;
-  size?: number | undefined ;
-  sort?: string[] | undefined ;
-  fullName?: string | undefined ;
-  isAcadem?: boolean | undefined ;
-  isGraduated?: boolean | undefined ;
-  groupIds?: string[] | undefined ;
-  companyIds?: string[] | undefined ;
-  isOnPractice?: boolean | undefined ;
-  hasPracticeRequest?: boolean | undefined ;
-  hasInterviews?: boolean | undefined ;
-  stackIds?: string[] | undefined ;
-  lastLogin?: Date | undefined ;
+  page?: number | undefined;
+  size?: number | undefined;
+  sort?: string[] | undefined;
+  fullName?: string | undefined;
+  isAcadem?: boolean | undefined;
+  isGraduated?: boolean | undefined;
+  groupIds?: string[] | undefined;
+  companyIds?: string[] | undefined;
+  isOnPractice?: boolean | undefined;
+  hasPracticeRequest?: boolean | undefined;
+  hasInterviews?: boolean | undefined;
+  stackIds?: string[] | undefined;
+  lastLogin?: Date | undefined;
 }
 
 export type ExportStudentsStudentQueryParameters = {
-  studentIds?: string[] | undefined ;
+  studentIds?: string[] | undefined;
 }
 
 export function sendStudentToAcademUrl(studentId: string): string {
   let url_ = getBaseUrl() + "/api/v1/student/{studentId}/to-academ";
-if (studentId === undefined || studentId === null)
-  throw new Error("The parameter 'studentId' must be defined.");
-url_ = url_.replace("{studentId}", encodeURIComponent("" + studentId));
+  if (studentId === undefined || studentId === null)
+    throw new Error("The parameter 'studentId' must be defined.");
+  url_ = url_.replace("{studentId}", encodeURIComponent("" + studentId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function sendStudentToAcademMutationKey(studentId: string): MutationKey {
   return trimArrayEnd([
-      'StudentClient',
-      'sendStudentToAcadem',
-      studentId as any,
-    ]);
+    'StudentClient',
+    'sendStudentToAcadem',
+    studentId as any,
+  ]);
 }
 
 /**
@@ -82,17 +83,17 @@ export function sendStudentToAcademMutationKey(studentId: string): MutationKey {
  */
 export function useSendStudentToAcademMutation<TContext>(studentId: string, options?: Omit<UseMutationOptions<Types.StudentDto, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StudentDto, unknown, void, TContext> {
   const key = sendStudentToAcademMutationKey(studentId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.sendStudentToAcadem(studentId),
     mutationKey: key,
   });
 }
-  
+
 type SendStudentToAcadem__MutationParameters = SendStudentToAcademStudentQueryParameters
 
 /**
@@ -100,34 +101,34 @@ type SendStudentToAcadem__MutationParameters = SendStudentToAcademStudentQueryPa
  * @param studentId ID студента
  * @return OK
  */
-export function useSendStudentToAcademMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, SendStudentToAcadem__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: SendStudentToAcademStudentQueryParameters}): UseMutationResult<Types.StudentDto, unknown, SendStudentToAcadem__MutationParameters, TContext> {
+export function useSendStudentToAcademMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, SendStudentToAcadem__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: SendStudentToAcademStudentQueryParameters }): UseMutationResult<Types.StudentDto, unknown, SendStudentToAcadem__MutationParameters, TContext> {
   const key = sendStudentToAcademMutationKey(options?.parameters?.studentId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: SendStudentToAcadem__MutationParameters) => Client.sendStudentToAcadem(data.studentId ?? options?.parameters?.studentId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: SendStudentToAcadem__MutationParameters) => Client.sendStudentToAcadem(data.studentId ?? options?.parameters?.studentId!),
+    mutationKey: key,
+  });
 }
-  
+
 export function returnStudentFromAcademUrl(studentId: string): string {
   let url_ = getBaseUrl() + "/api/v1/student/{studentId}/from-academ";
-if (studentId === undefined || studentId === null)
-  throw new Error("The parameter 'studentId' must be defined.");
-url_ = url_.replace("{studentId}", encodeURIComponent("" + studentId));
+  if (studentId === undefined || studentId === null)
+    throw new Error("The parameter 'studentId' must be defined.");
+  url_ = url_.replace("{studentId}", encodeURIComponent("" + studentId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function returnStudentFromAcademMutationKey(studentId: string): MutationKey {
   return trimArrayEnd([
-      'StudentClient',
-      'returnStudentFromAcadem',
-      studentId as any,
-    ]);
+    'StudentClient',
+    'returnStudentFromAcadem',
+    studentId as any,
+  ]);
 }
 
 /**
@@ -137,17 +138,17 @@ export function returnStudentFromAcademMutationKey(studentId: string): MutationK
  */
 export function useReturnStudentFromAcademMutation<TContext>(studentId: string, options?: Omit<UseMutationOptions<Types.StudentDto, unknown, Types.ReturnFromAcademDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StudentDto, unknown, Types.ReturnFromAcademDto, TContext> {
   const key = returnStudentFromAcademMutationKey(studentId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.ReturnFromAcademDto) => Client.returnStudentFromAcadem(studentId, body),
     mutationKey: key,
   });
 }
-  
+
 type ReturnStudentFromAcadem__MutationParameters = ReturnStudentFromAcademStudentQueryParameters & {
   body: Types.ReturnFromAcademDto;
 }
@@ -157,34 +158,34 @@ type ReturnStudentFromAcadem__MutationParameters = ReturnStudentFromAcademStuden
  * @param studentId ID студента
  * @return OK
  */
-export function useReturnStudentFromAcademMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, ReturnStudentFromAcadem__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ReturnStudentFromAcademStudentQueryParameters}): UseMutationResult<Types.StudentDto, unknown, ReturnStudentFromAcadem__MutationParameters, TContext> {
+export function useReturnStudentFromAcademMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, ReturnStudentFromAcadem__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: ReturnStudentFromAcademStudentQueryParameters }): UseMutationResult<Types.StudentDto, unknown, ReturnStudentFromAcadem__MutationParameters, TContext> {
   const key = returnStudentFromAcademMutationKey(options?.parameters?.studentId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: ReturnStudentFromAcadem__MutationParameters) => Client.returnStudentFromAcadem(data.studentId ?? options?.parameters?.studentId!, data.body),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: ReturnStudentFromAcadem__MutationParameters) => Client.returnStudentFromAcadem(data.studentId ?? options?.parameters?.studentId!, data.body),
+    mutationKey: key,
+  });
 }
-  
+
 export function updateStudentUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/student/{id}";
-if (id === undefined || id === null)
-  throw new Error("The parameter 'id' must be defined.");
-url_ = url_.replace("{id}", encodeURIComponent("" + id));
+  if (id === undefined || id === null)
+    throw new Error("The parameter 'id' must be defined.");
+  url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updateStudentMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-      'StudentClient',
-      'updateStudent',
-      id as any,
-    ]);
+    'StudentClient',
+    'updateStudent',
+    id as any,
+  ]);
 }
 
 /**
@@ -194,17 +195,17 @@ export function updateStudentMutationKey(id: string): MutationKey {
  */
 export function useUpdateStudentMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.StudentDto, unknown, Types.StudentEditDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StudentDto, unknown, Types.StudentEditDto, TContext> {
   const key = updateStudentMutationKey(id);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.StudentEditDto) => Client.updateStudent(id, body),
     mutationKey: key,
   });
 }
-  
+
 type UpdateStudent__MutationParameters = UpdateStudentStudentQueryParameters & {
   body: Types.StudentEditDto;
 }
@@ -214,19 +215,19 @@ type UpdateStudent__MutationParameters = UpdateStudentStudentQueryParameters & {
  * @param id ID студента
  * @return OK
  */
-export function useUpdateStudentMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, UpdateStudent__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateStudentStudentQueryParameters}): UseMutationResult<Types.StudentDto, unknown, UpdateStudent__MutationParameters, TContext> {
+export function useUpdateStudentMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, UpdateStudent__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateStudentStudentQueryParameters }): UseMutationResult<Types.StudentDto, unknown, UpdateStudent__MutationParameters, TContext> {
   const key = updateStudentMutationKey(options?.parameters?.id!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: UpdateStudent__MutationParameters) => Client.updateStudent(data.id ?? options?.parameters?.id!, data.body),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: UpdateStudent__MutationParameters) => Client.updateStudent(data.id ?? options?.parameters?.id!, data.body),
+    mutationKey: key,
+  });
 }
-  
+
 export function createStudentForCurrentUserUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/student";
   url_ = url_.replace(/[?&]$/, "");
@@ -235,9 +236,9 @@ export function createStudentForCurrentUserUrl(): string {
 
 export function createStudentForCurrentUserMutationKey(): MutationKey {
   return trimArrayEnd([
-      'StudentClient',
-      'createStudentForCurrentUser',
-    ]);
+    'StudentClient',
+    'createStudentForCurrentUser',
+  ]);
 }
 
 /**
@@ -246,32 +247,32 @@ export function createStudentForCurrentUserMutationKey(): MutationKey {
  */
 export function useCreateStudentForCurrentUserMutation<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, Types.StudentCreateDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StudentDto, unknown, Types.StudentCreateDto, TContext> {
   const key = createStudentForCurrentUserMutationKey();
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.StudentCreateDto) => Client.createStudentForCurrentUser(body),
     mutationKey: key,
   });
 }
-  
+
 export function createStudentUrl(userId: string): string {
   let url_ = getBaseUrl() + "/api/v1/student/user/{userId}";
-if (userId === undefined || userId === null)
-  throw new Error("The parameter 'userId' must be defined.");
-url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+  if (userId === undefined || userId === null)
+    throw new Error("The parameter 'userId' must be defined.");
+  url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function createStudentMutationKey(userId: string): MutationKey {
   return trimArrayEnd([
-      'StudentClient',
-      'createStudent',
-      userId as any,
-    ]);
+    'StudentClient',
+    'createStudent',
+    userId as any,
+  ]);
 }
 
 /**
@@ -281,17 +282,17 @@ export function createStudentMutationKey(userId: string): MutationKey {
  */
 export function useCreateStudentMutation<TContext>(userId: string, options?: Omit<UseMutationOptions<Types.StudentDto, unknown, Types.StudentCreateDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StudentDto, unknown, Types.StudentCreateDto, TContext> {
   const key = createStudentMutationKey(userId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.StudentCreateDto) => Client.createStudent(userId, body),
     mutationKey: key,
   });
 }
-  
+
 type CreateStudent__MutationParameters = CreateStudentStudentQueryParameters & {
   body: Types.StudentCreateDto;
 }
@@ -301,19 +302,19 @@ type CreateStudent__MutationParameters = CreateStudentStudentQueryParameters & {
  * @param userId ID пользователя
  * @return OK
  */
-export function useCreateStudentMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, CreateStudent__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: CreateStudentStudentQueryParameters}): UseMutationResult<Types.StudentDto, unknown, CreateStudent__MutationParameters, TContext> {
+export function useCreateStudentMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto, unknown, CreateStudent__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: CreateStudentStudentQueryParameters }): UseMutationResult<Types.StudentDto, unknown, CreateStudent__MutationParameters, TContext> {
   const key = createStudentMutationKey(options?.parameters?.userId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: CreateStudent__MutationParameters) => Client.createStudent(data.userId ?? options?.parameters?.userId!, data.body),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: CreateStudent__MutationParameters) => Client.createStudent(data.userId ?? options?.parameters?.userId!, data.body),
+    mutationKey: key,
+  });
 }
-  
+
 export function getStudentsByIdsUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/student/list/ids";
   url_ = url_.replace(/[?&]$/, "");
@@ -322,9 +323,9 @@ export function getStudentsByIdsUrl(): string {
 
 export function getStudentsByIdsMutationKey(): MutationKey {
   return trimArrayEnd([
-      'StudentClient',
-      'getStudentsByIds',
-    ]);
+    'StudentClient',
+    'getStudentsByIds',
+  ]);
 }
 
 /**
@@ -333,17 +334,17 @@ export function getStudentsByIdsMutationKey(): MutationKey {
  */
 export function useGetStudentsByIdsMutation<TContext>(options?: Omit<UseMutationOptions<Types.StudentDto[], unknown, string[], TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StudentDto[], unknown, string[], TContext> {
   const key = getStudentsByIdsMutationKey();
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: string[]) => Client.getStudentsByIds(body),
     mutationKey: key,
   });
 }
-  
+
 export function importStudentsUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/student/import";
   url_ = url_.replace(/[?&]$/, "");
@@ -352,9 +353,9 @@ export function importStudentsUrl(): string {
 
 export function importStudentsMutationKey(): MutationKey {
   return trimArrayEnd([
-      'StudentClient',
-      'importStudents',
-    ]);
+    'StudentClient',
+    'importStudents',
+  ]);
 }
 
 /**
@@ -364,70 +365,70 @@ export function importStudentsMutationKey(): MutationKey {
  */
 export function useImportStudentsMutation<TContext>(options?: Omit<UseMutationOptions<Types.FileResponse, unknown, ImportStudentsStudentMutationParameters, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.FileResponse, unknown, ImportStudentsStudentMutationParameters, TContext> {
   const key = importStudentsMutationKey();
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (importStudentsStudentMutationParameters: ImportStudentsStudentMutationParameters) => Client.importStudents(importStudentsStudentMutationParameters.file),
     mutationKey: key,
   });
 }
-  
+
 export function getAllStudentsUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/student/list?";
-if (page === null)
+  if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-else if (page !== undefined)
+  else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-if (size === null)
+  if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-else if (size !== undefined)
+  else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-if (sort === null)
+  if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-else if (sort !== undefined)
+  else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-if (fullName === null)
+  if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
-else if (fullName !== undefined)
+  else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
-if (isAcadem === null)
+  if (isAcadem === null)
     throw new Error("The parameter 'isAcadem' cannot be null.");
-else if (isAcadem !== undefined)
+  else if (isAcadem !== undefined)
     url_ += "isAcadem=" + encodeURIComponent("" + isAcadem) + "&";
-if (isGraduated === null)
+  if (isGraduated === null)
     throw new Error("The parameter 'isGraduated' cannot be null.");
-else if (isGraduated !== undefined)
+  else if (isGraduated !== undefined)
     url_ += "isGraduated=" + encodeURIComponent("" + isGraduated) + "&";
-if (groupIds === null)
+  if (groupIds === null)
     throw new Error("The parameter 'groupIds' cannot be null.");
-else if (groupIds !== undefined)
+  else if (groupIds !== undefined)
     groupIds && groupIds.forEach(item => { url_ += "groupIds=" + encodeURIComponent("" + item) + "&"; });
-if (companyIds === null)
+  if (companyIds === null)
     throw new Error("The parameter 'companyIds' cannot be null.");
-else if (companyIds !== undefined)
+  else if (companyIds !== undefined)
     companyIds && companyIds.forEach(item => { url_ += "companyIds=" + encodeURIComponent("" + item) + "&"; });
-if (isOnPractice === null)
+  if (isOnPractice === null)
     throw new Error("The parameter 'isOnPractice' cannot be null.");
-else if (isOnPractice !== undefined)
+  else if (isOnPractice !== undefined)
     url_ += "isOnPractice=" + encodeURIComponent("" + isOnPractice) + "&";
-if (hasPracticeRequest === null)
+  if (hasPracticeRequest === null)
     throw new Error("The parameter 'hasPracticeRequest' cannot be null.");
-else if (hasPracticeRequest !== undefined)
+  else if (hasPracticeRequest !== undefined)
     url_ += "hasPracticeRequest=" + encodeURIComponent("" + hasPracticeRequest) + "&";
-if (hasInterviews === null)
+  if (hasInterviews === null)
     throw new Error("The parameter 'hasInterviews' cannot be null.");
-else if (hasInterviews !== undefined)
+  else if (hasInterviews !== undefined)
     url_ += "hasInterviews=" + encodeURIComponent("" + hasInterviews) + "&";
-if (stackIds === null)
+  if (stackIds === null)
     throw new Error("The parameter 'stackIds' cannot be null.");
-else if (stackIds !== undefined)
+  else if (stackIds !== undefined)
     stackIds && stackIds.forEach(item => { url_ += "stackIds=" + encodeURIComponent("" + item) + "&"; });
-if (lastLogin === null)
+  if (lastLogin === null)
     throw new Error("The parameter 'lastLogin' cannot be null.");
-else if (lastLogin !== undefined)
+  else if (lastLogin !== undefined)
     url_ += "lastLogin=" + encodeURIComponent(lastLogin ? "" + lastLogin.toISOString() : "") + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -446,36 +447,36 @@ export function getAllStudentsQueryKey(dto: GetAllStudentsStudentQueryParameters
 export function getAllStudentsQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined): QueryKey;
 export function getAllStudentsQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin,  } = params[0] as GetAllStudentsStudentQueryParameters;
+    const { page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin, } = params[0] as GetAllStudentsStudentQueryParameters;
 
     return trimArrayEnd([
-        'StudentClient',
-        'getAllStudents',
-        page as any,
-        size as any,
-        sort as any,
-        fullName as any,
-        isAcadem as any,
-        isGraduated as any,
-        groupIds as any,
-        companyIds as any,
-        isOnPractice as any,
-        hasPracticeRequest as any,
-        hasInterviews as any,
-        stackIds as any,
-        lastLogin as any,
-      ]);
+      'StudentClient',
+      'getAllStudents',
+      page as any,
+      size as any,
+      sort as any,
+      fullName as any,
+      isAcadem as any,
+      isGraduated as any,
+      groupIds as any,
+      companyIds as any,
+      isOnPractice as any,
+      hasPracticeRequest as any,
+      hasInterviews as any,
+      stackIds as any,
+      lastLogin as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'StudentClient',
-        'getAllStudents',
-        ...params
-      ]);
+      'StudentClient',
+      'getAllStudents',
+      ...params
+    ]);
   }
 }
 export function __getAllStudents(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getAllStudents(
-      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,       context.queryKey[5] as string | undefined,       context.queryKey[6] as boolean | undefined,       context.queryKey[7] as boolean | undefined,       context.queryKey[8] as string[] | undefined,       context.queryKey[9] as string[] | undefined,       context.queryKey[10] as boolean | undefined,       context.queryKey[11] as boolean | undefined,       context.queryKey[12] as boolean | undefined,       context.queryKey[13] as string[] | undefined,       context.queryKey[14] as Date | undefined,axiosConfig    );
+    context.queryKey[2] as number | undefined, context.queryKey[3] as number | undefined, context.queryKey[4] as string[] | undefined, context.queryKey[5] as string | undefined, context.queryKey[6] as boolean | undefined, context.queryKey[7] as boolean | undefined, context.queryKey[8] as string[] | undefined, context.queryKey[9] as string[] | undefined, context.queryKey[10] as boolean | undefined, context.queryKey[11] as boolean | undefined, context.queryKey[12] as boolean | undefined, context.queryKey[13] as string[] | undefined, context.queryKey[14] as Date | undefined, axiosConfig);
 }
 
 export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(dto: GetAllStudentsStudentQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -497,9 +498,9 @@ export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDt
  * @return OK
  */
 export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, lastLogin?: Date | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoStudentDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
@@ -513,10 +514,10 @@ export function useGetAllStudentsQuery<TSelectData = Types.PagedListDtoStudentDt
   let hasInterviews: any = undefined;
   let stackIds: any = undefined;
   let lastLogin: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin,  } = params[0] as GetAllStudentsStudentQueryParameters);
+      ({ page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin, } = params[0] as GetAllStudentsStudentQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -577,12 +578,12 @@ export function setGetAllStudentsData(queryClient: QueryClient, updater: (data: 
 export function setGetAllStudentsDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoStudentDto | undefined) => Types.PagedListDtoStudentDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-    
+
 export function exportStudentsUrl(studentIds?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/student/export?";
-if (studentIds === null)
+  if (studentIds === null)
     throw new Error("The parameter 'studentIds' cannot be null.");
-else if (studentIds !== undefined)
+  else if (studentIds !== undefined)
     studentIds && studentIds.forEach(item => { url_ += "studentIds=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -600,24 +601,24 @@ export function setExportStudentsDefaultOptions(options: typeof exportStudentsDe
 export function exportStudentsQueryKey(studentIds?: string[] | undefined): QueryKey;
 export function exportStudentsQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { studentIds,  } = params[0] as ExportStudentsStudentQueryParameters;
+    const { studentIds, } = params[0] as ExportStudentsStudentQueryParameters;
 
     return trimArrayEnd([
-        'StudentClient',
-        'exportStudents',
-        studentIds as any,
-      ]);
+      'StudentClient',
+      'exportStudents',
+      studentIds as any,
+    ]);
   } else {
     return trimArrayEnd([
-        'StudentClient',
-        'exportStudents',
-        ...params
-      ]);
+      'StudentClient',
+      'exportStudents',
+      ...params
+    ]);
   }
 }
 export function __exportStudents(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.exportStudents(
-      context.queryKey[2] as string[] | undefined,axiosConfig    );
+    context.queryKey[2] as string[] | undefined, axiosConfig);
 }
 
 export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(dto: ExportStudentsStudentQueryParameters, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -627,14 +628,14 @@ export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError 
  * @return OK
  */
 export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(studentIds?: string[] | undefined, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+export function useExportStudentsQuery<TSelectData = Types.FileResponse, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.FileResponse, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let axiosConfig: AxiosRequestConfig | undefined = undefined;
   let studentIds: any = undefined;
-  
+
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ studentIds,  } = params[0] as ExportStudentsStudentQueryParameters);
+      ({ studentIds, } = params[0] as ExportStudentsStudentQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

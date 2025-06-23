@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Button, Container, Flex, Group, MultiSelect, Text, TextInput, Title } from "@mantine/core";
 import { GET_STACKS, Interview, InterviewStatus } from "shared/lib";
 import './css.css';
@@ -34,13 +35,13 @@ export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/)
         }
     });
 
-    const onSubmit = (vals: { company: string, stackId: string }) => {
+    const onSubmit = (vals: { company: string, stackId: string[] }) => {
         console.log(`Запрос фильтрации`, vals); // Тело запроса для изменения
         //onSuccess();
     };
     return (
         <Container p={0} fluid style={{ width: '100%', border: '1px solid black', marginBottom: '5vh', borderRadius: '2px' }}>
-            <form>
+            <form onSubmit={form.onSubmit(onSubmit)}>
                 <Group gap="xl" wrap="nowrap">
                     <TextInput w={300} style={{ margin: '2%' }}
                         label="Название компании"
@@ -63,27 +64,27 @@ export const SelectionSearchForm = (/*{ onSuccess }: SelectionSearchFormProps*/)
 }
 
 
-export function SelectionStudentList({ data }: { data: InterviewDto[] }) {
+export function SelectionStudentList({ data, chatId }: { data: InterviewDto[], chatId: string }) {
     return (
         <Container p={0} fluid style={{ width: '100%' }}>
             {data.map(card => (
-                <SelectionCard key={card.id} selection={card} />
+                <SelectionCard key={card.id} selection={card} chatId={chatId} />
             ))}
         </Container >
     );
 }
 
 
-export function SelectionCard({ selection }: { selection: Interview }) {
+export function SelectionCard({ selection, chatId }: { selection: Interview, chatId: string }) {
     return (
         <div style={{ border: '1px solid black', marginBottom: '2vh', borderRadius: '2px' }}>
-            <SelectionHeaderCard selection={selection} />
+            <SelectionHeaderCard selection={selection} chatId={chatId} />
             {/*<SelectionComments id={selection.id}/>*/}
         </div>
     );
 }
 
-export function SelectionHeaderCard({ selection }: { selection: Interview }) {
+export function SelectionHeaderCard({ selection, chatId }: { selection: Interview, chatId: string }) {
     return (
         <Container fluid p={'lg'} style={{ padding: '0' }}>
             <Flex justify="space-between">
@@ -100,7 +101,7 @@ export function SelectionHeaderCard({ selection }: { selection: Interview }) {
                                 <SuccedSelection id={selection.id} />
                             </>
                         )}
-                        <CommentSelection id={selection.id} />
+                        <CommentSelection id={chatId} />
                         <EditSelection id={selection.id} />
                         <DeleteSelection id={selection.id} />
                     </Flex>

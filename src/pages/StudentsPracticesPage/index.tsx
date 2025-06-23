@@ -1,4 +1,4 @@
-import { Card, Center, Container, Flex, Loader, Text } from "@mantine/core";
+import { Card, Center, Flex, Loader, Text } from "@mantine/core";
 import { FilterBlockShort, FilterCompanySelect, FilterGroupMultiple, FilterName, FilterTrueFalse } from "entity";
 import { useSearchParams } from "react-router-dom";
 import { useGetAllPracticesQuery } from "services/api/api-client/PracticeQuery";

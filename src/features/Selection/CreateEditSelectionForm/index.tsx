@@ -1,12 +1,11 @@
-import { Button, MultiSelect, Textarea, Select, Center, Loader } from "@mantine/core";
+import { Button, MultiSelect, Select, Center, Loader, SelectProps } from "@mantine/core";
 import { useForm } from "@mantine/form"
-import { CreateInterviewDtoStatus, InterviewDtoStatus, UpdateInterviewDtoStatus } from "services/api/api-client.types";
+import { CreateInterviewDtoStatus, UpdateInterviewDtoStatus } from "services/api/api-client.types";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { useCreateInterviewMutation, useGetInterviewList_1Query, useGetInterviewQuery, useUpdateInterviewMutation } from "services/api/api-client/InterviewsQuery";
 import { useGetLanguageListQuery } from "services/api/api-client/Programming_languageQuery";
 import { useGetStackListQuery } from "services/api/api-client/StackQuery";
-import { Company, GET_STACKS, GET_COMPANIES, Language, Stack } from "shared/lib";
-import { GET_LANGUAGES } from "shared/lib/api/stubs/Language";
+import { Company, Language, Stack } from "shared/lib";
 
 type SelectionFormProps = {
     onSuccess: () => void;
@@ -28,8 +27,8 @@ type EditFormValues = {
     status: UpdateInterviewDtoStatus;
 };
 
-export const CreateSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
-    const form = useForm({
+export const CreateSelectionForm = ({ onSuccess, }: SelectionFormProps) => {
+    const form = useForm<{ companyId: string, stackId: string, languageId: string[] }>({
         mode: 'uncontrolled',
         initialValues: {
             companyId: '',
@@ -60,9 +59,9 @@ export const CreateSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
     };
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
-            <SelectForm items={dataCompany?.items!} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value)} />
-            <SelectForm items={dataStacks!} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value)} />
-            <MultiSelectForm items={dataLanguages!} label={"Языки"} onChange={(value) => form.setFieldValue('languageId', value)} />
+            <SelectForm items={dataCompany?.items!} label={"Название компании"} onChange={(value) => form.setFieldValue('companyId', value!)} />
+            <SelectForm items={dataStacks!} label={"Напраления"} onChange={(value) => form.setFieldValue('stackId', value!)} />
+            <MultiSelectForm items={dataLanguages!} label={"Языки"} onChangeMulti={(value) => form.setFieldValue('languageId', value!)} />
             <div style={{ display: 'flex' }}>
                 <Button type='submit' style={{ marginLeft: 'auto' }}>{'Сохранить'}</Button>
             </div>
@@ -109,12 +108,13 @@ export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
 type SelectFormProps = {
     items: Company[] | Stack[] | Language[] | StatusOption[];
     label: string;
-    onChange: (value: string) => void;
+    onChange?: SelectProps['onChange']
+    onChangeMulti?: (value: string[]) => void
     required?: boolean;
     defaultValue?: string | string[]
 }
 
-export const MultiSelectForm = ({ items, label, onChange, required = true, defaultValue }: SelectFormProps) => {
+export const MultiSelectForm = ({ items, label, onChangeMulti, required = true, defaultValue }: SelectFormProps) => {
     return (
         <MultiSelect
             style={{ marginBottom: '15px' }}
@@ -122,7 +122,7 @@ export const MultiSelectForm = ({ items, label, onChange, required = true, defau
             withAsterisk={required}
             placeholder={label}
             defaultValue={Array.isArray(defaultValue) ? defaultValue : undefined}
-            onChange={onChange}
+            onChange={onChangeMulti}
             data={items.map(option => {
                 return { value: option.id, label: option.name };
             })}

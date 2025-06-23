@@ -1,6 +1,5 @@
-import { Button, Center, Loader, Modal, Text, Notification, Select, Card, Tooltip } from "@mantine/core"
+import { Button, Center, Loader, Modal, Text, Select, Card, Tooltip } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks";
-import { IconCheck } from "@tabler/icons-react";
 import { PencilSvgrepoCom } from "assets/icons"
 import { useEffect, useState } from "react";
 import { useUpdatePracticeMutation } from "services/api/api-client/PracticeQuery";
@@ -29,8 +28,7 @@ export const ReportEdit = ({ id, initialValue = null, onSuccess }: ReportIdProps
     };
 
     useEffect(() => {
-        if (isSuccess) 
-        {
+        if (isSuccess) {
             close();
             reset();
             setValue(null);
@@ -38,8 +36,7 @@ export const ReportEdit = ({ id, initialValue = null, onSuccess }: ReportIdProps
     }, [isSuccess, close, reset]);
 
     const handleEdit = () => {
-        if (value === null) 
-        {
+        if (value === null) {
             return;
         }
         mutate({

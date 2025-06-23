@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
@@ -19,7 +20,7 @@ import { getAxios, getBaseUrl } from './helpers';
  */
 export function changeStudentGraduationStatus(body: Types.ChangeStudentGraduationStatusDto, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/graduation";
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeChangeStudentGraduationStatusDto(body);
 
@@ -61,42 +62,42 @@ function processChangeStudentGraduationStatus(response: AxiosResponse): Promise<
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -115,9 +116,9 @@ function processChangeStudentGraduationStatus(response: AxiosResponse): Promise<
 export function graduateGroup(groupId: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/graduation/{groupId}";
     if (groupId === undefined || groupId === null)
-      throw new Error("The parameter 'groupId' must be defined.");
+        throw new Error("The parameter 'groupId' must be defined.");
     url_ = url_.replace("{groupId}", encodeURIComponent("" + groupId));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGraduateGroup,
@@ -155,42 +156,42 @@ function processGraduateGroup(response: AxiosResponse): Promise<Types.Response> 
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -202,22 +203,22 @@ function processGraduateGroup(response: AxiosResponse): Promise<Types.Response> 
 }
 let _requestConfigChangeStudentGraduationStatus: Partial<AxiosRequestConfig> | null;
 export function getChangeStudentGraduationStatusRequestConfig() {
-  return _requestConfigChangeStudentGraduationStatus;
+    return _requestConfigChangeStudentGraduationStatus;
 }
 export function setChangeStudentGraduationStatusRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigChangeStudentGraduationStatus = value;
+    _requestConfigChangeStudentGraduationStatus = value;
 }
 export function patchChangeStudentGraduationStatusRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigChangeStudentGraduationStatus = patch(_requestConfigChangeStudentGraduationStatus ?? {});
+    _requestConfigChangeStudentGraduationStatus = patch(_requestConfigChangeStudentGraduationStatus ?? {});
 }
 
 let _requestConfigGraduateGroup: Partial<AxiosRequestConfig> | null;
 export function getGraduateGroupRequestConfig() {
-  return _requestConfigGraduateGroup;
+    return _requestConfigGraduateGroup;
 }
 export function setGraduateGroupRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigGraduateGroup = value;
+    _requestConfigGraduateGroup = value;
 }
 export function patchGraduateGroupRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigGraduateGroup = patch(_requestConfigGraduateGroup ?? {});
+    _requestConfigGraduateGroup = patch(_requestConfigGraduateGroup ?? {});
 }

@@ -12,7 +12,10 @@ export const GET_STUDENT: Student = {
 
 export const GET_STUDENT_2: Student = {
     id: 'some_student_uuid_2',
-    groupId: 'some_group_uuid',
+    group: {
+        id: 'some_id',
+        number: '9999'
+    },
     user: GET_USER
 }
 
@@ -38,10 +41,10 @@ export const GET_DEAN: Dean = {
 export const GET_USER_ROLE_LIST: UserRoleList = [
     {
         id: 'some_role_uuid1',
-        userRole:'STUDENT'
+        userRole: 'STUDENT'
     },
     {
         id: 'some_role_uuid2',
-        userRole:'ADMIN'
+        userRole: 'ADMIN'
     }
 ]

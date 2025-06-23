@@ -7,7 +7,7 @@ type DeleteLanguageOrStackProps = {
     type: 'language' | 'stack'
 }
 
-export const DeleteLanguageOrStack = ({ id, type }: DeleteLanguageOrStackProps) => {
+export const DeleteLanguageOrStack = ({ type }: DeleteLanguageOrStackProps) => {
 
     const handleDelete = (close: () => void) => {
         if (type === 'language') {

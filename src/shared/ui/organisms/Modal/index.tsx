@@ -30,6 +30,7 @@ export const Modal = ({ content, render, title, size = 'md' }: RenderModalProps)
                     blur: 3,
                 }}
                 zIndex={300}
+                size={size}
             >
                 {content({ opened, open, close })}
             </MModal>

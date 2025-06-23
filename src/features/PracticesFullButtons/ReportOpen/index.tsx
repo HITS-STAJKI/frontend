@@ -196,9 +196,6 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
             ) : (
                 <div style={{ width: '100%' }}>
                     <Group style={{ width: '80%', margin: '0 auto', justifyContent: 'space-between', marginBottom: '1rem' }} align="end" >
-                        <div>
-                            {JSON.stringify(report)}
-                        </div>
                         <Button style={{ width: '100%' }} color='green'>Выставить оценку за практику</Button>
                         <Flex align='center' gap="sm" style={{ width: '100%' }}>
                             <Text style={{ flex: '1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700 }} > Отчет:</Text>

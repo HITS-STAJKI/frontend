@@ -1,5 +1,4 @@
 import { GroupFilters, GroupList } from "widgets/GroupList"
-import { GroupSearchBlock } from "widgets/GroupSearchBlock"
 import { Container, Flex, Title } from '@mantine/core';
 import { CreateGroup } from "features/Group";
 

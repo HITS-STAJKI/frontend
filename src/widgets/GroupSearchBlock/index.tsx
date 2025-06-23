@@ -1,4 +1,4 @@
-import { Input, Button, Flex, NativeSelect } from '@mantine/core';
+import { Input, Button, Flex } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 
 export const GroupSearchBlock = () => {

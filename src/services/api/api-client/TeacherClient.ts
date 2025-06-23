@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
@@ -19,7 +20,7 @@ import { getAxios, getBaseUrl } from './helpers';
  */
 export function createTeacher(body: Types.TeacherCreateDto, config?: AxiosRequestConfig | undefined): Promise<Types.TeacherDto> {
     let url_ = getBaseUrl() + "/api/v1/teacher";
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeTeacherCreateDto(body);
 
@@ -61,42 +62,42 @@ function processCreateTeacher(response: AxiosResponse): Promise<Types.TeacherDto
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initTeacherDto(resultData200);
         return Promise.resolve<Types.TeacherDto>(result200);
 
@@ -133,7 +134,7 @@ export function getAllTeachers(page?: number | undefined, size?: number | undefi
         throw new Error("The parameter 'fullName' cannot be null.");
     else if (fullName !== undefined)
         url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetAllTeachers,
@@ -171,42 +172,42 @@ function processGetAllTeachers(response: AxiosResponse): Promise<Types.PagedList
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initPagedListDtoTeacherDto(resultData200);
         return Promise.resolve<Types.PagedListDtoTeacherDto>(result200);
 
@@ -218,22 +219,22 @@ function processGetAllTeachers(response: AxiosResponse): Promise<Types.PagedList
 }
 let _requestConfigCreateTeacher: Partial<AxiosRequestConfig> | null;
 export function getCreateTeacherRequestConfig() {
-  return _requestConfigCreateTeacher;
+    return _requestConfigCreateTeacher;
 }
 export function setCreateTeacherRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigCreateTeacher = value;
+    _requestConfigCreateTeacher = value;
 }
 export function patchCreateTeacherRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigCreateTeacher = patch(_requestConfigCreateTeacher ?? {});
+    _requestConfigCreateTeacher = patch(_requestConfigCreateTeacher ?? {});
 }
 
 let _requestConfigGetAllTeachers: Partial<AxiosRequestConfig> | null;
 export function getGetAllTeachersRequestConfig() {
-  return _requestConfigGetAllTeachers;
+    return _requestConfigGetAllTeachers;
 }
 export function setGetAllTeachersRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigGetAllTeachers = value;
+    _requestConfigGetAllTeachers = value;
 }
 export function patchGetAllTeachersRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigGetAllTeachers = patch(_requestConfigGetAllTeachers ?? {});
+    _requestConfigGetAllTeachers = patch(_requestConfigGetAllTeachers ?? {});
 }

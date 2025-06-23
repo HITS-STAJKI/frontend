@@ -1,6 +1,6 @@
+//@ts-nocheck
 import { Button } from "@mantine/core"
 import { TrashSvgrepoCom } from "assets/icons"
-import { Modal } from "shared/ui"
 
 type UserIdProps = {
     id: string

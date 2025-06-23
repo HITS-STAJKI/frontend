@@ -1,6 +1,5 @@
-import { Button, Center, Container, Loader, Modal, Text, Notification, Card, Tooltip } from "@mantine/core"
+import { Button, Center, Loader, Modal, Text, Card, Tooltip } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks";
-import { IconCheck } from "@tabler/icons-react";
 import { ArchiveSvgrepoCom } from "assets/icons"
 import { useArchiveStudentPracticeMutation } from "services/api/api-client/PracticeQuery";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
@@ -32,7 +31,7 @@ export const ReportArchive = ({ id, onSuccess }: ReportIdProps & { onSuccess?: (
                 </Button>
             </Tooltip>
 
-            <Modal opened={opened} onClose={() => { reset(); close(); }} centered title={<Text size="lg" fw={700}>Подтверждение архивирования</Text> }>
+            <Modal opened={opened} onClose={() => { reset(); close(); }} centered title={<Text size="lg" fw={700}>Подтверждение архивирования</Text>}>
                 {isPending ? (
                     <Center mt="md">
                         <Loader />

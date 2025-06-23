@@ -16,7 +16,7 @@ interface StudentProps {
     onToggleSelect: () => void,
 }
 
-export function StudentListCard({ index, studentId, userId, fullName, groupNumber, lastLoginDate, unreadMessagesCount, chatId, isSelected, onToggleSelect }: StudentProps) {
+export function StudentListCard({ index, studentId, fullName, groupNumber, lastLoginDate, unreadMessagesCount, chatId, isSelected, onToggleSelect }: StudentProps) {
     const navigate = useNavigate();
     const [modalOpened, setModalOpened] = useState(false);
 

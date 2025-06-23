@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -19,29 +20,29 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type DeleteUserRoleRoleQueryParameters = {
-  roleId: string ;
-  userId: string ;
+  roleId: string;
+  userId: string;
 }
 
 export function deleteUserRoleUrl(roleId: string, userId: string): string {
   let url_ = getBaseUrl() + "/api/v1/role/{roleId}/user/{userId}";
-if (roleId === undefined || roleId === null)
-  throw new Error("The parameter 'roleId' must be defined.");
-url_ = url_.replace("{roleId}", encodeURIComponent("" + roleId));
-if (userId === undefined || userId === null)
-  throw new Error("The parameter 'userId' must be defined.");
-url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+  if (roleId === undefined || roleId === null)
+    throw new Error("The parameter 'roleId' must be defined.");
+  url_ = url_.replace("{roleId}", encodeURIComponent("" + roleId));
+  if (userId === undefined || userId === null)
+    throw new Error("The parameter 'userId' must be defined.");
+  url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deleteUserRoleMutationKey(roleId: string, userId: string): MutationKey {
   return trimArrayEnd([
-      'RoleClient',
-      'deleteUserRole',
-      roleId as any,
-      userId as any,
-    ]);
+    'RoleClient',
+    'deleteUserRole',
+    roleId as any,
+    userId as any,
+  ]);
 }
 
 /**
@@ -50,32 +51,32 @@ export function deleteUserRoleMutationKey(roleId: string, userId: string): Mutat
  */
 export function useDeleteUserRoleMutation<TContext>(roleId: string, userId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deleteUserRoleMutationKey(roleId, userId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.deleteUserRole(roleId, userId),
     mutationKey: key,
   });
 }
-  
+
 type DeleteUserRole__MutationParameters = DeleteUserRoleRoleQueryParameters
 
 /**
  * Удаление роли пользователя
  * @return OK
  */
-export function useDeleteUserRoleMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteUserRole__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteUserRoleRoleQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteUserRole__MutationParameters, TContext> {
+export function useDeleteUserRoleMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteUserRole__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteUserRoleRoleQueryParameters }): UseMutationResult<Types.Response, unknown, DeleteUserRole__MutationParameters, TContext> {
   const key = deleteUserRoleMutationKey(options?.parameters?.roleId!, options?.parameters?.userId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: DeleteUserRole__MutationParameters) => Client.deleteUserRole(data.roleId ?? options?.parameters?.roleId!, data.userId ?? options?.parameters?.userId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: DeleteUserRole__MutationParameters) => Client.deleteUserRole(data.roleId ?? options?.parameters?.roleId!, data.userId ?? options?.parameters?.userId!),
+    mutationKey: key,
+  });
 }

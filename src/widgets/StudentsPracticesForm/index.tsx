@@ -2,7 +2,6 @@ import { Button, Flex, Card, Grid, Box, Group, Text, Modal, Select, Loader } fro
 import { FullPracticeCard } from "entity/FullPracticeCard";
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
-import { DateInput } from "@mantine/dates";
 import { PagedListDtoPracticeDto } from "services/api/api-client.types";
 import { useSearchParams } from "react-router-dom";
 import { useApproveStudentPractices_1Mutation } from "services/api/api-client/PracticeQuery";
@@ -28,39 +27,31 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
     const [searchParams, setSearchParams] = useSearchParams();
     const [sort, setSort] = useState<[SortKeyAllPractices, SortDirectionAllPractices] | null>(initialSort);
 
-    function handleSort(key: SortKeyAllPractices) 
-    {
+    function handleSort(key: SortKeyAllPractices) {
         setSort((currentSort) => {
             let newSort: [SortKeyAllPractices, SortDirectionAllPractices] | null;
 
-            if (currentSort?.[0] === key) 
-            {
-                if (currentSort[1] === "asc") 
-                {
+            if (currentSort?.[0] === key) {
+                if (currentSort[1] === "asc") {
                     newSort = [key, "desc"];
-                } 
-                else if (currentSort[1] === "desc") 
-                {
+                }
+                else if (currentSort[1] === "desc") {
                     newSort = null;
-                } 
-                else 
-                {
+                }
+                else {
                     newSort = [key, "asc"];
                 }
-            } 
-            else 
-            {
+            }
+            else {
                 newSort = [key, "asc"];
             }
 
             const updatedParams = new URLSearchParams(searchParams);
-            if (newSort) 
-            {
+            if (newSort) {
                 updatedParams.set("sort", newSort[0]);
                 updatedParams.set("sortDirection", newSort[1]);
-            } 
-            else 
-            {
+            }
+            else {
                 updatedParams.delete("sort");
                 updatedParams.delete("sortDirection");
             }
@@ -70,18 +61,16 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKeyAllPractices }) 
-    {
-        if (!sort || sort[0] !== columnKey)
-        {
+    function SortArrow({ columnKey }: { columnKey: SortKeyAllPractices }) {
+        if (!sort || sort[0] !== columnKey) {
             return null;
         }
-        return sort[1] === "asc" ? 
-        (
-            <IconChevronUp size={14} style={{ marginLeft: 4 }} />
-        ) : (
-            <IconChevronDown size={14} style={{ marginLeft: 4 }} />
-        );
+        return sort[1] === "asc" ?
+            (
+                <IconChevronUp size={14} style={{ marginLeft: 4 }} />
+            ) : (
+                <IconChevronDown size={14} style={{ marginLeft: 4 }} />
+            );
     }
 
     return (
@@ -106,7 +95,7 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "stretch"
-                            }}>
+                                }}>
                                 <Button
                                     variant="subtle"
                                     size="sm"
@@ -122,17 +111,17 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
                                         textAlign: "center",
                                         padding: "8px",
                                         gap: "4px",
-                                }}>
+                                    }}>
                                     <span
                                         style={{
-                                        display: "-webkit-box",
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: "vertical",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "normal",
-                                        lineHeight: "1.2em",
-                                        maxWidth: "100%",
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical",
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            whiteSpace: "normal",
+                                            lineHeight: "1.2em",
+                                            maxWidth: "100%",
                                         }}
                                     >
                                         {label}
@@ -148,7 +137,7 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
                 </div>
             </Card>
             {(!items || items.length === 0) ? (
-                <Card withBorder padding="lg" radius="md" shadow="sm" style={{width: '100%'}}>
+                <Card withBorder padding="lg" radius="md" shadow="sm" style={{ width: '100%' }}>
                     <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
                         Практик нет
                     </Text>
@@ -195,7 +184,7 @@ export function PracticesFormUnder({ studentCount, onSuccess }: PracticesFormUnd
     });
 
     const { data, isLoading, isError: isCompanyError, error: companyError } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000);
-    
+
     const options = isLoading || !Array.isArray(data?.items) ? []
         : data.items.map((partner) => ({
             value: partner.id,
@@ -212,8 +201,7 @@ export function PracticesFormUnder({ studentCount, onSuccess }: PracticesFormUnd
     };
 
     const handleConfirmInModal = () => {
-        if (selectedCompanyId) 
-        {
+        if (selectedCompanyId) {
             approvePractices();
         }
     };
@@ -258,7 +246,7 @@ export function PracticesFormUnder({ studentCount, onSuccess }: PracticesFormUnd
                     <Button variant="default" onClick={() => setModalOpened(false)}>
                         Отмена
                     </Button>
-                    <Button color="green"onClick={handleConfirmInModal}disabled={!selectedCompanyId || isPending}>
+                    <Button color="green" onClick={handleConfirmInModal} disabled={!selectedCompanyId || isPending}>
                         {isPending ? <Loader size="xs" /> : "Подтвердить"}
                     </Button>
                 </Group>

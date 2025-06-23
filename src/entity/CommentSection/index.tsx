@@ -1,36 +1,36 @@
-import { ActionIcon, Avatar, Box, Center, Container, Flex, Group, Indicator, Loader, MantineColor, Space, Stack, Text, Textarea, Title } from "@mantine/core"
+import { ActionIcon, Avatar, Box, Center, Flex, Group, Indicator, Loader, MantineColor, Space, Stack, Text, Textarea } from "@mantine/core"
 import { IconCheck, IconEdit, IconTrash, IconX } from "@tabler/icons-react"
 import { CreateCommentForm } from "features/CreateCommentForm"
 import { useEffect, useRef, useState } from "react"
 import { MessageDto } from "services/api/api-client.types"
 import { useDeleteMessageMutation, useEditMessageMutation, useGetMessagesListQuery } from "services/api/api-client/Messages_in_chatQuery"
 import { useGetUserByIdQuery } from "services/api/api-client/UserQuery"
-import { hashCode, InterviewsComment } from "shared/lib"
+import { hashCode } from "shared/lib"
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage"
 
 const AvatarColor: Array<MantineColor> = ['dark', 'gray', 'red', 'pink', 'grape', 'violet', 'indigo', 'blue', 'cyan', 'green', 'lime', 'yellow', 'orange', 'teal']
 
-type CommentSectionProps = {
-    comments: Array<InterviewsComment>
-}
+// type CommentSectionProps = {
+//     comments: Array<InterviewsComment>
+// }
 
-export const CommentSection = ({ comments }: CommentSectionProps) => {
-    return (
-        <Container fluid>
-            <Title order={3}>{"Комментарии"}</Title>
-            <Space h='md' />
-            <Stack>
-                {comments.map(comment => {
-                    return (
-                        <Comment key={comment.id} {...comment} id={comment.id} />
-                    )
-                })}
-            </Stack>
-            <Space h='md' />
-            <CreateCommentForm id={'some_id'} />
-        </Container >
-    )
-}
+// export const CommentSection = ({ comments }: CommentSectionProps) => {
+//     return (
+//         <Container fluid>
+//             <Title order={3}>{"Комментарии"}</Title>
+//             <Space h='md' />
+//             <Stack>
+//                 {comments.map(comment => {
+//                     return (
+//                         <Comment key={comment.id} {...comment} id={comment.id} />
+//                     )
+//                 })}
+//             </Stack>
+//             <Space h='md' />
+//             <CreateCommentForm id={'some_id'} />
+//         </Container >
+//     )
+// }
 
 function dateFormatter(isoDateStr: string): string {
     if (!isoDateStr) return '';
@@ -110,6 +110,7 @@ export const CommentSectionAlt = ({ chatId, height = '50vh' }: CommentSectionAlt
                             }}
                         />
                     </Box>
+
                 </>
             )}
         </Flex>

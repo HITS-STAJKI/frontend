@@ -1,5 +1,5 @@
 import { Group, GroupPage } from "../../entities";
-import { GET_STUDENT, GET_STUDENT_2 } from "../Role";
+import { GET_STUDENT } from "../Role";
 
 export const GROUP1: Group = {
     id: 'some_group_id_1',

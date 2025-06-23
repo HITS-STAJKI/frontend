@@ -1,6 +1,5 @@
-import { Button, Center, Container, Loader, Modal, Text, Notification, Card, Tooltip } from "@mantine/core"
+import { Button, Center, Loader, Modal, Text, Card, Tooltip } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks";
-import { IconCheck } from "@tabler/icons-react";
 import { TrashSvgrepoCom } from "assets/icons"
 
 type ReportIdProps = {
@@ -13,8 +12,7 @@ export const ReportDelete = ({ id }: ReportIdProps & { onSuccess?: () => void })
     const isPending = false;
     const isError = false;
     const isSuccess = false;
-    const error = null;
-    const reset = () => {};
+    const reset = () => { };
 
     const handleConfirm = () => {
         console.log('Delete report with id:', id);
@@ -30,7 +28,7 @@ export const ReportDelete = ({ id }: ReportIdProps & { onSuccess?: () => void })
                 </Button>
             </Tooltip>
 
-            <Modal opened={opened} onClose={() => { reset(); close(); }} centered title={ <Text size="lg" fw={700}> Подтверждение удаления </Text> } >
+            <Modal opened={opened} onClose={() => { reset(); close(); }} centered title={<Text size="lg" fw={700}> Подтверждение удаления </Text>} >
                 {isPending ? (
                     <Center mt="md">
                         <Loader />

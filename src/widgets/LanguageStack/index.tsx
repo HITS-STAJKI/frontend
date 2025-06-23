@@ -1,5 +1,4 @@
 import { Button, Flex, TextInput, Text } from "@mantine/core";
-import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
 import { LanguageStackCard } from "entity";
 import { CreateLanguageOrStackForm } from "features";
 import { Modal } from "shared/ui";

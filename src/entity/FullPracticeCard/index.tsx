@@ -9,20 +9,19 @@ interface FullPracticeCardProps extends PracticeDto {
     onRefresh?: () => void;
 }
 
-export function FullPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index, onRefresh }: FullPracticeCardProps) {
+export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, isArchived, isApproved, index, onRefresh }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
     const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
 
     const handleClick = () => {
-        if (studentRole?.id) 
-        {
+        if (studentRole?.id) {
             navigate(PRACTICE_ROUTE.replace(':id', studentRole.id));
         }
     };
 
     const isCardClickable = isApproved && !isArchived;
-    
+
     return (
         <Card
             key={id}
@@ -30,22 +29,19 @@ export function FullPracticeCard({ id, user, group, company, stack, createdAt, i
             style={{ width: '100%', height: '64px', display: 'flex', cursor: isCardClickable ? 'pointer' : 'default', transition: 'box-shadow 0.2s ease, background-color 0.2s ease' }}
             onClick={isCardClickable ? handleClick : undefined}
             onKeyDown={isCardClickable ? (e) => {
-                if (e.key === 'Enter' || e.key === ' ') 
-                {
+                if (e.key === 'Enter' || e.key === ' ') {
                     handleClick();
                 }
             } : undefined}
             tabIndex={isCardClickable ? 0 : -1}
             onMouseEnter={(e) => {
-                if (isCardClickable) 
-                {
+                if (isCardClickable) {
                     (e.currentTarget as HTMLDivElement).style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
                     (e.currentTarget as HTMLDivElement).style.backgroundColor = '#f9f9f9';
                 }
             }}
             onMouseLeave={(e) => {
-                if (isCardClickable) 
-                {
+                if (isCardClickable) {
                     (e.currentTarget as HTMLDivElement).style.boxShadow = '';
                     (e.currentTarget as HTMLDivElement).style.backgroundColor = '';
                 }
@@ -55,7 +51,7 @@ export function FullPracticeCard({ id, user, group, company, stack, createdAt, i
                 <Box style={{ width: '40px', textAlign: 'center' }}>
                     <Text>{index}</Text>
                 </Box>
-                <Grid style={{width: '100%'}}>
+                <Grid style={{ width: '100%' }}>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {user?.fullName ?? 'Неизвестный пользователь'}
@@ -75,7 +71,7 @@ export function FullPracticeCard({ id, user, group, company, stack, createdAt, i
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {isPaid == true ? "Да" : "Нет"}
                         </Text>
-                    </Grid.Col>                
+                    </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {isApproved == true ? "Да" : "Нет"}

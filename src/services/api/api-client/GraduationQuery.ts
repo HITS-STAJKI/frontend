@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -19,7 +20,7 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type GraduateGroupGraduationQueryParameters = {
-  groupId: string ;
+  groupId: string;
 }
 
 export function changeStudentGraduationStatusUrl(): string {
@@ -30,9 +31,9 @@ export function changeStudentGraduationStatusUrl(): string {
 
 export function changeStudentGraduationStatusMutationKey(): MutationKey {
   return trimArrayEnd([
-      'GraduationClient',
-      'changeStudentGraduationStatus',
-    ]);
+    'GraduationClient',
+    'changeStudentGraduationStatus',
+  ]);
 }
 
 /**
@@ -41,32 +42,32 @@ export function changeStudentGraduationStatusMutationKey(): MutationKey {
  */
 export function useChangeStudentGraduationStatusMutation<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, Types.ChangeStudentGraduationStatusDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, Types.ChangeStudentGraduationStatusDto, TContext> {
   const key = changeStudentGraduationStatusMutationKey();
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: (body: Types.ChangeStudentGraduationStatusDto) => Client.changeStudentGraduationStatus(body),
     mutationKey: key,
   });
 }
-  
+
 export function graduateGroupUrl(groupId: string): string {
   let url_ = getBaseUrl() + "/api/v1/graduation/{groupId}";
-if (groupId === undefined || groupId === null)
-  throw new Error("The parameter 'groupId' must be defined.");
-url_ = url_.replace("{groupId}", encodeURIComponent("" + groupId));
+  if (groupId === undefined || groupId === null)
+    throw new Error("The parameter 'groupId' must be defined.");
+  url_ = url_.replace("{groupId}", encodeURIComponent("" + groupId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function graduateGroupMutationKey(groupId: string): MutationKey {
   return trimArrayEnd([
-      'GraduationClient',
-      'graduateGroup',
-      groupId as any,
-    ]);
+    'GraduationClient',
+    'graduateGroup',
+    groupId as any,
+  ]);
 }
 
 /**
@@ -76,17 +77,17 @@ export function graduateGroupMutationKey(groupId: string): MutationKey {
  */
 export function useGraduateGroupMutation<TContext>(groupId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = graduateGroupMutationKey(groupId);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
+
   return useMutation({
     ...options,
     mutationFn: () => Client.graduateGroup(groupId),
     mutationKey: key,
   });
 }
-  
+
 type GraduateGroup__MutationParameters = GraduateGroupGraduationQueryParameters
 
 /**
@@ -94,15 +95,15 @@ type GraduateGroup__MutationParameters = GraduateGroupGraduationQueryParameters
  * @param groupId Идентификатор потока
  * @return OK
  */
-export function useGraduateGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, GraduateGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: GraduateGroupGraduationQueryParameters}): UseMutationResult<Types.Response, unknown, GraduateGroup__MutationParameters, TContext> {
+export function useGraduateGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, GraduateGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: GraduateGroupGraduationQueryParameters }): UseMutationResult<Types.Response, unknown, GraduateGroup__MutationParameters, TContext> {
   const key = graduateGroupMutationKey(options?.parameters?.groupId!);
-  
+
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-  
-return useMutation({
-  ...options, 
-  mutationFn: (data: GraduateGroup__MutationParameters) => Client.graduateGroup(data.groupId ?? options?.parameters?.groupId!),
-  mutationKey: key,
-});
+
+  return useMutation({
+    ...options,
+    mutationFn: (data: GraduateGroup__MutationParameters) => Client.graduateGroup(data.groupId ?? options?.parameters?.groupId!),
+    mutationKey: key,
+  });
 }
