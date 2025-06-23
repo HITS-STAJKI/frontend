@@ -13,24 +13,25 @@ import { useEffect, useState } from "react";
 import { ReportId } from "services/api/api-client.types";
 import { useGetStudentsByIdsMutation } from "services/api/api-client/StudentQuery";
 import { Roles, WithProfileRole } from "shared/lib";
+import { useGetCurrentUserQuery } from "services/api/api-client/UserQuery";
 
 type ReportIdProps = {
     practiceId: string;
-    studentId: string;
+    studentId: string | null;
 };
 
 export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: ReportIdProps & { opened: boolean; onClose: () => void }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const { data: report, isLoading: reportLoading, isError: isReportError, error: reportError } = useGetPracticeReportQuery(practiceId, { enabled: opened });
-
     const { data: fileMetadata, isLoading: fileLoading, isError: fileError } = useGetFileMetadataQuery(report?.fileId ?? '', { enabled: !!report?.fileId && opened });
+
+    const { data: currentUser } = useGetCurrentUserQuery({ enabled: !studentId && opened });
 
     const [grade, setGrade] = useState<string | null>(report?.grade?.toString() ?? null);
     const [originalGrade, setOriginalGrade] = useState<string | null>(report?.grade?.toString() ?? null);
 
     const [chatId, setChatId] = useState<string | null>(null);
-
     const [mutationError, setMutationError] = useState<string | null>(null);
 
     const uploadMutation = useUploadFileMutation();
@@ -50,19 +51,28 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
     }, [report]);
 
     useEffect(() => {
-        if (opened && studentId) {
+        if (opened) 
+        {
             setMutationError(null);
-            getStudentMutation.mutateAsync([studentId])
-                .then((res) => {
-                    const student = res?.[0];
-                    setChatId(student?.chatId ?? null);
-                })
-                .catch((err) => {
-                    const msg = getErrorMessage(err);
-                    setMutationError(`Ошибка получения chatId: ${msg}`);
-                });
+            if (studentId) 
+            {
+                getStudentMutation.mutateAsync([studentId])
+                    .then((res) => {
+                        const student = res?.[0];
+                        setChatId(student?.chatId ?? null);
+                    })
+                    .catch((err) => {
+                        const msg = getErrorMessage(err);
+                        setMutationError(`Ошибка получения chatId: ${msg}`);
+                    });
+            } 
+            else if (currentUser?.student?.chatId) 
+            {
+                //TODO: добавить проверику на роль
+                setChatId(currentUser.student.chatId);
+            }
         }
-    }, [opened, studentId]);
+    }, [opened, studentId, currentUser]);
 
     useEffect(() => {
         if (!opened) {
