@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom"
 import { PublicLayout } from "./layout/PublicLayout"
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE, MY_PROFILE_ROUTE, PERSON_PROFILE_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENT_PRACTICES_ROUTE, PRACTICE_ROUTE, STUDENTS_ROUTE, STATISTICS_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE } from "shared/lib"
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, LANGUAGES_ROUTE, STACKS_ROUTE, INTERVIEW_REPORT, ROLES_ROUTE, GROUPS_ROUTE, PARTNERS_ROUTE, CONCRETE_PARTNER_ROUTE, MY_PROFILE_ROUTE, PERSON_PROFILE_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENT_PRACTICES_ROUTE, PRACTICE_ROUTE, STUDENTS_ROUTE, STATISTICS_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE, MY_PRACTICE_ROUTE } from "shared/lib"
 
 import { PrivateLayout } from "./layout/PrivateLayout"
 import { lazy } from "react"
@@ -23,6 +23,7 @@ const Dashboard = lazy(() => import('pages/Dashboard'))
 const SelectionStudentPage = lazy(() => import('pages/SelectionStudentPage'))
 const SelectionTeacherPage = lazy(() => import('pages/SelectionTeacherPage'))
 const StudentPractice = lazy(() => import('pages/StudentPractice'))
+const MyPracticePage = lazy(() => import('pages/MyPracticePage'))
 
 export const AppRouter = () => {
     return (
@@ -49,6 +50,7 @@ export const AppRouter = () => {
                 <Route path={SELECTION_FOR_STUDENT_ROUTE} element={<SelectionStudentPage />} />
                 <Route path={SELECTION_FOR_TEACHER_ROUTE} element={<SelectionTeacherPage />} />
                 <Route path={STATISTICS_ROUTE} element={<Dashboard />} />
+                <Route path={MY_PRACTICE_ROUTE} element={<MyPracticePage />} />
             </Route>
             <Route path="*" element={<Navigate to={LOGIN_ROUTE} />} />
         </Routes>

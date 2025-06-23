@@ -1,7 +1,7 @@
 import { Card, Flex } from "@mantine/core"
 import { ReactNode, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { GROUPS_ROUTE, INTERVIEW_REPORT, LANGUAGES_ROUTE, MY_PROFILE_ROUTE, PARTNERS_ROUTE, Roles, ROLES_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE, STACKS_ROUTE, STATISTICS_ROUTE, STUDENT_PRACTICES_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENTS_ROUTE, WithProfileRole } from "shared/lib"
+import { GROUPS_ROUTE, LANGUAGES_ROUTE, MY_PRACTICE_ROUTE, MY_PROFILE_ROUTE, PARTNERS_ROUTE, Roles, ROLES_ROUTE, SELECTION_FOR_STUDENT_ROUTE, SELECTION_FOR_TEACHER_ROUTE, STACKS_ROUTE, STATISTICS_ROUTE, STUDENTS_PRACTICES_ROUTE, STUDENTS_ROUTE, WithProfileRole } from "shared/lib"
 
 export const Menu = () => {
     const routes: Array<MenuItemProps> = [
@@ -13,7 +13,6 @@ export const Menu = () => {
                 { to: GROUPS_ROUTE, label: 'Группы' },
             ], label: 'Администрирование', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD,]
         },
-        { to: INTERVIEW_REPORT, label: 'Отчеты о прохождениях собеседований', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD,] },
         { to: PARTNERS_ROUTE, label: 'Партнеры', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.STUDENT, Roles.TEACHER, Roles.CURATOR] },
         { to: STATISTICS_ROUTE, label: 'Статистика', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
         { to: MY_PROFILE_ROUTE, label: 'Мой профиль', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.STUDENT, Roles.TEACHER, Roles.CURATOR] },
@@ -21,6 +20,7 @@ export const Menu = () => {
         { to: STUDENTS_ROUTE, label: 'Студенты', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
         { to: SELECTION_FOR_STUDENT_ROUTE, label: 'Мои собеседования', userFor: [Roles.STUDENT] },
         { to: SELECTION_FOR_TEACHER_ROUTE, label: 'Собеседования студентов', userFor: [Roles.EDUCATION_PROGRAM_LEAD] },
+        { to: MY_PRACTICE_ROUTE, label: 'Моя практика', userFor: [Roles.STUDENT] },
     ]
     return (
         <Flex w='100%' h='100%' align='center' gap='lg' mt='md' direction='column' style={{ overflowY: 'auto' }}>

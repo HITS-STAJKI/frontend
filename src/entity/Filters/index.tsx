@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { TextInput, Select, MultiSelect } from "@mantine/core";
-import { GET_GROUPS, GET_COMPANIES, GET_STACKS, GET_LANGUAGES } from "shared/lib";
 import { DateInput, DateTimePicker } from "@mantine/dates";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
-import { CompanyPartnerDto } from "services/api/api-client.types";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { useGetStackListQuery } from "services/api/api-client/StackQuery";
 
@@ -335,7 +333,6 @@ export function FilterTrueFalseNull({ id, onChangeValue }: { id: string; onChang
 
 export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: { id: string; onChangeValue: (val: string | null) => void; initialValue?: string | null; }) {
     const [value, setValue] = useState<string | null>(initialValue ?? "false");
-    const [data, setData] = useState([{ value: "true", label: "Да" }, { value: "false", label: "Нет" }]);
 
     useEffect(() => {
         onChangeValue(initialValue);
@@ -351,7 +348,7 @@ export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: {
             id={`filter-${id}`}
             value={value}
             onChange={handleChange}
-            data={data}
+            data={[{ value: "true", label: "Да" }, { value: "false", label: "Нет" }]}
         />
     );
 }

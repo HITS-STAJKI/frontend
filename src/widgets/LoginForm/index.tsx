@@ -16,19 +16,19 @@ export const LoginForm = () => {
     const navigate = useNavigate()
     const getUser = useGetCurrentUserQuery();
     const onFormSubmit = async (vals: LoginFormProps) => {
-        try {
-            const tokens = await mutateAsync(vals);
+        mutateAsync(vals).then((tokens) => {
             localStorage.setItem("token", tokens.token!);
             localStorage.setItem("exp", tokens.expirationDate?.toString()!);
-            const user = await getUser.refetch().then(res => res.data);
-            if (user?.id) {
-                localStorage.setItem("userId", user.id);
-            }
-
+            getUser.refetch().then(res => res.data).then(user => {
+                if (user?.id) {
+                    localStorage.setItem("userId", user.id);
+                }
+            })
+        }).then(() => {
             navigate(MY_PROFILE_ROUTE);
-        } catch (err) {
-            console.error("Ошибка входа:", err);
-        }
+        }).catch((err) => {
+            console.error("Ошибка входа:", err)
+        })
     };
     return (
         <Container w='100%'>
