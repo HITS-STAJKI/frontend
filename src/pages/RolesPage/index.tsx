@@ -1,28 +1,27 @@
-import { Container, Flex, Text } from "@mantine/core";
+import { Container, Flex, Select, Text, TextInput, Title } from "@mantine/core";
+import { FilterBlockShort, FilterUserName, FilterUserRole } from "entity";
 import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserRole } from "services/api/api-client.types";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { Pagination } from "shared/ui";
-import { UsersList, SearchRolesForm } from "widgets/RolesForm"
+import { UsersList } from "widgets/RolesForm"
 
 export const RolesPage = () => {
-    const [searchParams, setSearchParams] = useState<{
-        name?: string;
-        role?: UserRole;
-    }>({});
+    const [searchParams] = useSearchParams();
+
+    const nameParam = searchParams.get('name') || undefined;
+    const roleParam = searchParams.get('role') as UserRole || undefined;
+    const sizeParam = searchParams.get('size') || '10';
 
     const { data, isLoading } = useGetUserListQuery({
-        fullName: searchParams.name,
-        userRole: searchParams.role,
+        fullName: nameParam,
+        userRole: roleParam,
+        size: Number(sizeParam),
+        page: 0 
     });
-    // const { data: groups, isLoading: isLoadingGroups } = useGetGroupsQuery()
-    // const { data: partners, isLoading: isLoadingPartners } = useGetPartnersQuery()
-
-    const handleSearch = (values: typeof searchParams) => {
-        setSearchParams(values);
-    };
 
     if (isLoading) {
         return 'Загрузка'
@@ -30,7 +29,35 @@ export const RolesPage = () => {
     return (
         <Container fluid>
             <Flex direction="column" style={{ width: '75%', margin: '0 auto',  minWidth: '900px' }}>
-                <SearchRolesForm onSearch={handleSearch} initialValues={searchParams} />
+                <Flex justify="space-between" align="flex-end" mb="md">
+                    <Title order={1}>Пользователи</Title>
+                </Flex>
+                <FilterBlockShort 
+                    availableFilters={[
+                        {
+                            id: "name",
+                            label: "ФИО пользователя",
+                            element: (props) => (
+                                <FilterUserName 
+                                    id="name" 
+                                    initialValue={props.initialValue} 
+                                    onChangeValue={props.onChangeValue} 
+                                />
+                            )
+                        },
+                        {
+                            id: "role",
+                            label: "Роль пользователя",
+                            element: (props) => (
+                                <FilterUserRole 
+                                    id="role" 
+                                    initialValue={searchParams.get('role')} 
+                                    onChangeValue={props.onChangeValue} 
+                                />
+                            )
+                        }
+                    ]}
+                />
                 {data?.items?.length === 0 ? (
                     <Text>Пользователи не найдены</Text>
                 ) : (

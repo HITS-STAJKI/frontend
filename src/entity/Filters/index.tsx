@@ -355,9 +355,13 @@ export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: {
     );
 }
 
-export function FilterUserRole({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
-    const [value, setValue] = useState<string | null>(null);
+export function FilterUserRole({ id, onChangeValue, initialValue  }: { id: string; onChangeValue: (val: string | null) => void; initialValue?: string | null;  }) {
+    const [value, setValue] = useState<string | null>(initialValue || null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
+
+    useEffect(() => {
+        setValue(initialValue || null);
+    }, [initialValue]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -420,6 +424,37 @@ export function FilterGroupName({ id, onChangeValue }: { id: string; onChangeVal
         <TextInput
             id={`filter-${id}`}
             placeholder="Номер группы"
+            value={value}
+            onChange={handleChange}
+        />
+    );
+}
+
+export function FilterUserName({ 
+    id, 
+    onChangeValue, 
+    initialValue = "" 
+}: { 
+    id: string; 
+    initialValue?: string | null; 
+    onChangeValue: (val: string | null) => void; 
+}) {
+    const [value, setValue] = useState(initialValue || "");
+
+    useEffect(() => {
+        setValue(initialValue || "");
+    }, [initialValue]);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const val = event.currentTarget.value;
+        setValue(val);
+        onChangeValue(val || null);
+    };
+
+    return (
+        <TextInput
+            id={`filter-${id}`}
+            placeholder="Поиск по ФИО"
             value={value}
             onChange={handleChange}
         />
