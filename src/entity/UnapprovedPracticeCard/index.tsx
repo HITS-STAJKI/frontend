@@ -67,7 +67,7 @@ export function UnapprovedPracticeCard({ id, user, group, company, stack, create
                         </Grid.Col>
                         <Grid.Col span={2} style={{ display: "flex", justifyContent: "space-evenly", width: "100%", alignItems: "center" }} >
                             {chatId && <Button color="green" onClick={() => { setModalOpened(true) }} style={{ padding: '0', aspectRatio: '1 / 1' }}>{<SvgCommentIcon fontSize={'30'} />}</Button>}
-                            {id && <SuccedTeacherSelection id={id} />}
+                            {id && <SuccedTeacherSelection id={studentRole?.id!} />}
                         </Grid.Col>
                     </Grid>
                 </div>

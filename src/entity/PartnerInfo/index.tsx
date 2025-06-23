@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CompanyPartnerDto } from "services/api/api-client.types";
 import { useDownloadFileQuery } from 'services/api/api-client/FilesQuery';
+import { Roles, WithProfileRole } from 'shared/lib';
 
 type PartnerInfoProps = {
     partner: CompanyPartnerDto;
@@ -23,8 +24,7 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     useEffect(() => {
-        if (fileData?.data) 
-        {
+        if (fileData?.data) {
             const reader = new FileReader();
             reader.onloadend = () => setImageSrc(reader.result as string);
             reader.readAsDataURL(fileData.data);
@@ -32,19 +32,15 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
     }, [fileData]);
 
     const getErrorMessage = (error: unknown): string => {
-        if (!error) 
-        {
+        if (!error) {
             return 'Неизвестная ошибка';
         }
-        if (typeof error === 'object' && error !== null) 
-        {
+        if (typeof error === 'object' && error !== null) {
             const err = error as any;
-            if (err.message) 
-            {
+            if (err.message) {
                 return err.message;
             }
-            if (err.response?.data?.message) 
-            {
+            if (err.response?.data?.message) {
                 return err.response.data.message;
             }
         }
@@ -62,8 +58,16 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
                 </Group>
 
                 <Group>
-                    <EditPartnerButton partner={partner} onSuccess={refetch} />
-                    <DeletePartnerButton partner={partner} />
+                    <WithProfileRole
+                        render={
+                            <>
+                                <EditPartnerButton partner={partner} onSuccess={refetch} />
+                                <DeletePartnerButton partner={partner} />
+                            </>
+                        }
+                        usersFor={[Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.CURATOR]}
+                    />
+
                     <Button variant="outline" leftSection={<IconArrowLeft size={16} />} onClick={() => navigate('/partners')}>
                         Назад
                     </Button>

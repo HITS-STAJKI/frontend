@@ -65,8 +65,9 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                     });
             }
             else if (currentUser?.student?.chatId) {
-                //TODO: добавить проверику на роль
-                setChatId(currentUser.student.chatId);
+                if (!!currentUser.student) {
+                    setChatId(currentUser.student.chatId);
+                }
             }
         }
     }, [opened, studentId, currentUser]);
@@ -190,7 +191,6 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
             setMutationError(`Ошибка изменения оценки: ${msg}`);
         }
     };
-
     return (
         <Modal opened={opened} onClose={onClose} title={<Text size="xl" style={{ fontWeight: 700 }}>Отчёт</Text>} size="xl">
             {reportLoading ? (
@@ -213,7 +213,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                         label={null}
                                         style={{ flex: '2', minWidth: 0 }}
                                     />
-                                    {report?.grade === null && (!report?.fileId ? (
+                                    {((report?.grade === null) || (report?.grade === undefined)) && (!report?.fileId ? (
                                         <Button
                                             color="green"
                                             size="xs"
@@ -266,28 +266,34 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                     >
                                         {fileMetadata?.name ?? 'Скачать файл'}
                                     </Button>
-                                    <Flex align="end" gap="sm" mt="sm">
-                                        <Select
-                                            label="Оценка за отчёт"
-                                            placeholder="Выберите оценку"
-                                            data={['2', '3', '4', '5']}
-                                            value={grade}
-                                            onChange={handleGradeChange}
-                                            disabled={setGradeMutation.isPending}
-                                            allowDeselect={false}
-                                            size="xs"
-                                            style={{ maxWidth: 120 }}
-                                        />
-                                        <Button
-                                            size="xs"
-                                            variant="filled"
-                                            color="orange"
-                                            onClick={handleGradeSubmit}
-                                            disabled={!grade || grade === originalGrade || setGradeMutation.isPending}
-                                        >
-                                            {setGradeMutation.isPending ? 'Сохраняем...' : 'Изменить оценку'}
-                                        </Button>
-                                    </Flex>
+                                    <WithProfileRole
+                                        render={
+                                            <Flex align="end" gap="sm" mt="sm">
+                                                <Select
+                                                    label="Оценка за отчёт"
+                                                    placeholder="Выберите оценку"
+                                                    data={['2', '3', '4', '5']}
+                                                    value={grade}
+                                                    onChange={handleGradeChange}
+                                                    disabled={setGradeMutation.isPending}
+                                                    allowDeselect={false}
+                                                    size="xs"
+                                                    style={{ maxWidth: 120 }}
+                                                />
+                                                <Button
+                                                    size="xs"
+                                                    variant="filled"
+                                                    color="orange"
+                                                    onClick={handleGradeSubmit}
+                                                    disabled={!grade || grade === originalGrade || setGradeMutation.isPending}
+                                                >
+                                                    {setGradeMutation.isPending ? 'Сохраняем...' : 'Изменить оценку'}
+                                                </Button>
+                                            </Flex>
+                                        }
+                                        usersFor={[Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD]}
+                                    />
+
                                 </>
                             )
                         )}

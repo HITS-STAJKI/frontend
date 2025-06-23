@@ -9,11 +9,11 @@ import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
 const SelectionStudentPage = () => {
     const [searchParams] = useSearchParams();
-    
-    const { data: list, isLoading: isLoadingList, isError: isErrorList, error: errorList } = useGetInterviewList_1Query()
-
     const size = Number(searchParams.get("size") ?? "10");
     const page = Number(searchParams.get("page") ?? "0");
+    const { data: list, isLoading: isLoadingList, isError: isErrorList, error: errorList } = useGetInterviewList_1Query(page, size)
+
+
 
     const { data: user, isLoading: loadingUser, isError: isErrorUser, error: errorUser } = useGetCurrentUserQuery()
 
@@ -48,7 +48,7 @@ const SelectionStudentPage = () => {
             </Center>
         );
     }
-    
+
     return (
         <>
             <Container p={0} fluid style={{ width: '100%', marginInline: '2vh' }}>
