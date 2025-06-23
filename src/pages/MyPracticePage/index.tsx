@@ -42,7 +42,7 @@ const MyPracticePage = () => {
             <Flex direction="column" style={{ width: '100%', margin: '0 auto' }} gap="md">
                 <Group justify="space-between" mt="md" style={{ width: '100%' }} wrap="nowrap">
                     <Title order={2}>Практика студента</Title>
-                    <AttachReport practiceId={practice.id!} studentId={practice.user?.roles?.find(role => role.userRole === RoleDtoUserRole.STUDENT)!.id!} />
+                    <AttachReport practiceId={practice.id!}/>
                 </Group>
                 <Card shadow="sm" padding="md" style={{ width: '100%', display: 'flex' }}>
                     <Stack gap="xs">
