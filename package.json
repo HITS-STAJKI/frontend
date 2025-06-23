@@ -7,7 +7,7 @@
     "dev": "vite --open",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
+    "preview": "vite preview --host",
     "generate-requests": "react-query-swagger openapi2tsclient /tanstack /input:https://tomcat.sonya.jij.li/internship/v3/api-docs /output:src/services/api/api-client.ts /template:Axios /serviceHost:. /minimal /OperationGenerationMode:MultipleClientsFromFirstTagAndOperationId"
   },
   "dependencies": {
