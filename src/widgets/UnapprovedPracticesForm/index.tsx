@@ -1,11 +1,8 @@
-import { Button, Flex, Card, Grid, Box, Group, Text, Modal, Select, Loader } from "@mantine/core"
+import { Button, Flex, Card, Grid, Box, Group, Text } from "@mantine/core"
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { PagedListDtoPracticeDto } from "services/api/api-client.types";
 import { useSearchParams } from "react-router-dom";
-import { useApproveStudentPractices_1Mutation } from "services/api/api-client/PracticeQuery";
-import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
-import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { UnapprovedPracticeCard } from "entity/UnapprovedPracticeCard";
 
 export type SortDirectionUnapprovedPractices = "asc" | "desc";
@@ -24,39 +21,31 @@ export function UnapprovedPracticesForm({ items, pagination, initialSort = null 
     const [searchParams, setSearchParams] = useSearchParams();
     const [sort, setSort] = useState<[SortKeyUnapprovedPractices, SortDirectionUnapprovedPractices] | null>(initialSort);
 
-    function handleSort(key: SortKeyUnapprovedPractices) 
-    {
+    function handleSort(key: SortKeyUnapprovedPractices) {
         setSort((currentSort) => {
             let newSort: [SortKeyUnapprovedPractices, SortDirectionUnapprovedPractices] | null;
 
-            if (currentSort?.[0] === key) 
-            {
-                if (currentSort[1] === "asc") 
-                {
+            if (currentSort?.[0] === key) {
+                if (currentSort[1] === "asc") {
                     newSort = [key, "desc"];
-                } 
-                else if (currentSort[1] === "desc") 
-                {
+                }
+                else if (currentSort[1] === "desc") {
                     newSort = null;
-                } 
-                else 
-                {
+                }
+                else {
                     newSort = [key, "asc"];
                 }
-            } 
-            else 
-            {
+            }
+            else {
                 newSort = [key, "asc"];
             }
 
             const updatedParams = new URLSearchParams(searchParams);
-            if (newSort) 
-            {
+            if (newSort) {
                 updatedParams.set("sort", newSort[0]);
                 updatedParams.set("sortDirection", newSort[1]);
-            } 
-            else 
-            {
+            }
+            else {
                 updatedParams.delete("sort");
                 updatedParams.delete("sortDirection");
             }
@@ -66,18 +55,16 @@ export function UnapprovedPracticesForm({ items, pagination, initialSort = null 
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKeyUnapprovedPractices }) 
-    {
-        if (!sort || sort[0] !== columnKey)
-        {
+    function SortArrow({ columnKey }: { columnKey: SortKeyUnapprovedPractices }) {
+        if (!sort || sort[0] !== columnKey) {
             return null;
         }
-        return sort[1] === "asc" ? 
-        (
-            <IconChevronUp size={14} style={{ marginLeft: 4 }} />
-        ) : (
-            <IconChevronDown size={14} style={{ marginLeft: 4 }} />
-        );
+        return sort[1] === "asc" ?
+            (
+                <IconChevronUp size={14} style={{ marginLeft: 4 }} />
+            ) : (
+                <IconChevronDown size={14} style={{ marginLeft: 4 }} />
+            );
     }
 
     return (
@@ -100,7 +87,7 @@ export function UnapprovedPracticesForm({ items, pagination, initialSort = null 
                                     display: "flex",
                                     justifyContent: "center",
                                     alignItems: "stretch"
-                            }}>
+                                }}>
                                 <Button
                                     variant="subtle"
                                     size="sm"
@@ -116,17 +103,17 @@ export function UnapprovedPracticesForm({ items, pagination, initialSort = null 
                                         textAlign: "center",
                                         padding: "8px",
                                         gap: "4px",
-                                }}>
+                                    }}>
                                     <span
                                         style={{
-                                        display: "-webkit-box",
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: "vertical",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                        whiteSpace: "normal",
-                                        lineHeight: "1.2em",
-                                        maxWidth: "100%",
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical",
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            whiteSpace: "normal",
+                                            lineHeight: "1.2em",
+                                            maxWidth: "100%",
                                         }}
                                     >
                                         {label}
@@ -142,7 +129,7 @@ export function UnapprovedPracticesForm({ items, pagination, initialSort = null 
                 </div>
             </Card>
             {(!items || items.length === 0) ? (
-                <Card withBorder padding="lg" radius="md" shadow="sm" style={{width: '100%'}}>
+                <Card withBorder padding="lg" radius="md" shadow="sm" style={{ width: '100%' }}>
                     <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
                         Практик нет
                     </Text>
@@ -180,7 +167,7 @@ export function UnapprovedPracticesFormUnder({ studentCount }: PracticesProps) {
         <Box p="md" style={{ border: "1px solid #ccc", borderRadius: 8 }}>
             <Group justify="space-between" align="center">
                 <Text>Найдено заявок: {studentCount}</Text>
-                <Group/>
+                <Group />
             </Group>
         </Box>
     );

@@ -1,9 +1,6 @@
 import { Box, Button, Card, Grid, Text } from "@mantine/core"
-import { PRACTICE_ROUTE } from "shared/lib";
-import { ReportArchive, ReportDelete, ReportEdit, ReportOpen } from "features/PracticesFullButtons";
-import { useNavigate } from "react-router-dom";
 import { PracticeDto } from "services/api/api-client.types";
-import { CommentSelection, SuccedTeacherSelection } from "widgets/Selection/ModuleWindows";
+import { SuccedTeacherSelection } from "widgets/Selection/ModuleWindows";
 import { SvgCommentIcon } from "assets/icons";
 import { StudentCommentsModal } from "entity/StudentListCard";
 import { useEffect, useState } from "react";
@@ -14,24 +11,22 @@ interface UnapprovedPracticeCardProps extends PracticeDto {
     onRefresh?: () => void;
 }
 
-export function UnapprovedPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index, onRefresh }: UnapprovedPracticeCardProps) 
-{
+export function UnapprovedPracticeCard({ id, user, group, company, stack, createdAt, index, }: UnapprovedPracticeCardProps) {
     const [modalOpened, setModalOpened] = useState(false);
     const [chatId, setChatId] = useState<string | null>(null);
 
     const getStudentMutation = useGetStudentsByIdsMutation();
 
     const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
-    
+
     useEffect(() => {
-        if (studentRole?.id) 
-        {
+        if (studentRole?.id) {
             getStudentMutation.mutateAsync([studentRole.id])
                 .then((res) => {
                     const student = res?.[0];
                     setChatId(student?.chatId ?? null);
                 })
-                .catch((err) => {
+                .catch(() => {
                     setChatId(null);
                 });
         }
@@ -44,7 +39,7 @@ export function UnapprovedPracticeCard({ id, user, group, company, stack, create
                     <Box style={{ width: '40px', textAlign: 'center' }}>
                         <Text>{index}</Text>
                     </Box>
-                    <Grid style={{width: '100%'}}>
+                    <Grid style={{ width: '100%' }}>
                         <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                             <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                                 {user?.fullName ?? 'Неизвестный пользователь'}
@@ -64,14 +59,14 @@ export function UnapprovedPracticeCard({ id, user, group, company, stack, create
                             <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                                 {stack?.name ?? 'Неизвестная технология'}
                             </Text>
-                        </Grid.Col>                
+                        </Grid.Col>
                         <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                             <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                                 {createdAt ? createdAt.toLocaleString() : ''}
                             </Text>
                         </Grid.Col>
                         <Grid.Col span={2} style={{ display: "flex", justifyContent: "space-evenly", width: "100%", alignItems: "center" }} >
-                            {chatId && <Button color="green" onClick={() => {setModalOpened(true)}} style={{ padding: '0', aspectRatio: '1 / 1'}}>{<SvgCommentIcon fontSize={'30'}/>}</Button>}
+                            {chatId && <Button color="green" onClick={() => { setModalOpened(true) }} style={{ padding: '0', aspectRatio: '1 / 1' }}>{<SvgCommentIcon fontSize={'30'} />}</Button>}
                             {id && <SuccedTeacherSelection id={id} />}
                         </Grid.Col>
                     </Grid>

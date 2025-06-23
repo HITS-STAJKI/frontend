@@ -48,19 +48,14 @@ export function FilterName({ id, onChangeValue, initialValue = "" }: { id: strin
     );
 }
 
-export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onChangeValue: (val: string | null) => void; }) {
-    const [value, setValue] = useState<string | null>(null);
-    const [data, setData] = useState<{ value: string; label: string }[]>([]);
+export function FilterInterviewStatus({ id, onChangeValue, initialValue }: { id: string; initialValue: string | null; onChangeValue: (val: string | null) => void; }) {
+    const [value, setValue] = useState<string | null>(initialValue);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setData([
-                { value: "PENDING", label: "На рассмотрении" },
-                { value: "REJECTED", label: "Отклонен" },
-                { value: "SUCCEED", label: "Пройден" },
-            ]);
-        }, 300);
-    }, []);
+    const options = [
+        { value: "PENDING", label: "На рассмотрении" },
+        { value: "REJECTED", label: "Отклонен" },
+        { value: "SUCCEED", label: "Пройден" }
+    ];
 
     const handleChange = (val: string | null) => {
         setValue(val);
@@ -70,10 +65,10 @@ export function FilterInterviewStatus({ id, onChangeValue }: { id: string; onCha
     return (
         <Select
             id={`filter-${id}`}
-            placeholder="Выберите статус"
+            placeholder={"Выберите статус"}
             value={value}
             onChange={handleChange}
-            data={data}
+            data={options}
             clearable
         />
     );

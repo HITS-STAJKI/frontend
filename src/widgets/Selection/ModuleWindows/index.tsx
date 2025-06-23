@@ -4,7 +4,6 @@ import { CreateSelectionForm, EditSelectionForm } from "features/Selection/Creat
 import { PencilSvgrepoCom, TrashSvgrepoCom, SvgCommentIcon } from "assets/icons";
 import { CommentSectionAlt } from "entity";
 import { useApproveStudentPracticeMutation, useCreateStudentPracticeMutation } from "services/api/api-client/PracticeQuery";
-import { useGetInterviewListQuery } from "services/api/api-client/InterviewsQuery";
 import { useForm } from "@mantine/form";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { useState } from "react";

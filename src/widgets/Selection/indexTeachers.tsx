@@ -139,9 +139,9 @@ export type SortKeyST =
     | "student.group.number"
     | "company.name"
     | "createdAt"
-    | "isPaid"
-    | "isArchived"
-    | "isApproved";
+    | "stack.name"
+    | "languages.name"
+    | 'status'
 type PagedListDtoPracticeSTProps = PagedListDtoPracticeDto & {
     initialSort: [SortKeyST, SortDirectionST] | null;
     onRefresh?: () => void;
@@ -207,9 +207,9 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoPractice
                             { key: "student.user.fullName", label: "ФИО", span: 2.9 },
                             { key: "student.group.number", label: "Поток", span: 1.5 },
                             { key: "company.name", label: "Компания", span: 1.5 },
-                            { key: "isPaid", label: "Направление", span: 1.5 },
-                            { key: "isApproved", label: "Технологии", span: 1.5 },
-                            { key: "isArchived", label: "Статус", span: 1.6 },
+                            { key: 'stack.name', label: "Направление", span: 1.5 },
+                            { key: "languages.name", label: "Технологии", span: 1.5 },
+                            { key: "status", label: "Статус", span: 1.6 },
                             { key: "createdAt", label: "Дата создания", span: 1.5 },
                         ].map(({ key, label, span }) => (
                             <Grid.Col key={key} span={span} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
