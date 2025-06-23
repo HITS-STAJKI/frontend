@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
@@ -21,9 +22,9 @@ import { getAxios, getBaseUrl } from './helpers';
 export function getPartnerInfo(partnerId: string, config?: AxiosRequestConfig | undefined): Promise<Types.CompanyPartnerDto> {
     let url_ = getBaseUrl() + "/api/v1/partner/{partnerId}";
     if (partnerId === undefined || partnerId === null)
-      throw new Error("The parameter 'partnerId' must be defined.");
+        throw new Error("The parameter 'partnerId' must be defined.");
     url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetPartnerInfo,
@@ -61,42 +62,42 @@ function processGetPartnerInfo(response: AxiosResponse): Promise<Types.CompanyPa
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initCompanyPartnerDto(resultData200);
         return Promise.resolve<Types.CompanyPartnerDto>(result200);
 
@@ -115,9 +116,9 @@ function processGetPartnerInfo(response: AxiosResponse): Promise<Types.CompanyPa
 export function updatePartnerInfo(partnerId: string, body: Types.UpdateCompanyPartnerDto, config?: AxiosRequestConfig | undefined): Promise<Types.CompanyPartnerDto> {
     let url_ = getBaseUrl() + "/api/v1/partner/{partnerId}";
     if (partnerId === undefined || partnerId === null)
-      throw new Error("The parameter 'partnerId' must be defined.");
+        throw new Error("The parameter 'partnerId' must be defined.");
     url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeUpdateCompanyPartnerDto(body);
 
@@ -159,42 +160,42 @@ function processUpdatePartnerInfo(response: AxiosResponse): Promise<Types.Compan
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initCompanyPartnerDto(resultData200);
         return Promise.resolve<Types.CompanyPartnerDto>(result200);
 
@@ -213,9 +214,9 @@ function processUpdatePartnerInfo(response: AxiosResponse): Promise<Types.Compan
 export function deletePartner(partnerId: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/partner/{partnerId}";
     if (partnerId === undefined || partnerId === null)
-      throw new Error("The parameter 'partnerId' must be defined.");
+        throw new Error("The parameter 'partnerId' must be defined.");
     url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigDeletePartner,
@@ -253,42 +254,42 @@ function processDeletePartner(response: AxiosResponse): Promise<Types.Response> 
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -305,7 +306,7 @@ function processDeletePartner(response: AxiosResponse): Promise<Types.Response> 
  */
 export function createPartner(body: Types.CreateCompanyPartnerDto, config?: AxiosRequestConfig | undefined): Promise<Types.CompanyPartnerDto> {
     let url_ = getBaseUrl() + "/api/v1/partner";
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeCreateCompanyPartnerDto(body);
 
@@ -347,42 +348,42 @@ function processCreatePartner(response: AxiosResponse): Promise<Types.CompanyPar
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initCompanyPartnerDto(resultData200);
         return Promise.resolve<Types.CompanyPartnerDto>(result200);
 
@@ -397,7 +398,7 @@ function processCreatePartner(response: AxiosResponse): Promise<Types.CompanyPar
  * Получение списка партнеров хитса
  * @param id (optional) Идентификатор компании
  * @param name (optional) Название компании (разрешается частичное совпадение)
- * @param isNew (optional) Только новые компании
+ * @param isNew (optional) Только новые компании (те, в которых никто не проходит практику)
  * @param page (optional) Zero-based page index (0..N)
  * @param size (optional) The size of the page to be returned
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
@@ -429,7 +430,7 @@ export function getPartners(id?: string | undefined, name?: string | undefined, 
         throw new Error("The parameter 'sort' cannot be null.");
     else if (sort !== undefined)
         sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetPartners,
@@ -467,42 +468,42 @@ function processGetPartners(response: AxiosResponse): Promise<Types.PagedListDto
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initPagedListDtoShortCompanyPartnerDto(resultData200);
         return Promise.resolve<Types.PagedListDtoShortCompanyPartnerDto>(result200);
 
@@ -514,55 +515,55 @@ function processGetPartners(response: AxiosResponse): Promise<Types.PagedListDto
 }
 let _requestConfigGetPartnerInfo: Partial<AxiosRequestConfig> | null;
 export function getGetPartnerInfoRequestConfig() {
-  return _requestConfigGetPartnerInfo;
+    return _requestConfigGetPartnerInfo;
 }
 export function setGetPartnerInfoRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigGetPartnerInfo = value;
+    _requestConfigGetPartnerInfo = value;
 }
 export function patchGetPartnerInfoRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigGetPartnerInfo = patch(_requestConfigGetPartnerInfo ?? {});
+    _requestConfigGetPartnerInfo = patch(_requestConfigGetPartnerInfo ?? {});
 }
 
 let _requestConfigUpdatePartnerInfo: Partial<AxiosRequestConfig> | null;
 export function getUpdatePartnerInfoRequestConfig() {
-  return _requestConfigUpdatePartnerInfo;
+    return _requestConfigUpdatePartnerInfo;
 }
 export function setUpdatePartnerInfoRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigUpdatePartnerInfo = value;
+    _requestConfigUpdatePartnerInfo = value;
 }
 export function patchUpdatePartnerInfoRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigUpdatePartnerInfo = patch(_requestConfigUpdatePartnerInfo ?? {});
+    _requestConfigUpdatePartnerInfo = patch(_requestConfigUpdatePartnerInfo ?? {});
 }
 
 let _requestConfigDeletePartner: Partial<AxiosRequestConfig> | null;
 export function getDeletePartnerRequestConfig() {
-  return _requestConfigDeletePartner;
+    return _requestConfigDeletePartner;
 }
 export function setDeletePartnerRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigDeletePartner = value;
+    _requestConfigDeletePartner = value;
 }
 export function patchDeletePartnerRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigDeletePartner = patch(_requestConfigDeletePartner ?? {});
+    _requestConfigDeletePartner = patch(_requestConfigDeletePartner ?? {});
 }
 
 let _requestConfigCreatePartner: Partial<AxiosRequestConfig> | null;
 export function getCreatePartnerRequestConfig() {
-  return _requestConfigCreatePartner;
+    return _requestConfigCreatePartner;
 }
 export function setCreatePartnerRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigCreatePartner = value;
+    _requestConfigCreatePartner = value;
 }
 export function patchCreatePartnerRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigCreatePartner = patch(_requestConfigCreatePartner ?? {});
+    _requestConfigCreatePartner = patch(_requestConfigCreatePartner ?? {});
 }
 
 let _requestConfigGetPartners: Partial<AxiosRequestConfig> | null;
 export function getGetPartnersRequestConfig() {
-  return _requestConfigGetPartners;
+    return _requestConfigGetPartners;
 }
 export function setGetPartnersRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigGetPartners = value;
+    _requestConfigGetPartners = value;
 }
 export function patchGetPartnersRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigGetPartners = patch(_requestConfigGetPartners ?? {});
+    _requestConfigGetPartners = patch(_requestConfigGetPartners ?? {});
 }

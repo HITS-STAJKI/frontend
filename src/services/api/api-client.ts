@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as Types from './api-client.types';
 export * from './api-client.types';
 
@@ -147,10 +148,10 @@ import { getResultTypeFactory } from './api-client/helpers';
 export function deserializeDate(str: unknown) {
   if (!str || typeof str !== 'string') return str;
   if (!/^\d\d\d\d\-\d\d\-\d\d/.test(str)) return str;
-  
+
   const date = new Date(str);
   const isDate = date instanceof Date && !isNaN(date as any);
-  
+
   return isDate ? date : str;
 }
 
@@ -171,7 +172,7 @@ export function deserializeClassesInQueryData(queryKey: QueryKey, data: any) {
     return data;
   } else if ('pages' in data && 'pageParams' in data && Array.isArray(data.pages) && Array.isArray(data.pageParams)) {
     // infinite query
-    data.pages = data.pages.map((page:any) => deserializeClassesInQueryData(queryKey, page));
+    data.pages = data.pages.map((page: any) => deserializeClassesInQueryData(queryKey, page));
   } else if (Array.isArray(data)) {
     return data.map(elem => constructDtoClass(queryKey, elem));
   } else {
@@ -218,7 +219,7 @@ export function getResultTypeClassKey(queryKey: QueryKey): string {
 }
 
 export function initPersister() {
-  
+
   addResultTypeFactory('UserClient___getCurrentUser', (data: any) => Types.initUserDetailsDto(data));
   addResultTypeFactory('UserClient___getUserById', (data: any) => Types.initUserDetailsDto(data));
   addResultTypeFactory('UserClient___getUserList', (data: any) => Types.initPagedListDtoUserDto(data));
@@ -232,7 +233,7 @@ export function initPersister() {
 
   addResultTypeFactory('PracticeClient___getCurrentStudentPractice', (data: any) => Types.initPracticeDto(data));
   addResultTypeFactory('PracticeClient___getMyPractice', (data: any) => Types.initPracticeDto(data));
-  addResultTypeFactory('PracticeClient___getStudentPractices', (data: any) => Types.initPagedListDtoPracticeDto(data));
+  addResultTypeFactory('PracticeClient___getStudentPractices', (data: any) => Types.initPagedPracticesDto(data));
   addResultTypeFactory('PracticeClient___getPracticeRequests', (data: any) => Types.initPagedListDtoPracticeDto(data));
   addResultTypeFactory('PracticeClient___getAllPractices', (data: any) => Types.initPagedListDtoPracticeDto(data));
 
@@ -279,6 +280,7 @@ export function initPersister() {
   addResultTypeFactory('ChatControllerClient___getMyChatInfo', (data: any) => Types.initChatInfoDto(data));
 
 
+  addResultTypeFactory('StatisticsClient___countStudentsByFilter', (data: any) => Types.initStatisticsResponse(data));
 
 
 

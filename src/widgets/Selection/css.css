@@ -1,0 +1,62 @@
+.PENDING {
+  padding: 5px 20px;
+  display: inline-block;
+  border-radius: 50px;
+  background: var(--mantine-color-gray-filled);
+  color: var(--mantine-color-white);
+  flex-grow: 1;
+  text-align: center;
+  margin-inline: 10px;
+}
+
+.REJECTED {
+  padding: 5px 20px;
+  display: inline-block;
+  border-radius: 50px;
+  background: var(--mantine-color-red-filled);
+  color: var(--mantine-color-white);
+  flex-grow: 1;
+  text-align: center;
+  margin-inline: 10px;
+}
+
+.SUCCEED {
+  padding: 5px 20px;
+  display: inline-block;
+  border-radius: 50px;
+  background: var(--mantine-color-green-filled);
+  color: var(--mantine-color-white);
+  flex-grow: 1;
+  text-align: center;
+  margin-inline: 10px 0px;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position:100% 50%;
+  }
+  100% {
+    background-position:0% 50%;
+  }
+}
+.PRACTICE {
+  padding: 5px 20px;
+  display: inline-block;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #2ab91d, #00552a);
+  background-size: 300% 300%;
+  color: var(--mantine-color-white);
+  flex-grow: 1;
+  text-align: center;
+  font-weight: normal;
+  font-size:medium;
+  border: 0;
+  margin-inline: 0px 10px;
+  animation: gradient 1s linear infinite;
+}
+/**.PRACTICE:hover {
+  animation: gradient 1s linear infinite;
+}**/

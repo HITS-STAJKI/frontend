@@ -1,19 +1,35 @@
-import { Button, Flex, TextInput } from "@mantine/core";
-import { LanguagePage, StackPage } from "../../shared/lib/api/entities";
+import { Button, Flex, TextInput, Text } from "@mantine/core";
 import { LanguageStackCard } from "entity";
 import { CreateLanguageOrStackForm } from "features";
 import { Modal } from "shared/ui";
+import { useState } from "react";
+import { useDebouncedCallback } from "@mantine/hooks";
+import { LanguageDto, StackDto } from "services/api/api-client.types";
 
 
 interface SearchFormProps {
     type: 'language' | 'stack'; // что создавать
+    onSearch?: (query: string) => void;
 }
 
-export function SearchForm({ type }: SearchFormProps) {
+export function SearchForm({ type, onSearch }: SearchFormProps) {
+
+    const [searchValue, setSearchValue] = useState('');
+
+    // Обработчик изменения ввода с debounce (чтобы не делать запрос на каждое нажатие)
+    const handleSearchChange = useDebouncedCallback((value: string) => {
+        onSearch?.(value);
+    }, 300);
+
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
             <TextInput
                 placeholder={type === 'language' ? "Поиск языка..." : "Поиск стека..."}
+                value={searchValue}
+                onChange={(e) => {
+                    setSearchValue(e.target.value);
+                    handleSearchChange(e.target.value);
+                }}
             />
             <Modal
                 render={open => <Button onClick={() => open()}>{type === 'language' ? 'Создать язык' : 'Создать стек'}</Button>}
@@ -29,11 +45,14 @@ export function SearchForm({ type }: SearchFormProps) {
     );
 }
 
-export function LanguageList({ content, type }: (LanguagePage | StackPage) & { type: 'language' | 'stack' }) {
+export function LanguageList({ items, type }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' }) {
     return (
-        <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
-            {content.map(card => (
-                <LanguageStackCard key={card.id} type={type} id={card.id} name={card.name} />
+        <Flex direction="column" gap="md" mt="lg" style={{ width: '100%' }}>
+            <Text style={{ marginBottom: '10px' }}>
+                Найдено {type === 'language' ? 'языков' : 'стеков'}: {items.length}
+            </Text>
+            {items.map((item, index) => (
+                <LanguageStackCard key={item.id} type={type} id={item.id} name={item.name} index={index} />
             ))}
         </Flex>
     );

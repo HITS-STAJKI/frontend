@@ -23,7 +23,7 @@ export const COMPANY3: Company = {
 };
 
 export const GET_COMPANIES: CompanyPage = {
-    content: [COMPANY1, COMPANY2, COMPANY3],
+    items: [COMPANY1, COMPANY2, COMPANY3],
     pagination: {
         size: 3,
         currentPage: 1,

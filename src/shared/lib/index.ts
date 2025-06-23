@@ -1,3 +1,5 @@
 export * from './api'
 export * from './config'
 export * from './js'
+export * from './providers'
+export * from './HOC'

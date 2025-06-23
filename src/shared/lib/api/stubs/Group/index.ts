@@ -1,5 +1,5 @@
 import { Group, GroupPage } from "../../entities";
-import { GET_STUDENT, GET_STUDENT_2 } from "../Role";
+import { GET_STUDENT } from "../Role";
 
 export const GROUP1: Group = {
     id: 'some_group_id_1',
@@ -23,7 +23,7 @@ export const GROUP3: Group = {
 }
 
 export const GET_GROUPS: GroupPage = {
-    content: [GROUP1, GROUP2, GROUP3],
+    items: [GROUP1, GROUP2, GROUP3],
     pagination: {
         totalPages: 1,
         currentPage: 0,

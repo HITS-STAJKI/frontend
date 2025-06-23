@@ -1,4 +1,4 @@
-import { Input, Button, Flex, NativeSelect } from '@mantine/core';
+import { Input, Button, Flex } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 
 export const GroupSearchBlock = () => {
@@ -7,8 +7,6 @@ export const GroupSearchBlock = () => {
             <Input.Wrapper label="Поиск по номеру группы">
                 <Input placeholder="Введите номер группы" />
             </Input.Wrapper>
-            
-            <NativeSelect ml="xs" label="Сортировка" data={['По ***', 'Или по ***', 'Край по ***']} />
 
             <Button variant="filled" aria-label="Settings" style={{ marginLeft: '6px' }}>
                 <IconSearch style={{ width: '70%', height: '70%' }} stroke={2.5} />

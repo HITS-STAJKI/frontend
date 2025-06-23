@@ -4,6 +4,7 @@ import './styles/index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css';
+
 import { AppRouter } from './routes'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { QueryFactory } from '../services/api'
@@ -16,7 +17,7 @@ const axiosInstance = axios.create({
   headers: {
     Authorization: `Bearer ${window.localStorage.getItem('token')}`,
   },
-});
+})
 
 QueryFactory.setAxiosFactory(() => axiosInstance);
 

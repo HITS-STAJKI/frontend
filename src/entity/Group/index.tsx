@@ -10,13 +10,17 @@ type GroupProps = {
 
 }
 
-export const Group = ({ group }: GroupProps) => {
+export const Group = ({ group, number }: GroupProps & {number: number}) => {
     return (
         <Card shadow='sm' withBorder>
             <Flex justify='space-between'>
-
-                <EditListOfStudentsButton group={group} />
                 <MGroup>
+                <div>{number}</div>
+                <EditListOfStudentsButton group={group} />
+                </MGroup>
+                
+                <MGroup>
+                    <div>{group.studentsCount} учащихся</div>
                     <EditGroupButton group={group} />
                     <DeleteGroupButton group={group} />
                 </MGroup>

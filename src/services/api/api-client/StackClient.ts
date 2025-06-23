@@ -7,6 +7,7 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
+//@ts-nocheck
 import * as Types from '../api-client.types';
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
@@ -21,9 +22,9 @@ import { getAxios, getBaseUrl } from './helpers';
 export function updateStack(stackId: string, body: Types.UpdateStackDto, config?: AxiosRequestConfig | undefined): Promise<Types.StackDto> {
     let url_ = getBaseUrl() + "/api/v1/stack/{stackId}";
     if (stackId === undefined || stackId === null)
-      throw new Error("The parameter 'stackId' must be defined.");
+        throw new Error("The parameter 'stackId' must be defined.");
     url_ = url_.replace("{stackId}", encodeURIComponent("" + stackId));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeUpdateStackDto(body);
 
@@ -65,42 +66,42 @@ function processUpdateStack(response: AxiosResponse): Promise<Types.StackDto> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initStackDto(resultData200);
         return Promise.resolve<Types.StackDto>(result200);
 
@@ -119,9 +120,9 @@ function processUpdateStack(response: AxiosResponse): Promise<Types.StackDto> {
 export function deleteStack(stackId: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/stack/{stackId}";
     if (stackId === undefined || stackId === null)
-      throw new Error("The parameter 'stackId' must be defined.");
+        throw new Error("The parameter 'stackId' must be defined.");
     url_ = url_.replace("{stackId}", encodeURIComponent("" + stackId));
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigDeleteStack,
@@ -159,42 +160,42 @@ function processDeleteStack(response: AxiosResponse): Promise<Types.Response> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -211,7 +212,7 @@ function processDeleteStack(response: AxiosResponse): Promise<Types.Response> {
  */
 export function createStack(body: Types.CreateStackDto, config?: AxiosRequestConfig | undefined): Promise<Types.StackDto> {
     let url_ = getBaseUrl() + "/api/v1/stack";
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeCreateStackDto(body);
 
@@ -253,42 +254,42 @@ function processCreateStack(response: AxiosResponse): Promise<Types.StackDto> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         result200 = Types.initStackDto(resultData200);
         return Promise.resolve<Types.StackDto>(result200);
 
@@ -310,7 +311,7 @@ export function getStackList(query?: string | undefined, config?: AxiosRequestCo
         throw new Error("The parameter 'query' cannot be null.");
     else if (query !== undefined)
         url_ += "query=" + encodeURIComponent("" + query) + "&";
-      url_ = url_.replace(/[?&]$/, "");
+    url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetStackList,
@@ -348,47 +349,47 @@ function processGetStackList(response: AxiosResponse): Promise<Types.StackDto[]>
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409  = _responseText;
+        let resultData409 = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400  = _responseText;
+        let resultData400 = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500  = _responseText;
+        let resultData500 = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401  = _responseText;
+        let resultData401 = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404  = _responseText;
+        let resultData404 = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200  = _responseText;
+        let resultData200 = _responseText;
         if (Array.isArray(resultData200)) {
-              result200 = resultData200.map(item => 
+            result200 = resultData200.map(item =>
                 Types.initStackDto(item)
-              );
-            }
+            );
+        }
         return Promise.resolve<Types.StackDto[]>(result200);
 
     } else if (status !== 200 && status !== 204) {
@@ -399,44 +400,44 @@ function processGetStackList(response: AxiosResponse): Promise<Types.StackDto[]>
 }
 let _requestConfigUpdateStack: Partial<AxiosRequestConfig> | null;
 export function getUpdateStackRequestConfig() {
-  return _requestConfigUpdateStack;
+    return _requestConfigUpdateStack;
 }
 export function setUpdateStackRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigUpdateStack = value;
+    _requestConfigUpdateStack = value;
 }
 export function patchUpdateStackRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigUpdateStack = patch(_requestConfigUpdateStack ?? {});
+    _requestConfigUpdateStack = patch(_requestConfigUpdateStack ?? {});
 }
 
 let _requestConfigDeleteStack: Partial<AxiosRequestConfig> | null;
 export function getDeleteStackRequestConfig() {
-  return _requestConfigDeleteStack;
+    return _requestConfigDeleteStack;
 }
 export function setDeleteStackRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigDeleteStack = value;
+    _requestConfigDeleteStack = value;
 }
 export function patchDeleteStackRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigDeleteStack = patch(_requestConfigDeleteStack ?? {});
+    _requestConfigDeleteStack = patch(_requestConfigDeleteStack ?? {});
 }
 
 let _requestConfigCreateStack: Partial<AxiosRequestConfig> | null;
 export function getCreateStackRequestConfig() {
-  return _requestConfigCreateStack;
+    return _requestConfigCreateStack;
 }
 export function setCreateStackRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigCreateStack = value;
+    _requestConfigCreateStack = value;
 }
 export function patchCreateStackRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigCreateStack = patch(_requestConfigCreateStack ?? {});
+    _requestConfigCreateStack = patch(_requestConfigCreateStack ?? {});
 }
 
 let _requestConfigGetStackList: Partial<AxiosRequestConfig> | null;
 export function getGetStackListRequestConfig() {
-  return _requestConfigGetStackList;
+    return _requestConfigGetStackList;
 }
 export function setGetStackListRequestConfig(value: Partial<AxiosRequestConfig>) {
-  _requestConfigGetStackList = value;
+    _requestConfigGetStackList = value;
 }
 export function patchGetStackListRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-  _requestConfigGetStackList = patch(_requestConfigGetStackList ?? {});
+    _requestConfigGetStackList = patch(_requestConfigGetStackList ?? {});
 }

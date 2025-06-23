@@ -11,7 +11,7 @@ export const StudentCard = ({ student }: StudentProps) => {
         <Card withBorder mb="md">
             <Flex justify='space-between'>
 
-                {student.user.lastName} {student.user.firstName}
+                {student.fullName}
                 <DeleteStudentFromGroupButton student={student} />
 
             </Flex>

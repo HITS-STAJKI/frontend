@@ -1,16 +1,15 @@
-import { Card, Flex, Avatar, Text} from "@mantine/core";
+import { Card, Flex, Avatar, Text } from "@mantine/core";
 import { InterviewsComment } from "shared/lib";
-import { UserIcon } from "./UserIcon/UserIcon";
 
 export function CommentCard({ id, content, createdAt, modifiedAt, author }: InterviewsComment) {
     return (
-        <Card className="comment" id={id} style={{width: '100%', padding:'0.25vh', minHeight: '48px'}}>
+        <Card className="" id={id} style={{ width: '100%', padding: '0.25vh', minHeight: '48px' }}>
             <Flex align="flex-start">
-                {<Avatar color={getColorById(id)}>{/* author.avatar != null ? author.avatar :*/ author.firstName[0].toUpperCase() + author.lastName[0].toUpperCase()}</Avatar> }
-                <div style={{ flex: 1, marginLeft: '10px'}}>
+                {<Avatar color={getColorById(id)}>{/* author.avatar != null ? author.avatar :*/ author.fullname.toUpperCase()}</Avatar>}
+                <div style={{ flex: 1, marginLeft: '10px' }}>
                     <Flex direction="column">
                         <Flex align="center">
-                            <Text>{author.firstName} {author.lastName}</Text>
+                            <Text>{author.fullname}</Text>
                             <Text style={{ color: 'gray', fontSize: '0.8em', marginLeft: '5px' }}>
                                 {createdAt === modifiedAt ? createdAt : modifiedAt}
                             </Text>
