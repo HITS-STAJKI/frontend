@@ -25,7 +25,7 @@ export const LoginForm = () => {
                 }
             })
         }).then(() => {
-            navigate(MY_PROFILE_ROUTE);
+            setTimeout(() => navigate(MY_PROFILE_ROUTE), 2)
         }).catch((err) => {
             console.error("Ошибка входа:", err)
         })

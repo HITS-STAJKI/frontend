@@ -1,4 +1,4 @@
-import { Button, Card, Center, Container, FileInput, Loader, Select, Space, Text, Tooltip } from "@mantine/core"
+import { Anchor, Button, Card, Center, FileInput, Loader, Select, Space, Text, Tooltip } from "@mantine/core"
 import { DocSvgrepoCom } from "assets/icons"
 
 import { useDisclosure } from '@mantine/hooks';
@@ -12,6 +12,7 @@ import { IconDownload } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { ReportId } from "services/api/api-client.types";
 import { useGetStudentsByIdsMutation } from "services/api/api-client/StudentQuery";
+import { Roles, WithProfileRole } from "shared/lib";
 
 type ReportIdProps = {
     practiceId: string;
@@ -174,6 +175,10 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
             ) : (
                 <div style={{ width: '100%' }}>
                     <Group style={{ width: '80%', margin: '0 auto', justifyContent: 'space-between', marginBottom: '1rem' }} align="center" >
+                        <div>
+                            {JSON.stringify(report)}
+                        </div>
+                        <Button style={{ width: '100%' }} color='green'>Выставить оценку за практику</Button>
                         <Flex align="center" gap="sm" style={{ width: '100%' }}>
                             <Text style={{ flex: '1', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontWeight: 700 }} > Отчет:</Text>
                             <FileInput
@@ -183,31 +188,39 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                 label={null}
                                 style={{ flex: '2', minWidth: 0 }}
                             />
-                            {!report?.fileId ? (
-                                <Button
-                                    color="green"
-                                    size="xs"
-                                    onClick={handleAttach}
-                                    disabled={!selectedFile || uploadMutation.isPending}
-                                    style={{
-                                        flex: '1',
-                                        whiteSpace: 'nowrap',
-                                    }}
-                                >
-                                    {uploadMutation.isPending ? 'Загрузка...' : 'Прикрепить'}
-                                </Button>
+                            {report?.grade === null && (!report?.fileId ? (
+                                <WithProfileRole render={
+                                    <Button
+                                        color="green"
+                                        size="xs"
+                                        onClick={handleAttach}
+                                        disabled={!selectedFile || uploadMutation.isPending}
+                                        style={{
+                                            flex: '1',
+                                            whiteSpace: 'nowrap',
+                                        }}
+                                    >
+                                        {uploadMutation.isPending ? 'Загрузка...' : 'Прикрепить'}
+                                    </Button>
+                                }
+                                    usersFor={[Roles.STUDENT]}
+                                />
                             ) : (
-                                <Button
-                                    size="xs"
-                                    variant="default"
-                                    color="gray"
-                                    onClick={handleReplace}
-                                    disabled={!selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending}
-                                    style={{ flex: '1', whiteSpace: 'nowrap' }}
-                                >
-                                    {(uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending) ? 'Заменяется...' : 'Изменить'}
-                                </Button>
-                            )}
+                                <>
+                                    <Button
+                                        size="xs"
+                                        variant="default"
+                                        color="gray"
+                                        onClick={handleReplace}
+                                        disabled={!selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending}
+                                        style={{ flex: '1', whiteSpace: 'nowrap' }}
+                                    >
+                                        {(uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending) ? 'Заменяется...' : 'Изменить'}
+                                    </Button>
+                                    <Anchor href={`https://tomcat.sonya.jij.li/internship/api/v1/files/${report?.fileId}/download`} target='_blank'>Скачать файл</Anchor>
+                                </>
+                            ))}
+
                         </Flex>
                         {report?.fileId && (
                             fileLoading ? (

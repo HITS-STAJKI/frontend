@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Container, Space, Stack, Title, Group, Flex } from "@mantine/core";
-import { Modal } from '@mantine/core';
-
-import { Comment } from "entity";
-import { GET_INTERVIEWS_COMMENTS, InterviewsComment } from "shared/lib";
-import { CreateCommentForm } from "features/CreateCommentForm";
+import { Button } from "@mantine/core";
 import { ReportOpenModal } from "features/PracticesFullButtons";
 import { useGetPracticeReportQuery } from "services/api/api-client/Practice_reportsQuery";
 import { downloadFileUrl } from "services/api/api-client/FilesQuery";
@@ -76,7 +71,10 @@ export const ReportShortOpen = ({ id, studentId }: ReportIdProps) => {
 
     return (
         <>
-            {renderOpenButton()}
+            {/* {renderOpenButton()} */}
+            <Button variant='light' size="sm" onClick={() => setOpened(true)}>
+                Посмотреть отчет
+            </Button>
 
             {id && (<ReportOpenModal practiceId={id} studentId={studentId} opened={opened} onClose={() => setOpened(false)} />)}
         </>

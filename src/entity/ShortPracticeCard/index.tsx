@@ -5,23 +5,22 @@ import { useNavigate } from "react-router-dom";
 import { PracticeDto } from "services/api/api-client.types";
 
 interface FullPracticeCardProps extends PracticeDto {
-  index: number;
+    index: number;
 }
 
-export function ShortPracticeCard({ id, user, group, company, stack, createdAt, isPaid, isArchived, isApproved, index }: FullPracticeCardProps) {
+export function ShortPracticeCard({ id, user, company, createdAt, isPaid, isArchived, isApproved, index }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
     const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
 
     const handleClick = () => {
-        if (studentRole?.id) 
-        {
+        if (studentRole?.id) {
             navigate(PRACTICE_ROUTE.replace(':id', studentRole.id));
         }
     };
 
     const isCardClickable = isApproved && !isArchived;
-    
+
     return (
         <Card
             key={id}
@@ -29,22 +28,19 @@ export function ShortPracticeCard({ id, user, group, company, stack, createdAt, 
             style={{ width: '100%', height: '64px', display: 'flex', cursor: isCardClickable ? 'pointer' : 'default', transition: 'box-shadow 0.2s ease, background-color 0.2s ease' }}
             onClick={isCardClickable ? handleClick : undefined}
             onKeyDown={isCardClickable ? (e) => {
-                if (e.key === 'Enter' || e.key === ' ') 
-                {
+                if (e.key === 'Enter' || e.key === ' ') {
                     handleClick();
                 }
             } : undefined}
             tabIndex={isCardClickable ? 0 : -1}
             onMouseEnter={(e) => {
-                if (isCardClickable) 
-                {
+                if (isCardClickable) {
                     (e.currentTarget as HTMLDivElement).style.boxShadow = '0 0 10px rgba(0,0,0,0.1)';
                     (e.currentTarget as HTMLDivElement).style.backgroundColor = '#f9f9f9';
                 }
             }}
             onMouseLeave={(e) => {
-                if (isCardClickable) 
-                {
+                if (isCardClickable) {
                     (e.currentTarget as HTMLDivElement).style.boxShadow = '';
                     (e.currentTarget as HTMLDivElement).style.backgroundColor = '';
                 }
@@ -54,7 +50,7 @@ export function ShortPracticeCard({ id, user, group, company, stack, createdAt, 
                 <Box style={{ width: '40px', textAlign: 'center' }}>
                     <Text>{index}</Text>
                 </Box>
-                <Grid style={{width: '100%'}}>
+                <Grid style={{ width: '100%' }}>
                     <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {company?.name ?? '—'}
@@ -64,7 +60,7 @@ export function ShortPracticeCard({ id, user, group, company, stack, createdAt, 
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {isPaid == true ? "Да" : "Нет"}
                         </Text>
-                    </Grid.Col>                
+                    </Grid.Col>
                     <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {isApproved == true ? "Да" : "Нет"}
@@ -84,8 +80,8 @@ export function ShortPracticeCard({ id, user, group, company, stack, createdAt, 
                         {
                             //TODO: Сделать отображжение кнопок от роли
                         }
-                        { id && studentRole && <ReportShortOpen id={id} studentId={studentRole?.id}/> }
-                    </Grid.Col> 
+                        {id && studentRole && <ReportShortOpen id={id} studentId={studentRole?.id} />}
+                    </Grid.Col>
                 </Grid>
             </div>
         </Card>
