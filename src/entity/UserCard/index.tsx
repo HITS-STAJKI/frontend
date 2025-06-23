@@ -3,11 +3,11 @@ import { User } from "shared/lib/api/entities/User";
 import { EditUserButton } from "features/UsersList/UserEditButton";
 import { DeleteUserButton } from "features/UsersList/UserDeleteButton";
 
-export function UserCard({ id, email, fullname, roles, number }: User & {number: number}) {
+export function UserCard({ id, fullname, roles, number }: User & { number: number }) {
     return (
         <Card key={id} shadow="sm" style={{ width: '100%', height: '64px', display: 'flex' }} data-role={JSON.stringify(roles)}>
             <Grid grow>
-            
+
                 <Grid.Col span={2.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                     <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                         {number}

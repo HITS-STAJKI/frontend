@@ -4,7 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import { UserRole } from "services/api/api-client.types";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { Pagination } from "shared/ui";
-import { UsersList } from "widgets/RolesForm"
+import { RoleDropdown, UsersList } from "widgets/RolesForm"
 
 const RolesPage = () => {
     const [searchParams] = useSearchParams();
@@ -28,6 +28,7 @@ const RolesPage = () => {
             <Flex direction="column" style={{ width: '75%', margin: '0 auto', minWidth: '900px' }}>
                 <Flex justify="space-between" align="flex-end" mb="md">
                     <Title order={1}>Пользователи</Title>
+                    <RoleDropdown />
                 </Flex>
                 <FilterBlockShort
                     availableFilters={[

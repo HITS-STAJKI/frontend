@@ -1,8 +1,8 @@
-import { Button, Flex, TextInput, Menu, MultiSelect, Select, SelectProps, Title, Modal } from "@mantine/core"
+import { Button, Flex, TextInput, Menu, Select, SelectProps, Title, Modal } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { UserList } from "shared/lib/api/entities/User";
 import { UserCard } from "entity/UserCard";
-import { CompanyPartnerDto, GroupDto, UserRole } from "services/api/api-client.types";
+import { UserRole } from "services/api/api-client.types";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { forwardRef, useState } from "react";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
@@ -14,7 +14,7 @@ import { useCreateTeacherMutation } from "services/api/api-client/TeacherQuery";
 import { useCreateProgramLeadMutation } from "services/api/api-client/Educational_program_leadQuery";
 
 
-function RoleDropdown() {
+export function RoleDropdown() {
     const [type, setType] = useState<'STUDENT' | 'TEACHER' | 'CURATOR' | 'DEAN' | 'EDUCATIONALPROGRAMLEAD' | undefined>(undefined)
     return (
         <>

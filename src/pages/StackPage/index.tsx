@@ -1,7 +1,6 @@
 import { LanguageList } from "../../widgets/LanguageStack";
 import { SearchForm } from "../../widgets/LanguageStack";
 import { Center, Container, Flex, Loader } from "@mantine/core";
-import { GET_STACKS } from "../../shared/lib/api/stubs/";
 import { useGetStackListQuery } from "services/api/api-client/StackQuery";
 import { useState } from "react";
 
