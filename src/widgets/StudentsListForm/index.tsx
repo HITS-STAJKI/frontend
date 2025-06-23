@@ -1,4 +1,4 @@
-import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea } from "@mantine/core"
+import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea, FileInput } from "@mantine/core"
 import { useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { StudentListCard } from "entity/StudentListCard";
@@ -6,6 +6,8 @@ import { PagedListDtoStudentDto } from "services/api/api-client.types";
 import { useSearchParams } from "react-router-dom";
 import { useSendMessagesMutation } from "services/api/api-client/ChatControllerQuery";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
+import { UploadFileFilesMutationParameters } from "services/api/api-client/FilesQuery";
+import { useImportStudentsMutation } from "services/api/api-client/StudentQuery";
 
 type PracticesFormOverProps = {
     studentName: string,
@@ -222,7 +224,7 @@ export function StudentsCommentaryForm({ selectedStudentIds }: StudentsCommentar
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
     const isSubmitDisabled = value.trim() === '' || selectedStudentIds.length === 0;
-
+    const { mutateAsync: importMutation } = useImportStudentsMutation()
     const { mutate, status } = useSendMessagesMutation({
         onSuccess: () => {
             setValue('');
@@ -275,13 +277,32 @@ export function StudentsCommentaryForm({ selectedStudentIds }: StudentsCommentar
                     )}
 
                     <Group justify="flex-end" mt="sm">
-                        <Button
-                            color="green"
-                            variant="filled"
-                            style={{ textAlign: 'center', flexDirection: 'column', whiteSpace: 'pre-line', padding: '0.75rem' }}
-                        >
-                            Экспортировать пользователей
-                        </Button>
+                        <FileInput label={'Прикерепить студентов'} accept={'.xlsx,.xls'} size='sm' maw={'30%'} miw={'10%'} onChange={(e) => {
+                            console.log(e)
+                            const name = e?.name
+                            if (!name) {
+                                return
+                            }
+                            const fp: UploadFileFilesMutationParameters = {
+                                file: {
+                                    data: e,
+                                    fileName: name
+                                },
+
+                            }
+                            importMutation(fp).then((file) => {
+                                const url = window.URL.createObjectURL(file.data)
+                                const a = document.createElement('a')
+                                a.href = url;
+                                a.download = file.fileName!;
+                                document.body.appendChild(a);
+                                a.click();
+                                window.URL.revokeObjectURL(url);
+                                document.body.removeChild(a);
+                            }).catch(err => {
+                                setErrorMessage(getErrorMessage(err))
+                            })
+                        }} />
                     </Group>
                 </Stack>
             </Card>

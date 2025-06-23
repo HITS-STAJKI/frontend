@@ -51,11 +51,9 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
     }, [report]);
 
     useEffect(() => {
-        if (opened) 
-        {
+        if (opened) {
             setMutationError(null);
-            if (studentId) 
-            {
+            if (studentId) {
                 getStudentMutation.mutateAsync([studentId])
                     .then((res) => {
                         const student = res?.[0];
@@ -65,9 +63,8 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                         const msg = getErrorMessage(err);
                         setMutationError(`Ошибка получения chatId: ${msg}`);
                     });
-            } 
-            else if (currentUser?.student?.chatId) 
-            {
+            }
+            else if (currentUser?.student?.chatId) {
                 //TODO: добавить проверику на роль
                 setChatId(currentUser.student.chatId);
             }
@@ -95,7 +92,6 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                 }
                 const blob = await response.blob()
                 const url = window.URL.createObjectURL(blob)
-                console.log(url, fileMetadata)
                 const a = document.createElement('a');
                 a.href = url;
                 a.download = fileMetadata?.name!;
