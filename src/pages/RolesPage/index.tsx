@@ -1,10 +1,7 @@
-import { Container, Flex, Select, Text, TextInput, Title } from "@mantine/core";
+import { Container, Flex, Text, Title } from "@mantine/core";
 import { FilterBlockShort, FilterUserName, FilterUserRole } from "entity";
-import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { UserRole } from "services/api/api-client.types";
-import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
-import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
 import { Pagination } from "shared/ui";
 import { UsersList } from "widgets/RolesForm"
