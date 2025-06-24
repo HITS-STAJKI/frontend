@@ -145,7 +145,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
 
         setMutationError(null);
         try {
-            await unattachMutation.mutateAsync({ reportId: { reportId: report.id } });
+            await unattachMutation.mutateAsync({ reportId: report.id as unknown as ReportId });
             await deleteMutation.mutateAsync({ id: report.fileId });
 
             const fileParameter = {

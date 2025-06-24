@@ -49,10 +49,12 @@ export function StudentListCard({ index, studentId, fullName, groupNumber, lastL
                                 {lastLoginDate ? lastLoginDate.toLocaleString() : ''}
                             </Text>
                         </Grid.Col>
-                        <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                            <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                {unreadMessagesCount ? (unreadMessagesCount > 9 ? '9+' : unreadMessagesCount) : 0}
-                            </Text>
+                        <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }} >
+                            {unreadMessagesCount != null && unreadMessagesCount > 0 && (
+                                <Box style={{ padding: '4px 8px', border: '1px solid #ff6b6b', borderRadius: '12px', color: 'black', fontWeight: 500, fontSize: '14px', minWidth: '24px', textAlign: 'center' }} >
+                                    {unreadMessagesCount > 9 ? '9+' : unreadMessagesCount}
+                                </Box>
+                            )}
                         </Grid.Col>
                         <Grid.Col span={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Button variant="outline" onClick={(e) => { e.stopPropagation(); navigate(`/practices/student/${studentId}`); }}>
@@ -62,7 +64,7 @@ export function StudentListCard({ index, studentId, fullName, groupNumber, lastL
                     </Grid>
                 </div>
             </Card>
-
+            
             <StudentCommentsModal opened={modalOpened} onClose={() => setModalOpened(false)} chatId={chatId} />
         </>
     );

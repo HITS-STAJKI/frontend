@@ -22,7 +22,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
     {id: "groupName",label: "Номер группы",element: (props) => <FilterGroupName id="groupName" onChangeValue={props.onChangeValue} />}
 ]}/>*/}
 
-const pageSizes = [10, 15, 20, 25, 50, 100];
+const pageSizes = [10, 15, 20, 25, 50, 100, 150, 200, 1000];
 
 type FilterItem = {
     id: string;
