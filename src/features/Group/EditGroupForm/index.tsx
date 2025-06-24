@@ -16,7 +16,7 @@ export const EditGroupButton = ({ group }: EditGroupButtonProps) => {
                 <PencilSvgrepoCom />
             </Button>}
             content={({ close }) => <EditGroupForm group={group} onSuccess={() => close()} />}
-            title={'Редактировать группу'}
+            title={'Редактировать поток'}
         />
 
     )

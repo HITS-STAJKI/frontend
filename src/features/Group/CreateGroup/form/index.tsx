@@ -19,7 +19,7 @@ export const CreateGroupForm = ({ onSuccess }: CreateGroupFormProps) => {
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
             <TextInput
-                label="Номер группы"
+                label="Номер потока"
                 key={form.key('number')}
                 mb="xs"
                 {...form.getInputProps('number')}

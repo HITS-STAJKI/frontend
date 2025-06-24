@@ -96,7 +96,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                     <Grid style={{ width: "100%" }}>
                         {[
                             { key: "user.fullName", label: "Имя студента" },
-                            { key: "group.number", label: "Группа" },
+                            { key: "group.number", label: "Поток" },
                             { key: "user.lastLoginDate", label: "Время последнего входа" }
                         ].map(({ key, label }) => (
                             <Grid.Col
@@ -277,7 +277,7 @@ export function StudentsCommentaryForm({ selectedStudentIds }: StudentsCommentar
                     )}
 
                     <Group justify="flex-end" mt="sm">
-                        <FileInput label={'Прикерепить студентов'} accept={'.xlsx,.xls'} size='sm' maw={'30%'} miw={'10%'} onChange={(e) => {
+                        <FileInput label={'Прикрепить студентов'} accept={'.xlsx,.xls'} size='sm' maw={'30%'} miw={'10%'} onChange={(e) => {
                             console.log(e)
                             const name = e?.name
                             if (!name) {

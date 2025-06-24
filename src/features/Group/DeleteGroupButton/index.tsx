@@ -15,7 +15,7 @@ export const DeleteGroupButton = ({ group }: DeleteGroupButtonProps) => {
 
     return (
         <Modal
-            title={`Вы уверены, что хотите удалить группу ${group.number}?`}
+            title={`Вы уверены, что хотите удалить поток ${group.number}?`}
             render={open => <Button color="red" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}>
                 <TrashSvgrepoCom />
             </Button>}
