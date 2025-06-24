@@ -58,7 +58,7 @@ export const ProfileBlock = ({
             </div>
 
             <ProfileForm profileInfo={profileData} mod={mode} />
-
+            {(!!!profileData.curator || !!!profileData.dean || !!!profileData.educationalProgramLead || !!!profileData.student || !!!profileData.teacher) && <div>Ожидайте пока вам выдадут роль</div>}
         </div>
     )
 }
