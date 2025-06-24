@@ -37,11 +37,24 @@ import { User } from "shared/lib";
       });
     };
   
-   
-    const rolesOptions = user.roles?.map((role) => ({
-      value: role.id,
-      label: role.userRole,
-    }));
+    const roleLabels: Record<string, string> = {
+        ADMIN: "Админ",
+        DEAN: "Деканат",
+        CURATOR: "Куратор",
+        STUDENT: "Студент",
+        TEACHER: "Преподаватель",
+        EDUCATIONAL_PROGRAM_LEAD: "Руководитель образовательной программы",
+      };
+      
+
+    const rolesOptions = user.roles?.map((role) => {
+        const userRole = role.userRole;
+        return {
+            value: role.id,
+            label: userRole ? roleLabels[userRole] || userRole : "Неизвестная роль", 
+        }
+        
+    });
 
     const filteredRolesOptions = rolesOptions?.filter(role => role.label !== undefined).map(role => ({
         value: role.value,

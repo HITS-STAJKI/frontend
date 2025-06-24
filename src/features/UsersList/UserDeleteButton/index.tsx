@@ -20,7 +20,7 @@ export const DeleteUserButton = ({ user }: {user: UserDto}) => {
         
 
         <Modal
-            render={open => <Button color="red" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}>
+            render={open => <Button color="red" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0, marginLeft: "1vw" }}>
                 <TrashSvgrepoCom />
             </Button>}
             content={({ close }) => <DeleteRoleForm 

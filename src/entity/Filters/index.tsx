@@ -508,7 +508,7 @@ export function FilterUserRole({ id, onChangeValue, initialValue  }: { id: strin
     useEffect(() => {
         setTimeout(() => {
             setData([
-                { value: "ADMIN", label: "Админ" },
+                // { value: "ADMIN", label: "Админ" },
                 { value: "DEAN", label: "Деканат" },
                 { value: "CURATOR", label: "Куратор" },
                 { value: "STUDENT", label: "Студент" },
