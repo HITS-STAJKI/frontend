@@ -20,7 +20,7 @@ export function RoleDropdown() {
         <>
             <Menu position="left-start">
                 <Menu.Target>
-                    <Button>Создать пользователя</Button>
+                    <Button>Выдать пользователю роль</Button>
                 </Menu.Target>
                 <Menu.Dropdown style={{ display: "flex", flexDirection: "row", alignItems: "center", padding: 0 }}>
                     <Menu.Item onClick={() => setType('STUDENT')}>Студент</Menu.Item>
@@ -189,20 +189,14 @@ export function SearchRolesForm({ onSearch, initialValues }: {
 
 export function UsersList({ items, pagination }: UserList) {
 
-    const currentPage = pagination.currentPage || 1;
-    const size = pagination.size || 10;
-
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
-            {items.map((user, index) => {
-                const number = (currentPage - 1) * size + index + 1;
+            {items.map((user, localIndex) => {
+                const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
                 return <UserCard
                     key={user.id}
-                    id={user.id!}
-                    email={user.email!}
-                    fullname={user.fullName!}
-                    roles={user.roles!}
-                    number={number} // Передаем номер в карточку
+                    user={user}
+                    number={globalIndex + 1} 
                 />
             })}
         </Flex>
