@@ -22,7 +22,7 @@ export const LanguagePage = () => {
                 {isLoading ? (
                     <div>Loading...</div>
                 ) : (
-                    <LanguageList items={data || []} type='language' />
+                    <LanguageList items={data || []} type='language' query={searchQuery} />
                 )}
             </Flex>
         </Container>
