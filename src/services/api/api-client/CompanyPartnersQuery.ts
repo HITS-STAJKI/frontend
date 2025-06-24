@@ -20,31 +20,31 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type GetPartnerInfoCompanyPartnersQueryParameters = {
-  partnerId: string;
+  partnerId: string ;
 }
 
 export type UpdatePartnerInfoCompanyPartnersQueryParameters = {
-  partnerId: string;
+  partnerId: string ;
 }
 
 export type DeletePartnerCompanyPartnersQueryParameters = {
-  partnerId: string;
+  partnerId: string ;
 }
 
 export type GetPartnersCompanyPartnersQueryParameters = {
-  id?: string | undefined;
-  name?: string | undefined;
-  isNew?: boolean | undefined;
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
+  id?: string | undefined ;
+  name?: string | undefined ;
+  isNew?: boolean | undefined ;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
 }
 
 export function getPartnerInfoUrl(partnerId: string): string {
   let url_ = getBaseUrl() + "/api/v1/partner/{partnerId}";
-  if (partnerId === undefined || partnerId === null)
-    throw new Error("The parameter 'partnerId' must be defined.");
-  url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
+if (partnerId === undefined || partnerId === null)
+  throw new Error("The parameter 'partnerId' must be defined.");
+url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
@@ -61,24 +61,24 @@ export function setGetPartnerInfoDefaultOptions(options: typeof getPartnerInfoDe
 export function getPartnerInfoQueryKey(partnerId: string): QueryKey;
 export function getPartnerInfoQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { partnerId, } = params[0] as GetPartnerInfoCompanyPartnersQueryParameters;
+    const { partnerId,  } = params[0] as GetPartnerInfoCompanyPartnersQueryParameters;
 
     return trimArrayEnd([
-      'CompanyPartnersClient',
-      'getPartnerInfo',
-      partnerId as any,
-    ]);
+        'CompanyPartnersClient',
+        'getPartnerInfo',
+        partnerId as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'CompanyPartnersClient',
-      'getPartnerInfo',
-      ...params
-    ]);
+        'CompanyPartnersClient',
+        'getPartnerInfo',
+        ...params
+      ]);
   }
 }
 export function __getPartnerInfo(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getPartnerInfo(
-    context.queryKey[2] as string, axiosConfig);
+      context.queryKey[2] as string,axiosConfig    );
 }
 
 export function useGetPartnerInfoQuery<TSelectData = Types.CompanyPartnerDto, TError = unknown>(dto: GetPartnerInfoCompanyPartnersQueryParameters, options?: Omit<UseQueryOptions<Types.CompanyPartnerDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -88,14 +88,14 @@ export function useGetPartnerInfoQuery<TSelectData = Types.CompanyPartnerDto, TE
  * @return OK
  */
 export function useGetPartnerInfoQuery<TSelectData = Types.CompanyPartnerDto, TError = unknown>(partnerId: string, options?: Omit<UseQueryOptions<Types.CompanyPartnerDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetPartnerInfoQuery<TSelectData = Types.CompanyPartnerDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetPartnerInfoQuery<TSelectData = Types.CompanyPartnerDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.CompanyPartnerDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let partnerId: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ partnerId, } = params[0] as GetPartnerInfoCompanyPartnersQueryParameters);
+      ({ partnerId,  } = params[0] as GetPartnerInfoCompanyPartnersQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -132,22 +132,22 @@ export function setGetPartnerInfoData(queryClient: QueryClient, updater: (data: 
 export function setGetPartnerInfoDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.CompanyPartnerDto | undefined) => Types.CompanyPartnerDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function updatePartnerInfoUrl(partnerId: string): string {
   let url_ = getBaseUrl() + "/api/v1/partner/{partnerId}";
-  if (partnerId === undefined || partnerId === null)
-    throw new Error("The parameter 'partnerId' must be defined.");
-  url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
+if (partnerId === undefined || partnerId === null)
+  throw new Error("The parameter 'partnerId' must be defined.");
+url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updatePartnerInfoMutationKey(partnerId: string): MutationKey {
   return trimArrayEnd([
-    'CompanyPartnersClient',
-    'updatePartnerInfo',
-    partnerId as any,
-  ]);
+      'CompanyPartnersClient',
+      'updatePartnerInfo',
+      partnerId as any,
+    ]);
 }
 
 /**
@@ -157,17 +157,17 @@ export function updatePartnerInfoMutationKey(partnerId: string): MutationKey {
  */
 export function useUpdatePartnerInfoMutation<TContext>(partnerId: string, options?: Omit<UseMutationOptions<Types.CompanyPartnerDto, unknown, Types.UpdateCompanyPartnerDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.CompanyPartnerDto, unknown, Types.UpdateCompanyPartnerDto, TContext> {
   const key = updatePartnerInfoMutationKey(partnerId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.UpdateCompanyPartnerDto) => Client.updatePartnerInfo(partnerId, body),
     mutationKey: key,
   });
 }
-
+  
 type UpdatePartnerInfo__MutationParameters = UpdatePartnerInfoCompanyPartnersQueryParameters & {
   body: Types.UpdateCompanyPartnerDto;
 }
@@ -177,34 +177,34 @@ type UpdatePartnerInfo__MutationParameters = UpdatePartnerInfoCompanyPartnersQue
  * @param partnerId Идентификатор партнера
  * @return OK
  */
-export function useUpdatePartnerInfoMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.CompanyPartnerDto, unknown, UpdatePartnerInfo__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdatePartnerInfoCompanyPartnersQueryParameters }): UseMutationResult<Types.CompanyPartnerDto, unknown, UpdatePartnerInfo__MutationParameters, TContext> {
+export function useUpdatePartnerInfoMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.CompanyPartnerDto, unknown, UpdatePartnerInfo__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdatePartnerInfoCompanyPartnersQueryParameters}): UseMutationResult<Types.CompanyPartnerDto, unknown, UpdatePartnerInfo__MutationParameters, TContext> {
   const key = updatePartnerInfoMutationKey(options?.parameters?.partnerId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: UpdatePartnerInfo__MutationParameters) => Client.updatePartnerInfo(data.partnerId ?? options?.parameters?.partnerId!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: UpdatePartnerInfo__MutationParameters) => Client.updatePartnerInfo(data.partnerId ?? options?.parameters?.partnerId!, data.body),
+  mutationKey: key,
+});
 }
-
+  
 export function deletePartnerUrl(partnerId: string): string {
   let url_ = getBaseUrl() + "/api/v1/partner/{partnerId}";
-  if (partnerId === undefined || partnerId === null)
-    throw new Error("The parameter 'partnerId' must be defined.");
-  url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
+if (partnerId === undefined || partnerId === null)
+  throw new Error("The parameter 'partnerId' must be defined.");
+url_ = url_.replace("{partnerId}", encodeURIComponent("" + partnerId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deletePartnerMutationKey(partnerId: string): MutationKey {
   return trimArrayEnd([
-    'CompanyPartnersClient',
-    'deletePartner',
-    partnerId as any,
-  ]);
+      'CompanyPartnersClient',
+      'deletePartner',
+      partnerId as any,
+    ]);
 }
 
 /**
@@ -214,17 +214,17 @@ export function deletePartnerMutationKey(partnerId: string): MutationKey {
  */
 export function useDeletePartnerMutation<TContext>(partnerId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deletePartnerMutationKey(partnerId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: () => Client.deletePartner(partnerId),
     mutationKey: key,
   });
 }
-
+  
 type DeletePartner__MutationParameters = DeletePartnerCompanyPartnersQueryParameters
 
 /**
@@ -232,19 +232,19 @@ type DeletePartner__MutationParameters = DeletePartnerCompanyPartnersQueryParame
  * @param partnerId Идентификатор партнера
  * @return OK
  */
-export function useDeletePartnerMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeletePartner__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeletePartnerCompanyPartnersQueryParameters }): UseMutationResult<Types.Response, unknown, DeletePartner__MutationParameters, TContext> {
+export function useDeletePartnerMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeletePartner__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeletePartnerCompanyPartnersQueryParameters}): UseMutationResult<Types.Response, unknown, DeletePartner__MutationParameters, TContext> {
   const key = deletePartnerMutationKey(options?.parameters?.partnerId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: DeletePartner__MutationParameters) => Client.deletePartner(data.partnerId ?? options?.parameters?.partnerId!),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: DeletePartner__MutationParameters) => Client.deletePartner(data.partnerId ?? options?.parameters?.partnerId!),
+  mutationKey: key,
+});
 }
-
+  
 export function createPartnerUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/partner";
   url_ = url_.replace(/[?&]$/, "");
@@ -253,9 +253,9 @@ export function createPartnerUrl(): string {
 
 export function createPartnerMutationKey(): MutationKey {
   return trimArrayEnd([
-    'CompanyPartnersClient',
-    'createPartner',
-  ]);
+      'CompanyPartnersClient',
+      'createPartner',
+    ]);
 }
 
 /**
@@ -264,42 +264,42 @@ export function createPartnerMutationKey(): MutationKey {
  */
 export function useCreatePartnerMutation<TContext>(options?: Omit<UseMutationOptions<Types.CompanyPartnerDto, unknown, Types.CreateCompanyPartnerDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.CompanyPartnerDto, unknown, Types.CreateCompanyPartnerDto, TContext> {
   const key = createPartnerMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.CreateCompanyPartnerDto) => Client.createPartner(body),
     mutationKey: key,
   });
 }
-
+  
 export function getPartnersUrl(id?: string | undefined, name?: string | undefined, isNew?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/partner/list?";
-  if (id === null)
+if (id === null)
     throw new Error("The parameter 'id' cannot be null.");
-  else if (id !== undefined)
+else if (id !== undefined)
     url_ += "id=" + encodeURIComponent("" + id) + "&";
-  if (name === null)
+if (name === null)
     throw new Error("The parameter 'name' cannot be null.");
-  else if (name !== undefined)
+else if (name !== undefined)
     url_ += "name=" + encodeURIComponent("" + name) + "&";
-  if (isNew === null)
+if (isNew === null)
     throw new Error("The parameter 'isNew' cannot be null.");
-  else if (isNew !== undefined)
+else if (isNew !== undefined)
     url_ += "isNew=" + encodeURIComponent("" + isNew) + "&";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -318,29 +318,29 @@ export function getPartnersQueryKey(dto: GetPartnersCompanyPartnersQueryParamete
 export function getPartnersQueryKey(id?: string | undefined, name?: string | undefined, isNew?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getPartnersQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { id, name, isNew, page, size, sort, } = params[0] as GetPartnersCompanyPartnersQueryParameters;
+    const { id, name, isNew, page, size, sort,  } = params[0] as GetPartnersCompanyPartnersQueryParameters;
 
     return trimArrayEnd([
-      'CompanyPartnersClient',
-      'getPartners',
-      id as any,
-      name as any,
-      isNew as any,
-      page as any,
-      size as any,
-      sort as any,
-    ]);
+        'CompanyPartnersClient',
+        'getPartners',
+        id as any,
+        name as any,
+        isNew as any,
+        page as any,
+        size as any,
+        sort as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'CompanyPartnersClient',
-      'getPartners',
-      ...params
-    ]);
+        'CompanyPartnersClient',
+        'getPartners',
+        ...params
+      ]);
   }
 }
 export function __getPartners(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getPartners(
-    context.queryKey[2] as string | undefined, context.queryKey[3] as string | undefined, context.queryKey[4] as boolean | undefined, context.queryKey[5] as number | undefined, context.queryKey[6] as number | undefined, context.queryKey[7] as string[] | undefined, axiosConfig);
+      context.queryKey[2] as string | undefined,       context.queryKey[3] as string | undefined,       context.queryKey[4] as boolean | undefined,       context.queryKey[5] as number | undefined,       context.queryKey[6] as number | undefined,       context.queryKey[7] as string[] | undefined,axiosConfig    );
 }
 
 export function useGetPartnersQuery<TSelectData = Types.PagedListDtoShortCompanyPartnerDto, TError = unknown>(dto: GetPartnersCompanyPartnersQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoShortCompanyPartnerDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -355,19 +355,19 @@ export function useGetPartnersQuery<TSelectData = Types.PagedListDtoShortCompany
  * @return OK
  */
 export function useGetPartnersQuery<TSelectData = Types.PagedListDtoShortCompanyPartnerDto, TError = unknown>(id?: string | undefined, name?: string | undefined, isNew?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoShortCompanyPartnerDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetPartnersQuery<TSelectData = Types.PagedListDtoShortCompanyPartnerDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetPartnersQuery<TSelectData = Types.PagedListDtoShortCompanyPartnerDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoShortCompanyPartnerDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let id: any = undefined;
   let name: any = undefined;
   let isNew: any = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ id, name, isNew, page, size, sort, } = params[0] as GetPartnersCompanyPartnersQueryParameters);
+      ({ id, name, isNew, page, size, sort,  } = params[0] as GetPartnersCompanyPartnersQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

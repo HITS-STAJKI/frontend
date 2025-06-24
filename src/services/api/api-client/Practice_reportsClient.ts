@@ -21,11 +21,11 @@ import { getAxios, getBaseUrl } from './helpers';
  */
 export function unattachFileFromReport(reportId: Types.ReportId, config?: AxiosRequestConfig | undefined): Promise<Types.ReportDto> {
     let url_ = getBaseUrl() + "/api/v1/report/file/unattach?";
-    if (reportId === undefined || reportId === null)
+      if (reportId === undefined || reportId === null)
         throw new Error("The parameter 'reportId' must be defined and cannot be null.");
-    else
+      else
         url_ += "reportId=" + encodeURIComponent("" + reportId) + "&";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigUnattachFileFromReport,
@@ -63,42 +63,42 @@ function processUnattachFileFromReport(response: AxiosResponse): Promise<Types.R
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initReportDto(resultData200);
         return Promise.resolve<Types.ReportDto>(result200);
 
@@ -117,15 +117,15 @@ function processUnattachFileFromReport(response: AxiosResponse): Promise<Types.R
  */
 export function attachFileToReport(reportId: Types.ReportId, fileId: string, config?: AxiosRequestConfig | undefined): Promise<Types.ReportDto> {
     let url_ = getBaseUrl() + "/api/v1/report/file/attach?";
-    if (reportId === undefined || reportId === null)
+      if (reportId === undefined || reportId === null)
         throw new Error("The parameter 'reportId' must be defined and cannot be null.");
-    else
+      else
         url_ += "reportId=" + encodeURIComponent("" + reportId) + "&";
-    if (fileId === undefined || fileId === null)
+      if (fileId === undefined || fileId === null)
         throw new Error("The parameter 'fileId' must be defined and cannot be null.");
-    else
+      else
         url_ += "fileId=" + encodeURIComponent("" + fileId) + "&";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigAttachFileToReport,
@@ -163,42 +163,42 @@ function processAttachFileToReport(response: AxiosResponse): Promise<Types.Repor
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initReportDto(resultData200);
         return Promise.resolve<Types.ReportDto>(result200);
 
@@ -211,29 +211,28 @@ function processAttachFileToReport(response: AxiosResponse): Promise<Types.Repor
 
 /**
  * Изменить оценку отчета о практике
- * @param reportId Идентификатор отчета
  * @param grade Оценка отчета
  * @return OK
  */
-export function setGrade(reportId: Types.ReportId, grade: number, config?: AxiosRequestConfig | undefined): Promise<Types.ReportDto> {
+export function setGrade(grade: number, body: Types.ReportId, config?: AxiosRequestConfig | undefined): Promise<Types.ReportDto> {
     let url_ = getBaseUrl() + "/api/v1/report/grade?";
-    if (reportId === undefined || reportId === null)
-        throw new Error("The parameter 'reportId' must be defined and cannot be null.");
-    else
-        url_ += "reportId=" + encodeURIComponent("" + reportId) + "&";
-    if (grade === undefined || grade === null)
+      if (grade === undefined || grade === null)
         throw new Error("The parameter 'grade' must be defined and cannot be null.");
-    else
+      else
         url_ += "grade=" + encodeURIComponent("" + grade) + "&";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
+
+    const content_ = Types.serializeReportId(body);
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigSetGrade,
         ...config,
+        data: content_,
         method: "PATCH",
         url: url_,
         headers: {
             ..._requestConfigSetGrade?.headers,
+            "Content-Type": "application/json",
             "Accept": "*/*",
             ...config?.headers,
         }
@@ -263,42 +262,42 @@ function processSetGrade(response: AxiosResponse): Promise<Types.ReportDto> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initReportDto(resultData200);
         return Promise.resolve<Types.ReportDto>(result200);
 
@@ -316,11 +315,11 @@ function processSetGrade(response: AxiosResponse): Promise<Types.ReportDto> {
  */
 export function getPracticeReport(practiceId: string, config?: AxiosRequestConfig | undefined): Promise<Types.ReportDto> {
     let url_ = getBaseUrl() + "/api/v1/report?";
-    if (practiceId === undefined || practiceId === null)
+      if (practiceId === undefined || practiceId === null)
         throw new Error("The parameter 'practiceId' must be defined and cannot be null.");
-    else
+      else
         url_ += "practiceId=" + encodeURIComponent("" + practiceId) + "&";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetPracticeReport,
@@ -358,42 +357,42 @@ function processGetPracticeReport(response: AxiosResponse): Promise<Types.Report
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initReportDto(resultData200);
         return Promise.resolve<Types.ReportDto>(result200);
 
@@ -405,44 +404,44 @@ function processGetPracticeReport(response: AxiosResponse): Promise<Types.Report
 }
 let _requestConfigUnattachFileFromReport: Partial<AxiosRequestConfig> | null;
 export function getUnattachFileFromReportRequestConfig() {
-    return _requestConfigUnattachFileFromReport;
+  return _requestConfigUnattachFileFromReport;
 }
 export function setUnattachFileFromReportRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigUnattachFileFromReport = value;
+  _requestConfigUnattachFileFromReport = value;
 }
 export function patchUnattachFileFromReportRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigUnattachFileFromReport = patch(_requestConfigUnattachFileFromReport ?? {});
+  _requestConfigUnattachFileFromReport = patch(_requestConfigUnattachFileFromReport ?? {});
 }
 
 let _requestConfigAttachFileToReport: Partial<AxiosRequestConfig> | null;
 export function getAttachFileToReportRequestConfig() {
-    return _requestConfigAttachFileToReport;
+  return _requestConfigAttachFileToReport;
 }
 export function setAttachFileToReportRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigAttachFileToReport = value;
+  _requestConfigAttachFileToReport = value;
 }
 export function patchAttachFileToReportRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigAttachFileToReport = patch(_requestConfigAttachFileToReport ?? {});
+  _requestConfigAttachFileToReport = patch(_requestConfigAttachFileToReport ?? {});
 }
 
 let _requestConfigSetGrade: Partial<AxiosRequestConfig> | null;
 export function getSetGradeRequestConfig() {
-    return _requestConfigSetGrade;
+  return _requestConfigSetGrade;
 }
 export function setSetGradeRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigSetGrade = value;
+  _requestConfigSetGrade = value;
 }
 export function patchSetGradeRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigSetGrade = patch(_requestConfigSetGrade ?? {});
+  _requestConfigSetGrade = patch(_requestConfigSetGrade ?? {});
 }
 
 let _requestConfigGetPracticeReport: Partial<AxiosRequestConfig> | null;
 export function getGetPracticeReportRequestConfig() {
-    return _requestConfigGetPracticeReport;
+  return _requestConfigGetPracticeReport;
 }
 export function setGetPracticeReportRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetPracticeReport = value;
+  _requestConfigGetPracticeReport = value;
 }
 export function patchGetPracticeReportRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetPracticeReport = patch(_requestConfigGetPracticeReport ?? {});
+  _requestConfigGetPracticeReport = patch(_requestConfigGetPracticeReport ?? {});
 }

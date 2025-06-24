@@ -1,7 +1,7 @@
 //@ts-nocheck
 //-----Types.File-----
 /** dto для возвращения ошибочных результатов */
-export interface ErrorResponse {
+export interface ErrorResponse  {
   message?: string;
   timestamp?: Date;
   status?: number;
@@ -17,7 +17,7 @@ export function initErrorResponse(_data: ErrorResponse) {
   if (_data) {
     _data.timestamp = _data["timestamp"] ? new Date(_data["timestamp"].toString()) : <any>null;
     if (Array.isArray(_data["validationErrors"])) {
-      _data.validationErrors = _data["validationErrors"].map(item =>
+      _data.validationErrors = _data["validationErrors"].map(item => 
         initValidationErrorResponse(item)
       );
     }
@@ -34,13 +34,13 @@ export function prepareSerializeErrorResponse(_data: ErrorResponse): ErrorRespon
   const data: Record<string, any> = { ..._data };
   data["timestamp"] = _data.timestamp && _data.timestamp.toISOString();
   if (Array.isArray(_data.validationErrors)) {
-    data["validationErrors"] = _data.validationErrors.map(item =>
-      prepareSerializeValidationErrorResponse(item)
+    data["validationErrors"] = _data.validationErrors.map(item => 
+        prepareSerializeValidationErrorResponse(item)
     );
   }
   return data as ErrorResponse;
 }
-export interface ValidationErrorResponse {
+export interface ValidationErrorResponse  {
   field?: string;
   message?: string;
   [key: string]: any;
@@ -51,7 +51,7 @@ export function deserializeValidationErrorResponse(json: string): ValidationErro
   return data;
 }
 export function initValidationErrorResponse(_data: ValidationErrorResponse) {
-  return _data;
+    return _data;
 }
 export function serializeValidationErrorResponse(_data: ValidationErrorResponse | undefined) {
   if (_data) {
@@ -64,7 +64,7 @@ export function prepareSerializeValidationErrorResponse(_data: ValidationErrorRe
   return data as ValidationErrorResponse;
 }
 /** Модель редактирования пользователя */
-export interface UserEditDto {
+export interface UserEditDto  {
   /** Полное имя пользователя */
   fullName: string;
   [key: string]: any;
@@ -75,7 +75,7 @@ export function deserializeUserEditDto(json: string): UserEditDto {
   return data;
 }
 export function initUserEditDto(_data: UserEditDto) {
-  return _data;
+    return _data;
 }
 export function serializeUserEditDto(_data: UserEditDto | undefined) {
   if (_data) {
@@ -88,7 +88,7 @@ export function prepareSerializeUserEditDto(_data: UserEditDto): UserEditDto {
   return data as UserEditDto;
 }
 /** Модель пользователя */
-export interface UserShortDto {
+export interface UserShortDto  {
   /** Идентификатор пользователя */
   id: string;
   /** Адрес электронной почты */
@@ -122,7 +122,7 @@ export function prepareSerializeUserShortDto(_data: UserShortDto): UserShortDto 
   return data as UserShortDto;
 }
 /** Модель редактирования электронной почты пользователя */
-export interface UserEmailEditDto {
+export interface UserEmailEditDto  {
   /** Адрес электронной почты */
   email: string;
   [key: string]: any;
@@ -133,7 +133,7 @@ export function deserializeUserEmailEditDto(json: string): UserEmailEditDto {
   return data;
 }
 export function initUserEmailEditDto(_data: UserEmailEditDto) {
-  return _data;
+    return _data;
 }
 export function serializeUserEmailEditDto(_data: UserEmailEditDto | undefined) {
   if (_data) {
@@ -146,7 +146,7 @@ export function prepareSerializeUserEmailEditDto(_data: UserEmailEditDto): UserE
   return data as UserEmailEditDto;
 }
 /** Модель для изменения пароля */
-export interface PasswordEditDto {
+export interface PasswordEditDto  {
   /** Старый пароль пользователя */
   oldPassword: string;
   /** Новый пароль пользователя */
@@ -161,7 +161,7 @@ export function deserializePasswordEditDto(json: string): PasswordEditDto {
   return data;
 }
 export function initPasswordEditDto(_data: PasswordEditDto) {
-  return _data;
+    return _data;
 }
 export function serializePasswordEditDto(_data: PasswordEditDto | undefined) {
   if (_data) {
@@ -174,7 +174,7 @@ export function prepareSerializePasswordEditDto(_data: PasswordEditDto): Passwor
   return data as PasswordEditDto;
 }
 /** dto для ответов */
-export interface Response {
+export interface Response  {
   /** Содержание ответа */
   message?: string;
   timestamp?: Date;
@@ -205,7 +205,7 @@ export function prepareSerializeResponse(_data: Response): Response {
   return data as Response;
 }
 /** Модель группы */
-export interface GroupShortDto {
+export interface GroupShortDto  {
   /** Идентификатор группы */
   id?: string;
   /** Номер группы */
@@ -218,7 +218,7 @@ export function deserializeGroupShortDto(json: string): GroupShortDto {
   return data;
 }
 export function initGroupShortDto(_data: GroupShortDto) {
-  return _data;
+    return _data;
 }
 export function serializeGroupShortDto(_data: GroupShortDto | undefined) {
   if (_data) {
@@ -231,7 +231,7 @@ export function prepareSerializeGroupShortDto(_data: GroupShortDto): GroupShortD
   return data as GroupShortDto;
 }
 /** Модель студента */
-export interface StudentDto {
+export interface StudentDto  {
   /** Идентификатор роли */
   id: string;
   isAcadem: boolean;
@@ -268,7 +268,7 @@ export function prepareSerializeStudentDto(_data: StudentDto): StudentDto {
   return data as StudentDto;
 }
 /** Модель для возвращения студента из академа */
-export interface ReturnFromAcademDto {
+export interface ReturnFromAcademDto  {
   /** Идентификатор группы */
   groupId: string;
   [key: string]: any;
@@ -279,7 +279,7 @@ export function deserializeReturnFromAcademDto(json: string): ReturnFromAcademDt
   return data;
 }
 export function initReturnFromAcademDto(_data: ReturnFromAcademDto) {
-  return _data;
+    return _data;
 }
 export function serializeReturnFromAcademDto(_data: ReturnFromAcademDto | undefined) {
   if (_data) {
@@ -292,7 +292,7 @@ export function prepareSerializeReturnFromAcademDto(_data: ReturnFromAcademDto):
   return data as ReturnFromAcademDto;
 }
 /** Модель для изменения студента */
-export interface StudentEditDto {
+export interface StudentEditDto  {
   /** Идентификатор группы */
   groupId: string;
   [key: string]: any;
@@ -303,7 +303,7 @@ export function deserializeStudentEditDto(json: string): StudentEditDto {
   return data;
 }
 export function initStudentEditDto(_data: StudentEditDto) {
-  return _data;
+    return _data;
 }
 export function serializeStudentEditDto(_data: StudentEditDto | undefined) {
   if (_data) {
@@ -316,7 +316,7 @@ export function prepareSerializeStudentEditDto(_data: StudentEditDto): StudentEd
   return data as StudentEditDto;
 }
 /** dto для обновления стека */
-export interface UpdateStackDto {
+export interface UpdateStackDto  {
   /** Название стека */
   name: string;
   [key: string]: any;
@@ -327,7 +327,7 @@ export function deserializeUpdateStackDto(json: string): UpdateStackDto {
   return data;
 }
 export function initUpdateStackDto(_data: UpdateStackDto) {
-  return _data;
+    return _data;
 }
 export function serializeUpdateStackDto(_data: UpdateStackDto | undefined) {
   if (_data) {
@@ -340,7 +340,7 @@ export function prepareSerializeUpdateStackDto(_data: UpdateStackDto): UpdateSta
   return data as UpdateStackDto;
 }
 /** dto стека */
-export interface StackDto {
+export interface StackDto  {
   /** Идентификатор стека */
   id: string;
   /** Название стека */
@@ -353,7 +353,7 @@ export function deserializeStackDto(json: string): StackDto {
   return data;
 }
 export function initStackDto(_data: StackDto) {
-  return _data;
+    return _data;
 }
 export function serializeStackDto(_data: StackDto | undefined) {
   if (_data) {
@@ -366,7 +366,7 @@ export function prepareSerializeStackDto(_data: StackDto): StackDto {
   return data as StackDto;
 }
 /** dto для обновления практики */
-export interface UpdatePracticeDto {
+export interface UpdatePracticeDto  {
   /** Статус оплачиваемости */
   isPaid: boolean;
   [key: string]: any;
@@ -377,7 +377,7 @@ export function deserializeUpdatePracticeDto(json: string): UpdatePracticeDto {
   return data;
 }
 export function initUpdatePracticeDto(_data: UpdatePracticeDto) {
-  return _data;
+    return _data;
 }
 export function serializeUpdatePracticeDto(_data: UpdatePracticeDto | undefined) {
   if (_data) {
@@ -390,7 +390,7 @@ export function prepareSerializeUpdatePracticeDto(_data: UpdatePracticeDto): Upd
   return data as UpdatePracticeDto;
 }
 /** dto для компаний партнеров */
-export interface CompanyPartnerDto {
+export interface CompanyPartnerDto  {
   /** Идентификатор языка */
   id: string;
   /** Имя компании */
@@ -411,7 +411,7 @@ export function deserializeCompanyPartnerDto(json: string): CompanyPartnerDto {
 export function initCompanyPartnerDto(_data: CompanyPartnerDto) {
   if (_data) {
     if (Array.isArray(_data["curators"])) {
-      _data.curators = _data["curators"].map(item =>
+      _data.curators = _data["curators"].map(item => 
         initUserShortDto(item)
       );
     }
@@ -427,14 +427,14 @@ export function serializeCompanyPartnerDto(_data: CompanyPartnerDto | undefined)
 export function prepareSerializeCompanyPartnerDto(_data: CompanyPartnerDto): CompanyPartnerDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.curators)) {
-    data["curators"] = _data.curators.map(item =>
-      prepareSerializeUserShortDto(item)
+    data["curators"] = _data.curators.map(item => 
+        prepareSerializeUserShortDto(item)
     );
   }
   return data as CompanyPartnerDto;
 }
 /** dto для практик */
-export interface PracticeDto {
+export interface PracticeDto  {
   /** Идентификатор практики */
   id?: string;
   /** Владелец практики */
@@ -486,7 +486,7 @@ export function prepareSerializePracticeDto(_data: PracticeDto): PracticeDto {
   return data as PracticeDto;
 }
 /** Модель роли */
-export interface RoleDto {
+export interface RoleDto  {
   /** Идентификатор роли */
   id: string;
   /** Роль */
@@ -515,7 +515,7 @@ export function prepareSerializeRoleDto(_data: RoleDto): RoleDto {
   return data as RoleDto;
 }
 /** Модель пользователя */
-export interface UserDto {
+export interface UserDto  {
   /** Идентификатор пользователя */
   id?: string;
   /** Адрес электронной почты */
@@ -533,7 +533,7 @@ export function deserializeUserDto(json: string): UserDto {
 export function initUserDto(_data: UserDto) {
   if (_data) {
     if (Array.isArray(_data["roles"])) {
-      _data.roles = _data["roles"].map(item =>
+      _data.roles = _data["roles"].map(item => 
         initRoleDto(item)
       );
     }
@@ -549,14 +549,14 @@ export function serializeUserDto(_data: UserDto | undefined) {
 export function prepareSerializeUserDto(_data: UserDto): UserDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.roles)) {
-    data["roles"] = _data.roles.map(item =>
-      prepareSerializeRoleDto(item)
+    data["roles"] = _data.roles.map(item => 
+        prepareSerializeRoleDto(item)
     );
   }
   return data as UserDto;
 }
 /** dto для обновления компаний партнеров */
-export interface UpdateCompanyPartnerDto {
+export interface UpdateCompanyPartnerDto  {
   /** Имя компании */
   name: string;
   /** Информация о компании */
@@ -571,7 +571,7 @@ export function deserializeUpdateCompanyPartnerDto(json: string): UpdateCompanyP
   return data;
 }
 export function initUpdateCompanyPartnerDto(_data: UpdateCompanyPartnerDto) {
-  return _data;
+    return _data;
 }
 export function serializeUpdateCompanyPartnerDto(_data: UpdateCompanyPartnerDto | undefined) {
   if (_data) {
@@ -584,7 +584,7 @@ export function prepareSerializeUpdateCompanyPartnerDto(_data: UpdateCompanyPart
   return data as UpdateCompanyPartnerDto;
 }
 /** dto для обновления языков */
-export interface UpdateLanguageDto {
+export interface UpdateLanguageDto  {
   /** Название языка */
   name: string;
   [key: string]: any;
@@ -595,7 +595,7 @@ export function deserializeUpdateLanguageDto(json: string): UpdateLanguageDto {
   return data;
 }
 export function initUpdateLanguageDto(_data: UpdateLanguageDto) {
-  return _data;
+    return _data;
 }
 export function serializeUpdateLanguageDto(_data: UpdateLanguageDto | undefined) {
   if (_data) {
@@ -608,7 +608,7 @@ export function prepareSerializeUpdateLanguageDto(_data: UpdateLanguageDto): Upd
   return data as UpdateLanguageDto;
 }
 /** dto языка */
-export interface LanguageDto {
+export interface LanguageDto  {
   /** Идентификатор языка */
   id: string;
   /** Название языка */
@@ -621,7 +621,7 @@ export function deserializeLanguageDto(json: string): LanguageDto {
   return data;
 }
 export function initLanguageDto(_data: LanguageDto) {
-  return _data;
+    return _data;
 }
 export function serializeLanguageDto(_data: LanguageDto | undefined) {
   if (_data) {
@@ -634,7 +634,7 @@ export function prepareSerializeLanguageDto(_data: LanguageDto): LanguageDto {
   return data as LanguageDto;
 }
 /** dto для обновления отбора */
-export interface UpdateInterviewDto {
+export interface UpdateInterviewDto  {
   /** Статус отбора */
   status: UpdateInterviewDtoStatus;
   [key: string]: any;
@@ -661,7 +661,7 @@ export function prepareSerializeUpdateInterviewDto(_data: UpdateInterviewDto): U
   return data as UpdateInterviewDto;
 }
 /** dto отбора */
-export interface InterviewDto {
+export interface InterviewDto  {
   /** Идентификатор отбора */
   id: string;
   /** Время создания отбора */
@@ -688,7 +688,7 @@ export function initInterviewDto(_data: InterviewDto) {
     _data.status = _data["status"];
     _data.stack = _data["stack"] && initStackDto(_data["stack"]);
     if (Array.isArray(_data["languages"])) {
-      _data.languages = _data["languages"].map(item =>
+      _data.languages = _data["languages"].map(item => 
         initLanguageDto(item)
       );
     }
@@ -709,8 +709,8 @@ export function prepareSerializeInterviewDto(_data: InterviewDto): InterviewDto 
   data["modifiedAt"] = _data.modifiedAt && _data.modifiedAt.toISOString();
   data["stack"] = _data.stack && prepareSerializeStackDto(_data.stack);
   if (Array.isArray(_data.languages)) {
-    data["languages"] = _data.languages.map(item =>
-      prepareSerializeLanguageDto(item)
+    data["languages"] = _data.languages.map(item => 
+        prepareSerializeLanguageDto(item)
     );
   }
   data["companyPartner"] = _data.companyPartner && prepareSerializeShortCompanyPartnerDto(_data.companyPartner);
@@ -718,7 +718,7 @@ export function prepareSerializeInterviewDto(_data: InterviewDto): InterviewDto 
   return data as InterviewDto;
 }
 /** Сокращенное dto для компаний партнеров */
-export interface ShortCompanyPartnerDto {
+export interface ShortCompanyPartnerDto  {
   /** Идентификатор языка */
   id: string;
   /** Имя компании */
@@ -733,7 +733,7 @@ export function deserializeShortCompanyPartnerDto(json: string): ShortCompanyPar
   return data;
 }
 export function initShortCompanyPartnerDto(_data: ShortCompanyPartnerDto) {
-  return _data;
+    return _data;
 }
 export function serializeShortCompanyPartnerDto(_data: ShortCompanyPartnerDto | undefined) {
   if (_data) {
@@ -746,7 +746,7 @@ export function prepareSerializeShortCompanyPartnerDto(_data: ShortCompanyPartne
   return data as ShortCompanyPartnerDto;
 }
 /** Модель для изменения куратора */
-export interface CuratorEditDto {
+export interface CuratorEditDto  {
   /** Идентификатор компании */
   companyId: string;
   [key: string]: any;
@@ -757,7 +757,7 @@ export function deserializeCuratorEditDto(json: string): CuratorEditDto {
   return data;
 }
 export function initCuratorEditDto(_data: CuratorEditDto) {
-  return _data;
+    return _data;
 }
 export function serializeCuratorEditDto(_data: CuratorEditDto | undefined) {
   if (_data) {
@@ -770,7 +770,7 @@ export function prepareSerializeCuratorEditDto(_data: CuratorEditDto): CuratorEd
   return data as CuratorEditDto;
 }
 /** Модель куратора */
-export interface CuratorDto {
+export interface CuratorDto  {
   /** Идентификатор роли */
   id: string;
   user: UserShortDto;
@@ -801,7 +801,7 @@ export function prepareSerializeCuratorDto(_data: CuratorDto): CuratorDto {
   data["companyPartner"] = _data.companyPartner && prepareSerializeShortCompanyPartnerDto(_data.companyPartner);
   return data as CuratorDto;
 }
-export interface EditMessageRequest {
+export interface EditMessageRequest  {
   content: string;
   [key: string]: any;
 }
@@ -811,7 +811,7 @@ export function deserializeEditMessageRequest(json: string): EditMessageRequest 
   return data;
 }
 export function initEditMessageRequest(_data: EditMessageRequest) {
-  return _data;
+    return _data;
 }
 export function serializeEditMessageRequest(_data: EditMessageRequest | undefined) {
   if (_data) {
@@ -823,7 +823,7 @@ export function prepareSerializeEditMessageRequest(_data: EditMessageRequest): E
   const data: Record<string, any> = { ..._data };
   return data as EditMessageRequest;
 }
-export interface MessageDto {
+export interface MessageDto  {
   /** Идентификатор сообщения */
   id?: string;
   /** Контент сообщения */
@@ -865,7 +865,7 @@ export function prepareSerializeMessageDto(_data: MessageDto): MessageDto {
   return data as MessageDto;
 }
 /** Модель регистрации */
-export interface RegistrationRequestDto {
+export interface RegistrationRequestDto  {
   /** Адрес электронной почты */
   email: string;
   /** Пароль пользователя */
@@ -880,7 +880,7 @@ export function deserializeRegistrationRequestDto(json: string): RegistrationReq
   return data;
 }
 export function initRegistrationRequestDto(_data: RegistrationRequestDto) {
-  return _data;
+    return _data;
 }
 export function serializeRegistrationRequestDto(_data: RegistrationRequestDto | undefined) {
   if (_data) {
@@ -892,7 +892,7 @@ export function prepareSerializeRegistrationRequestDto(_data: RegistrationReques
   const data: Record<string, any> = { ..._data };
   return data as RegistrationRequestDto;
 }
-export interface TokenDto {
+export interface TokenDto  {
   token?: string;
   expirationDate?: Date;
   [key: string]: any;
@@ -920,7 +920,7 @@ export function prepareSerializeTokenDto(_data: TokenDto): TokenDto {
   return data as TokenDto;
 }
 /** Модель login'а */
-export interface LoginCredentialsDto {
+export interface LoginCredentialsDto  {
   /** Адрес электронной почты */
   email: string;
   /** Пароль пользователя */
@@ -933,7 +933,7 @@ export function deserializeLoginCredentialsDto(json: string): LoginCredentialsDt
   return data;
 }
 export function initLoginCredentialsDto(_data: LoginCredentialsDto) {
-  return _data;
+    return _data;
 }
 export function serializeLoginCredentialsDto(_data: LoginCredentialsDto | undefined) {
   if (_data) {
@@ -946,7 +946,7 @@ export function prepareSerializeLoginCredentialsDto(_data: LoginCredentialsDto):
   return data as LoginCredentialsDto;
 }
 /** Модель для создания преподавателя */
-export interface TeacherCreateDto {
+export interface TeacherCreateDto  {
   /** Идентификатор пользователя */
   userId: string;
   [key: string]: any;
@@ -957,7 +957,7 @@ export function deserializeTeacherCreateDto(json: string): TeacherCreateDto {
   return data;
 }
 export function initTeacherCreateDto(_data: TeacherCreateDto) {
-  return _data;
+    return _data;
 }
 export function serializeTeacherCreateDto(_data: TeacherCreateDto | undefined) {
   if (_data) {
@@ -970,7 +970,7 @@ export function prepareSerializeTeacherCreateDto(_data: TeacherCreateDto): Teach
   return data as TeacherCreateDto;
 }
 /** Модель преподавателя */
-export interface TeacherDto {
+export interface TeacherDto  {
   /** Идентификатор роли */
   id: string;
   user: UserShortDto;
@@ -999,7 +999,7 @@ export function prepareSerializeTeacherDto(_data: TeacherDto): TeacherDto {
   return data as TeacherDto;
 }
 /** Модель для создания студента */
-export interface StudentCreateDto {
+export interface StudentCreateDto  {
   /** Идентификатор группы */
   groupId: string;
   [key: string]: any;
@@ -1010,7 +1010,7 @@ export function deserializeStudentCreateDto(json: string): StudentCreateDto {
   return data;
 }
 export function initStudentCreateDto(_data: StudentCreateDto) {
-  return _data;
+    return _data;
 }
 export function serializeStudentCreateDto(_data: StudentCreateDto | undefined) {
   if (_data) {
@@ -1023,7 +1023,7 @@ export function prepareSerializeStudentCreateDto(_data: StudentCreateDto): Stude
   return data as StudentCreateDto;
 }
 /** dto для создания стека */
-export interface CreateStackDto {
+export interface CreateStackDto  {
   /** Название стека */
   name: string;
   [key: string]: any;
@@ -1034,7 +1034,7 @@ export function deserializeCreateStackDto(json: string): CreateStackDto {
   return data;
 }
 export function initCreateStackDto(_data: CreateStackDto) {
-  return _data;
+    return _data;
 }
 export function serializeCreateStackDto(_data: CreateStackDto | undefined) {
   if (_data) {
@@ -1046,7 +1046,7 @@ export function prepareSerializeCreateStackDto(_data: CreateStackDto): CreateSta
   const data: Record<string, any> = { ..._data };
   return data as CreateStackDto;
 }
-export interface ReportId {
+export interface ReportId  {
   reportId?: string;
   [key: string]: any;
 }
@@ -1056,7 +1056,7 @@ export function deserializeReportId(json: string): ReportId {
   return data;
 }
 export function initReportId(_data: ReportId) {
-  return _data;
+    return _data;
 }
 export function serializeReportId(_data: ReportId | undefined) {
   if (_data) {
@@ -1068,7 +1068,7 @@ export function prepareSerializeReportId(_data: ReportId): ReportId {
   const data: Record<string, any> = { ..._data };
   return data as ReportId;
 }
-export interface ReportDto {
+export interface ReportDto  {
   /** Идентификатор отчета */
   id: string;
   /** Время отправки комментария */
@@ -1106,7 +1106,7 @@ export function prepareSerializeReportDto(_data: ReportDto): ReportDto {
   return data as ReportDto;
 }
 /** dto для создания практики */
-export interface CreatePracticeDto {
+export interface CreatePracticeDto  {
   /** ID интервью, по которому создаётся практика */
   interviewId: string;
   /** Статус оплачиваемости */
@@ -1119,7 +1119,7 @@ export function deserializeCreatePracticeDto(json: string): CreatePracticeDto {
   return data;
 }
 export function initCreatePracticeDto(_data: CreatePracticeDto) {
-  return _data;
+    return _data;
 }
 export function serializeCreatePracticeDto(_data: CreatePracticeDto | undefined) {
   if (_data) {
@@ -1132,7 +1132,7 @@ export function prepareSerializeCreatePracticeDto(_data: CreatePracticeDto): Cre
   return data as CreatePracticeDto;
 }
 /** dto для создания компаний партнеров */
-export interface CreateCompanyPartnerDto {
+export interface CreateCompanyPartnerDto  {
   /** Имя компании */
   name: string;
   /** Информация о компании */
@@ -1147,7 +1147,7 @@ export function deserializeCreateCompanyPartnerDto(json: string): CreateCompanyP
   return data;
 }
 export function initCreateCompanyPartnerDto(_data: CreateCompanyPartnerDto) {
-  return _data;
+    return _data;
 }
 export function serializeCreateCompanyPartnerDto(_data: CreateCompanyPartnerDto | undefined) {
   if (_data) {
@@ -1160,7 +1160,7 @@ export function prepareSerializeCreateCompanyPartnerDto(_data: CreateCompanyPart
   return data as CreateCompanyPartnerDto;
 }
 /** dto для создания языков */
-export interface CreateLanguageDto {
+export interface CreateLanguageDto  {
   /** Название языка */
   name: string;
   [key: string]: any;
@@ -1171,7 +1171,7 @@ export function deserializeCreateLanguageDto(json: string): CreateLanguageDto {
   return data;
 }
 export function initCreateLanguageDto(_data: CreateLanguageDto) {
-  return _data;
+    return _data;
 }
 export function serializeCreateLanguageDto(_data: CreateLanguageDto | undefined) {
   if (_data) {
@@ -1184,7 +1184,7 @@ export function prepareSerializeCreateLanguageDto(_data: CreateLanguageDto): Cre
   return data as CreateLanguageDto;
 }
 /** dto для создания отбора */
-export interface CreateInterviewDto {
+export interface CreateInterviewDto  {
   /** Идентификатор стека */
   stackId: string;
   /** Идентификаторы языков */
@@ -1218,7 +1218,7 @@ export function prepareSerializeCreateInterviewDto(_data: CreateInterviewDto): C
   return data as CreateInterviewDto;
 }
 /** Создание группы (только номер) */
-export interface CreateGroupDto {
+export interface CreateGroupDto  {
   /** Номер группы */
   number: string;
   [key: string]: any;
@@ -1229,7 +1229,7 @@ export function deserializeCreateGroupDto(json: string): CreateGroupDto {
   return data;
 }
 export function initCreateGroupDto(_data: CreateGroupDto) {
-  return _data;
+    return _data;
 }
 export function serializeCreateGroupDto(_data: CreateGroupDto | undefined) {
   if (_data) {
@@ -1242,7 +1242,7 @@ export function prepareSerializeCreateGroupDto(_data: CreateGroupDto): CreateGro
   return data as CreateGroupDto;
 }
 /** dto группы */
-export interface GroupDto {
+export interface GroupDto  {
   /** Идентификатор группы */
   id?: string;
   /** Номер группы */
@@ -1260,7 +1260,7 @@ export function deserializeGroupDto(json: string): GroupDto {
 export function initGroupDto(_data: GroupDto) {
   if (_data) {
     if (Array.isArray(_data["students"])) {
-      _data.students = _data["students"].map(item =>
+      _data.students = _data["students"].map(item => 
         initUserDto(item)
       );
     }
@@ -1276,13 +1276,13 @@ export function serializeGroupDto(_data: GroupDto | undefined) {
 export function prepareSerializeGroupDto(_data: GroupDto): GroupDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.students)) {
-    data["students"] = _data.students.map(item =>
-      prepareSerializeUserDto(item)
+    data["students"] = _data.students.map(item => 
+        prepareSerializeUserDto(item)
     );
   }
   return data as GroupDto;
 }
-export interface ChangeStudentGraduationStatusDto {
+export interface ChangeStudentGraduationStatusDto  {
   /** Идентификатор студента */
   studentId: string;
   /** Статус выпуска студента */
@@ -1295,7 +1295,7 @@ export function deserializeChangeStudentGraduationStatusDto(json: string): Chang
   return data;
 }
 export function initChangeStudentGraduationStatusDto(_data: ChangeStudentGraduationStatusDto) {
-  return _data;
+    return _data;
 }
 export function serializeChangeStudentGraduationStatusDto(_data: ChangeStudentGraduationStatusDto | undefined) {
   if (_data) {
@@ -1307,7 +1307,7 @@ export function prepareSerializeChangeStudentGraduationStatusDto(_data: ChangeSt
   const data: Record<string, any> = { ..._data };
   return data as ChangeStudentGraduationStatusDto;
 }
-export interface FileDto {
+export interface FileDto  {
   /** Идентификатор файла */
   id?: string;
   /** Имя файла */
@@ -1346,7 +1346,7 @@ export function prepareSerializeFileDto(_data: FileDto): FileDto {
   return data as FileDto;
 }
 /** Модель для создания руководителя образовательной программы */
-export interface EducationalProgramLeadCreateDto {
+export interface EducationalProgramLeadCreateDto  {
   /** Идентификатор пользователя */
   userId: string;
   [key: string]: any;
@@ -1357,7 +1357,7 @@ export function deserializeEducationalProgramLeadCreateDto(json: string): Educat
   return data;
 }
 export function initEducationalProgramLeadCreateDto(_data: EducationalProgramLeadCreateDto) {
-  return _data;
+    return _data;
 }
 export function serializeEducationalProgramLeadCreateDto(_data: EducationalProgramLeadCreateDto | undefined) {
   if (_data) {
@@ -1370,7 +1370,7 @@ export function prepareSerializeEducationalProgramLeadCreateDto(_data: Education
   return data as EducationalProgramLeadCreateDto;
 }
 /** Модель руководителя образовательной программы */
-export interface EducationalProgramLeadDto {
+export interface EducationalProgramLeadDto  {
   /** Идентификатор роли */
   id: string;
   user: UserShortDto;
@@ -1399,7 +1399,7 @@ export function prepareSerializeEducationalProgramLeadDto(_data: EducationalProg
   return data as EducationalProgramLeadDto;
 }
 /** Модель для создания представителя деканата */
-export interface DeanCreateDto {
+export interface DeanCreateDto  {
   /** Идентификатор пользователя */
   userId: string;
   [key: string]: any;
@@ -1410,7 +1410,7 @@ export function deserializeDeanCreateDto(json: string): DeanCreateDto {
   return data;
 }
 export function initDeanCreateDto(_data: DeanCreateDto) {
-  return _data;
+    return _data;
 }
 export function serializeDeanCreateDto(_data: DeanCreateDto | undefined) {
   if (_data) {
@@ -1423,7 +1423,7 @@ export function prepareSerializeDeanCreateDto(_data: DeanCreateDto): DeanCreateD
   return data as DeanCreateDto;
 }
 /** Модель деканата */
-export interface DeanDto {
+export interface DeanDto  {
   /** Идентификатор роли */
   id: string;
   user: UserShortDto;
@@ -1452,7 +1452,7 @@ export function prepareSerializeDeanDto(_data: DeanDto): DeanDto {
   return data as DeanDto;
 }
 /** Модель для создания куратора */
-export interface CuratorCreateDto {
+export interface CuratorCreateDto  {
   /** Идентификатор пользователя */
   userId: string;
   /** Идентификатор компании */
@@ -1465,7 +1465,7 @@ export function deserializeCuratorCreateDto(json: string): CuratorCreateDto {
   return data;
 }
 export function initCuratorCreateDto(_data: CuratorCreateDto) {
-  return _data;
+    return _data;
 }
 export function serializeCuratorCreateDto(_data: CuratorCreateDto | undefined) {
   if (_data) {
@@ -1477,7 +1477,7 @@ export function prepareSerializeCuratorCreateDto(_data: CuratorCreateDto): Curat
   const data: Record<string, any> = { ..._data };
   return data as CuratorCreateDto;
 }
-export interface SendMessageRequest {
+export interface SendMessageRequest  {
   content: string;
   [key: string]: any;
 }
@@ -1487,7 +1487,7 @@ export function deserializeSendMessageRequest(json: string): SendMessageRequest 
   return data;
 }
 export function initSendMessageRequest(_data: SendMessageRequest) {
-  return _data;
+    return _data;
 }
 export function serializeSendMessageRequest(_data: SendMessageRequest | undefined) {
   if (_data) {
@@ -1499,7 +1499,7 @@ export function prepareSerializeSendMessageRequest(_data: SendMessageRequest): S
   const data: Record<string, any> = { ..._data };
   return data as SendMessageRequest;
 }
-export interface SendMessageToStudentsRequest {
+export interface SendMessageToStudentsRequest  {
   /** Идентификаторы студентов */
   studentIds: string[];
   content: string;
@@ -1527,7 +1527,7 @@ export function prepareSerializeSendMessageToStudentsRequest(_data: SendMessageT
   return data as SendMessageToStudentsRequest;
 }
 /** Обновление группы */
-export interface UpdateGroupDto {
+export interface UpdateGroupDto  {
   /** Номер группы */
   number: string;
   [key: string]: any;
@@ -1538,7 +1538,7 @@ export function deserializeUpdateGroupDto(json: string): UpdateGroupDto {
   return data;
 }
 export function initUpdateGroupDto(_data: UpdateGroupDto) {
-  return _data;
+    return _data;
 }
 export function serializeUpdateGroupDto(_data: UpdateGroupDto | undefined) {
   if (_data) {
@@ -1551,7 +1551,7 @@ export function prepareSerializeUpdateGroupDto(_data: UpdateGroupDto): UpdateGro
   return data as UpdateGroupDto;
 }
 /** Модель куратора */
-export interface CuratorShortDto {
+export interface CuratorShortDto  {
   /** Идентификатор роли */
   id: string;
   companyPartner: ShortCompanyPartnerDto;
@@ -1580,7 +1580,7 @@ export function prepareSerializeCuratorShortDto(_data: CuratorShortDto): Curator
   return data as CuratorShortDto;
 }
 /** Модель представителя деканата */
-export interface DeanShortDto {
+export interface DeanShortDto  {
   /** Идентификатор роли */
   id: string;
   [key: string]: any;
@@ -1591,7 +1591,7 @@ export function deserializeDeanShortDto(json: string): DeanShortDto {
   return data;
 }
 export function initDeanShortDto(_data: DeanShortDto) {
-  return _data;
+    return _data;
 }
 export function serializeDeanShortDto(_data: DeanShortDto | undefined) {
   if (_data) {
@@ -1604,7 +1604,7 @@ export function prepareSerializeDeanShortDto(_data: DeanShortDto): DeanShortDto 
   return data as DeanShortDto;
 }
 /** Модель руководителя образовательной программы */
-export interface EducationalProgramLeadShortDto {
+export interface EducationalProgramLeadShortDto  {
   /** Идентификатор роли */
   id: string;
   [key: string]: any;
@@ -1615,7 +1615,7 @@ export function deserializeEducationalProgramLeadShortDto(json: string): Educati
   return data;
 }
 export function initEducationalProgramLeadShortDto(_data: EducationalProgramLeadShortDto) {
-  return _data;
+    return _data;
 }
 export function serializeEducationalProgramLeadShortDto(_data: EducationalProgramLeadShortDto | undefined) {
   if (_data) {
@@ -1628,7 +1628,7 @@ export function prepareSerializeEducationalProgramLeadShortDto(_data: Educationa
   return data as EducationalProgramLeadShortDto;
 }
 /** Модель студента */
-export interface StudentShortDto {
+export interface StudentShortDto  {
   /** Идентификатор роли */
   id: string;
   isAcadem: boolean;
@@ -1660,7 +1660,7 @@ export function prepareSerializeStudentShortDto(_data: StudentShortDto): Student
   return data as StudentShortDto;
 }
 /** Модель преподавателя */
-export interface TeacherShortDto {
+export interface TeacherShortDto  {
   /** Идентификатор роли */
   id: string;
   [key: string]: any;
@@ -1671,7 +1671,7 @@ export function deserializeTeacherShortDto(json: string): TeacherShortDto {
   return data;
 }
 export function initTeacherShortDto(_data: TeacherShortDto) {
-  return _data;
+    return _data;
 }
 export function serializeTeacherShortDto(_data: TeacherShortDto | undefined) {
   if (_data) {
@@ -1684,7 +1684,7 @@ export function prepareSerializeTeacherShortDto(_data: TeacherShortDto): Teacher
   return data as TeacherShortDto;
 }
 /** Подробная модель пользователя */
-export interface UserDetailsDto {
+export interface UserDetailsDto  {
   /** Идентификатор пользователя */
   id: string;
   /** Адрес электронной почты */
@@ -1728,7 +1728,7 @@ export function prepareSerializeUserDetailsDto(_data: UserDetailsDto): UserDetai
   data["educationalProgramLead"] = _data.educationalProgramLead && prepareSerializeEducationalProgramLeadShortDto(_data.educationalProgramLead);
   return data as UserDetailsDto;
 }
-export interface PageDto {
+export interface PageDto  {
   /** Количество элементов текущей страницы */
   size?: number;
   /** Номер текущей страницы */
@@ -1745,7 +1745,7 @@ export function deserializePageDto(json: string): PageDto {
   return data;
 }
 export function initPageDto(_data: PageDto) {
-  return _data;
+    return _data;
 }
 export function serializePageDto(_data: PageDto | undefined) {
   if (_data) {
@@ -1757,7 +1757,7 @@ export function prepareSerializePageDto(_data: PageDto): PageDto {
   const data: Record<string, any> = { ..._data };
   return data as PageDto;
 }
-export interface PagedListDtoUserDto {
+export interface PagedListDtoUserDto  {
   items?: UserDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -1770,7 +1770,7 @@ export function deserializePagedListDtoUserDto(json: string): PagedListDtoUserDt
 export function initPagedListDtoUserDto(_data: PagedListDtoUserDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initUserDto(item)
       );
     }
@@ -1787,14 +1787,14 @@ export function serializePagedListDtoUserDto(_data: PagedListDtoUserDto | undefi
 export function prepareSerializePagedListDtoUserDto(_data: PagedListDtoUserDto): PagedListDtoUserDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeUserDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeUserDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoUserDto;
 }
-export interface PagedListDtoTeacherDto {
+export interface PagedListDtoTeacherDto  {
   items?: TeacherDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -1807,7 +1807,7 @@ export function deserializePagedListDtoTeacherDto(json: string): PagedListDtoTea
 export function initPagedListDtoTeacherDto(_data: PagedListDtoTeacherDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initTeacherDto(item)
       );
     }
@@ -1824,14 +1824,14 @@ export function serializePagedListDtoTeacherDto(_data: PagedListDtoTeacherDto | 
 export function prepareSerializePagedListDtoTeacherDto(_data: PagedListDtoTeacherDto): PagedListDtoTeacherDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeTeacherDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeTeacherDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoTeacherDto;
 }
-export interface PagedListDtoStudentDto {
+export interface PagedListDtoStudentDto  {
   items?: StudentDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -1844,7 +1844,7 @@ export function deserializePagedListDtoStudentDto(json: string): PagedListDtoStu
 export function initPagedListDtoStudentDto(_data: PagedListDtoStudentDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initStudentDto(item)
       );
     }
@@ -1861,15 +1861,15 @@ export function serializePagedListDtoStudentDto(_data: PagedListDtoStudentDto | 
 export function prepareSerializePagedListDtoStudentDto(_data: PagedListDtoStudentDto): PagedListDtoStudentDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeStudentDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeStudentDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoStudentDto;
 }
 /** Статистика по найденным студентам */
-export interface StatisticsResponse {
+export interface StatisticsResponse  {
   /** Количество найденных студентов */
   count?: number;
   [key: string]: any;
@@ -1880,7 +1880,7 @@ export function deserializeStatisticsResponse(json: string): StatisticsResponse 
   return data;
 }
 export function initStatisticsResponse(_data: StatisticsResponse) {
-  return _data;
+    return _data;
 }
 export function serializeStatisticsResponse(_data: StatisticsResponse | undefined) {
   if (_data) {
@@ -1892,7 +1892,7 @@ export function prepareSerializeStatisticsResponse(_data: StatisticsResponse): S
   const data: Record<string, any> = { ..._data };
   return data as StatisticsResponse;
 }
-export interface PagedListDtoPracticeDto {
+export interface PagedListDtoPracticeDto  {
   items?: PracticeDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -1905,7 +1905,7 @@ export function deserializePagedListDtoPracticeDto(json: string): PagedListDtoPr
 export function initPagedListDtoPracticeDto(_data: PagedListDtoPracticeDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initPracticeDto(item)
       );
     }
@@ -1922,15 +1922,15 @@ export function serializePagedListDtoPracticeDto(_data: PagedListDtoPracticeDto 
 export function prepareSerializePagedListDtoPracticeDto(_data: PagedListDtoPracticeDto): PagedListDtoPracticeDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializePracticeDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializePracticeDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoPracticeDto;
 }
 /** dto списка практик с информацией о студенте */
-export interface PagedPracticesDto {
+export interface PagedPracticesDto  {
   student?: StudentDto;
   practices?: PagedListDtoPracticeDto;
   [key: string]: any;
@@ -1959,7 +1959,7 @@ export function prepareSerializePagedPracticesDto(_data: PagedPracticesDto): Pag
   data["practices"] = _data.practices && prepareSerializePagedListDtoPracticeDto(_data.practices);
   return data as PagedPracticesDto;
 }
-export interface PagedListDtoShortCompanyPartnerDto {
+export interface PagedListDtoShortCompanyPartnerDto  {
   items?: ShortCompanyPartnerDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -1972,7 +1972,7 @@ export function deserializePagedListDtoShortCompanyPartnerDto(json: string): Pag
 export function initPagedListDtoShortCompanyPartnerDto(_data: PagedListDtoShortCompanyPartnerDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initShortCompanyPartnerDto(item)
       );
     }
@@ -1989,14 +1989,14 @@ export function serializePagedListDtoShortCompanyPartnerDto(_data: PagedListDtoS
 export function prepareSerializePagedListDtoShortCompanyPartnerDto(_data: PagedListDtoShortCompanyPartnerDto): PagedListDtoShortCompanyPartnerDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeShortCompanyPartnerDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeShortCompanyPartnerDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoShortCompanyPartnerDto;
 }
-export interface PagedListDtoInterviewDto {
+export interface PagedListDtoInterviewDto  {
   items?: InterviewDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -2009,7 +2009,7 @@ export function deserializePagedListDtoInterviewDto(json: string): PagedListDtoI
 export function initPagedListDtoInterviewDto(_data: PagedListDtoInterviewDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initInterviewDto(item)
       );
     }
@@ -2026,14 +2026,14 @@ export function serializePagedListDtoInterviewDto(_data: PagedListDtoInterviewDt
 export function prepareSerializePagedListDtoInterviewDto(_data: PagedListDtoInterviewDto): PagedListDtoInterviewDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeInterviewDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeInterviewDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoInterviewDto;
 }
-export interface PagedListDtoGroupDto {
+export interface PagedListDtoGroupDto  {
   items?: GroupDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -2046,7 +2046,7 @@ export function deserializePagedListDtoGroupDto(json: string): PagedListDtoGroup
 export function initPagedListDtoGroupDto(_data: PagedListDtoGroupDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initGroupDto(item)
       );
     }
@@ -2063,14 +2063,14 @@ export function serializePagedListDtoGroupDto(_data: PagedListDtoGroupDto | unde
 export function prepareSerializePagedListDtoGroupDto(_data: PagedListDtoGroupDto): PagedListDtoGroupDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeGroupDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeGroupDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoGroupDto;
 }
-export interface PagedListDtoFileDto {
+export interface PagedListDtoFileDto  {
   items?: FileDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -2083,7 +2083,7 @@ export function deserializePagedListDtoFileDto(json: string): PagedListDtoFileDt
 export function initPagedListDtoFileDto(_data: PagedListDtoFileDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initFileDto(item)
       );
     }
@@ -2100,14 +2100,14 @@ export function serializePagedListDtoFileDto(_data: PagedListDtoFileDto | undefi
 export function prepareSerializePagedListDtoFileDto(_data: PagedListDtoFileDto): PagedListDtoFileDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeFileDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeFileDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoFileDto;
 }
-export interface PagedListDtoDeanDto {
+export interface PagedListDtoDeanDto  {
   items?: DeanDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -2120,7 +2120,7 @@ export function deserializePagedListDtoDeanDto(json: string): PagedListDtoDeanDt
 export function initPagedListDtoDeanDto(_data: PagedListDtoDeanDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initDeanDto(item)
       );
     }
@@ -2137,14 +2137,14 @@ export function serializePagedListDtoDeanDto(_data: PagedListDtoDeanDto | undefi
 export function prepareSerializePagedListDtoDeanDto(_data: PagedListDtoDeanDto): PagedListDtoDeanDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeDeanDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeDeanDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoDeanDto;
 }
-export interface PagedListDtoCuratorDto {
+export interface PagedListDtoCuratorDto  {
   items?: CuratorDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -2157,7 +2157,7 @@ export function deserializePagedListDtoCuratorDto(json: string): PagedListDtoCur
 export function initPagedListDtoCuratorDto(_data: PagedListDtoCuratorDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initCuratorDto(item)
       );
     }
@@ -2174,14 +2174,14 @@ export function serializePagedListDtoCuratorDto(_data: PagedListDtoCuratorDto | 
 export function prepareSerializePagedListDtoCuratorDto(_data: PagedListDtoCuratorDto): PagedListDtoCuratorDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeCuratorDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeCuratorDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoCuratorDto;
 }
-export interface PagedListDtoMessageDto {
+export interface PagedListDtoMessageDto  {
   items?: MessageDto[];
   pagination?: PageDto;
   [key: string]: any;
@@ -2194,7 +2194,7 @@ export function deserializePagedListDtoMessageDto(json: string): PagedListDtoMes
 export function initPagedListDtoMessageDto(_data: PagedListDtoMessageDto) {
   if (_data) {
     if (Array.isArray(_data["items"])) {
-      _data.items = _data["items"].map(item =>
+      _data.items = _data["items"].map(item => 
         initMessageDto(item)
       );
     }
@@ -2211,14 +2211,14 @@ export function serializePagedListDtoMessageDto(_data: PagedListDtoMessageDto | 
 export function prepareSerializePagedListDtoMessageDto(_data: PagedListDtoMessageDto): PagedListDtoMessageDto {
   const data: Record<string, any> = { ..._data };
   if (Array.isArray(_data.items)) {
-    data["items"] = _data.items.map(item =>
-      prepareSerializeMessageDto(item)
+    data["items"] = _data.items.map(item => 
+        prepareSerializeMessageDto(item)
     );
   }
   data["pagination"] = _data.pagination && prepareSerializePageDto(_data.pagination);
   return data as PagedListDtoMessageDto;
 }
-export interface ChatInfoDto {
+export interface ChatInfoDto  {
   /** Идентификатор чата */
   chatId?: string;
   /** Идентификатор студента */
@@ -2233,7 +2233,7 @@ export function deserializeChatInfoDto(json: string): ChatInfoDto {
   return data;
 }
 export function initChatInfoDto(_data: ChatInfoDto) {
-  return _data;
+    return _data;
 }
 export function serializeChatInfoDto(_data: ChatInfoDto | undefined) {
   if (_data) {
@@ -2247,89 +2247,89 @@ export function prepareSerializeChatInfoDto(_data: ChatInfoDto): ChatInfoDto {
 }
 /** Роль пользователя */
 export enum UserRole {
-  ADMIN = "ADMIN",
-  DEAN = "DEAN",
-  CURATOR = "CURATOR",
-  STUDENT = "STUDENT",
-  TEACHER = "TEACHER",
-  EDUCATIONAL_PROGRAM_LEAD = "EDUCATIONAL_PROGRAM_LEAD",
+    ADMIN = "ADMIN",
+    DEAN = "DEAN",
+    CURATOR = "CURATOR",
+    STUDENT = "STUDENT",
+    TEACHER = "TEACHER",
+    EDUCATIONAL_PROGRAM_LEAD = "EDUCATIONAL_PROGRAM_LEAD",
 }
 /** Статус отбора */
 export enum Status {
-  PENDING = "PENDING",
-  REJECTED = "REJECTED",
-  SUCCEED = "SUCCEED",
+    PENDING = "PENDING",
+    REJECTED = "REJECTED",
+    SUCCEED = "SUCCEED",
 }
 export enum Type {
-  LOGO = "LOGO",
-  REPORT = "REPORT",
-  OTHER = "OTHER",
+    LOGO = "LOGO",
+    REPORT = "REPORT",
+    OTHER = "OTHER",
 }
 export enum RoleDtoUserRole {
-  ADMIN = "ADMIN",
-  DEAN = "DEAN",
-  CURATOR = "CURATOR",
-  STUDENT = "STUDENT",
-  TEACHER = "TEACHER",
-  EDUCATIONAL_PROGRAM_LEAD = "EDUCATIONAL_PROGRAM_LEAD",
+    ADMIN = "ADMIN",
+    DEAN = "DEAN",
+    CURATOR = "CURATOR",
+    STUDENT = "STUDENT",
+    TEACHER = "TEACHER",
+    EDUCATIONAL_PROGRAM_LEAD = "EDUCATIONAL_PROGRAM_LEAD",
 }
 export enum UpdateInterviewDtoStatus {
-  PENDING = "PENDING",
-  REJECTED = "REJECTED",
-  SUCCEED = "SUCCEED",
+    PENDING = "PENDING",
+    REJECTED = "REJECTED",
+    SUCCEED = "SUCCEED",
 }
 export enum InterviewDtoStatus {
-  PENDING = "PENDING",
-  REJECTED = "REJECTED",
-  SUCCEED = "SUCCEED",
+    PENDING = "PENDING",
+    REJECTED = "REJECTED",
+    SUCCEED = "SUCCEED",
 }
 export enum CreateInterviewDtoStatus {
-  PENDING = "PENDING",
-  REJECTED = "REJECTED",
-  SUCCEED = "SUCCEED",
+    PENDING = "PENDING",
+    REJECTED = "REJECTED",
+    SUCCEED = "SUCCEED",
 }
 export enum FileDtoType {
-  LOGO = "LOGO",
-  REPORT = "REPORT",
-  OTHER = "OTHER",
+    LOGO = "LOGO",
+    REPORT = "REPORT",
+    OTHER = "OTHER",
 }
 import type { AxiosError } from 'axios'
 export interface FileParameter {
-  data: any;
-  fileName: string;
+    data: any;
+    fileName: string;
 }
 export interface FileResponse {
-  data: Blob;
-  status: number;
-  fileName?: string;
-  headers?: { [name: string]: any };
+    data: Blob;
+    status: number;
+    fileName?: string;
+    headers?: { [name: string]: any };
 }
 export class ApiException extends Error {
-  message: string;
-  status: number;
-  response: string;
-  headers: { [key: string]: any; };
-  result: any;
-  constructor(message: string, status: number, response: string, headers: { [key: string]: any; }, result: any) {
-    super();
-    this.message = message;
-    this.status = status;
-    this.response = response;
-    this.headers = headers;
-    this.result = result;
-  }
-  protected isApiException = true;
-  static isApiException(obj: any): obj is ApiException {
-    return obj.isApiException === true;
-  }
+    message: string;
+    status: number;
+    response: string;
+    headers: { [key: string]: any; };
+    result: any;
+    constructor(message: string, status: number, response: string, headers: { [key: string]: any; }, result: any) {
+        super();
+        this.message = message;
+        this.status = status;
+        this.response = response;
+        this.headers = headers;
+        this.result = result;
+    }
+    protected isApiException = true;
+    static isApiException(obj: any): obj is ApiException {
+        return obj.isApiException === true;
+    }
 }
 export function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): any {
-  if (result !== null && result !== undefined)
-    throw result;
-  else
-    throw new ApiException(message, status, response, headers, null);
+    if (result !== null && result !== undefined)
+        throw result;
+    else
+        throw new ApiException(message, status, response, headers, null);
 }
 export function isAxiosError(obj: any | undefined): obj is AxiosError {
-  return obj && obj.isAxiosError === true;
+    return obj && obj.isAxiosError === true;
 }
 //-----/Types.File-----

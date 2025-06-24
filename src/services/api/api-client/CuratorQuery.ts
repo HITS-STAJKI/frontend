@@ -20,31 +20,31 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type UpdateCuratorRoleCuratorQueryParameters = {
-  id: string;
+  id: string ;
 }
 
 export type GetAllCuratorsCuratorQueryParameters = {
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
-  fullName?: string | undefined;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
+  fullName?: string | undefined ;
 }
 
 export function updateCuratorRoleUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/curator/{id}";
-  if (id === undefined || id === null)
-    throw new Error("The parameter 'id' must be defined.");
-  url_ = url_.replace("{id}", encodeURIComponent("" + id));
+if (id === undefined || id === null)
+  throw new Error("The parameter 'id' must be defined.");
+url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updateCuratorRoleMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-    'CuratorClient',
-    'updateCuratorRole',
-    id as any,
-  ]);
+      'CuratorClient',
+      'updateCuratorRole',
+      id as any,
+    ]);
 }
 
 /**
@@ -53,17 +53,17 @@ export function updateCuratorRoleMutationKey(id: string): MutationKey {
  */
 export function useUpdateCuratorRoleMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.CuratorDto, unknown, Types.CuratorEditDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.CuratorDto, unknown, Types.CuratorEditDto, TContext> {
   const key = updateCuratorRoleMutationKey(id);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.CuratorEditDto) => Client.updateCuratorRole(id, body),
     mutationKey: key,
   });
 }
-
+  
 type UpdateCuratorRole__MutationParameters = UpdateCuratorRoleCuratorQueryParameters & {
   body: Types.CuratorEditDto;
 }
@@ -72,19 +72,19 @@ type UpdateCuratorRole__MutationParameters = UpdateCuratorRoleCuratorQueryParame
  * Обновление информации о кураторе
  * @return OK
  */
-export function useUpdateCuratorRoleMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.CuratorDto, unknown, UpdateCuratorRole__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateCuratorRoleCuratorQueryParameters }): UseMutationResult<Types.CuratorDto, unknown, UpdateCuratorRole__MutationParameters, TContext> {
+export function useUpdateCuratorRoleMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.CuratorDto, unknown, UpdateCuratorRole__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateCuratorRoleCuratorQueryParameters}): UseMutationResult<Types.CuratorDto, unknown, UpdateCuratorRole__MutationParameters, TContext> {
   const key = updateCuratorRoleMutationKey(options?.parameters?.id!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: UpdateCuratorRole__MutationParameters) => Client.updateCuratorRole(data.id ?? options?.parameters?.id!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: UpdateCuratorRole__MutationParameters) => Client.updateCuratorRole(data.id ?? options?.parameters?.id!, data.body),
+  mutationKey: key,
+});
 }
-
+  
 export function createCuratorUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/curator";
   url_ = url_.replace(/[?&]$/, "");
@@ -93,9 +93,9 @@ export function createCuratorUrl(): string {
 
 export function createCuratorMutationKey(): MutationKey {
   return trimArrayEnd([
-    'CuratorClient',
-    'createCurator',
-  ]);
+      'CuratorClient',
+      'createCurator',
+    ]);
 }
 
 /**
@@ -104,34 +104,34 @@ export function createCuratorMutationKey(): MutationKey {
  */
 export function useCreateCuratorMutation<TContext>(options?: Omit<UseMutationOptions<Types.CuratorDto, unknown, Types.CuratorCreateDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.CuratorDto, unknown, Types.CuratorCreateDto, TContext> {
   const key = createCuratorMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.CuratorCreateDto) => Client.createCurator(body),
     mutationKey: key,
   });
 }
-
+  
 export function getAllCuratorsUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/curator/list?";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-  if (fullName === null)
+if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
-  else if (fullName !== undefined)
+else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -150,27 +150,27 @@ export function getAllCuratorsQueryKey(dto: GetAllCuratorsCuratorQueryParameters
 export function getAllCuratorsQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): QueryKey;
 export function getAllCuratorsQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort, fullName, } = params[0] as GetAllCuratorsCuratorQueryParameters;
+    const { page, size, sort, fullName,  } = params[0] as GetAllCuratorsCuratorQueryParameters;
 
     return trimArrayEnd([
-      'CuratorClient',
-      'getAllCurators',
-      page as any,
-      size as any,
-      sort as any,
-      fullName as any,
-    ]);
+        'CuratorClient',
+        'getAllCurators',
+        page as any,
+        size as any,
+        sort as any,
+        fullName as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'CuratorClient',
-      'getAllCurators',
-      ...params
-    ]);
+        'CuratorClient',
+        'getAllCurators',
+        ...params
+      ]);
   }
 }
 export function __getAllCurators(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getAllCurators(
-    context.queryKey[2] as number | undefined, context.queryKey[3] as number | undefined, context.queryKey[4] as string[] | undefined, context.queryKey[5] as string | undefined, axiosConfig);
+      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,       context.queryKey[5] as string | undefined,axiosConfig    );
 }
 
 export function useGetAllCuratorsQuery<TSelectData = Types.PagedListDtoCuratorDto, TError = unknown>(dto: GetAllCuratorsCuratorQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoCuratorDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -183,17 +183,17 @@ export function useGetAllCuratorsQuery<TSelectData = Types.PagedListDtoCuratorDt
  * @return OK
  */
 export function useGetAllCuratorsQuery<TSelectData = Types.PagedListDtoCuratorDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoCuratorDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetAllCuratorsQuery<TSelectData = Types.PagedListDtoCuratorDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetAllCuratorsQuery<TSelectData = Types.PagedListDtoCuratorDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoCuratorDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
   let fullName: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort, fullName, } = params[0] as GetAllCuratorsCuratorQueryParameters);
+      ({ page, size, sort, fullName,  } = params[0] as GetAllCuratorsCuratorQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

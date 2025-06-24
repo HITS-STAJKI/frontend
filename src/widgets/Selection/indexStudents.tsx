@@ -10,7 +10,7 @@ import { InterviewDto } from "services/api/api-client.types";
 export function TitleForm() {
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <Title size="h1">Мои отборы</Title>
+            <Title size="h1">Мои собеседования</Title>
             <CreateSelection id={'ГЕНЕРАТОР НОВОГО ID'} />
         </div>
     );

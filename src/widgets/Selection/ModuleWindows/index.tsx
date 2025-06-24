@@ -7,6 +7,9 @@ import { useApproveStudentPracticeMutation, useCreateStudentPracticeMutation } f
 import { useForm } from "@mantine/form";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { useState } from "react";
+import { useDeleteInterviewMutation } from '../../../services/api/api-client/InterviewsQuery.ts'
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryFactory } from '../../../services/api'
 
 
 export function CreateSelection({ id }: { id: string }) {
@@ -15,7 +18,7 @@ export function CreateSelection({ id }: { id: string }) {
             render={open => <Button onClick={() => open()} style={{
                 padding: '0',
                 minWidth: '9rem'
-            }}>{"Создать отбор"}</Button>}
+            }}>{"Добавить собеседование"}</Button>}
             content={({ close }) => (
                 <CreateSelectionForm
                     onSuccess={() => close()}
@@ -36,7 +39,7 @@ export function EditSelection({ id }: { id: string }) {
             }}>{<PencilSvgrepoCom fontSize={'30'} />}</Button>}
             content={({ close }) => (
                 <EditSelectionForm
-                    onSuccess={() => close()}
+                    onSuccess={close}
                     id={id}
                 />
             )}
@@ -46,9 +49,14 @@ export function EditSelection({ id }: { id: string }) {
 }
 
 export const DeleteSelection = ({ id }: { id: string }) => {
+    const queryClient = useQueryClient()
+    const { mutateAsync } = useDeleteInterviewMutation(id)
 
-    const handleDelete = (close: () => void) => {
-        console.log(`Тело запроса удаления ${id}:`);
+    const handleDelete = async (close: () => void) => {
+        await mutateAsync();
+        await queryClient.invalidateQueries({
+          queryKey: QueryFactory.InterviewsQuery.getInterviewListQueryKey().slice(-1, 0)
+        })
         close()
     }
     return (

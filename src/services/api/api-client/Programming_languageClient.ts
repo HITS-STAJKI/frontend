@@ -22,9 +22,9 @@ import { getAxios, getBaseUrl } from './helpers';
 export function updateLanguage(languageId: string, body: Types.UpdateLanguageDto, config?: AxiosRequestConfig | undefined): Promise<Types.LanguageDto> {
     let url_ = getBaseUrl() + "/api/v1/language/{languageId}";
     if (languageId === undefined || languageId === null)
-        throw new Error("The parameter 'languageId' must be defined.");
+      throw new Error("The parameter 'languageId' must be defined.");
     url_ = url_.replace("{languageId}", encodeURIComponent("" + languageId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeUpdateLanguageDto(body);
 
@@ -66,42 +66,42 @@ function processUpdateLanguage(response: AxiosResponse): Promise<Types.LanguageD
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initLanguageDto(resultData200);
         return Promise.resolve<Types.LanguageDto>(result200);
 
@@ -120,9 +120,9 @@ function processUpdateLanguage(response: AxiosResponse): Promise<Types.LanguageD
 export function deleteLanguage(languageId: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/language/{languageId}";
     if (languageId === undefined || languageId === null)
-        throw new Error("The parameter 'languageId' must be defined.");
+      throw new Error("The parameter 'languageId' must be defined.");
     url_ = url_.replace("{languageId}", encodeURIComponent("" + languageId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigDeleteLanguage,
@@ -160,42 +160,42 @@ function processDeleteLanguage(response: AxiosResponse): Promise<Types.Response>
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -212,7 +212,7 @@ function processDeleteLanguage(response: AxiosResponse): Promise<Types.Response>
  */
 export function createLanguage(body: Types.CreateLanguageDto, config?: AxiosRequestConfig | undefined): Promise<Types.LanguageDto> {
     let url_ = getBaseUrl() + "/api/v1/language";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeCreateLanguageDto(body);
 
@@ -254,42 +254,42 @@ function processCreateLanguage(response: AxiosResponse): Promise<Types.LanguageD
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initLanguageDto(resultData200);
         return Promise.resolve<Types.LanguageDto>(result200);
 
@@ -311,7 +311,7 @@ export function getLanguageList(query?: string | undefined, config?: AxiosReques
         throw new Error("The parameter 'query' cannot be null.");
     else if (query !== undefined)
         url_ += "query=" + encodeURIComponent("" + query) + "&";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetLanguageList,
@@ -349,47 +349,47 @@ function processGetLanguageList(response: AxiosResponse): Promise<Types.Language
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         if (Array.isArray(resultData200)) {
-            result200 = resultData200.map(item =>
+              result200 = resultData200.map(item => 
                 Types.initLanguageDto(item)
-            );
-        }
+              );
+            }
         return Promise.resolve<Types.LanguageDto[]>(result200);
 
     } else if (status !== 200 && status !== 204) {
@@ -400,44 +400,44 @@ function processGetLanguageList(response: AxiosResponse): Promise<Types.Language
 }
 let _requestConfigUpdateLanguage: Partial<AxiosRequestConfig> | null;
 export function getUpdateLanguageRequestConfig() {
-    return _requestConfigUpdateLanguage;
+  return _requestConfigUpdateLanguage;
 }
 export function setUpdateLanguageRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateLanguage = value;
+  _requestConfigUpdateLanguage = value;
 }
 export function patchUpdateLanguageRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateLanguage = patch(_requestConfigUpdateLanguage ?? {});
+  _requestConfigUpdateLanguage = patch(_requestConfigUpdateLanguage ?? {});
 }
 
 let _requestConfigDeleteLanguage: Partial<AxiosRequestConfig> | null;
 export function getDeleteLanguageRequestConfig() {
-    return _requestConfigDeleteLanguage;
+  return _requestConfigDeleteLanguage;
 }
 export function setDeleteLanguageRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteLanguage = value;
+  _requestConfigDeleteLanguage = value;
 }
 export function patchDeleteLanguageRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteLanguage = patch(_requestConfigDeleteLanguage ?? {});
+  _requestConfigDeleteLanguage = patch(_requestConfigDeleteLanguage ?? {});
 }
 
 let _requestConfigCreateLanguage: Partial<AxiosRequestConfig> | null;
 export function getCreateLanguageRequestConfig() {
-    return _requestConfigCreateLanguage;
+  return _requestConfigCreateLanguage;
 }
 export function setCreateLanguageRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigCreateLanguage = value;
+  _requestConfigCreateLanguage = value;
 }
 export function patchCreateLanguageRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigCreateLanguage = patch(_requestConfigCreateLanguage ?? {});
+  _requestConfigCreateLanguage = patch(_requestConfigCreateLanguage ?? {});
 }
 
 let _requestConfigGetLanguageList: Partial<AxiosRequestConfig> | null;
 export function getGetLanguageListRequestConfig() {
-    return _requestConfigGetLanguageList;
+  return _requestConfigGetLanguageList;
 }
 export function setGetLanguageListRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetLanguageList = value;
+  _requestConfigGetLanguageList = value;
 }
 export function patchGetLanguageListRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetLanguageList = patch(_requestConfigGetLanguageList ?? {});
+  _requestConfigGetLanguageList = patch(_requestConfigGetLanguageList ?? {});
 }

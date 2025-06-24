@@ -20,32 +20,32 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type UpdateStackStackQueryParameters = {
-  stackId: string;
+  stackId: string ;
 }
 
 export type DeleteStackStackQueryParameters = {
-  stackId: string;
+  stackId: string ;
 }
 
 export type GetStackListStackQueryParameters = {
-  query?: string | undefined;
+  query?: string | undefined ;
 }
 
 export function updateStackUrl(stackId: string): string {
   let url_ = getBaseUrl() + "/api/v1/stack/{stackId}";
-  if (stackId === undefined || stackId === null)
-    throw new Error("The parameter 'stackId' must be defined.");
-  url_ = url_.replace("{stackId}", encodeURIComponent("" + stackId));
+if (stackId === undefined || stackId === null)
+  throw new Error("The parameter 'stackId' must be defined.");
+url_ = url_.replace("{stackId}", encodeURIComponent("" + stackId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updateStackMutationKey(stackId: string): MutationKey {
   return trimArrayEnd([
-    'StackClient',
-    'updateStack',
-    stackId as any,
-  ]);
+      'StackClient',
+      'updateStack',
+      stackId as any,
+    ]);
 }
 
 /**
@@ -55,17 +55,17 @@ export function updateStackMutationKey(stackId: string): MutationKey {
  */
 export function useUpdateStackMutation<TContext>(stackId: string, options?: Omit<UseMutationOptions<Types.StackDto, unknown, Types.UpdateStackDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StackDto, unknown, Types.UpdateStackDto, TContext> {
   const key = updateStackMutationKey(stackId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.UpdateStackDto) => Client.updateStack(stackId, body),
     mutationKey: key,
   });
 }
-
+  
 type UpdateStack__MutationParameters = UpdateStackStackQueryParameters & {
   body: Types.UpdateStackDto;
 }
@@ -75,34 +75,34 @@ type UpdateStack__MutationParameters = UpdateStackStackQueryParameters & {
  * @param stackId Идентификатор стека
  * @return OK
  */
-export function useUpdateStackMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StackDto, unknown, UpdateStack__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateStackStackQueryParameters }): UseMutationResult<Types.StackDto, unknown, UpdateStack__MutationParameters, TContext> {
+export function useUpdateStackMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.StackDto, unknown, UpdateStack__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateStackStackQueryParameters}): UseMutationResult<Types.StackDto, unknown, UpdateStack__MutationParameters, TContext> {
   const key = updateStackMutationKey(options?.parameters?.stackId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: UpdateStack__MutationParameters) => Client.updateStack(data.stackId ?? options?.parameters?.stackId!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: UpdateStack__MutationParameters) => Client.updateStack(data.stackId ?? options?.parameters?.stackId!, data.body),
+  mutationKey: key,
+});
 }
-
+  
 export function deleteStackUrl(stackId: string): string {
   let url_ = getBaseUrl() + "/api/v1/stack/{stackId}";
-  if (stackId === undefined || stackId === null)
-    throw new Error("The parameter 'stackId' must be defined.");
-  url_ = url_.replace("{stackId}", encodeURIComponent("" + stackId));
+if (stackId === undefined || stackId === null)
+  throw new Error("The parameter 'stackId' must be defined.");
+url_ = url_.replace("{stackId}", encodeURIComponent("" + stackId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deleteStackMutationKey(stackId: string): MutationKey {
   return trimArrayEnd([
-    'StackClient',
-    'deleteStack',
-    stackId as any,
-  ]);
+      'StackClient',
+      'deleteStack',
+      stackId as any,
+    ]);
 }
 
 /**
@@ -112,17 +112,17 @@ export function deleteStackMutationKey(stackId: string): MutationKey {
  */
 export function useDeleteStackMutation<TContext>(stackId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deleteStackMutationKey(stackId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: () => Client.deleteStack(stackId),
     mutationKey: key,
   });
 }
-
+  
 type DeleteStack__MutationParameters = DeleteStackStackQueryParameters
 
 /**
@@ -130,19 +130,19 @@ type DeleteStack__MutationParameters = DeleteStackStackQueryParameters
  * @param stackId Идентификатор стека
  * @return OK
  */
-export function useDeleteStackMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteStack__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteStackStackQueryParameters }): UseMutationResult<Types.Response, unknown, DeleteStack__MutationParameters, TContext> {
+export function useDeleteStackMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteStack__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteStackStackQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteStack__MutationParameters, TContext> {
   const key = deleteStackMutationKey(options?.parameters?.stackId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: DeleteStack__MutationParameters) => Client.deleteStack(data.stackId ?? options?.parameters?.stackId!),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: DeleteStack__MutationParameters) => Client.deleteStack(data.stackId ?? options?.parameters?.stackId!),
+  mutationKey: key,
+});
 }
-
+  
 export function createStackUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/stack";
   url_ = url_.replace(/[?&]$/, "");
@@ -151,9 +151,9 @@ export function createStackUrl(): string {
 
 export function createStackMutationKey(): MutationKey {
   return trimArrayEnd([
-    'StackClient',
-    'createStack',
-  ]);
+      'StackClient',
+      'createStack',
+    ]);
 }
 
 /**
@@ -162,22 +162,22 @@ export function createStackMutationKey(): MutationKey {
  */
 export function useCreateStackMutation<TContext>(options?: Omit<UseMutationOptions<Types.StackDto, unknown, Types.CreateStackDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.StackDto, unknown, Types.CreateStackDto, TContext> {
   const key = createStackMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.CreateStackDto) => Client.createStack(body),
     mutationKey: key,
   });
 }
-
+  
 export function getStackListUrl(query?: string | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/stack/list?";
-  if (query === null)
+if (query === null)
     throw new Error("The parameter 'query' cannot be null.");
-  else if (query !== undefined)
+else if (query !== undefined)
     url_ += "query=" + encodeURIComponent("" + query) + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -195,24 +195,24 @@ export function setGetStackListDefaultOptions(options: typeof getStackListDefaul
 export function getStackListQueryKey(query?: string | undefined): QueryKey;
 export function getStackListQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { query, } = params[0] as GetStackListStackQueryParameters;
+    const { query,  } = params[0] as GetStackListStackQueryParameters;
 
     return trimArrayEnd([
-      'StackClient',
-      'getStackList',
-      query as any,
-    ]);
+        'StackClient',
+        'getStackList',
+        query as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'StackClient',
-      'getStackList',
-      ...params
-    ]);
+        'StackClient',
+        'getStackList',
+        ...params
+      ]);
   }
 }
 export function __getStackList(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getStackList(
-    context.queryKey[2] as string | undefined, axiosConfig);
+      context.queryKey[2] as string | undefined,axiosConfig    );
 }
 
 export function useGetStackListQuery<TSelectData = Types.StackDto[], TError = unknown>(dto: GetStackListStackQueryParameters, options?: Omit<UseQueryOptions<Types.StackDto[], TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -222,14 +222,14 @@ export function useGetStackListQuery<TSelectData = Types.StackDto[], TError = un
  * @return OK
  */
 export function useGetStackListQuery<TSelectData = Types.StackDto[], TError = unknown>(query?: string | undefined, options?: Omit<UseQueryOptions<Types.StackDto[], TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetStackListQuery<TSelectData = Types.StackDto[], TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetStackListQuery<TSelectData = Types.StackDto[], TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.StackDto[], TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let query: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ query, } = params[0] as GetStackListStackQueryParameters);
+      ({ query,  } = params[0] as GetStackListStackQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

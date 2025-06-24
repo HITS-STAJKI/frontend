@@ -20,10 +20,10 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type GetAllDeansDeanQueryParameters = {
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
-  fullName?: string | undefined;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
+  fullName?: string | undefined ;
 }
 
 export function createDeanUrl(): string {
@@ -34,9 +34,9 @@ export function createDeanUrl(): string {
 
 export function createDeanMutationKey(): MutationKey {
   return trimArrayEnd([
-    'DeanClient',
-    'createDean',
-  ]);
+      'DeanClient',
+      'createDean',
+    ]);
 }
 
 /**
@@ -45,34 +45,34 @@ export function createDeanMutationKey(): MutationKey {
  */
 export function useCreateDeanMutation<TContext>(options?: Omit<UseMutationOptions<Types.DeanDto, unknown, Types.DeanCreateDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.DeanDto, unknown, Types.DeanCreateDto, TContext> {
   const key = createDeanMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.DeanCreateDto) => Client.createDean(body),
     mutationKey: key,
   });
 }
-
+  
 export function getAllDeansUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/dean/list?";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-  if (fullName === null)
+if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
-  else if (fullName !== undefined)
+else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -91,27 +91,27 @@ export function getAllDeansQueryKey(dto: GetAllDeansDeanQueryParameters): QueryK
 export function getAllDeansQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): QueryKey;
 export function getAllDeansQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort, fullName, } = params[0] as GetAllDeansDeanQueryParameters;
+    const { page, size, sort, fullName,  } = params[0] as GetAllDeansDeanQueryParameters;
 
     return trimArrayEnd([
-      'DeanClient',
-      'getAllDeans',
-      page as any,
-      size as any,
-      sort as any,
-      fullName as any,
-    ]);
+        'DeanClient',
+        'getAllDeans',
+        page as any,
+        size as any,
+        sort as any,
+        fullName as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'DeanClient',
-      'getAllDeans',
-      ...params
-    ]);
+        'DeanClient',
+        'getAllDeans',
+        ...params
+      ]);
   }
 }
 export function __getAllDeans(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getAllDeans(
-    context.queryKey[2] as number | undefined, context.queryKey[3] as number | undefined, context.queryKey[4] as string[] | undefined, context.queryKey[5] as string | undefined, axiosConfig);
+      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,       context.queryKey[5] as string | undefined,axiosConfig    );
 }
 
 export function useGetAllDeansQuery<TSelectData = Types.PagedListDtoDeanDto, TError = unknown>(dto: GetAllDeansDeanQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoDeanDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -124,17 +124,17 @@ export function useGetAllDeansQuery<TSelectData = Types.PagedListDtoDeanDto, TEr
  * @return OK
  */
 export function useGetAllDeansQuery<TSelectData = Types.PagedListDtoDeanDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoDeanDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetAllDeansQuery<TSelectData = Types.PagedListDtoDeanDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetAllDeansQuery<TSelectData = Types.PagedListDtoDeanDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoDeanDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
   let fullName: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort, fullName, } = params[0] as GetAllDeansDeanQueryParameters);
+      ({ page, size, sort, fullName,  } = params[0] as GetAllDeansDeanQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

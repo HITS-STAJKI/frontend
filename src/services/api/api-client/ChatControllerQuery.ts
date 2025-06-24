@@ -28,9 +28,9 @@ export function sendMessagesUrl(): string {
 
 export function sendMessagesMutationKey(): MutationKey {
   return trimArrayEnd([
-    'ChatControllerClient',
-    'sendMessages',
-  ]);
+      'ChatControllerClient',
+      'sendMessages',
+    ]);
 }
 
 /**
@@ -39,17 +39,17 @@ export function sendMessagesMutationKey(): MutationKey {
  */
 export function useSendMessagesMutation<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, Types.SendMessageToStudentsRequest, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, Types.SendMessageToStudentsRequest, TContext> {
   const key = sendMessagesMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.SendMessageToStudentsRequest) => Client.sendMessages(body),
     mutationKey: key,
   });
 }
-
+  
 export function getMyChatInfoUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/chats/my";
   url_ = url_.replace(/[?&]$/, "");
@@ -68,13 +68,13 @@ export function setGetMyChatInfoDefaultOptions(options: typeof getMyChatInfoDefa
 export function getMyChatInfoQueryKey(): QueryKey;
 export function getMyChatInfoQueryKey(...params: any[]): QueryKey {
   return trimArrayEnd([
-    'ChatControllerClient',
-    'getMyChatInfo',
-  ]);
+      'ChatControllerClient',
+      'getMyChatInfo',
+    ]);
 }
 export function __getMyChatInfo(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getMyChatInfo(
-    axiosConfig);
+axiosConfig    );
 }
 
 /**
@@ -82,10 +82,10 @@ export function __getMyChatInfo(context: QueryFunctionContext, axiosConfig?: Axi
  * @return OK
  */
 export function useGetMyChatInfoQuery<TSelectData = Types.ChatInfoDto, TError = unknown>(options?: Omit<UseQueryOptions<Types.ChatInfoDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetMyChatInfoQuery<TSelectData = Types.ChatInfoDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetMyChatInfoQuery<TSelectData = Types.ChatInfoDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.ChatInfoDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
-
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  
 
   options = params[0] as any;
   axiosConfig = params[1] as any;
@@ -104,7 +104,7 @@ export function useGetMyChatInfoQuery<TSelectData = Types.ChatInfoDto, TError = 
  * Получить информацию о своем чате (для студента)
  * @return OK
  */
-export function setGetMyChatInfoData(queryClient: QueryClient, updater: (data: Types.ChatInfoDto | undefined) => Types.ChatInfoDto,) {
+export function setGetMyChatInfoData(queryClient: QueryClient, updater: (data: Types.ChatInfoDto | undefined) => Types.ChatInfoDto, ) {
   queryClient.setQueryData(getMyChatInfoQueryKey(),
     updater
   );

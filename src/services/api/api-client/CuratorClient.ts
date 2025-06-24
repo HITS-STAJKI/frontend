@@ -21,9 +21,9 @@ import { getAxios, getBaseUrl } from './helpers';
 export function updateCuratorRole(id: string, body: Types.CuratorEditDto, config?: AxiosRequestConfig | undefined): Promise<Types.CuratorDto> {
     let url_ = getBaseUrl() + "/api/v1/curator/{id}";
     if (id === undefined || id === null)
-        throw new Error("The parameter 'id' must be defined.");
+      throw new Error("The parameter 'id' must be defined.");
     url_ = url_.replace("{id}", encodeURIComponent("" + id));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeCuratorEditDto(body);
 
@@ -65,42 +65,42 @@ function processUpdateCuratorRole(response: AxiosResponse): Promise<Types.Curato
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initCuratorDto(resultData200);
         return Promise.resolve<Types.CuratorDto>(result200);
 
@@ -117,7 +117,7 @@ function processUpdateCuratorRole(response: AxiosResponse): Promise<Types.Curato
  */
 export function createCurator(body: Types.CuratorCreateDto, config?: AxiosRequestConfig | undefined): Promise<Types.CuratorDto> {
     let url_ = getBaseUrl() + "/api/v1/curator";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeCuratorCreateDto(body);
 
@@ -159,42 +159,42 @@ function processCreateCurator(response: AxiosResponse): Promise<Types.CuratorDto
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initCuratorDto(resultData200);
         return Promise.resolve<Types.CuratorDto>(result200);
 
@@ -231,7 +231,7 @@ export function getAllCurators(page?: number | undefined, size?: number | undefi
         throw new Error("The parameter 'fullName' cannot be null.");
     else if (fullName !== undefined)
         url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetAllCurators,
@@ -269,42 +269,42 @@ function processGetAllCurators(response: AxiosResponse): Promise<Types.PagedList
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initPagedListDtoCuratorDto(resultData200);
         return Promise.resolve<Types.PagedListDtoCuratorDto>(result200);
 
@@ -316,33 +316,33 @@ function processGetAllCurators(response: AxiosResponse): Promise<Types.PagedList
 }
 let _requestConfigUpdateCuratorRole: Partial<AxiosRequestConfig> | null;
 export function getUpdateCuratorRoleRequestConfig() {
-    return _requestConfigUpdateCuratorRole;
+  return _requestConfigUpdateCuratorRole;
 }
 export function setUpdateCuratorRoleRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateCuratorRole = value;
+  _requestConfigUpdateCuratorRole = value;
 }
 export function patchUpdateCuratorRoleRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateCuratorRole = patch(_requestConfigUpdateCuratorRole ?? {});
+  _requestConfigUpdateCuratorRole = patch(_requestConfigUpdateCuratorRole ?? {});
 }
 
 let _requestConfigCreateCurator: Partial<AxiosRequestConfig> | null;
 export function getCreateCuratorRequestConfig() {
-    return _requestConfigCreateCurator;
+  return _requestConfigCreateCurator;
 }
 export function setCreateCuratorRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigCreateCurator = value;
+  _requestConfigCreateCurator = value;
 }
 export function patchCreateCuratorRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigCreateCurator = patch(_requestConfigCreateCurator ?? {});
+  _requestConfigCreateCurator = patch(_requestConfigCreateCurator ?? {});
 }
 
 let _requestConfigGetAllCurators: Partial<AxiosRequestConfig> | null;
 export function getGetAllCuratorsRequestConfig() {
-    return _requestConfigGetAllCurators;
+  return _requestConfigGetAllCurators;
 }
 export function setGetAllCuratorsRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetAllCurators = value;
+  _requestConfigGetAllCurators = value;
 }
 export function patchGetAllCuratorsRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetAllCurators = patch(_requestConfigGetAllCurators ?? {});
+  _requestConfigGetAllCurators = patch(_requestConfigGetAllCurators ?? {});
 }

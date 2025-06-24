@@ -20,42 +20,42 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type GetGroupsGroupQueryParameters = {
-  id?: string | undefined;
-  number?: string | undefined;
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
+  id?: string | undefined ;
+  number?: string | undefined ;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
 }
 
 export type DeleteGroupGroupQueryParameters = {
-  id: string;
+  id: string ;
 }
 
 export type UpdateGroupGroupQueryParameters = {
-  id: string;
+  id: string ;
 }
 
 export function getGroupsUrl(id?: string | undefined, number?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/groups?";
-  if (id === null)
+if (id === null)
     throw new Error("The parameter 'id' cannot be null.");
-  else if (id !== undefined)
+else if (id !== undefined)
     url_ += "id=" + encodeURIComponent("" + id) + "&";
-  if (number === null)
+if (number === null)
     throw new Error("The parameter 'number' cannot be null.");
-  else if (number !== undefined)
+else if (number !== undefined)
     url_ += "number=" + encodeURIComponent("" + number) + "&";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -74,28 +74,28 @@ export function getGroupsQueryKey(dto: GetGroupsGroupQueryParameters): QueryKey;
 export function getGroupsQueryKey(id?: string | undefined, number?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getGroupsQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { id, number, page, size, sort, } = params[0] as GetGroupsGroupQueryParameters;
+    const { id, number, page, size, sort,  } = params[0] as GetGroupsGroupQueryParameters;
 
     return trimArrayEnd([
-      'GroupClient',
-      'getGroups',
-      id as any,
-      number as any,
-      page as any,
-      size as any,
-      sort as any,
-    ]);
+        'GroupClient',
+        'getGroups',
+        id as any,
+        number as any,
+        page as any,
+        size as any,
+        sort as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'GroupClient',
-      'getGroups',
-      ...params
-    ]);
+        'GroupClient',
+        'getGroups',
+        ...params
+      ]);
   }
 }
 export function __getGroups(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getGroups(
-    context.queryKey[2] as string | undefined, context.queryKey[3] as string | undefined, context.queryKey[4] as number | undefined, context.queryKey[5] as number | undefined, context.queryKey[6] as string[] | undefined, axiosConfig);
+      context.queryKey[2] as string | undefined,       context.queryKey[3] as string | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as number | undefined,       context.queryKey[6] as string[] | undefined,axiosConfig    );
 }
 
 export function useGetGroupsQuery<TSelectData = Types.PagedListDtoGroupDto, TError = unknown>(dto: GetGroupsGroupQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoGroupDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -109,18 +109,18 @@ export function useGetGroupsQuery<TSelectData = Types.PagedListDtoGroupDto, TErr
  * @return OK
  */
 export function useGetGroupsQuery<TSelectData = Types.PagedListDtoGroupDto, TError = unknown>(id?: string | undefined, number?: string | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoGroupDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetGroupsQuery<TSelectData = Types.PagedListDtoGroupDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetGroupsQuery<TSelectData = Types.PagedListDtoGroupDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoGroupDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let id: any = undefined;
   let number: any = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ id, number, page, size, sort, } = params[0] as GetGroupsGroupQueryParameters);
+      ({ id, number, page, size, sort,  } = params[0] as GetGroupsGroupQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -165,7 +165,7 @@ export function setGetGroupsData(queryClient: QueryClient, updater: (data: Types
 export function setGetGroupsDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoGroupDto | undefined) => Types.PagedListDtoGroupDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function createGroupUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/groups";
   url_ = url_.replace(/[?&]$/, "");
@@ -174,9 +174,9 @@ export function createGroupUrl(): string {
 
 export function createGroupMutationKey(): MutationKey {
   return trimArrayEnd([
-    'GroupClient',
-    'createGroup',
-  ]);
+      'GroupClient',
+      'createGroup',
+    ]);
 }
 
 /**
@@ -185,32 +185,32 @@ export function createGroupMutationKey(): MutationKey {
  */
 export function useCreateGroupMutation<TContext>(options?: Omit<UseMutationOptions<Types.GroupDto, unknown, Types.CreateGroupDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.GroupDto, unknown, Types.CreateGroupDto, TContext> {
   const key = createGroupMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.CreateGroupDto) => Client.createGroup(body),
     mutationKey: key,
   });
 }
-
+  
 export function deleteGroupUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/groups/{id}";
-  if (id === undefined || id === null)
-    throw new Error("The parameter 'id' must be defined.");
-  url_ = url_.replace("{id}", encodeURIComponent("" + id));
+if (id === undefined || id === null)
+  throw new Error("The parameter 'id' must be defined.");
+url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deleteGroupMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-    'GroupClient',
-    'deleteGroup',
-    id as any,
-  ]);
+      'GroupClient',
+      'deleteGroup',
+      id as any,
+    ]);
 }
 
 /**
@@ -220,17 +220,17 @@ export function deleteGroupMutationKey(id: string): MutationKey {
  */
 export function useDeleteGroupMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deleteGroupMutationKey(id);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: () => Client.deleteGroup(id),
     mutationKey: key,
   });
 }
-
+  
 type DeleteGroup__MutationParameters = DeleteGroupGroupQueryParameters
 
 /**
@@ -238,34 +238,34 @@ type DeleteGroup__MutationParameters = DeleteGroupGroupQueryParameters
  * @param id id группы
  * @return OK
  */
-export function useDeleteGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteGroupGroupQueryParameters }): UseMutationResult<Types.Response, unknown, DeleteGroup__MutationParameters, TContext> {
+export function useDeleteGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteGroupGroupQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteGroup__MutationParameters, TContext> {
   const key = deleteGroupMutationKey(options?.parameters?.id!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: DeleteGroup__MutationParameters) => Client.deleteGroup(data.id ?? options?.parameters?.id!),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: DeleteGroup__MutationParameters) => Client.deleteGroup(data.id ?? options?.parameters?.id!),
+  mutationKey: key,
+});
 }
-
+  
 export function updateGroupUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/groups/{id}";
-  if (id === undefined || id === null)
-    throw new Error("The parameter 'id' must be defined.");
-  url_ = url_.replace("{id}", encodeURIComponent("" + id));
+if (id === undefined || id === null)
+  throw new Error("The parameter 'id' must be defined.");
+url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updateGroupMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-    'GroupClient',
-    'updateGroup',
-    id as any,
-  ]);
+      'GroupClient',
+      'updateGroup',
+      id as any,
+    ]);
 }
 
 /**
@@ -275,17 +275,17 @@ export function updateGroupMutationKey(id: string): MutationKey {
  */
 export function useUpdateGroupMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.GroupDto, unknown, Types.UpdateGroupDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.GroupDto, unknown, Types.UpdateGroupDto, TContext> {
   const key = updateGroupMutationKey(id);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.UpdateGroupDto) => Client.updateGroup(id, body),
     mutationKey: key,
   });
 }
-
+  
 type UpdateGroup__MutationParameters = UpdateGroupGroupQueryParameters & {
   body: Types.UpdateGroupDto;
 }
@@ -295,15 +295,15 @@ type UpdateGroup__MutationParameters = UpdateGroupGroupQueryParameters & {
  * @param id id группы
  * @return OK
  */
-export function useUpdateGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.GroupDto, unknown, UpdateGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateGroupGroupQueryParameters }): UseMutationResult<Types.GroupDto, unknown, UpdateGroup__MutationParameters, TContext> {
+export function useUpdateGroupMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.GroupDto, unknown, UpdateGroup__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateGroupGroupQueryParameters}): UseMutationResult<Types.GroupDto, unknown, UpdateGroup__MutationParameters, TContext> {
   const key = updateGroupMutationKey(options?.parameters?.id!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: UpdateGroup__MutationParameters) => Client.updateGroup(data.id ?? options?.parameters?.id!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: UpdateGroup__MutationParameters) => Client.updateGroup(data.id ?? options?.parameters?.id!, data.body),
+  mutationKey: key,
+});
 }

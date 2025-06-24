@@ -21,20 +21,20 @@ import type { AxiosRequestConfig } from 'axios';
 
 
 export type UpdateUserEmailUserQueryParameters = {
-  userId: string;
+  userId: string ;
 }
 
 
 export type GetUserByIdUserQueryParameters = {
-  id: string;
+  id: string ;
 }
 
 export type GetUserListUserQueryParameters = {
-  fullName?: string | undefined;
-  userRole?: Types.UserRole | undefined;
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
+  fullName?: string | undefined ;
+  userRole?: Types.UserRole | undefined ;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
 }
 
 export function getCurrentUserUrl(): string {
@@ -55,13 +55,13 @@ export function setGetCurrentUserDefaultOptions(options: typeof getCurrentUserDe
 export function getCurrentUserQueryKey(): QueryKey;
 export function getCurrentUserQueryKey(...params: any[]): QueryKey {
   return trimArrayEnd([
-    'UserClient',
-    'getCurrentUser',
-  ]);
+      'UserClient',
+      'getCurrentUser',
+    ]);
 }
 export function __getCurrentUser(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getCurrentUser(
-    axiosConfig);
+axiosConfig    );
 }
 
 /**
@@ -69,10 +69,10 @@ export function __getCurrentUser(context: QueryFunctionContext, axiosConfig?: Ax
  * @return OK
  */
 export function useGetCurrentUserQuery<TSelectData = Types.UserDetailsDto, TError = unknown>(options?: Omit<UseQueryOptions<Types.UserDetailsDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetCurrentUserQuery<TSelectData = Types.UserDetailsDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetCurrentUserQuery<TSelectData = Types.UserDetailsDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.UserDetailsDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
-
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  
 
   options = params[0] as any;
   axiosConfig = params[1] as any;
@@ -91,7 +91,7 @@ export function useGetCurrentUserQuery<TSelectData = Types.UserDetailsDto, TErro
  * Получение информации текущего пользователя
  * @return OK
  */
-export function setGetCurrentUserData(queryClient: QueryClient, updater: (data: Types.UserDetailsDto | undefined) => Types.UserDetailsDto,) {
+export function setGetCurrentUserData(queryClient: QueryClient, updater: (data: Types.UserDetailsDto | undefined) => Types.UserDetailsDto, ) {
   queryClient.setQueryData(getCurrentUserQueryKey(),
     updater
   );
@@ -104,7 +104,7 @@ export function setGetCurrentUserData(queryClient: QueryClient, updater: (data: 
 export function setGetCurrentUserDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.UserDetailsDto | undefined) => Types.UserDetailsDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function updateCurrentUserUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/user";
   url_ = url_.replace(/[?&]$/, "");
@@ -113,9 +113,9 @@ export function updateCurrentUserUrl(): string {
 
 export function updateCurrentUserMutationKey(): MutationKey {
   return trimArrayEnd([
-    'UserClient',
-    'updateCurrentUser',
-  ]);
+      'UserClient',
+      'updateCurrentUser',
+    ]);
 }
 
 /**
@@ -124,32 +124,32 @@ export function updateCurrentUserMutationKey(): MutationKey {
  */
 export function useUpdateCurrentUserMutation<TContext>(options?: Omit<UseMutationOptions<Types.UserShortDto, unknown, Types.UserEditDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.UserShortDto, unknown, Types.UserEditDto, TContext> {
   const key = updateCurrentUserMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.UserEditDto) => Client.updateCurrentUser(body),
     mutationKey: key,
   });
 }
-
+  
 export function updateUserEmailUrl(userId: string): string {
   let url_ = getBaseUrl() + "/api/v1/user/{userId}";
-  if (userId === undefined || userId === null)
-    throw new Error("The parameter 'userId' must be defined.");
-  url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
+if (userId === undefined || userId === null)
+  throw new Error("The parameter 'userId' must be defined.");
+url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updateUserEmailMutationKey(userId: string): MutationKey {
   return trimArrayEnd([
-    'UserClient',
-    'updateUserEmail',
-    userId as any,
-  ]);
+      'UserClient',
+      'updateUserEmail',
+      userId as any,
+    ]);
 }
 
 /**
@@ -158,17 +158,17 @@ export function updateUserEmailMutationKey(userId: string): MutationKey {
  */
 export function useUpdateUserEmailMutation<TContext>(userId: string, options?: Omit<UseMutationOptions<Types.UserShortDto, unknown, Types.UserEmailEditDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.UserShortDto, unknown, Types.UserEmailEditDto, TContext> {
   const key = updateUserEmailMutationKey(userId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.UserEmailEditDto) => Client.updateUserEmail(userId, body),
     mutationKey: key,
   });
 }
-
+  
 type UpdateUserEmail__MutationParameters = UpdateUserEmailUserQueryParameters & {
   body: Types.UserEmailEditDto;
 }
@@ -177,19 +177,19 @@ type UpdateUserEmail__MutationParameters = UpdateUserEmailUserQueryParameters & 
  * Изменение электронной почты указанного пользователя
  * @return OK
  */
-export function useUpdateUserEmailMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.UserShortDto, unknown, UpdateUserEmail__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateUserEmailUserQueryParameters }): UseMutationResult<Types.UserShortDto, unknown, UpdateUserEmail__MutationParameters, TContext> {
+export function useUpdateUserEmailMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.UserShortDto, unknown, UpdateUserEmail__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateUserEmailUserQueryParameters}): UseMutationResult<Types.UserShortDto, unknown, UpdateUserEmail__MutationParameters, TContext> {
   const key = updateUserEmailMutationKey(options?.parameters?.userId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: UpdateUserEmail__MutationParameters) => Client.updateUserEmail(data.userId ?? options?.parameters?.userId!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: UpdateUserEmail__MutationParameters) => Client.updateUserEmail(data.userId ?? options?.parameters?.userId!, data.body),
+  mutationKey: key,
+});
 }
-
+  
 export function updateCurrentUserPasswordUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/user/password";
   url_ = url_.replace(/[?&]$/, "");
@@ -198,9 +198,9 @@ export function updateCurrentUserPasswordUrl(): string {
 
 export function updateCurrentUserPasswordMutationKey(): MutationKey {
   return trimArrayEnd([
-    'UserClient',
-    'updateCurrentUserPassword',
-  ]);
+      'UserClient',
+      'updateCurrentUserPassword',
+    ]);
 }
 
 /**
@@ -209,17 +209,17 @@ export function updateCurrentUserPasswordMutationKey(): MutationKey {
  */
 export function useUpdateCurrentUserPasswordMutation<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, Types.PasswordEditDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, Types.PasswordEditDto, TContext> {
   const key = updateCurrentUserPasswordMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.PasswordEditDto) => Client.updateCurrentUserPassword(body),
     mutationKey: key,
   });
 }
-
+  
 export function registerUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/user/register";
   url_ = url_.replace(/[?&]$/, "");
@@ -228,9 +228,9 @@ export function registerUrl(): string {
 
 export function registerMutationKey(): MutationKey {
   return trimArrayEnd([
-    'UserClient',
-    'register',
-  ]);
+      'UserClient',
+      'register',
+    ]);
 }
 
 /**
@@ -239,17 +239,17 @@ export function registerMutationKey(): MutationKey {
  */
 export function useRegisterMutation<TContext>(options?: Omit<UseMutationOptions<Types.TokenDto, unknown, Types.RegistrationRequestDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.TokenDto, unknown, Types.RegistrationRequestDto, TContext> {
   const key = registerMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.RegistrationRequestDto) => Client.register(body),
     mutationKey: key,
   });
 }
-
+  
 export function loginUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/user/login";
   url_ = url_.replace(/[?&]$/, "");
@@ -258,9 +258,9 @@ export function loginUrl(): string {
 
 export function loginMutationKey(): MutationKey {
   return trimArrayEnd([
-    'UserClient',
-    'login',
-  ]);
+      'UserClient',
+      'login',
+    ]);
 }
 
 /**
@@ -269,22 +269,22 @@ export function loginMutationKey(): MutationKey {
  */
 export function useLoginMutation<TContext>(options?: Omit<UseMutationOptions<Types.TokenDto, unknown, Types.LoginCredentialsDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.TokenDto, unknown, Types.LoginCredentialsDto, TContext> {
   const key = loginMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.LoginCredentialsDto) => Client.login(body),
     mutationKey: key,
   });
 }
-
+  
 export function getUserByIdUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/user/{id}";
-  if (id === undefined || id === null)
-    throw new Error("The parameter 'id' must be defined.");
-  url_ = url_.replace("{id}", encodeURIComponent("" + id));
+if (id === undefined || id === null)
+  throw new Error("The parameter 'id' must be defined.");
+url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
@@ -301,24 +301,24 @@ export function setGetUserByIdDefaultOptions(options: typeof getUserByIdDefaultO
 export function getUserByIdQueryKey(id: string): QueryKey;
 export function getUserByIdQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { id, } = params[0] as GetUserByIdUserQueryParameters;
+    const { id,  } = params[0] as GetUserByIdUserQueryParameters;
 
     return trimArrayEnd([
-      'UserClient',
-      'getUserById',
-      id as any,
-    ]);
+        'UserClient',
+        'getUserById',
+        id as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'UserClient',
-      'getUserById',
-      ...params
-    ]);
+        'UserClient',
+        'getUserById',
+        ...params
+      ]);
   }
 }
 export function __getUserById(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getUserById(
-    context.queryKey[2] as string, axiosConfig);
+      context.queryKey[2] as string,axiosConfig    );
 }
 
 export function useGetUserByIdQuery<TSelectData = Types.UserDetailsDto, TError = unknown>(dto: GetUserByIdUserQueryParameters, options?: Omit<UseQueryOptions<Types.UserDetailsDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -327,14 +327,14 @@ export function useGetUserByIdQuery<TSelectData = Types.UserDetailsDto, TError =
  * @return OK
  */
 export function useGetUserByIdQuery<TSelectData = Types.UserDetailsDto, TError = unknown>(id: string, options?: Omit<UseQueryOptions<Types.UserDetailsDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetUserByIdQuery<TSelectData = Types.UserDetailsDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetUserByIdQuery<TSelectData = Types.UserDetailsDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.UserDetailsDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let id: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ id, } = params[0] as GetUserByIdUserQueryParameters);
+      ({ id,  } = params[0] as GetUserByIdUserQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -369,28 +369,28 @@ export function setGetUserByIdData(queryClient: QueryClient, updater: (data: Typ
 export function setGetUserByIdDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.UserDetailsDto | undefined) => Types.UserDetailsDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function getUserListUrl(fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/user/list?";
-  if (fullName === null)
+if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
-  else if (fullName !== undefined)
+else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
-  if (userRole === null)
+if (userRole === null)
     throw new Error("The parameter 'userRole' cannot be null.");
-  else if (userRole !== undefined)
+else if (userRole !== undefined)
     url_ += "userRole=" + encodeURIComponent("" + userRole) + "&";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -409,28 +409,28 @@ export function getUserListQueryKey(dto: GetUserListUserQueryParameters): QueryK
 export function getUserListQueryKey(fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getUserListQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { fullName, userRole, page, size, sort, } = params[0] as GetUserListUserQueryParameters;
+    const { fullName, userRole, page, size, sort,  } = params[0] as GetUserListUserQueryParameters;
 
     return trimArrayEnd([
-      'UserClient',
-      'getUserList',
-      fullName as any,
-      userRole as any,
-      page as any,
-      size as any,
-      sort as any,
-    ]);
+        'UserClient',
+        'getUserList',
+        fullName as any,
+        userRole as any,
+        page as any,
+        size as any,
+        sort as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'UserClient',
-      'getUserList',
-      ...params
-    ]);
+        'UserClient',
+        'getUserList',
+        ...params
+      ]);
   }
 }
 export function __getUserList(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getUserList(
-    context.queryKey[2] as string | undefined, context.queryKey[3] as Types.UserRole | undefined, context.queryKey[4] as number | undefined, context.queryKey[5] as number | undefined, context.queryKey[6] as string[] | undefined, axiosConfig);
+      context.queryKey[2] as string | undefined,       context.queryKey[3] as Types.UserRole | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as number | undefined,       context.queryKey[6] as string[] | undefined,axiosConfig    );
 }
 
 export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(dto: GetUserListUserQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -444,18 +444,18 @@ export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TEr
  * @return OK
  */
 export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(fullName?: string | undefined, userRole?: Types.UserRole | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetUserListQuery<TSelectData = Types.PagedListDtoUserDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoUserDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let fullName: any = undefined;
   let userRole: any = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ fullName, userRole, page, size, sort, } = params[0] as GetUserListUserQueryParameters);
+      ({ fullName, userRole, page, size, sort,  } = params[0] as GetUserListUserQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
