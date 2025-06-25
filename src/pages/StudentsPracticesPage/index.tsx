@@ -36,8 +36,6 @@ export const StudentsPracticesPage = () => {
 
     const { data, isLoading, isError, error, refetch } = useGetAllPracticesQuery(studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort);
 
-    console.log(data);
-
     return (
         <div style={{ width: '100%' }}>
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
@@ -63,7 +61,7 @@ export const StudentsPracticesPage = () => {
                 ) : (
                     <>
                         <PracticesFormUnder studentCount={data?.pagination?.totalElements ?? 0} />
-                        <PracticesList items={data?.items} pagination={data?.pagination} initialSort={sortArray} onRefresh={refetch} />
+                        <PracticesList items={data?.items} pagination={data?.pagination} size={size} initialSort={sortArray} onRefresh={refetch} />
                         <Pagination pagination={data?.pagination} />
                     </>
                 )}

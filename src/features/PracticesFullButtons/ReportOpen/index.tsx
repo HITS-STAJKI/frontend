@@ -294,6 +294,16 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                         }
                                         usersFor={[Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD]}
                                     />
+                                    <WithProfileRole
+                                        render={
+                                            report?.grade != null ? (
+                                                <Text size="sm" fw={500} mt="sm">
+                                                    Ваша оценка за практику: <b>{report.grade}</b>
+                                                </Text>
+                                            ) : null
+                                        }
+                                        usersFor={[Roles.STUDENT]}
+                                    />
 
                                 </>
                             )

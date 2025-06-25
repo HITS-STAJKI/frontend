@@ -21,9 +21,10 @@ export type SortKeyAllPractices =
 type PagedListDtoPracticeProps = PagedListDtoPracticeDto & {
     initialSort: [SortKeyAllPractices, SortDirectionAllPractices] | null;
     onRefresh?: () => void;
+    size: number;
 };
 
-export function PracticesList({ items, pagination, initialSort = null, onRefresh }: PagedListDtoPracticeProps) {
+export function PracticesList({ items, pagination, initialSort = null, onRefresh, size }: PagedListDtoPracticeProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [sort, setSort] = useState<[SortKeyAllPractices, SortDirectionAllPractices] | null>(initialSort);
 
@@ -144,7 +145,7 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
                 </Card>
             ) : (
                 (items ?? []).map((practice, localIndex) => {
-                    const globalIndex = ((pagination?.currentPage ?? 0)) * (pagination?.size ?? 10) + localIndex;
+                    const globalIndex = ((pagination?.currentPage ?? 0)) * (size) + localIndex;
                     return (
                         <FullPracticeCard
                             key={practice.id}

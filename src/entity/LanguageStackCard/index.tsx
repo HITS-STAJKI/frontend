@@ -14,8 +14,8 @@ export function LanguageStackCard({ id, name, type, index, query }: LanguageDto 
                 </Flex>
                 
                 <Flex gap="md">
-                    <EditLanguageOrStack id={id} type={type} name={name} query={query}></EditLanguageOrStack>
-                    <DeleteLanguageOrStack id={id} type={type} query={query} />
+                    <EditLanguageOrStack id={id} type={type} name={name}/>
+                    <DeleteLanguageOrStack id={id} type={type} />
                 </Flex>
             </Flex>
         </Card>

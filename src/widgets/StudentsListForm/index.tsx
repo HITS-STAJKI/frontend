@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 import { useSendMessagesMutation } from "services/api/api-client/ChatControllerQuery";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { UploadFileFilesMutationParameters } from "services/api/api-client/FilesQuery";
-import { exportStudentsUrl, useImportStudentsMutation } from "services/api/api-client/StudentQuery";
+import { useImportStudentsMutation } from "services/api/api-client/StudentQuery";
 
 type PracticesFormOverProps = {
     studentName: string,
@@ -36,9 +36,10 @@ type StudentsListFormProps = PagedListDtoStudentDto & {
     initialSort: [SortKeyStudents, SortDirectionStudents] | null;
     selectedStudentIds: string[];
     setSelectedStudentIds: React.Dispatch<React.SetStateAction<string[]>>;
+    size: number;
 };
 
-export function StudentsListForm({ items, pagination, initialSort, selectedStudentIds, setSelectedStudentIds }: StudentsListFormProps) {
+export function StudentsListForm({ items, pagination, initialSort, selectedStudentIds, setSelectedStudentIds, size }: StudentsListFormProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [sort, setSort] = useState<[SortKeyStudents, SortDirectionStudents] | null>(initialSort);
 
@@ -132,7 +133,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                     <Grid style={{ width: "100%" }}>
                         {[
                             { key: "user.fullName", label: "Имя студента" },
-                            { key: "group.number", label: "Группа" },
+                            { key: "group.number", label: "Поток" },
                             { key: "user.lastLoginDate", label: "Время последнего входа" },
                             { key: "unreadMessagesCount", label: "Непрочитанные сообщения" }
                         ].map(({ key, label }) => (
@@ -186,7 +187,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
             </Card>
             {(sortedItems && sortedItems.length > 0) ? (
                 sortedItems.map((student, localIndex) => {
-                    const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
+                    const globalIndex = ((pagination?.currentPage ?? 1)) * (size) + localIndex;
                     return (
                         <StudentListCard
                             key={student.id}
@@ -277,24 +278,33 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
     const handleExport = async () => {
         setIsExporting(true);
         setExportError(null);
-        try {
-            const url = exportStudentsUrl(selectedStudentIds);
-            const response = await fetch(url);
-            if (!response.ok) {
+
+        try 
+        {
+            const response = await fetch(`https://tomcat.sonya.jij.li/internship/api/v1/student/export?studentIds=${selectedStudentIds.join(',')}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+
+            if (!response.ok) 
+            {
                 throw new Error('Ошибка при экспорте студентов');
             }
-            const blob = await response.blob();
 
-            const a = document.createElement('a');
+            const blob = await response.blob();
             const objectUrl = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
             a.href = objectUrl;
             a.download = 'students.xlsx';
             document.body.appendChild(a);
             a.click();
-            a.remove();
             window.URL.revokeObjectURL(objectUrl);
-        }
-        catch (err: any) {
+            a.remove();
+        } 
+        catch (err) 
+        {
             console.error(err);
             setExportError(getErrorMessage(err));
         }

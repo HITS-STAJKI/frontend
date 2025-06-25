@@ -1,4 +1,4 @@
-import { SelectionStudentList, SelectionSearchForm } from "widgets/Selection/indexStudents"
+import { SelectionStudentList } from "widgets/Selection/indexStudents"
 import { Card, Center, Container, Flex, Loader, Text } from "@mantine/core";
 import { TitleForm } from "widgets/Selection/indexStudents";
 import { Pagination } from "shared/ui";
@@ -11,13 +11,14 @@ const SelectionStudentPage = () => {
     const [searchParams] = useSearchParams();
     const size = Number(searchParams.get("size") ?? "10");
     const page = Number(searchParams.get("page") ?? "0");
-    const { data: list, isLoading: isLoadingList, isError: isErrorList, error: errorList } = useGetInterviewList_1Query(page, size)
+    const { data: list, isLoading: isLoadingList, isError: isErrorList, error: errorList, refetch } = useGetInterviewList_1Query(page, size)
 
 
 
     const { data: user, isLoading: loadingUser, isError: isErrorUser, error: errorUser } = useGetCurrentUserQuery()
 
-    if (isLoadingList || loadingUser) {
+    if (isLoadingList || loadingUser) 
+    {
         return (
             <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
                 <Loader size="lg" />
@@ -25,7 +26,8 @@ const SelectionStudentPage = () => {
         );
     }
 
-    if (isErrorList || isErrorUser) {
+    if (isErrorList || isErrorUser) 
+    {
         return (
             <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6, width: '100%' }}>
                 <Text color="red" size="sm" style={{ textAlign: 'center' }}>
@@ -41,7 +43,8 @@ const SelectionStudentPage = () => {
         );
     }
 
-    if (!list || !user) {
+    if (!list || !user) 
+    {
         return (
             <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
                 <Text>Нет данных</Text>
@@ -53,9 +56,8 @@ const SelectionStudentPage = () => {
         <>
             <Container p={0} fluid style={{ width: '100%', marginInline: '2vh' }}>
                 <Flex direction="column">
-                    <TitleForm />
-                    <SelectionSearchForm />
-                    <SelectionStudentList data={list?.items!} chatId={user?.student?.chatId!} />
+                    <TitleForm onRefresh={refetch} />
+                    <SelectionStudentList data={list?.items!} chatId={user?.student?.chatId!} onSuccess={refetch} />
                     <Pagination pagination={list?.pagination} />
                 </Flex>
             </Container>

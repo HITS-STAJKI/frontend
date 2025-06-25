@@ -72,7 +72,7 @@ export const StudentsListPage = () => {
                 ) : (
                     <>
                         <StudentsFormUnder studentCount={data?.pagination?.totalElements ?? 0} />
-                        <StudentsListForm items={data?.items} pagination={data?.pagination} initialSort={sortArray} selectedStudentIds={selectedStudentIds} setSelectedStudentIds={setSelectedStudentIds} />
+                        <StudentsListForm items={data?.items} pagination={data?.pagination} initialSort={sortArray} selectedStudentIds={selectedStudentIds} setSelectedStudentIds={setSelectedStudentIds} size={size}/>
                         <StudentsCommentaryForm selectedStudentIds={selectedStudentIds} refetchStudents={refetch}/>
                         <Pagination pagination={data?.pagination} />
                     </>

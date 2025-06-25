@@ -31,9 +31,10 @@ export type SortKeyStudentPractices =
 
 type PagedListDtoPracticeProps = PagedListDtoPracticeDto & {
     initialSort: [SortKeyStudentPractices, SortDirectionStudentPractices] | null;
+    size: number
 };
 
-export function PracticesList({ items, pagination, initialSort = null }: PagedListDtoPracticeProps) {
+export function PracticesList({ items, pagination, initialSort = null, size }: PagedListDtoPracticeProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [sort, setSort] = useState<[SortKeyStudentPractices, SortDirectionStudentPractices] | null>(initialSort);
 
@@ -150,24 +151,32 @@ export function PracticesList({ items, pagination, initialSort = null }: PagedLi
                     </Grid>
                 </div>
             </Card>
-            {(items ?? []).map((practice, localIndex) => {
-                const globalIndex = ((pagination?.currentPage ?? 0)) * (pagination?.size ?? 10) + localIndex;
-                return (
-                    <ShortPracticeCard
-                        key={practice.id}
-                        id={practice.id}
-                        user={practice.user}
-                        group={practice.group}
-                        company={practice.company}
-                        stack={practice.stack}
-                        createdAt={practice.createdAt}
-                        isPaid={practice.isPaid}
-                        isArchived={practice.isArchived}
-                        isApproved={practice.isApproved}
-                        index={globalIndex + 1}
-                    />
-                );
-            })}
+            {(!items || items.length === 0) ? (
+                <Card withBorder padding="lg" radius="md" shadow="sm" style={{ width: '100%' }}>
+                    <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
+                        Практик нет
+                    </Text>
+                </Card>
+            ) : (
+                (items ?? []).map((practice, localIndex) => {
+                    const globalIndex = ((pagination?.currentPage ?? 0)) * (size) + localIndex;
+                    return (
+                        <ShortPracticeCard
+                            key={practice.id}
+                            id={practice.id}
+                            user={practice.user}
+                            group={practice.group}
+                            company={practice.company}
+                            stack={practice.stack}
+                            createdAt={practice.createdAt}
+                            isPaid={practice.isPaid}
+                            isArchived={practice.isArchived}
+                            isApproved={practice.isApproved}
+                            index={globalIndex + 1}
+                        />
+                    );
+                })
+            )}
         </Flex>
     );
 }
