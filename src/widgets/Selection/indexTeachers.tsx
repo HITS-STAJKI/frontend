@@ -320,7 +320,11 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+<<<<<<< Updated upstream
                             {languages[0]?.name}
+=======
+                            {languages[0]?.name ? languages[0].name : 'Язык не найден'}
+>>>>>>> Stashed changes
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.6} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
