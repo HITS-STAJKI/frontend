@@ -55,7 +55,7 @@ export function SelectionHeaderCard({ selection, chatId, onSuccess }: { selectio
             <Flex justify="space-between">
                 <div>
                     <Text size="xl" style={{ fontWeight: '500' }}>Компания {selection.companyPartner.name || "Неизвестная компания"}</Text>
-                    <Text size="xl">Направление: {selection.stack.name || "Неизвестное направление"}</Text>
+                    <Text size="xl">Стек: {selection.stack.name || "Неизвестный стек"}</Text>
                 </div>
                 <div>
                     <Flex wrap="wrap">

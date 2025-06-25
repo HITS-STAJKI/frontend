@@ -18,7 +18,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
     {id: "groups",label: "Группы",element: (props) => <FilterGroupMultiple id="groups" onChangeValue={props.onChangeValue} />},
     {id: "truefalse",label: "Да?",element: (props) => <FilterTrueFalseNull id="truefalse" onChangeValue={props.onChangeValue} />},
     {id: "userRole",label: "Роль пользователя",element: (props) => <FilterUserRole id="userRole" onChangeValue={props.onChangeValue} />},
-    {id: "stackName",label: "Название стэка",element: (props) => <FilterStackName id="stackName" onChangeValue={props.onChangeValue} />},
+    {id: "stackName",label: "Название стека",element: (props) => <FilterStackName id="stackName" onChangeValue={props.onChangeValue} />},
     {id: "groupName",label: "Номер группы",element: (props) => <FilterGroupName id="groupName" onChangeValue={props.onChangeValue} />}
 ]}/>*/}
 

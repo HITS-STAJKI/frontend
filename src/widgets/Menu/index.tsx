@@ -17,7 +17,7 @@ export const Menu = () => {
         {
             to: [
                 { to: LANGUAGES_ROUTE, label: 'Языки', },
-                { to: STACKS_ROUTE, label: 'Стэки' },
+                { to: STACKS_ROUTE, label: 'Стеки' },
                 { to: ROLES_ROUTE, label: 'Пользователи' },
                 { to: GROUPS_ROUTE, label: 'Потоки' },
             ], label: 'Администрирование', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD,]

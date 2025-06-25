@@ -27,7 +27,7 @@ const filters: ComboboxData = [
     { value: 'isOnPractice', label: 'На практике' },
     { value: 'hasPracticeRequest', label: 'Есть запрос на практику' },
     { value: 'hasInterviews', label: 'Есть интервью' },
-    { value: 'stackIds', label: 'Стэки' },
+    { value: 'stackIds', label: 'Стеки' },
     { value: 'includeArchived', label: 'Архивированные' },
 ]
 
@@ -146,7 +146,7 @@ const fields: Array<{ value: string | null, field: (setStats: React.Dispatch<Rea
             defaultValue={''} />
     },
     {
-        value: 'stackIds', field: (setStats, data) => <MultiSelect label='Стэк технологий' data={data} onChange={e => {
+        value: 'stackIds', field: (setStats, data) => <MultiSelect label='Стек технологий' data={data} onChange={e => {
             setStats(prev => {
                 return {
                     ...prev,
