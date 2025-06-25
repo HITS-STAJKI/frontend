@@ -1,7 +1,9 @@
 import { Button, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { GroupDto } from "services/api/api-client.types"
-import { GroupUpdate } from "shared/lib"
+import { GroupDto, UpdateGroupDto } from "services/api/api-client.types"
+import { useUpdateGroupMutation } from "services/api/api-client/GroupQuery.ts"
+import { useQueryClient } from '@tanstack/react-query'
+import { QueryFactory } from '../../../../services/api'
 
 type EditGroupFormProps = {
     onSuccess: () => void
@@ -9,15 +11,20 @@ type EditGroupFormProps = {
 }
 
 export const EditGroupForm = ({ onSuccess, group }: EditGroupFormProps) => {
-    const form = useForm<GroupUpdate>({
+    const form = useForm<UpdateGroupDto>({
         initialValues: {
             number: group.number!
         }
     })
 
-    const handleEdit = (vals: GroupUpdate) => {
-        // TODO Логика редактирования группы
-        console.log("Тело запроса", vals)
+    const { mutateAsync } = useUpdateGroupMutation(group.id!)
+    const queryClient = useQueryClient()
+
+    const handleEdit = async (vals: UpdateGroupDto) => {
+        await mutateAsync(vals)
+        await queryClient.invalidateQueries({
+            queryKey: QueryFactory.GroupQuery.getGroupsQueryKey()
+        })
         onSuccess()
     }
 

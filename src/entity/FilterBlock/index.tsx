@@ -178,9 +178,9 @@ export function FilterBlockFull({ availableFilters }: FilterBlockProps) {
                     <Button color="red" onClick={handleClear} type='button'>
                         Очистить
                     </Button>
-                    <Button color="gray" type='button'>
-                        Печать
-                    </Button>
+                    {/*<Button color="gray" type='button'>*/}
+                    {/*    Печать*/}
+                    {/*</Button>*/}
                     <Box style={{ width: 36 }}>
                         {activeFilters.length > 0 ? (
                             <Button
