@@ -6,7 +6,7 @@ export const Dashboard = () => {
     const [stats, setStats] = useState<FilterRequest>({})
     const [main, setMain] = useState<FilterType | undefined>()
     return (
-        <Flex gap='xl' h={'100%'}>
+        <Flex h={'100%'}>
             <ChartCard {...stats} main={main} />
             <Filters setStats={setStats} setMain={setMain} main={main} />
         </Flex>

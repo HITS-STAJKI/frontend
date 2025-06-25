@@ -1,4 +1,4 @@
-import { ComboboxData, Flex, Input, MultiSelect, Select } from "@mantine/core"
+import { Center, ComboboxData, Flex, Input, Loader, MultiSelect, Select } from "@mantine/core"
 import { FilterRequest, FilterType } from "../ChartCard"
 import { memo, ReactNode } from "react"
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery"
@@ -182,24 +182,30 @@ export const Filters = ({ setStats, setMain, main }: {
     const { data: dataCompany, isLoading: isLoadingCompany } = useGetPartnersQuery(undefined, undefined, undefined, 0, 1000000000)
     const { data: dataStack, isLoading: isLoadingStack } = useGetStackListQuery()
     if (isLoadingGroups || isLoadingCompany || isLoadingStack) {
-        return 'Загрузка'
+        return <Flex flex={'33%'} style={{ flexGrow: 1, border: '1px solid black' }} p={'lg'} gap='0.25rem' direction='column' align='center' justify='center'>
+            <Center>
+                <Loader />
+            </Center>
+        </Flex>
     }
     return (
-        <Flex flex={'1'} style={{ flexGrow: 1, border: '1px solid black' }} p={'lg'} gap='1rem' direction='column'>
-            <Select data={filters} placeholder="Главный фильтр" onChange={e => {
+        <Flex flex={'33%'} style={{ flexGrow: 1, border: '1px solid black' }} p={'lg'} gap='0.25rem' direction='column'>
+            <Select data={filters} label='Индексируемый фильтр' onChange={e => {
                 if (e !== null)
                     setMain(e as FilterType)
             }} />
             {main !== undefined && (
                 <>
-                    {fields.find(element => element.value === main)?.field(setStats,
-                        main === 'groupIds' ? dataGroups?.items?.map(group => {
-                            return { value: group.id!, label: group.number! }
-                        }) : main === 'companyIds' ? dataCompany?.items?.map(company => {
-                            return { value: company.id, label: company.name }
-                        }) : dataStack?.map(stack => {
-                            return { value: stack.id, label: stack.name }
-                        }))}
+                    <div style={{ border: '1px solid red', margin: '0.12rem -0.25rem 0.12rem -0.25rem', padding: '0.12rem 0.25rem 0.12rem 0.25rem', borderRadius: '8px' }}>
+                        {fields.find(element => element.value === main)?.field(setStats,
+                            main === 'groupIds' ? dataGroups?.items?.map(group => {
+                                return { value: group.id!, label: group.number! }
+                            }) : main === 'companyIds' ? dataCompany?.items?.map(company => {
+                                return { value: company.id, label: company.name }
+                            }) : dataStack?.map(stack => {
+                                return { value: stack.id, label: stack.name }
+                            }))}
+                    </div>
                     {fields.filter(element => element.value !== main)!.map(element => {
                         return <div key={element.value}>{element.field(setStats,
                             element.value === 'groupIds' ? dataGroups?.items?.map(group => {
