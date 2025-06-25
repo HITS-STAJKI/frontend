@@ -31,20 +31,20 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
 
     return (
         <>
-            <Card 
-                key={studentId} 
-                shadow="sm" 
-                style={{ 
-                    width: '100%', 
-                    height: '64px', 
-                    display: 'flex', 
-                    cursor: 'pointer', 
-                    transition: 'box-shadow 0.2s ease, background-color 0.2s ease', 
-                    boxShadow: isHovered ? '0 0 10px rgba(0,0,0,0.1)' : undefined, 
-                    backgroundColor: isHovered ? '#f9f9f9' : undefined 
-                }} 
-                onClick={handleCardClick} 
-                onMouseEnter={() => setIsHovered(true)} 
+            <Card
+                key={studentId}
+                shadow="sm"
+                style={{
+                    width: '100%',
+                    height: '64px',
+                    display: 'flex',
+                    cursor: 'pointer',
+                    transition: 'box-shadow 0.2s ease, background-color 0.2s ease',
+                    boxShadow: isHovered ? '0 0 10px rgba(0,0,0,0.1)' : undefined,
+                    backgroundColor: isHovered ? '#f9f9f9' : undefined
+                }}
+                onClick={handleCardClick}
+                onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
             >
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%', width: '100%' }}>
@@ -57,7 +57,7 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{fullName}</Text>
                         </Grid.Col>
                         <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                            <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{groupNumber}</Text>
+                            <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{groupNumber ? groupNumber : 'Пользователь не в группе'}</Text>
                         </Grid.Col>
                         <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
@@ -71,29 +71,29 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
                                 </Box>
                             )}
                         </Grid.Col>
-                        <Grid.Col span={2} style={{ 
-                            display: 'flex', 
-                            justifyContent: 'flex-end', 
+                        <Grid.Col span={2} style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
                             alignItems: 'center',
                             gap: '8px' // Добавляем отступ между кнопками
                         }}>
-                            
-                            <Button 
-                                variant="outline" 
+
+                            <Button
+                                variant="outline"
                                 size="xs"
-                                onClick={(e) => { 
-                                    e.stopPropagation(); 
-                                    navigate(`/practices/student/${studentId}`); 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/practices/student/${studentId}`);
                                 }}
                             >
                                 Практика
                             </Button>
-                            <Button 
-                                variant="outline" 
-                                size="xs" 
-                                onClick={(e) => { 
-                                    e.stopPropagation(); 
-                                    navigate(`/profile/${userId}`); 
+                            <Button
+                                variant="outline"
+                                size="xs"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/profile/${userId}`);
                                 }}
                             >
                                 Профиль
@@ -102,7 +102,7 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
                     </Grid>
                 </div>
             </Card>
-            
+
             <StudentCommentsModal opened={modalOpened} onClose={() => setModalOpened(false)} chatId={chatId} />
         </>
     );
