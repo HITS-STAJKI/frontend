@@ -208,7 +208,7 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoPractice
                             { key: "student.group.number", label: "Поток", span: 1.5 },
                             { key: "company.name", label: "Компания", span: 1.5 },
                             { key: 'stack.name', label: "Направление", span: 1.5 },
-                            { key: "languages.name", label: "Технологии", span: 1.5 },
+                            { key: "languages.name", label: "Язык программирования", span: 1.5 },
                             { key: "status", label: "Статус", span: 1.6 },
                             { key: "createdAt", label: "Дата создания", span: 1.5 },
                         ].map(({ key, label, span }) => (
@@ -320,7 +320,7 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {languages[0].name}
+                            {languages[0]?.name ? languages[0].name : 'Язык не найден'}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.6} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>

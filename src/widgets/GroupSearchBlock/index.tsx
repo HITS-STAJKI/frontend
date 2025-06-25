@@ -4,8 +4,8 @@ import { IconSearch } from '@tabler/icons-react';
 export const GroupSearchBlock = () => {
     return (
         <Flex align="flex-end">
-            <Input.Wrapper label="Поиск по номеру группы">
-                <Input placeholder="Введите номер группы" />
+            <Input.Wrapper label="Поиск по номеру потока">
+                <Input placeholder="Введите номер потока" />
             </Input.Wrapper>
 
             <Button variant="filled" aria-label="Settings" style={{ marginLeft: '6px' }}>

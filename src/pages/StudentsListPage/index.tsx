@@ -51,12 +51,12 @@ export const StudentsListPage = () => {
                     { id: "fullName", label: "ФИО", element: (props) => <FilterName id="fullName" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "isAcadem", label: "Студент в академе?", element: (props) => <FilterTrueFalse id="isAcadem" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "isGraduated", label: "Студент выпустился?", element: (props) => <FilterTrueFalse id="isGraduated" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "groupIds", label: "Выберете группу", element: (props) => <FilterGroupMultiple id="groupIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "companyIds", label: "Выберете компанию", element: (props) => <FilterCompanyMultiple id="companyIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "groupIds", label: "Поток", element: (props) => <FilterGroupMultiple id="groupIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "companyIds", label: "Компания", element: (props) => <FilterCompanyMultiple id="companyIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "isOnPractice", label: "Студент на практике?", element: (props) => <FilterTrueFalse id="isOnPractice" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "hasInterviews", label: "Студент приступил к собеседованиям?", element: (props) => <FilterTrueFalse id="hasInterviews" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "hasPracticeRequest", label: "Студент подал заявку на практику?", element: (props) => <FilterTrueFalse id="hasPracticeRequest" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "stackIds", label: "Выберете направление", element: (props) => <FilterStackMultiple id="stackIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "hasPracticeRequest", label: "У студента есть неподтвержденные практики?", element: (props) => <FilterTrueFalse id="hasPracticeRequest" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "stackIds", label: "Направление", element: (props) => <FilterStackMultiple id="stackIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "lastLogin", label: "Время последнего захода в систему", element: (props) => <FilterDateTime id="lastLogin" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                 ]} />
                 {isLoading ? (

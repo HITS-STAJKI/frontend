@@ -22,7 +22,7 @@ const filters: ComboboxData = [
     { value: 'fullname', label: 'ФИО' },
     { value: 'isAcadem', label: 'Академ' },
     { value: 'isGraduated', label: 'Выпущен' },
-    { value: 'groupIds', label: 'Группы' },
+    { value: 'groupIds', label: 'Потоки' },
     { value: 'companyIds', label: 'Компании' },
     { value: 'isOnPractice', label: 'На практике' },
     { value: 'hasPracticeRequest', label: 'Есть запрос на практику' },
@@ -78,7 +78,7 @@ const fields: Array<{ value: string | null, field: (setStats: React.Dispatch<Rea
             defaultValue={''} />
     },
     {
-        value: 'groupIds', field: (setStats, data) => <MultiSelect label={'Группы'} data={data} onChange={e => {
+        value: 'groupIds', field: (setStats, data) => <MultiSelect label={'Потоки'} data={data} onChange={e => {
             setStats(prev => {
                 return {
                     ...prev,
@@ -186,7 +186,7 @@ export const Filters = ({ setStats, setMain, main }: {
     }
     return (
         <Flex flex={'1'} style={{ flexGrow: 1, border: '1px solid black' }} p={'lg'} gap='1rem' direction='column'>
-            <Select data={filters} placeholder="Выберете главный фильтр" onChange={e => {
+            <Select data={filters} placeholder="Главный фильтр" onChange={e => {
                 if (e !== null)
                     setMain(e as FilterType)
             }} />

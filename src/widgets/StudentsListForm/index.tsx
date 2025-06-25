@@ -46,35 +46,28 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
         setSort((currentSort) => {
             let newSort: [SortKeyStudents, SortDirectionStudents] | null;
 
-            if (currentSort?.[0] === key) 
-            {
-                if (currentSort[1] === "asc") 
-                {
+            if (currentSort?.[0] === key) {
+                if (currentSort[1] === "asc") {
                     newSort = [key, "desc"];
-                } 
-                else if (currentSort[1] === "desc") 
-                {
+                }
+                else if (currentSort[1] === "desc") {
                     newSort = null;
-                } 
-                else 
-                {
+                }
+                else {
                     newSort = [key, "asc"];
                 }
-            } 
-            else{
+            }
+            else {
                 newSort = [key, "asc"];
             }
 
-            if (key !== "unreadMessagesCount") 
-            {
+            if (key !== "unreadMessagesCount") {
                 const updatedParams = new URLSearchParams(searchParams);
-                if (newSort) 
-                {
+                if (newSort) {
                     updatedParams.set("sort", newSort[0]);
                     updatedParams.set("sortDirection", newSort[1]);
-                } 
-                else 
-                {
+                }
+                else {
                     updatedParams.delete("sort");
                     updatedParams.delete("sortDirection");
                 }
@@ -87,13 +80,11 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
     }
 
     const sortedItems = useMemo(() => {
-        if (!items)
-        {
-             return [];
+        if (!items) {
+            return [];
         }
 
-        if (!sort || sort[0] !== "unreadMessagesCount") 
-        {
+        if (!sort || sort[0] !== "unreadMessagesCount") {
             return items;
         }
 
@@ -107,8 +98,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
     }, [items, sort]);
 
     function SortArrow({ columnKey }: { columnKey: SortKeyStudents }) {
-        if (!sort || sort[0] !== columnKey) 
-        {
+        if (!sort || sort[0] !== columnKey) {
             return null;
         }
         return sort[1] === "asc" ?
@@ -125,14 +115,13 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                     <Box style={{ width: "40px", textAlign: "center" }} />
                     <Box style={{ width: "40px", textAlign: "center" }}>
-                        { items &&
+                        {items &&
                             <Checkbox
                                 size="sm"
                                 checked={items?.length > 0 && selectedStudentIds.length === items.length}
                                 indeterminate={selectedStudentIds.length > 0 && selectedStudentIds.length < (items?.length ?? 0)}
                                 onChange={() => {
-                                    if (items) 
-                                    {
+                                    if (items) {
                                         const allSelected = selectedStudentIds.length === items.length;
                                         setSelectedStudentIds(allSelected ? [] : items.map(student => student.id));
                                     }
@@ -275,8 +264,7 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
     const isLoading = status === 'pending';
 
     const handleSubmit = () => {
-        if (isSubmitDisabled)
-        {
+        if (isSubmitDisabled) {
             return;
         }
         setErrorMessage(null);
@@ -289,12 +277,10 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
     const handleExport = async () => {
         setIsExporting(true);
         setExportError(null);
-        try
-        {
+        try {
             const url = exportStudentsUrl(selectedStudentIds);
             const response = await fetch(url);
-            if (!response.ok) 
-            {
+            if (!response.ok) {
                 throw new Error('Ошибка при экспорте студентов');
             }
             const blob = await response.blob();
@@ -307,21 +293,18 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
             a.click();
             a.remove();
             window.URL.revokeObjectURL(objectUrl);
-        } 
-        catch (err: any) 
-        {
+        }
+        catch (err: any) {
             console.error(err);
             setExportError(getErrorMessage(err));
-        } 
-        finally 
-        {
+        }
+        finally {
             setIsExporting(false);
         }
     };
 
     const handleImport = async (e: File | null) => {
-        if (!e?.name)
-        {
+        if (!e?.name) {
             return;
         }
 
@@ -332,8 +315,7 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
             file: { data: e, fileName: e.name }
         };
 
-        try
-        {
+        try {
             const file = await importMutation(fp);
             const url = window.URL.createObjectURL(file.data);
             const a = document.createElement('a');
@@ -345,13 +327,11 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
             a.remove();
 
             refetchStudents();
-        } 
-        catch (err) 
-        {
+        }
+        catch (err) {
             setImportError(getErrorMessage(err));
-        } 
-        finally 
-        {
+        }
+        finally {
             setIsImporting(false);
         }
     };
@@ -360,7 +340,7 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
             <Card style={{ width: '100%', padding: '1rem', border: "1px solid #ccc", borderRadius: 8 }}>
                 <Stack gap="sm" style={{ width: '100%' }}>
-                    <Textarea placeholder="Введите комментарий..." autosize minRows={3} value={value} onChange={(event) => setValue(event.currentTarget.value)} style={{ width: '100%' }}/>
+                    <Textarea placeholder="Введите комментарий..." autosize minRows={3} value={value} onChange={(event) => setValue(event.currentTarget.value)} style={{ width: '100%' }} />
                     <Group justify="flex-end">
                         <Button variant="light" color="gray" onClick={() => setValue('')} disabled={isLoading}>
                             Отмена

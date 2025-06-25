@@ -20,32 +20,32 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type UploadFileFilesMutationParameters = {
-  file?: Types.FileParameter | undefined;
+  file?: Types.FileParameter | undefined ;
 }
 
 export type GetFileMetadataFilesQueryParameters = {
-  id: string;
+  id: string ;
 }
 
 export type DownloadFileFilesQueryParameters = {
-  id: string;
+  id: string ;
 }
 
 export type GetMyFilesFilesQueryParameters = {
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
 }
 
 export type GetAllFilesByTypeFilesQueryParameters = {
-  type: Types.Type;
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
+  type: Types.Type ;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
 }
 
 export type DeleteFileFilesQueryParameters = {
-  id: string;
+  id: string ;
 }
 
 export function uploadFileUrl(): string {
@@ -56,9 +56,9 @@ export function uploadFileUrl(): string {
 
 export function uploadFileMutationKey(): MutationKey {
   return trimArrayEnd([
-    'FilesClient',
-    'uploadFile',
-  ]);
+      'FilesClient',
+      'uploadFile',
+    ]);
 }
 
 /**
@@ -68,22 +68,22 @@ export function uploadFileMutationKey(): MutationKey {
  */
 export function useUploadFileMutation<TContext>(options?: Omit<UseMutationOptions<Types.FileDto, unknown, UploadFileFilesMutationParameters, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.FileDto, unknown, UploadFileFilesMutationParameters, TContext> {
   const key = uploadFileMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (uploadFileFilesMutationParameters: UploadFileFilesMutationParameters) => Client.uploadFile(uploadFileFilesMutationParameters.file),
     mutationKey: key,
   });
 }
-
+  
 export function getFileMetadataUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/files/{id}/metadata";
-  if (id === undefined || id === null)
-    throw new Error("The parameter 'id' must be defined.");
-  url_ = url_.replace("{id}", encodeURIComponent("" + id));
+if (id === undefined || id === null)
+  throw new Error("The parameter 'id' must be defined.");
+url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
@@ -100,24 +100,24 @@ export function setGetFileMetadataDefaultOptions(options: typeof getFileMetadata
 export function getFileMetadataQueryKey(id: string): QueryKey;
 export function getFileMetadataQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { id, } = params[0] as GetFileMetadataFilesQueryParameters;
+    const { id,  } = params[0] as GetFileMetadataFilesQueryParameters;
 
     return trimArrayEnd([
-      'FilesClient',
-      'getFileMetadata',
-      id as any,
-    ]);
+        'FilesClient',
+        'getFileMetadata',
+        id as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'FilesClient',
-      'getFileMetadata',
-      ...params
-    ]);
+        'FilesClient',
+        'getFileMetadata',
+        ...params
+      ]);
   }
 }
 export function __getFileMetadata(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getFileMetadata(
-    context.queryKey[2] as string, axiosConfig);
+      context.queryKey[2] as string,axiosConfig    );
 }
 
 export function useGetFileMetadataQuery<TSelectData = Types.FileDto, TError = unknown>(dto: GetFileMetadataFilesQueryParameters, options?: Omit<UseQueryOptions<Types.FileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -127,14 +127,14 @@ export function useGetFileMetadataQuery<TSelectData = Types.FileDto, TError = un
  * @return OK
  */
 export function useGetFileMetadataQuery<TSelectData = Types.FileDto, TError = unknown>(id: string, options?: Omit<UseQueryOptions<Types.FileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetFileMetadataQuery<TSelectData = Types.FileDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetFileMetadataQuery<TSelectData = Types.FileDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.FileDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let id: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ id, } = params[0] as GetFileMetadataFilesQueryParameters);
+      ({ id,  } = params[0] as GetFileMetadataFilesQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -171,12 +171,12 @@ export function setGetFileMetadataData(queryClient: QueryClient, updater: (data:
 export function setGetFileMetadataDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.FileDto | undefined) => Types.FileDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function downloadFileUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/files/{id}/download";
-  if (id === undefined || id === null)
-    throw new Error("The parameter 'id' must be defined.");
-  url_ = url_.replace("{id}", encodeURIComponent("" + id));
+if (id === undefined || id === null)
+  throw new Error("The parameter 'id' must be defined.");
+url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
@@ -193,24 +193,24 @@ export function setDownloadFileDefaultOptions(options: typeof downloadFileDefaul
 export function downloadFileQueryKey(id: string): QueryKey;
 export function downloadFileQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { id, } = params[0] as DownloadFileFilesQueryParameters;
+    const { id,  } = params[0] as DownloadFileFilesQueryParameters;
 
     return trimArrayEnd([
-      'FilesClient',
-      'downloadFile',
-      id as any,
-    ]);
+        'FilesClient',
+        'downloadFile',
+        id as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'FilesClient',
-      'downloadFile',
-      ...params
-    ]);
+        'FilesClient',
+        'downloadFile',
+        ...params
+      ]);
   }
 }
 export function __downloadFile(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.downloadFile(
-    context.queryKey[2] as string, axiosConfig);
+      context.queryKey[2] as string,axiosConfig    );
 }
 
 export function useDownloadFileQuery<TSelectData = Types.FileResponse, TError = unknown>(dto: DownloadFileFilesQueryParameters, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -220,14 +220,14 @@ export function useDownloadFileQuery<TSelectData = Types.FileResponse, TError = 
  * @return OK
  */
 export function useDownloadFileQuery<TSelectData = Types.FileResponse, TError = unknown>(id: string, options?: Omit<UseQueryOptions<Types.FileResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useDownloadFileQuery<TSelectData = Types.FileResponse, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useDownloadFileQuery<TSelectData = Types.FileResponse, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.FileResponse, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let id: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ id, } = params[0] as DownloadFileFilesQueryParameters);
+      ({ id,  } = params[0] as DownloadFileFilesQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -264,20 +264,20 @@ export function setDownloadFileData(queryClient: QueryClient, updater: (data: Ty
 export function setDownloadFileDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.FileResponse | undefined) => Types.FileResponse) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function getMyFilesUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/files/my?";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -296,26 +296,26 @@ export function getMyFilesQueryKey(dto: GetMyFilesFilesQueryParameters): QueryKe
 export function getMyFilesQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getMyFilesQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort, } = params[0] as GetMyFilesFilesQueryParameters;
+    const { page, size, sort,  } = params[0] as GetMyFilesFilesQueryParameters;
 
     return trimArrayEnd([
-      'FilesClient',
-      'getMyFiles',
-      page as any,
-      size as any,
-      sort as any,
-    ]);
+        'FilesClient',
+        'getMyFiles',
+        page as any,
+        size as any,
+        sort as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'FilesClient',
-      'getMyFiles',
-      ...params
-    ]);
+        'FilesClient',
+        'getMyFiles',
+        ...params
+      ]);
   }
 }
 export function __getMyFiles(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getMyFiles(
-    context.queryKey[2] as number | undefined, context.queryKey[3] as number | undefined, context.queryKey[4] as string[] | undefined, axiosConfig);
+      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,axiosConfig    );
 }
 
 export function useGetMyFilesQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(dto: GetMyFilesFilesQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -327,16 +327,16 @@ export function useGetMyFilesQuery<TSelectData = Types.PagedListDtoFileDto, TErr
  * @return OK
  */
 export function useGetMyFilesQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetMyFilesQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetMyFilesQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort, } = params[0] as GetMyFilesFilesQueryParameters);
+      ({ page, size, sort,  } = params[0] as GetMyFilesFilesQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -377,24 +377,24 @@ export function setGetMyFilesData(queryClient: QueryClient, updater: (data: Type
 export function setGetMyFilesDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoFileDto | undefined) => Types.PagedListDtoFileDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function getAllFilesByTypeUrl(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/files/all?";
   if (type === undefined || type === null)
     throw new Error("The parameter 'type' must be defined and cannot be null.");
   else
     url_ += "type=" + encodeURIComponent("" + type) + "&";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -413,27 +413,27 @@ export function getAllFilesByTypeQueryKey(dto: GetAllFilesByTypeFilesQueryParame
 export function getAllFilesByTypeQueryKey(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getAllFilesByTypeQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { type, page, size, sort, } = params[0] as GetAllFilesByTypeFilesQueryParameters;
+    const { type, page, size, sort,  } = params[0] as GetAllFilesByTypeFilesQueryParameters;
 
     return trimArrayEnd([
-      'FilesClient',
-      'getAllFilesByType',
-      type as any,
-      page as any,
-      size as any,
-      sort as any,
-    ]);
+        'FilesClient',
+        'getAllFilesByType',
+        type as any,
+        page as any,
+        size as any,
+        sort as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'FilesClient',
-      'getAllFilesByType',
-      ...params
-    ]);
+        'FilesClient',
+        'getAllFilesByType',
+        ...params
+      ]);
   }
 }
 export function __getAllFilesByType(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getAllFilesByType(
-    context.queryKey[2] as Types.Type, context.queryKey[3] as number | undefined, context.queryKey[4] as number | undefined, context.queryKey[5] as string[] | undefined, axiosConfig);
+      context.queryKey[2] as Types.Type,       context.queryKey[3] as number | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as string[] | undefined,axiosConfig    );
 }
 
 export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(dto: GetAllFilesByTypeFilesQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -445,17 +445,17 @@ export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDt
  * @return OK
  */
 export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetAllFilesByTypeQuery<TSelectData = Types.PagedListDtoFileDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoFileDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let type: any = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ type, page, size, sort, } = params[0] as GetAllFilesByTypeFilesQueryParameters);
+      ({ type, page, size, sort,  } = params[0] as GetAllFilesByTypeFilesQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
@@ -496,22 +496,22 @@ export function setGetAllFilesByTypeData(queryClient: QueryClient, updater: (dat
 export function setGetAllFilesByTypeDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PagedListDtoFileDto | undefined) => Types.PagedListDtoFileDto) {
   queryClient.setQueryData(queryKey, updater);
 }
-
+    
 export function deleteFileUrl(id: string): string {
   let url_ = getBaseUrl() + "/api/v1/files/{id}";
-  if (id === undefined || id === null)
-    throw new Error("The parameter 'id' must be defined.");
-  url_ = url_.replace("{id}", encodeURIComponent("" + id));
+if (id === undefined || id === null)
+  throw new Error("The parameter 'id' must be defined.");
+url_ = url_.replace("{id}", encodeURIComponent("" + id));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deleteFileMutationKey(id: string): MutationKey {
   return trimArrayEnd([
-    'FilesClient',
-    'deleteFile',
-    id as any,
-  ]);
+      'FilesClient',
+      'deleteFile',
+      id as any,
+    ]);
 }
 
 /**
@@ -521,17 +521,17 @@ export function deleteFileMutationKey(id: string): MutationKey {
  */
 export function useDeleteFileMutation<TContext>(id: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deleteFileMutationKey(id);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: () => Client.deleteFile(id),
     mutationKey: key,
   });
 }
-
+  
 type DeleteFile__MutationParameters = DeleteFileFilesQueryParameters
 
 /**
@@ -539,15 +539,15 @@ type DeleteFile__MutationParameters = DeleteFileFilesQueryParameters
  * @param id id файла
  * @return OK
  */
-export function useDeleteFileMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteFile__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteFileFilesQueryParameters }): UseMutationResult<Types.Response, unknown, DeleteFile__MutationParameters, TContext> {
+export function useDeleteFileMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteFile__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteFileFilesQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteFile__MutationParameters, TContext> {
   const key = deleteFileMutationKey(options?.parameters?.id!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: DeleteFile__MutationParameters) => Client.deleteFile(data.id ?? options?.parameters?.id!),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: DeleteFile__MutationParameters) => Client.deleteFile(data.id ?? options?.parameters?.id!),
+  mutationKey: key,
+});
 }

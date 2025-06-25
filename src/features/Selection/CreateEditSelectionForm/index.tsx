@@ -2,10 +2,12 @@ import { Button, MultiSelect, Select, Center, Loader, SelectProps } from "@manti
 import { useForm } from "@mantine/form"
 import { CreateInterviewDtoStatus, UpdateInterviewDtoStatus } from "services/api/api-client.types";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
-import { useCreateInterviewMutation, useGetInterviewList_1Query, useGetInterviewQuery, useUpdateInterviewMutation } from "services/api/api-client/InterviewsQuery";
+import { useCreateInterviewMutation, useGetInterviewQuery, useUpdateInterviewMutation } from "services/api/api-client/InterviewsQuery";
 import { useGetLanguageListQuery } from "services/api/api-client/Programming_languageQuery";
 import { useGetStackListQuery } from "services/api/api-client/StackQuery";
 import { Company, Language, Stack } from "shared/lib";
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryFactory } from "services/api";
 
 type SelectionFormProps = {
     onSuccess: () => void;
@@ -45,17 +47,19 @@ export const CreateSelectionForm = ({ onSuccess, }: SelectionFormProps) => {
     const { data: dataLanguages, isLoading: isLoadingLanguages } = useGetLanguageListQuery()
     const { data: dataCompany, isLoading: isLoadingPartners } = useGetPartnersQuery(undefined, undefined, undefined, 0, 100000000)
     const { mutateAsync } = useCreateInterviewMutation()
-    const { refetch } = useGetInterviewList_1Query()
+    const queryClient = useQueryClient()
+
     if (isLoadingStacks || isLoadingLanguages || isLoadingPartners) {
         return <Center>
             <Loader />
         </Center>
     }
-    const onSubmit = (vals: { companyId: string, stackId: string, languageId: Array<string> }) => {
-        mutateAsync({ languageIds: vals.languageId, companyPartnerId: vals.companyId, stackId: vals.stackId, status: CreateInterviewDtoStatus.PENDING }).then(() => {
-            refetch()
-            onSuccess();
+    const onSubmit = async (vals: { companyId: string, stackId: string, languageId: Array<string> }) => {
+        await mutateAsync({ languageIds: vals.languageId, companyPartnerId: vals.companyId, stackId: vals.stackId, status: CreateInterviewDtoStatus.PENDING })
+        await queryClient.invalidateQueries({
+            queryKey: QueryFactory.InterviewsQuery.getInterviewListQueryKey().slice(-1,0)
         })
+        onSuccess();
     };
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
@@ -71,8 +75,8 @@ export const CreateSelectionForm = ({ onSuccess, }: SelectionFormProps) => {
 
 export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
     const { mutateAsync } = useUpdateInterviewMutation(id)
-    const { refetch } = useGetInterviewList_1Query()
-    const { data, isLoading, refetch: refetchData } = useGetInterviewQuery(id)
+    const queryClient = useQueryClient()
+    const { data, isLoading } = useGetInterviewQuery(id)
     const form = useForm<EditFormValues>({
         mode: 'uncontrolled',
         initialValues: {
@@ -87,12 +91,15 @@ export const EditSelectionForm = ({ onSuccess, id }: SelectionFormProps) => {
             <Loader />
         </Center>
     }
-    const onSubmit = (vals: EditFormValues) => {
-        mutateAsync(vals).then(() => {
-            refetch()
-            refetchData()
-            onSuccess()
+    const onSubmit = async (vals: EditFormValues) => {
+        await mutateAsync(vals)
+        await queryClient.invalidateQueries({
+            queryKey: QueryFactory.InterviewsQuery.getInterviewQueryKey(id)
         })
+        await queryClient.invalidateQueries({
+            queryKey: QueryFactory.InterviewsQuery.getInterviewListQueryKey().slice(-1, 0)
+        })
+        onSuccess()
 
     };
     return (

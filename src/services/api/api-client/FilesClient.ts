@@ -21,7 +21,7 @@ import { getAxios, getBaseUrl } from './helpers';
  */
 export function uploadFile(file?: Types.FileParameter | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.FileDto> {
     let url_ = getBaseUrl() + "/api/v1/files";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = new FormData();
     if (file === null || file === undefined)
@@ -66,42 +66,42 @@ function processUploadFile(response: AxiosResponse): Promise<Types.FileDto> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initFileDto(resultData200);
         return Promise.resolve<Types.FileDto>(result200);
 
@@ -120,9 +120,9 @@ function processUploadFile(response: AxiosResponse): Promise<Types.FileDto> {
 export function getFileMetadata(id: string, config?: AxiosRequestConfig | undefined): Promise<Types.FileDto> {
     let url_ = getBaseUrl() + "/api/v1/files/{id}/metadata";
     if (id === undefined || id === null)
-        throw new Error("The parameter 'id' must be defined.");
+      throw new Error("The parameter 'id' must be defined.");
     url_ = url_.replace("{id}", encodeURIComponent("" + id));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetFileMetadata,
@@ -160,42 +160,42 @@ function processGetFileMetadata(response: AxiosResponse): Promise<Types.FileDto>
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initFileDto(resultData200);
         return Promise.resolve<Types.FileDto>(result200);
 
@@ -214,9 +214,9 @@ function processGetFileMetadata(response: AxiosResponse): Promise<Types.FileDto>
 export function downloadFile(id: string, config?: AxiosRequestConfig | undefined): Promise<Types.FileResponse> {
     let url_ = getBaseUrl() + "/api/v1/files/{id}/download";
     if (id === undefined || id === null)
-        throw new Error("The parameter 'id' must be defined.");
+      throw new Error("The parameter 'id' must be defined.");
     url_ = url_.replace("{id}", encodeURIComponent("" + id));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         responseType: "blob",
@@ -255,35 +255,35 @@ function processDownloadFile(response: AxiosResponse): Promise<Types.FileRespons
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
@@ -326,7 +326,7 @@ export function getMyFiles(page?: number | undefined, size?: number | undefined,
         throw new Error("The parameter 'sort' cannot be null.");
     else if (sort !== undefined)
         sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetMyFiles,
@@ -364,42 +364,42 @@ function processGetMyFiles(response: AxiosResponse): Promise<Types.PagedListDtoF
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initPagedListDtoFileDto(resultData200);
         return Promise.resolve<Types.PagedListDtoFileDto>(result200);
 
@@ -419,9 +419,9 @@ function processGetMyFiles(response: AxiosResponse): Promise<Types.PagedListDtoF
  */
 export function getAllFilesByType(type: Types.Type, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoFileDto> {
     let url_ = getBaseUrl() + "/api/v1/files/all?";
-    if (type === undefined || type === null)
+      if (type === undefined || type === null)
         throw new Error("The parameter 'type' must be defined and cannot be null.");
-    else
+      else
         url_ += "type=" + encodeURIComponent("" + type) + "&";
     if (page === null)
         throw new Error("The parameter 'page' cannot be null.");
@@ -435,7 +435,7 @@ export function getAllFilesByType(type: Types.Type, page?: number | undefined, s
         throw new Error("The parameter 'sort' cannot be null.");
     else if (sort !== undefined)
         sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetAllFilesByType,
@@ -473,42 +473,42 @@ function processGetAllFilesByType(response: AxiosResponse): Promise<Types.PagedL
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initPagedListDtoFileDto(resultData200);
         return Promise.resolve<Types.PagedListDtoFileDto>(result200);
 
@@ -527,9 +527,9 @@ function processGetAllFilesByType(response: AxiosResponse): Promise<Types.PagedL
 export function deleteFile(id: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/files/{id}";
     if (id === undefined || id === null)
-        throw new Error("The parameter 'id' must be defined.");
+      throw new Error("The parameter 'id' must be defined.");
     url_ = url_.replace("{id}", encodeURIComponent("" + id));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigDeleteFile,
@@ -567,42 +567,42 @@ function processDeleteFile(response: AxiosResponse): Promise<Types.Response> {
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -614,66 +614,66 @@ function processDeleteFile(response: AxiosResponse): Promise<Types.Response> {
 }
 let _requestConfigUploadFile: Partial<AxiosRequestConfig> | null;
 export function getUploadFileRequestConfig() {
-    return _requestConfigUploadFile;
+  return _requestConfigUploadFile;
 }
 export function setUploadFileRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigUploadFile = value;
+  _requestConfigUploadFile = value;
 }
 export function patchUploadFileRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigUploadFile = patch(_requestConfigUploadFile ?? {});
+  _requestConfigUploadFile = patch(_requestConfigUploadFile ?? {});
 }
 
 let _requestConfigGetFileMetadata: Partial<AxiosRequestConfig> | null;
 export function getGetFileMetadataRequestConfig() {
-    return _requestConfigGetFileMetadata;
+  return _requestConfigGetFileMetadata;
 }
 export function setGetFileMetadataRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetFileMetadata = value;
+  _requestConfigGetFileMetadata = value;
 }
 export function patchGetFileMetadataRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetFileMetadata = patch(_requestConfigGetFileMetadata ?? {});
+  _requestConfigGetFileMetadata = patch(_requestConfigGetFileMetadata ?? {});
 }
 
 let _requestConfigDownloadFile: Partial<AxiosRequestConfig> | null;
 export function getDownloadFileRequestConfig() {
-    return _requestConfigDownloadFile;
+  return _requestConfigDownloadFile;
 }
 export function setDownloadFileRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigDownloadFile = value;
+  _requestConfigDownloadFile = value;
 }
 export function patchDownloadFileRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigDownloadFile = patch(_requestConfigDownloadFile ?? {});
+  _requestConfigDownloadFile = patch(_requestConfigDownloadFile ?? {});
 }
 
 let _requestConfigGetMyFiles: Partial<AxiosRequestConfig> | null;
 export function getGetMyFilesRequestConfig() {
-    return _requestConfigGetMyFiles;
+  return _requestConfigGetMyFiles;
 }
 export function setGetMyFilesRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetMyFiles = value;
+  _requestConfigGetMyFiles = value;
 }
 export function patchGetMyFilesRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetMyFiles = patch(_requestConfigGetMyFiles ?? {});
+  _requestConfigGetMyFiles = patch(_requestConfigGetMyFiles ?? {});
 }
 
 let _requestConfigGetAllFilesByType: Partial<AxiosRequestConfig> | null;
 export function getGetAllFilesByTypeRequestConfig() {
-    return _requestConfigGetAllFilesByType;
+  return _requestConfigGetAllFilesByType;
 }
 export function setGetAllFilesByTypeRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetAllFilesByType = value;
+  _requestConfigGetAllFilesByType = value;
 }
 export function patchGetAllFilesByTypeRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetAllFilesByType = patch(_requestConfigGetAllFilesByType ?? {});
+  _requestConfigGetAllFilesByType = patch(_requestConfigGetAllFilesByType ?? {});
 }
 
 let _requestConfigDeleteFile: Partial<AxiosRequestConfig> | null;
 export function getDeleteFileRequestConfig() {
-    return _requestConfigDeleteFile;
+  return _requestConfigDeleteFile;
 }
 export function setDeleteFileRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteFile = value;
+  _requestConfigDeleteFile = value;
 }
 export function patchDeleteFileRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteFile = patch(_requestConfigDeleteFile ?? {});
+  _requestConfigDeleteFile = patch(_requestConfigDeleteFile ?? {});
 }

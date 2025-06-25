@@ -20,10 +20,10 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type GetAllTeachersTeacherQueryParameters = {
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
-  fullName?: string | undefined;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
+  fullName?: string | undefined ;
 }
 
 export function createTeacherUrl(): string {
@@ -34,9 +34,9 @@ export function createTeacherUrl(): string {
 
 export function createTeacherMutationKey(): MutationKey {
   return trimArrayEnd([
-    'TeacherClient',
-    'createTeacher',
-  ]);
+      'TeacherClient',
+      'createTeacher',
+    ]);
 }
 
 /**
@@ -45,34 +45,34 @@ export function createTeacherMutationKey(): MutationKey {
  */
 export function useCreateTeacherMutation<TContext>(options?: Omit<UseMutationOptions<Types.TeacherDto, unknown, Types.TeacherCreateDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.TeacherDto, unknown, Types.TeacherCreateDto, TContext> {
   const key = createTeacherMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.TeacherCreateDto) => Client.createTeacher(body),
     mutationKey: key,
   });
 }
-
+  
 export function getAllTeachersUrl(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/teacher/list?";
-  if (page === null)
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-  if (fullName === null)
+if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
-  else if (fullName !== undefined)
+else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -91,27 +91,27 @@ export function getAllTeachersQueryKey(dto: GetAllTeachersTeacherQueryParameters
 export function getAllTeachersQueryKey(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined): QueryKey;
 export function getAllTeachersQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { page, size, sort, fullName, } = params[0] as GetAllTeachersTeacherQueryParameters;
+    const { page, size, sort, fullName,  } = params[0] as GetAllTeachersTeacherQueryParameters;
 
     return trimArrayEnd([
-      'TeacherClient',
-      'getAllTeachers',
-      page as any,
-      size as any,
-      sort as any,
-      fullName as any,
-    ]);
+        'TeacherClient',
+        'getAllTeachers',
+        page as any,
+        size as any,
+        sort as any,
+        fullName as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'TeacherClient',
-      'getAllTeachers',
-      ...params
-    ]);
+        'TeacherClient',
+        'getAllTeachers',
+        ...params
+      ]);
   }
 }
 export function __getAllTeachers(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getAllTeachers(
-    context.queryKey[2] as number | undefined, context.queryKey[3] as number | undefined, context.queryKey[4] as string[] | undefined, context.queryKey[5] as string | undefined, axiosConfig);
+      context.queryKey[2] as number | undefined,       context.queryKey[3] as number | undefined,       context.queryKey[4] as string[] | undefined,       context.queryKey[5] as string | undefined,axiosConfig    );
 }
 
 export function useGetAllTeachersQuery<TSelectData = Types.PagedListDtoTeacherDto, TError = unknown>(dto: GetAllTeachersTeacherQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoTeacherDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -124,17 +124,17 @@ export function useGetAllTeachersQuery<TSelectData = Types.PagedListDtoTeacherDt
  * @return OK
  */
 export function useGetAllTeachersQuery<TSelectData = Types.PagedListDtoTeacherDto, TError = unknown>(page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, fullName?: string | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoTeacherDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetAllTeachersQuery<TSelectData = Types.PagedListDtoTeacherDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetAllTeachersQuery<TSelectData = Types.PagedListDtoTeacherDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoTeacherDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
   let fullName: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ page, size, sort, fullName, } = params[0] as GetAllTeachersTeacherQueryParameters);
+      ({ page, size, sort, fullName,  } = params[0] as GetAllTeachersTeacherQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

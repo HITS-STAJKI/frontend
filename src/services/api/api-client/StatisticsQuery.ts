@@ -20,59 +20,59 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type CountStudentsByFilterStatisticsQueryParameters = {
-  fullName?: string | undefined;
-  isAcadem?: boolean | undefined;
-  isGraduated?: boolean | undefined;
-  groupIds?: string[] | undefined;
-  companyIds?: string[] | undefined;
-  isOnPractice?: boolean | undefined;
-  hasPracticeRequest?: boolean | undefined;
-  hasInterviews?: boolean | undefined;
-  stackIds?: string[] | undefined;
-  includeArchived?: boolean | undefined;
+  fullName?: string | undefined ;
+  isAcadem?: boolean | undefined ;
+  isGraduated?: boolean | undefined ;
+  groupIds?: string[] | undefined ;
+  companyIds?: string[] | undefined ;
+  isOnPractice?: boolean | undefined ;
+  hasPracticeRequest?: boolean | undefined ;
+  hasInterviews?: boolean | undefined ;
+  stackIds?: string[] | undefined ;
+  includeArchived?: boolean | undefined ;
 }
 
 export function countStudentsByFilterUrl(fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/statistics/students/count?";
-  if (fullName === null)
+if (fullName === null)
     throw new Error("The parameter 'fullName' cannot be null.");
-  else if (fullName !== undefined)
+else if (fullName !== undefined)
     url_ += "fullName=" + encodeURIComponent("" + fullName) + "&";
-  if (isAcadem === null)
+if (isAcadem === null)
     throw new Error("The parameter 'isAcadem' cannot be null.");
-  else if (isAcadem !== undefined)
+else if (isAcadem !== undefined)
     url_ += "isAcadem=" + encodeURIComponent("" + isAcadem) + "&";
-  if (isGraduated === null)
+if (isGraduated === null)
     throw new Error("The parameter 'isGraduated' cannot be null.");
-  else if (isGraduated !== undefined)
+else if (isGraduated !== undefined)
     url_ += "isGraduated=" + encodeURIComponent("" + isGraduated) + "&";
-  if (groupIds === null)
+if (groupIds === null)
     throw new Error("The parameter 'groupIds' cannot be null.");
-  else if (groupIds !== undefined)
+else if (groupIds !== undefined)
     groupIds && groupIds.forEach(item => { url_ += "groupIds=" + encodeURIComponent("" + item) + "&"; });
-  if (companyIds === null)
+if (companyIds === null)
     throw new Error("The parameter 'companyIds' cannot be null.");
-  else if (companyIds !== undefined)
+else if (companyIds !== undefined)
     companyIds && companyIds.forEach(item => { url_ += "companyIds=" + encodeURIComponent("" + item) + "&"; });
-  if (isOnPractice === null)
+if (isOnPractice === null)
     throw new Error("The parameter 'isOnPractice' cannot be null.");
-  else if (isOnPractice !== undefined)
+else if (isOnPractice !== undefined)
     url_ += "isOnPractice=" + encodeURIComponent("" + isOnPractice) + "&";
-  if (hasPracticeRequest === null)
+if (hasPracticeRequest === null)
     throw new Error("The parameter 'hasPracticeRequest' cannot be null.");
-  else if (hasPracticeRequest !== undefined)
+else if (hasPracticeRequest !== undefined)
     url_ += "hasPracticeRequest=" + encodeURIComponent("" + hasPracticeRequest) + "&";
-  if (hasInterviews === null)
+if (hasInterviews === null)
     throw new Error("The parameter 'hasInterviews' cannot be null.");
-  else if (hasInterviews !== undefined)
+else if (hasInterviews !== undefined)
     url_ += "hasInterviews=" + encodeURIComponent("" + hasInterviews) + "&";
-  if (stackIds === null)
+if (stackIds === null)
     throw new Error("The parameter 'stackIds' cannot be null.");
-  else if (stackIds !== undefined)
+else if (stackIds !== undefined)
     stackIds && stackIds.forEach(item => { url_ += "stackIds=" + encodeURIComponent("" + item) + "&"; });
-  if (includeArchived === null)
+if (includeArchived === null)
     throw new Error("The parameter 'includeArchived' cannot be null.");
-  else if (includeArchived !== undefined)
+else if (includeArchived !== undefined)
     url_ += "includeArchived=" + encodeURIComponent("" + includeArchived) + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -91,33 +91,33 @@ export function countStudentsByFilterQueryKey(dto: CountStudentsByFilterStatisti
 export function countStudentsByFilterQueryKey(fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined): QueryKey;
 export function countStudentsByFilterQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, includeArchived, } = params[0] as CountStudentsByFilterStatisticsQueryParameters;
+    const { fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, includeArchived,  } = params[0] as CountStudentsByFilterStatisticsQueryParameters;
 
     return trimArrayEnd([
-      'StatisticsClient',
-      'countStudentsByFilter',
-      fullName as any,
-      isAcadem as any,
-      isGraduated as any,
-      groupIds as any,
-      companyIds as any,
-      isOnPractice as any,
-      hasPracticeRequest as any,
-      hasInterviews as any,
-      stackIds as any,
-      includeArchived as any,
-    ]);
+        'StatisticsClient',
+        'countStudentsByFilter',
+        fullName as any,
+        isAcadem as any,
+        isGraduated as any,
+        groupIds as any,
+        companyIds as any,
+        isOnPractice as any,
+        hasPracticeRequest as any,
+        hasInterviews as any,
+        stackIds as any,
+        includeArchived as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'StatisticsClient',
-      'countStudentsByFilter',
-      ...params
-    ]);
+        'StatisticsClient',
+        'countStudentsByFilter',
+        ...params
+      ]);
   }
 }
 export function __countStudentsByFilter(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.countStudentsByFilter(
-    context.queryKey[2] as string | undefined, context.queryKey[3] as boolean | undefined, context.queryKey[4] as boolean | undefined, context.queryKey[5] as string[] | undefined, context.queryKey[6] as string[] | undefined, context.queryKey[7] as boolean | undefined, context.queryKey[8] as boolean | undefined, context.queryKey[9] as boolean | undefined, context.queryKey[10] as string[] | undefined, context.queryKey[11] as boolean | undefined, axiosConfig);
+      context.queryKey[2] as string | undefined,       context.queryKey[3] as boolean | undefined,       context.queryKey[4] as boolean | undefined,       context.queryKey[5] as string[] | undefined,       context.queryKey[6] as string[] | undefined,       context.queryKey[7] as boolean | undefined,       context.queryKey[8] as boolean | undefined,       context.queryKey[9] as boolean | undefined,       context.queryKey[10] as string[] | undefined,       context.queryKey[11] as boolean | undefined,axiosConfig    );
 }
 
 export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResponse, TError = unknown>(dto: CountStudentsByFilterStatisticsQueryParameters, options?: Omit<UseQueryOptions<Types.StatisticsResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -136,9 +136,9 @@ export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResp
  * @return OK
  */
 export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResponse, TError = unknown>(fullName?: string | undefined, isAcadem?: boolean | undefined, isGraduated?: boolean | undefined, groupIds?: string[] | undefined, companyIds?: string[] | undefined, isOnPractice?: boolean | undefined, hasPracticeRequest?: boolean | undefined, hasInterviews?: boolean | undefined, stackIds?: string[] | undefined, includeArchived?: boolean | undefined, options?: Omit<UseQueryOptions<Types.StatisticsResponse, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResponse, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResponse, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.StatisticsResponse, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let fullName: any = undefined;
   let isAcadem: any = undefined;
   let isGraduated: any = undefined;
@@ -149,10 +149,10 @@ export function useCountStudentsByFilterQuery<TSelectData = Types.StatisticsResp
   let hasInterviews: any = undefined;
   let stackIds: any = undefined;
   let includeArchived: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, includeArchived, } = params[0] as CountStudentsByFilterStatisticsQueryParameters);
+      ({ fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, includeArchived,  } = params[0] as CountStudentsByFilterStatisticsQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

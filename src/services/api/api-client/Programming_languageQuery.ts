@@ -20,32 +20,32 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type UpdateLanguageProgramming_languageQueryParameters = {
-  languageId: string;
+  languageId: string ;
 }
 
 export type DeleteLanguageProgramming_languageQueryParameters = {
-  languageId: string;
+  languageId: string ;
 }
 
 export type GetLanguageListProgramming_languageQueryParameters = {
-  query?: string | undefined;
+  query?: string | undefined ;
 }
 
 export function updateLanguageUrl(languageId: string): string {
   let url_ = getBaseUrl() + "/api/v1/language/{languageId}";
-  if (languageId === undefined || languageId === null)
-    throw new Error("The parameter 'languageId' must be defined.");
-  url_ = url_.replace("{languageId}", encodeURIComponent("" + languageId));
+if (languageId === undefined || languageId === null)
+  throw new Error("The parameter 'languageId' must be defined.");
+url_ = url_.replace("{languageId}", encodeURIComponent("" + languageId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function updateLanguageMutationKey(languageId: string): MutationKey {
   return trimArrayEnd([
-    'Programming_languageClient',
-    'updateLanguage',
-    languageId as any,
-  ]);
+      'Programming_languageClient',
+      'updateLanguage',
+      languageId as any,
+    ]);
 }
 
 /**
@@ -55,17 +55,17 @@ export function updateLanguageMutationKey(languageId: string): MutationKey {
  */
 export function useUpdateLanguageMutation<TContext>(languageId: string, options?: Omit<UseMutationOptions<Types.LanguageDto, unknown, Types.UpdateLanguageDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.LanguageDto, unknown, Types.UpdateLanguageDto, TContext> {
   const key = updateLanguageMutationKey(languageId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.UpdateLanguageDto) => Client.updateLanguage(languageId, body),
     mutationKey: key,
   });
 }
-
+  
 type UpdateLanguage__MutationParameters = UpdateLanguageProgramming_languageQueryParameters & {
   body: Types.UpdateLanguageDto;
 }
@@ -75,34 +75,34 @@ type UpdateLanguage__MutationParameters = UpdateLanguageProgramming_languageQuer
  * @param languageId Идентификатор языка
  * @return OK
  */
-export function useUpdateLanguageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.LanguageDto, unknown, UpdateLanguage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateLanguageProgramming_languageQueryParameters }): UseMutationResult<Types.LanguageDto, unknown, UpdateLanguage__MutationParameters, TContext> {
+export function useUpdateLanguageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.LanguageDto, unknown, UpdateLanguage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: UpdateLanguageProgramming_languageQueryParameters}): UseMutationResult<Types.LanguageDto, unknown, UpdateLanguage__MutationParameters, TContext> {
   const key = updateLanguageMutationKey(options?.parameters?.languageId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: UpdateLanguage__MutationParameters) => Client.updateLanguage(data.languageId ?? options?.parameters?.languageId!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: UpdateLanguage__MutationParameters) => Client.updateLanguage(data.languageId ?? options?.parameters?.languageId!, data.body),
+  mutationKey: key,
+});
 }
-
+  
 export function deleteLanguageUrl(languageId: string): string {
   let url_ = getBaseUrl() + "/api/v1/language/{languageId}";
-  if (languageId === undefined || languageId === null)
-    throw new Error("The parameter 'languageId' must be defined.");
-  url_ = url_.replace("{languageId}", encodeURIComponent("" + languageId));
+if (languageId === undefined || languageId === null)
+  throw new Error("The parameter 'languageId' must be defined.");
+url_ = url_.replace("{languageId}", encodeURIComponent("" + languageId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deleteLanguageMutationKey(languageId: string): MutationKey {
   return trimArrayEnd([
-    'Programming_languageClient',
-    'deleteLanguage',
-    languageId as any,
-  ]);
+      'Programming_languageClient',
+      'deleteLanguage',
+      languageId as any,
+    ]);
 }
 
 /**
@@ -112,17 +112,17 @@ export function deleteLanguageMutationKey(languageId: string): MutationKey {
  */
 export function useDeleteLanguageMutation<TContext>(languageId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deleteLanguageMutationKey(languageId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: () => Client.deleteLanguage(languageId),
     mutationKey: key,
   });
 }
-
+  
 type DeleteLanguage__MutationParameters = DeleteLanguageProgramming_languageQueryParameters
 
 /**
@@ -130,19 +130,19 @@ type DeleteLanguage__MutationParameters = DeleteLanguageProgramming_languageQuer
  * @param languageId Идентификатор языка
  * @return OK
  */
-export function useDeleteLanguageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteLanguage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteLanguageProgramming_languageQueryParameters }): UseMutationResult<Types.Response, unknown, DeleteLanguage__MutationParameters, TContext> {
+export function useDeleteLanguageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteLanguage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteLanguageProgramming_languageQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteLanguage__MutationParameters, TContext> {
   const key = deleteLanguageMutationKey(options?.parameters?.languageId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: DeleteLanguage__MutationParameters) => Client.deleteLanguage(data.languageId ?? options?.parameters?.languageId!),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: DeleteLanguage__MutationParameters) => Client.deleteLanguage(data.languageId ?? options?.parameters?.languageId!),
+  mutationKey: key,
+});
 }
-
+  
 export function createLanguageUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/language";
   url_ = url_.replace(/[?&]$/, "");
@@ -151,9 +151,9 @@ export function createLanguageUrl(): string {
 
 export function createLanguageMutationKey(): MutationKey {
   return trimArrayEnd([
-    'Programming_languageClient',
-    'createLanguage',
-  ]);
+      'Programming_languageClient',
+      'createLanguage',
+    ]);
 }
 
 /**
@@ -162,22 +162,22 @@ export function createLanguageMutationKey(): MutationKey {
  */
 export function useCreateLanguageMutation<TContext>(options?: Omit<UseMutationOptions<Types.LanguageDto, unknown, Types.CreateLanguageDto, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.LanguageDto, unknown, Types.CreateLanguageDto, TContext> {
   const key = createLanguageMutationKey();
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.CreateLanguageDto) => Client.createLanguage(body),
     mutationKey: key,
   });
 }
-
+  
 export function getLanguageListUrl(query?: string | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/language/list?";
-  if (query === null)
+if (query === null)
     throw new Error("The parameter 'query' cannot be null.");
-  else if (query !== undefined)
+else if (query !== undefined)
     url_ += "query=" + encodeURIComponent("" + query) + "&";
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -195,24 +195,24 @@ export function setGetLanguageListDefaultOptions(options: typeof getLanguageList
 export function getLanguageListQueryKey(query?: string | undefined): QueryKey;
 export function getLanguageListQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { query, } = params[0] as GetLanguageListProgramming_languageQueryParameters;
+    const { query,  } = params[0] as GetLanguageListProgramming_languageQueryParameters;
 
     return trimArrayEnd([
-      'Programming_languageClient',
-      'getLanguageList',
-      query as any,
-    ]);
+        'Programming_languageClient',
+        'getLanguageList',
+        query as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'Programming_languageClient',
-      'getLanguageList',
-      ...params
-    ]);
+        'Programming_languageClient',
+        'getLanguageList',
+        ...params
+      ]);
   }
 }
 export function __getLanguageList(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getLanguageList(
-    context.queryKey[2] as string | undefined, axiosConfig);
+      context.queryKey[2] as string | undefined,axiosConfig    );
 }
 
 export function useGetLanguageListQuery<TSelectData = Types.LanguageDto[], TError = unknown>(dto: GetLanguageListProgramming_languageQueryParameters, options?: Omit<UseQueryOptions<Types.LanguageDto[], TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -222,14 +222,14 @@ export function useGetLanguageListQuery<TSelectData = Types.LanguageDto[], TErro
  * @return OK
  */
 export function useGetLanguageListQuery<TSelectData = Types.LanguageDto[], TError = unknown>(query?: string | undefined, options?: Omit<UseQueryOptions<Types.LanguageDto[], TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetLanguageListQuery<TSelectData = Types.LanguageDto[], TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetLanguageListQuery<TSelectData = Types.LanguageDto[], TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.LanguageDto[], TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let query: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ query, } = params[0] as GetLanguageListProgramming_languageQueryParameters);
+      ({ query,  } = params[0] as GetLanguageListProgramming_languageQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

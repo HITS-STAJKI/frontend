@@ -5,23 +5,23 @@ import { GROUPS_ROUTE, LANGUAGES_ROUTE, MY_PRACTICE_ROUTE, MY_PROFILE_ROUTE, PAR
 
 export const Menu = () => {
     const routes: Array<MenuItemProps> = [
+        { to: MY_PROFILE_ROUTE, label: 'Мой профиль', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.STUDENT, Roles.TEACHER, Roles.CURATOR] },
+        { to: MY_PRACTICE_ROUTE, label: 'Моя практика', userFor: [Roles.STUDENT] },
+        { to: SELECTION_FOR_STUDENT_ROUTE, label: 'Мои собеседования', userFor: [Roles.STUDENT] },
+        { to: PARTNERS_ROUTE, label: 'Партнеры', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.STUDENT, Roles.TEACHER, Roles.CURATOR] },
+        { to: STUDENTS_ROUTE, label: 'Студенты', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
+        { to: SELECTION_FOR_TEACHER_ROUTE, label: 'Собеседования студентов', userFor: [Roles.EDUCATION_PROGRAM_LEAD] },
+        { to: STUDENTS_PRACTICES_ROUTE, label: 'Практики студентов', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
+        { to: UNAPPROVED_PRACTICES_ROUTE, label: 'Неподтвержденные практики', userFor: [Roles.CURATOR, Roles.EDUCATION_PROGRAM_LEAD] },
+        { to: STATISTICS_ROUTE, label: 'Статистика', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
         {
             to: [
                 { to: LANGUAGES_ROUTE, label: 'Языки', },
                 { to: STACKS_ROUTE, label: 'Стэки' },
                 { to: ROLES_ROUTE, label: 'Пользователи' },
-                { to: GROUPS_ROUTE, label: 'Группы' },
+                { to: GROUPS_ROUTE, label: 'Потоки' },
             ], label: 'Администрирование', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD,]
         },
-        { to: PARTNERS_ROUTE, label: 'Партнеры', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.STUDENT, Roles.TEACHER, Roles.CURATOR] },
-        { to: STATISTICS_ROUTE, label: 'Статистика', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
-        { to: MY_PROFILE_ROUTE, label: 'Мой профиль', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.STUDENT, Roles.TEACHER, Roles.CURATOR] },
-        { to: STUDENTS_PRACTICES_ROUTE, label: 'Практики студентов', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
-        { to: STUDENTS_ROUTE, label: 'Студенты', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD] },
-        { to: SELECTION_FOR_STUDENT_ROUTE, label: 'Мои собеседования', userFor: [Roles.STUDENT] },
-        { to: SELECTION_FOR_TEACHER_ROUTE, label: 'Собеседования студентов', userFor: [Roles.EDUCATION_PROGRAM_LEAD] },
-        { to: MY_PRACTICE_ROUTE, label: 'Моя практика', userFor: [Roles.STUDENT] },
-        { to: UNAPPROVED_PRACTICES_ROUTE, label: 'Неподтвержденные практики', userFor: [Roles.CURATOR, Roles.EDUCATION_PROGRAM_LEAD] }
     ]
     return (
         <Flex w='100%' h='100%' align='center' gap='lg' mt='md' direction='column' style={{ overflowY: 'auto' }}>

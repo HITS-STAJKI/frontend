@@ -1,10 +1,11 @@
 import { ProfileForm } from "./Form";
-import { Title, Badge, Text, Button } from "@mantine/core";
+import { Title, Badge, Text } from "@mantine/core";
 import { ChangePassword } from "features/ChangePassword";
 import { RemoveFromAcadem } from "features/AcademicLeave/RemoveFromAcadem";
 import { SendToAcadem } from "features/AcademicLeave";
 import { UserDetailsDto } from "services/api/api-client.types";
 import { Logout } from "features";
+import { DeleteRole } from "features/DeleteRole";
 
 type ProfileBlockProps = {
     profileData: UserDetailsDto;
@@ -36,7 +37,7 @@ export const ProfileBlock = ({
 
         return null;
     };
-
+    console.log(!!profileData.student)
     return (
         <div style={{ marginTop: '2vh', marginLeft: '4vw', width: '50vw', minWidth: "300px" }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -45,7 +46,7 @@ export const ProfileBlock = ({
                 {profileData.student?.isAcadem && <Text c="red" ml="xs">(В академе)</Text>}
                 <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
                     {renderActionButton()}
-                    {mode === 'user' ? <Button>Управление ролями</Button> : <Logout />}
+                    {mode === 'user' ? <DeleteRole profileData={profileData} /> : <Logout />}
                 </div>
             </div>
 
@@ -58,7 +59,7 @@ export const ProfileBlock = ({
             </div>
 
             <ProfileForm profileInfo={profileData} mod={mode} />
-
+            {(!!!profileData.curator && !!!profileData.dean && !!!profileData.educationalProgramLead && !!!profileData.student && !!!profileData.teacher) && <div>Ожидайте пока вам выдадут роль</div>}
         </div>
     )
 }

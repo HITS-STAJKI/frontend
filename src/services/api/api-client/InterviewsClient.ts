@@ -22,9 +22,9 @@ import { getAxios, getBaseUrl } from './helpers';
 export function getInterview(interviewId: string, config?: AxiosRequestConfig | undefined): Promise<Types.InterviewDto> {
     let url_ = getBaseUrl() + "/api/v1/interview/{interviewId}";
     if (interviewId === undefined || interviewId === null)
-        throw new Error("The parameter 'interviewId' must be defined.");
+      throw new Error("The parameter 'interviewId' must be defined.");
     url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetInterview,
@@ -62,42 +62,42 @@ function processGetInterview(response: AxiosResponse): Promise<Types.InterviewDt
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initInterviewDto(resultData200);
         return Promise.resolve<Types.InterviewDto>(result200);
 
@@ -116,9 +116,9 @@ function processGetInterview(response: AxiosResponse): Promise<Types.InterviewDt
 export function updateInterview(interviewId: string, body: Types.UpdateInterviewDto, config?: AxiosRequestConfig | undefined): Promise<Types.InterviewDto> {
     let url_ = getBaseUrl() + "/api/v1/interview/{interviewId}";
     if (interviewId === undefined || interviewId === null)
-        throw new Error("The parameter 'interviewId' must be defined.");
+      throw new Error("The parameter 'interviewId' must be defined.");
     url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeUpdateInterviewDto(body);
 
@@ -160,42 +160,42 @@ function processUpdateInterview(response: AxiosResponse): Promise<Types.Intervie
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initInterviewDto(resultData200);
         return Promise.resolve<Types.InterviewDto>(result200);
 
@@ -214,9 +214,9 @@ function processUpdateInterview(response: AxiosResponse): Promise<Types.Intervie
 export function deleteInterview(interviewId: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/interview/{interviewId}";
     if (interviewId === undefined || interviewId === null)
-        throw new Error("The parameter 'interviewId' must be defined.");
+      throw new Error("The parameter 'interviewId' must be defined.");
     url_ = url_.replace("{interviewId}", encodeURIComponent("" + interviewId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigDeleteInterview,
@@ -254,42 +254,42 @@ function processDeleteInterview(response: AxiosResponse): Promise<Types.Response
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -306,7 +306,7 @@ function processDeleteInterview(response: AxiosResponse): Promise<Types.Response
  */
 export function createInterview(body: Types.CreateInterviewDto, config?: AxiosRequestConfig | undefined): Promise<Types.InterviewDto> {
     let url_ = getBaseUrl() + "/api/v1/interview";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeCreateInterviewDto(body);
 
@@ -348,42 +348,42 @@ function processCreateInterview(response: AxiosResponse): Promise<Types.Intervie
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initInterviewDto(resultData200);
         return Promise.resolve<Types.InterviewDto>(result200);
 
@@ -438,11 +438,11 @@ export function getInterviewList(studentName?: string | undefined, partnerId?: s
     if (modifiedAtFrom === null)
         throw new Error("The parameter 'modifiedAtFrom' cannot be null.");
     else if (modifiedAtFrom !== undefined)
-        url_ += "modifiedAtFrom=" + encodeURIComponent(modifiedAtFrom ? "" + modifiedAtFrom : "") + "&";
+        url_ += "modifiedAtFrom=" + encodeURIComponent(modifiedAtFrom ? "" + modifiedAtFrom.toISOString() : "") + "&";
     if (modifiedAtTo === null)
         throw new Error("The parameter 'modifiedAtTo' cannot be null.");
     else if (modifiedAtTo !== undefined)
-        url_ += "modifiedAtTo=" + encodeURIComponent(modifiedAtTo ? "" + modifiedAtTo : "") + "&";
+        url_ += "modifiedAtTo=" + encodeURIComponent(modifiedAtTo ? "" + modifiedAtTo.toISOString() : "") + "&";
     if (page === null)
         throw new Error("The parameter 'page' cannot be null.");
     else if (page !== undefined)
@@ -455,7 +455,7 @@ export function getInterviewList(studentName?: string | undefined, partnerId?: s
         throw new Error("The parameter 'sort' cannot be null.");
     else if (sort !== undefined)
         sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetInterviewList,
@@ -493,42 +493,42 @@ function processGetInterviewList(response: AxiosResponse): Promise<Types.PagedLi
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initPagedListDtoInterviewDto(resultData200);
         return Promise.resolve<Types.PagedListDtoInterviewDto>(result200);
 
@@ -560,7 +560,7 @@ export function getInterviewList_1(page?: number | undefined, size?: number | un
         throw new Error("The parameter 'sort' cannot be null.");
     else if (sort !== undefined)
         sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetInterviewList_1,
@@ -598,42 +598,42 @@ function processGetInterviewList_1(response: AxiosResponse): Promise<Types.Paged
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initPagedListDtoInterviewDto(resultData200);
         return Promise.resolve<Types.PagedListDtoInterviewDto>(result200);
 
@@ -645,66 +645,66 @@ function processGetInterviewList_1(response: AxiosResponse): Promise<Types.Paged
 }
 let _requestConfigGetInterview: Partial<AxiosRequestConfig> | null;
 export function getGetInterviewRequestConfig() {
-    return _requestConfigGetInterview;
+  return _requestConfigGetInterview;
 }
 export function setGetInterviewRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetInterview = value;
+  _requestConfigGetInterview = value;
 }
 export function patchGetInterviewRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetInterview = patch(_requestConfigGetInterview ?? {});
+  _requestConfigGetInterview = patch(_requestConfigGetInterview ?? {});
 }
 
 let _requestConfigUpdateInterview: Partial<AxiosRequestConfig> | null;
 export function getUpdateInterviewRequestConfig() {
-    return _requestConfigUpdateInterview;
+  return _requestConfigUpdateInterview;
 }
 export function setUpdateInterviewRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateInterview = value;
+  _requestConfigUpdateInterview = value;
 }
 export function patchUpdateInterviewRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateInterview = patch(_requestConfigUpdateInterview ?? {});
+  _requestConfigUpdateInterview = patch(_requestConfigUpdateInterview ?? {});
 }
 
 let _requestConfigDeleteInterview: Partial<AxiosRequestConfig> | null;
 export function getDeleteInterviewRequestConfig() {
-    return _requestConfigDeleteInterview;
+  return _requestConfigDeleteInterview;
 }
 export function setDeleteInterviewRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteInterview = value;
+  _requestConfigDeleteInterview = value;
 }
 export function patchDeleteInterviewRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteInterview = patch(_requestConfigDeleteInterview ?? {});
+  _requestConfigDeleteInterview = patch(_requestConfigDeleteInterview ?? {});
 }
 
 let _requestConfigCreateInterview: Partial<AxiosRequestConfig> | null;
 export function getCreateInterviewRequestConfig() {
-    return _requestConfigCreateInterview;
+  return _requestConfigCreateInterview;
 }
 export function setCreateInterviewRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigCreateInterview = value;
+  _requestConfigCreateInterview = value;
 }
 export function patchCreateInterviewRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigCreateInterview = patch(_requestConfigCreateInterview ?? {});
+  _requestConfigCreateInterview = patch(_requestConfigCreateInterview ?? {});
 }
 
 let _requestConfigGetInterviewList: Partial<AxiosRequestConfig> | null;
 export function getGetInterviewListRequestConfig() {
-    return _requestConfigGetInterviewList;
+  return _requestConfigGetInterviewList;
 }
 export function setGetInterviewListRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetInterviewList = value;
+  _requestConfigGetInterviewList = value;
 }
 export function patchGetInterviewListRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetInterviewList = patch(_requestConfigGetInterviewList ?? {});
+  _requestConfigGetInterviewList = patch(_requestConfigGetInterviewList ?? {});
 }
 
 let _requestConfigGetInterviewList_1: Partial<AxiosRequestConfig> | null;
 export function getGetInterviewList_1RequestConfig() {
-    return _requestConfigGetInterviewList_1;
+  return _requestConfigGetInterviewList_1;
 }
 export function setGetInterviewList_1RequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetInterviewList_1 = value;
+  _requestConfigGetInterviewList_1 = value;
 }
 export function patchGetInterviewList_1RequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetInterviewList_1 = patch(_requestConfigGetInterviewList_1 ?? {});
+  _requestConfigGetInterviewList_1 = patch(_requestConfigGetInterviewList_1 ?? {});
 }
