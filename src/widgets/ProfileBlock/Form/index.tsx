@@ -43,6 +43,7 @@ export const ProfileForm = ({ profileInfo, mod }: ProfileFormProps) => {
             <Button type="submit" color="blue" disabled={!canEdit}>
                 Сохранить
             </Button>
+
         </form>
     );
 };
