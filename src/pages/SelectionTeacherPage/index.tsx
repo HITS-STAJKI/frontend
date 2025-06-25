@@ -32,7 +32,10 @@ const SelectionTeacherPage = () => {
     const sort: string[] | undefined = sortArray
         ? [sortArray[1], sortArray[0]]
         : undefined;
-    const { data, isLoading, isError, error } = useGetInterviewListQuery(studentName, companyId, stackId, languageIds, groupId, status as Status, dateFrom, dateTo, page, size, sort)
+
+    const sortStr = sortArray ? [`${sortArray[0]},${sortArray[1]}`] : undefined;
+
+    const { data, isLoading, isError, error } = useGetInterviewListQuery(studentName, companyId, stackId, languageIds, groupId, status as Status, dateFrom, dateTo, page, size, sortStr)
 
     return (
         <>

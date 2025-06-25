@@ -40,7 +40,9 @@ export const StudentsListPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
 
-    const { data, isLoading, isError, error, refetch } = useGetAllStudentsQuery(page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin);
+    const sortStr = sortArray ? [`${sortArray[0]},${sortArray[1]}`] : undefined;
+
+    const { data, isLoading, isError, error, refetch } = useGetAllStudentsQuery(page, size, sortStr, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin);
 
     const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
 

@@ -20,7 +20,9 @@ const UnapprovedPracticesPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
 
-    const { data: practicesData, isLoading, isError, error } = useGetPracticeRequestsQuery(page, size, sort);
+    const sortStr = sortArray ? [`${sortArray[0]},${sortArray[1]}`] : undefined;
+
+    const { data: practicesData, isLoading, isError, error } = useGetPracticeRequestsQuery(page, size, sortStr);
 
     if (isLoading) 
     {

@@ -34,7 +34,9 @@ export const StudentsPracticesPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
 
-    const { data, isLoading, isError, error, refetch } = useGetAllPracticesQuery(studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort);
+    const sortStr = sortArray ? [`${sortArray[0]},${sortArray[1]}`] : undefined;
+
+    const { data, isLoading, isError, error, refetch } = useGetAllPracticesQuery(studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sortStr);
 
     return (
         <div style={{ width: '100%' }}>

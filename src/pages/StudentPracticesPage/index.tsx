@@ -21,8 +21,10 @@ export const StudentPracticesPage = () => {
     const sort: string[] | undefined = sortArray
         ? [sortArray[1], sortArray[0]]
         : undefined;
+    
+    const sortStr = sortArray ? [`${sortArray[0]},${sortArray[1]}`] : undefined;
 
-    const { data: practicesData, isLoading, isError, error } = useGetStudentPracticesQuery(id as string, page, size, sort);
+    const { data: practicesData, isLoading, isError, error } = useGetStudentPracticesQuery(id as string, page, size, sortStr);
 
     if (isLoading) {
         return (
