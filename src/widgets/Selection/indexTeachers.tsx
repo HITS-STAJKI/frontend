@@ -217,7 +217,7 @@ export function SelectionTeacherList({ items, pagination, initialSort = null }: 
                             { key: "student.group.number", label: "Поток", span: 1.5 },
                             { key: "company.name", label: "Компания", span: 1.5 },
                             { key: 'stack.name', label: "Направление", span: 1.5 },
-                            { key: "languages.name", label: "Технологии", span: 1.5 },
+                            { key: "languages.name", label: "Язык программирования", span: 1.5 },
                             { key: "status", label: "Статус", span: 1.6 },
                             { key: "createdAt", label: "Дата создания", span: 1.5 },
                         ].map(({ key, label, span }) => (

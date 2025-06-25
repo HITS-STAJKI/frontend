@@ -59,7 +59,7 @@ export const StudentPractice = () => {
                         <Text fw={500}>Студент:</Text>
                         <Text>ФИО: {practice.user?.fullName ?? "—"}</Text>
                         <Text>Почта: {practice.user?.email ?? "—"}</Text>
-                        <Text>Группа: {practice.group?.number ?? "—"}</Text>
+                        <Text>Поток: {practice.group?.number ?? "—"}</Text>
                     </Stack>
                 </Card>
                 <Card shadow="sm" padding="md" style={{ width: "100%" }}>

@@ -20,45 +20,45 @@ export { Client };
 import type { AxiosRequestConfig } from 'axios';
 
 export type EditMessageMessages_in_chatQueryParameters = {
-  chatId: string;
-  messageId: string;
+  chatId: string ;
+  messageId: string ;
 }
 
 export type DeleteMessageMessages_in_chatQueryParameters = {
-  chatId: string;
-  messageId: string;
+  chatId: string ;
+  messageId: string ;
 }
 
 export type SendMessageMessages_in_chatQueryParameters = {
-  chatId: string;
+  chatId: string ;
 }
 
 export type GetMessagesListMessages_in_chatQueryParameters = {
-  chatId: string;
-  page?: number | undefined;
-  size?: number | undefined;
-  sort?: string[] | undefined;
+  chatId: string ;
+  page?: number | undefined ;
+  size?: number | undefined ;
+  sort?: string[] | undefined ;
 }
 
 export function editMessageUrl(chatId: string, messageId: string): string {
   let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages/{messageId}";
-  if (chatId === undefined || chatId === null)
-    throw new Error("The parameter 'chatId' must be defined.");
-  url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
-  if (messageId === undefined || messageId === null)
-    throw new Error("The parameter 'messageId' must be defined.");
-  url_ = url_.replace("{messageId}", encodeURIComponent("" + messageId));
+if (chatId === undefined || chatId === null)
+  throw new Error("The parameter 'chatId' must be defined.");
+url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
+if (messageId === undefined || messageId === null)
+  throw new Error("The parameter 'messageId' must be defined.");
+url_ = url_.replace("{messageId}", encodeURIComponent("" + messageId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function editMessageMutationKey(chatId: string, messageId: string): MutationKey {
   return trimArrayEnd([
-    'Messages_in_chatClient',
-    'editMessage',
-    chatId as any,
-    messageId as any,
-  ]);
+      'Messages_in_chatClient',
+      'editMessage',
+      chatId as any,
+      messageId as any,
+    ]);
 }
 
 /**
@@ -69,17 +69,17 @@ export function editMessageMutationKey(chatId: string, messageId: string): Mutat
  */
 export function useEditMessageMutation<TContext>(chatId: string, messageId: string, options?: Omit<UseMutationOptions<Types.MessageDto, unknown, Types.EditMessageRequest, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.MessageDto, unknown, Types.EditMessageRequest, TContext> {
   const key = editMessageMutationKey(chatId, messageId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.EditMessageRequest) => Client.editMessage(chatId, messageId, body),
     mutationKey: key,
   });
 }
-
+  
 type EditMessage__MutationParameters = EditMessageMessages_in_chatQueryParameters & {
   body: Types.EditMessageRequest;
 }
@@ -90,38 +90,38 @@ type EditMessage__MutationParameters = EditMessageMessages_in_chatQueryParameter
  * @param messageId Id сообщения
  * @return OK
  */
-export function useEditMessageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.MessageDto, unknown, EditMessage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: EditMessageMessages_in_chatQueryParameters }): UseMutationResult<Types.MessageDto, unknown, EditMessage__MutationParameters, TContext> {
+export function useEditMessageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.MessageDto, unknown, EditMessage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: EditMessageMessages_in_chatQueryParameters}): UseMutationResult<Types.MessageDto, unknown, EditMessage__MutationParameters, TContext> {
   const key = editMessageMutationKey(options?.parameters?.chatId!, options?.parameters?.messageId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: EditMessage__MutationParameters) => Client.editMessage(data.chatId ?? options?.parameters?.chatId!, data.messageId ?? options?.parameters?.messageId!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: EditMessage__MutationParameters) => Client.editMessage(data.chatId ?? options?.parameters?.chatId!, data.messageId ?? options?.parameters?.messageId!, data.body),
+  mutationKey: key,
+});
 }
-
+  
 export function deleteMessageUrl(chatId: string, messageId: string): string {
   let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages/{messageId}";
-  if (chatId === undefined || chatId === null)
-    throw new Error("The parameter 'chatId' must be defined.");
-  url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
-  if (messageId === undefined || messageId === null)
-    throw new Error("The parameter 'messageId' must be defined.");
-  url_ = url_.replace("{messageId}", encodeURIComponent("" + messageId));
+if (chatId === undefined || chatId === null)
+  throw new Error("The parameter 'chatId' must be defined.");
+url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
+if (messageId === undefined || messageId === null)
+  throw new Error("The parameter 'messageId' must be defined.");
+url_ = url_.replace("{messageId}", encodeURIComponent("" + messageId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function deleteMessageMutationKey(chatId: string, messageId: string): MutationKey {
   return trimArrayEnd([
-    'Messages_in_chatClient',
-    'deleteMessage',
-    chatId as any,
-    messageId as any,
-  ]);
+      'Messages_in_chatClient',
+      'deleteMessage',
+      chatId as any,
+      messageId as any,
+    ]);
 }
 
 /**
@@ -132,17 +132,17 @@ export function deleteMessageMutationKey(chatId: string, messageId: string): Mut
  */
 export function useDeleteMessageMutation<TContext>(chatId: string, messageId: string, options?: Omit<UseMutationOptions<Types.Response, unknown, void, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.Response, unknown, void, TContext> {
   const key = deleteMessageMutationKey(chatId, messageId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: () => Client.deleteMessage(chatId, messageId),
     mutationKey: key,
   });
 }
-
+  
 type DeleteMessage__MutationParameters = DeleteMessageMessages_in_chatQueryParameters
 
 /**
@@ -151,34 +151,34 @@ type DeleteMessage__MutationParameters = DeleteMessageMessages_in_chatQueryParam
  * @param messageId Id сообщения
  * @return OK
  */
-export function useDeleteMessageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteMessage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteMessageMessages_in_chatQueryParameters }): UseMutationResult<Types.Response, unknown, DeleteMessage__MutationParameters, TContext> {
+export function useDeleteMessageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.Response, unknown, DeleteMessage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: DeleteMessageMessages_in_chatQueryParameters}): UseMutationResult<Types.Response, unknown, DeleteMessage__MutationParameters, TContext> {
   const key = deleteMessageMutationKey(options?.parameters?.chatId!, options?.parameters?.messageId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: DeleteMessage__MutationParameters) => Client.deleteMessage(data.chatId ?? options?.parameters?.chatId!, data.messageId ?? options?.parameters?.messageId!),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: DeleteMessage__MutationParameters) => Client.deleteMessage(data.chatId ?? options?.parameters?.chatId!, data.messageId ?? options?.parameters?.messageId!),
+  mutationKey: key,
+});
 }
-
+  
 export function sendMessageUrl(chatId: string): string {
   let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages";
-  if (chatId === undefined || chatId === null)
-    throw new Error("The parameter 'chatId' must be defined.");
-  url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
+if (chatId === undefined || chatId === null)
+  throw new Error("The parameter 'chatId' must be defined.");
+url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
   url_ = url_.replace(/[?&]$/, "");
   return url_;
 }
 
 export function sendMessageMutationKey(chatId: string): MutationKey {
   return trimArrayEnd([
-    'Messages_in_chatClient',
-    'sendMessage',
-    chatId as any,
-  ]);
+      'Messages_in_chatClient',
+      'sendMessage',
+      chatId as any,
+    ]);
 }
 
 /**
@@ -188,17 +188,17 @@ export function sendMessageMutationKey(chatId: string): MutationKey {
  */
 export function useSendMessageMutation<TContext>(chatId: string, options?: Omit<UseMutationOptions<Types.MessageDto, unknown, Types.SendMessageRequest, TContext>, 'mutationKey' | 'mutationFn'>): UseMutationResult<Types.MessageDto, unknown, Types.SendMessageRequest, TContext> {
   const key = sendMessageMutationKey(chatId);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
+  
   return useMutation({
     ...options,
     mutationFn: (body: Types.SendMessageRequest) => Client.sendMessage(chatId, body),
     mutationKey: key,
   });
 }
-
+  
 type SendMessage__MutationParameters = SendMessageMessages_in_chatQueryParameters & {
   body: Types.SendMessageRequest;
 }
@@ -208,35 +208,35 @@ type SendMessage__MutationParameters = SendMessageMessages_in_chatQueryParameter
  * @param chatId Id чата
  * @return OK
  */
-export function useSendMessageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.MessageDto, unknown, SendMessage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: SendMessageMessages_in_chatQueryParameters }): UseMutationResult<Types.MessageDto, unknown, SendMessage__MutationParameters, TContext> {
+export function useSendMessageMutationWithParameters<TContext>(options?: Omit<UseMutationOptions<Types.MessageDto, unknown, SendMessage__MutationParameters, TContext>, 'mutationKey' | 'mutationFn'> & { parameters?: SendMessageMessages_in_chatQueryParameters}): UseMutationResult<Types.MessageDto, unknown, SendMessage__MutationParameters, TContext> {
   const key = sendMessageMutationKey(options?.parameters?.chatId!);
-
+  
   const metaContext = useContext(QueryMetaContext);
   options = addMetaToOptions(options, metaContext);
-
-  return useMutation({
-    ...options,
-    mutationFn: (data: SendMessage__MutationParameters) => Client.sendMessage(data.chatId ?? options?.parameters?.chatId!, data.body),
-    mutationKey: key,
-  });
+  
+return useMutation({
+  ...options, 
+  mutationFn: (data: SendMessage__MutationParameters) => Client.sendMessage(data.chatId ?? options?.parameters?.chatId!, data.body),
+  mutationKey: key,
+});
 }
-
+  
 export function getMessagesListUrl(chatId: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages/list?";
-  if (chatId === undefined || chatId === null)
-    throw new Error("The parameter 'chatId' must be defined.");
-  url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
-  if (page === null)
+if (chatId === undefined || chatId === null)
+  throw new Error("The parameter 'chatId' must be defined.");
+url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
+if (page === null)
     throw new Error("The parameter 'page' cannot be null.");
-  else if (page !== undefined)
+else if (page !== undefined)
     url_ += "page=" + encodeURIComponent("" + page) + "&";
-  if (size === null)
+if (size === null)
     throw new Error("The parameter 'size' cannot be null.");
-  else if (size !== undefined)
+else if (size !== undefined)
     url_ += "size=" + encodeURIComponent("" + size) + "&";
-  if (sort === null)
+if (sort === null)
     throw new Error("The parameter 'sort' cannot be null.");
-  else if (sort !== undefined)
+else if (sort !== undefined)
     sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
   url_ = url_.replace(/[?&]$/, "");
   return url_;
@@ -255,27 +255,27 @@ export function getMessagesListQueryKey(dto: GetMessagesListMessages_in_chatQuer
 export function getMessagesListQueryKey(chatId: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getMessagesListQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { chatId, page, size, sort, } = params[0] as GetMessagesListMessages_in_chatQueryParameters;
+    const { chatId, page, size, sort,  } = params[0] as GetMessagesListMessages_in_chatQueryParameters;
 
     return trimArrayEnd([
-      'Messages_in_chatClient',
-      'getMessagesList',
-      chatId as any,
-      page as any,
-      size as any,
-      sort as any,
-    ]);
+        'Messages_in_chatClient',
+        'getMessagesList',
+        chatId as any,
+        page as any,
+        size as any,
+        sort as any,
+      ]);
   } else {
     return trimArrayEnd([
-      'Messages_in_chatClient',
-      'getMessagesList',
-      ...params
-    ]);
+        'Messages_in_chatClient',
+        'getMessagesList',
+        ...params
+      ]);
   }
 }
 export function __getMessagesList(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
   return Client.getMessagesList(
-    context.queryKey[2] as string, context.queryKey[3] as number | undefined, context.queryKey[4] as number | undefined, context.queryKey[5] as string[] | undefined, axiosConfig);
+      context.queryKey[2] as string,       context.queryKey[3] as number | undefined,       context.queryKey[4] as number | undefined,       context.queryKey[5] as string[] | undefined,axiosConfig    );
 }
 
 export function useGetMessagesListQuery<TSelectData = Types.PagedListDtoMessageDto, TError = unknown>(dto: GetMessagesListMessages_in_chatQueryParameters, options?: Omit<UseQueryOptions<Types.PagedListDtoMessageDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
@@ -288,17 +288,17 @@ export function useGetMessagesListQuery<TSelectData = Types.PagedListDtoMessageD
  * @return OK
  */
 export function useGetMessagesListQuery<TSelectData = Types.PagedListDtoMessageDto, TError = unknown>(chatId: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoMessageDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
-export function useGetMessagesListQuery<TSelectData = Types.PagedListDtoMessageDto, TError = unknown>(...params: any[]): UseQueryResult<TSelectData, TError> {
+export function useGetMessagesListQuery<TSelectData = Types.PagedListDtoMessageDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoMessageDto, TError, TSelectData> | undefined = undefined;
-  let axiosConfig: AxiosRequestConfig | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
   let chatId: any = undefined;
   let page: any = undefined;
   let size: any = undefined;
   let sort: any = undefined;
-
+  
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ chatId, page, size, sort, } = params[0] as GetMessagesListMessages_in_chatQueryParameters);
+      ({ chatId, page, size, sort,  } = params[0] as GetMessagesListMessages_in_chatQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {

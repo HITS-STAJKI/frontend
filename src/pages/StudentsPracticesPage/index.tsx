@@ -41,8 +41,8 @@ export const StudentsPracticesPage = () => {
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
                 <FilterBlockShort availableFilters={[
                     { id: "studentName", label: "ФИО", element: (props) => <FilterName id="studentName" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "groupIds", label: "Выберете группу", element: (props) => <FilterGroupMultiple id="groupIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "companyId", label: "Выберете компанию", element: (props) => <FilterCompanySelect id="companyId" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "groupIds", label: "Поток", element: (props) => <FilterGroupMultiple id="groupIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "companyId", label: "Компания", element: (props) => <FilterCompanySelect id="companyId" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "hasReport", label: "Отчет прикреплен?", element: (props) => <FilterTrueFalse id="hasReport" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "isReportApproved", label: "Отчет подтвержден?", element: (props) => <FilterTrueFalse id="isReportApproved" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "isArchived", label: "Архивные данные", element: (props) => <FilterTrueFalse id="isArchived" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },

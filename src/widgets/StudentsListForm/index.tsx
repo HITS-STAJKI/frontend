@@ -144,7 +144,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                     <Grid style={{ width: "100%" }}>
                         {[
                             { key: "user.fullName", label: "Имя студента" },
-                            { key: "group.number", label: "Группа" },
+                            { key: "group.number", label: "Поток" },
                             { key: "user.lastLoginDate", label: "Время последнего входа" },
                             { key: "unreadMessagesCount", label: "Непрочитанные сообщения" }
                         ].map(({ key, label }) => (

@@ -23,12 +23,12 @@ import { getAxios, getBaseUrl } from './helpers';
 export function editMessage(chatId: string, messageId: string, body: Types.EditMessageRequest, config?: AxiosRequestConfig | undefined): Promise<Types.MessageDto> {
     let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages/{messageId}";
     if (chatId === undefined || chatId === null)
-        throw new Error("The parameter 'chatId' must be defined.");
+      throw new Error("The parameter 'chatId' must be defined.");
     url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
     if (messageId === undefined || messageId === null)
-        throw new Error("The parameter 'messageId' must be defined.");
+      throw new Error("The parameter 'messageId' must be defined.");
     url_ = url_.replace("{messageId}", encodeURIComponent("" + messageId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeEditMessageRequest(body);
 
@@ -70,42 +70,42 @@ function processEditMessage(response: AxiosResponse): Promise<Types.MessageDto> 
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initMessageDto(resultData200);
         return Promise.resolve<Types.MessageDto>(result200);
 
@@ -125,12 +125,12 @@ function processEditMessage(response: AxiosResponse): Promise<Types.MessageDto> 
 export function deleteMessage(chatId: string, messageId: string, config?: AxiosRequestConfig | undefined): Promise<Types.Response> {
     let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages/{messageId}";
     if (chatId === undefined || chatId === null)
-        throw new Error("The parameter 'chatId' must be defined.");
+      throw new Error("The parameter 'chatId' must be defined.");
     url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
     if (messageId === undefined || messageId === null)
-        throw new Error("The parameter 'messageId' must be defined.");
+      throw new Error("The parameter 'messageId' must be defined.");
     url_ = url_.replace("{messageId}", encodeURIComponent("" + messageId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigDeleteMessage,
@@ -168,42 +168,42 @@ function processDeleteMessage(response: AxiosResponse): Promise<Types.Response> 
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initResponse(resultData200);
         return Promise.resolve<Types.Response>(result200);
 
@@ -222,9 +222,9 @@ function processDeleteMessage(response: AxiosResponse): Promise<Types.Response> 
 export function sendMessage(chatId: string, body: Types.SendMessageRequest, config?: AxiosRequestConfig | undefined): Promise<Types.MessageDto> {
     let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages";
     if (chatId === undefined || chatId === null)
-        throw new Error("The parameter 'chatId' must be defined.");
+      throw new Error("The parameter 'chatId' must be defined.");
     url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeSendMessageRequest(body);
 
@@ -266,42 +266,42 @@ function processSendMessage(response: AxiosResponse): Promise<Types.MessageDto> 
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initMessageDto(resultData200);
         return Promise.resolve<Types.MessageDto>(result200);
 
@@ -323,7 +323,7 @@ function processSendMessage(response: AxiosResponse): Promise<Types.MessageDto> 
 export function getMessagesList(chatId: string, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoMessageDto> {
     let url_ = getBaseUrl() + "/api/v1/chats/{chatId}/messages/list?";
     if (chatId === undefined || chatId === null)
-        throw new Error("The parameter 'chatId' must be defined.");
+      throw new Error("The parameter 'chatId' must be defined.");
     url_ = url_.replace("{chatId}", encodeURIComponent("" + chatId));
     if (page === null)
         throw new Error("The parameter 'page' cannot be null.");
@@ -337,7 +337,7 @@ export function getMessagesList(chatId: string, page?: number | undefined, size?
         throw new Error("The parameter 'sort' cannot be null.");
     else if (sort !== undefined)
         sort && sort.forEach(item => { url_ += "sort=" + encodeURIComponent("" + item) + "&"; });
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetMessagesList,
@@ -375,42 +375,42 @@ function processGetMessagesList(response: AxiosResponse): Promise<Types.PagedLis
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initPagedListDtoMessageDto(resultData200);
         return Promise.resolve<Types.PagedListDtoMessageDto>(result200);
 
@@ -422,44 +422,44 @@ function processGetMessagesList(response: AxiosResponse): Promise<Types.PagedLis
 }
 let _requestConfigEditMessage: Partial<AxiosRequestConfig> | null;
 export function getEditMessageRequestConfig() {
-    return _requestConfigEditMessage;
+  return _requestConfigEditMessage;
 }
 export function setEditMessageRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigEditMessage = value;
+  _requestConfigEditMessage = value;
 }
 export function patchEditMessageRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigEditMessage = patch(_requestConfigEditMessage ?? {});
+  _requestConfigEditMessage = patch(_requestConfigEditMessage ?? {});
 }
 
 let _requestConfigDeleteMessage: Partial<AxiosRequestConfig> | null;
 export function getDeleteMessageRequestConfig() {
-    return _requestConfigDeleteMessage;
+  return _requestConfigDeleteMessage;
 }
 export function setDeleteMessageRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteMessage = value;
+  _requestConfigDeleteMessage = value;
 }
 export function patchDeleteMessageRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigDeleteMessage = patch(_requestConfigDeleteMessage ?? {});
+  _requestConfigDeleteMessage = patch(_requestConfigDeleteMessage ?? {});
 }
 
 let _requestConfigSendMessage: Partial<AxiosRequestConfig> | null;
 export function getSendMessageRequestConfig() {
-    return _requestConfigSendMessage;
+  return _requestConfigSendMessage;
 }
 export function setSendMessageRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigSendMessage = value;
+  _requestConfigSendMessage = value;
 }
 export function patchSendMessageRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigSendMessage = patch(_requestConfigSendMessage ?? {});
+  _requestConfigSendMessage = patch(_requestConfigSendMessage ?? {});
 }
 
 let _requestConfigGetMessagesList: Partial<AxiosRequestConfig> | null;
 export function getGetMessagesListRequestConfig() {
-    return _requestConfigGetMessagesList;
+  return _requestConfigGetMessagesList;
 }
 export function setGetMessagesListRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetMessagesList = value;
+  _requestConfigGetMessagesList = value;
 }
 export function patchGetMessagesListRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetMessagesList = patch(_requestConfigGetMessagesList ?? {});
+  _requestConfigGetMessagesList = patch(_requestConfigGetMessagesList ?? {});
 }

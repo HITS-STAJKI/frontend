@@ -10,6 +10,7 @@ import { LanguageDto, StackDto } from "services/api/api-client.types";
 interface SearchFormProps {
     type: 'language' | 'stack'; // что создавать
     onSearch?: (query: string) => void;
+
 }
 
 export function SearchForm({ type, onSearch }: SearchFormProps) {
@@ -45,7 +46,7 @@ export function SearchForm({ type, onSearch }: SearchFormProps) {
     );
 }
 
-export function LanguageList({ items, type }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' }) {
+export function LanguageList({ items, type, query }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' } & {query: string}) {
     return (
         <Flex direction="column" gap="md" mt="lg" style={{ width: '100%' }}>
             <Text style={{ marginBottom: '10px' }}>

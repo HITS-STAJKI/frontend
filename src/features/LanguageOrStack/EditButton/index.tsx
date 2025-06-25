@@ -3,29 +3,21 @@ import { Button } from "@mantine/core"
 import { PencilSvgrepoCom } from "assets/icons"
 import { Modal } from "shared/ui"
 import { UpdateLanguageOrStackForm } from "./form"
-import { Language } from "shared/lib"
+import { LanguageDto } from '../../../services/api/api-client.types.ts'
 
 type EditLanguageOrStackProps = {
     type: 'language' | 'stack'
-} & Language
+    query?: string
+} & LanguageDto
 
-export const EditLanguageOrStack = ({ id, type, name }: EditLanguageOrStackProps) => {
-    const handleEdit = (close: () => void) => {
-        if (type === 'language') {
-            //изменяем по 1 типу
-        }
-        else {
-            //изменяем по 2 типу
-        }
-        close()
-    }
+export const EditLanguageOrStack = ({ id, type, name, query }: EditLanguageOrStackProps) => {
 
     return (
         <Modal
             render={open => <Button color="gray" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}>
                 <PencilSvgrepoCom />
             </Button>}
-            content={({ close }) => <UpdateLanguageOrStackForm id={id} name={name} onSuccess={close} />}
+            content={({ close }) => <UpdateLanguageOrStackForm type={type} query={query} id={id} name={name} onSuccess={close} />}
             title={'Вы уверены, что хотите изменить данный элемент?'}
         />
 

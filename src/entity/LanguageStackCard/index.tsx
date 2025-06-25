@@ -1,8 +1,8 @@
 import { Card, Flex, Text } from "@mantine/core";
 import { DeleteLanguageOrStack, EditLanguageOrStack } from "features";
-import { Language } from "shared/lib";
+import { LanguageDto } from '../../services/api/api-client.types.ts'
 
-export function LanguageStackCard({ id, name, type, index }: Language & { type: 'language' | 'stack' } & {index: number}) {
+export function LanguageStackCard({ id, name, type, index, query }: LanguageDto & { type: 'language' | 'stack' } & {index: number} & {query?: string }) {
 
     return (
         <Card shadow="sm" padding="lg" style={{ width: '100%', height: '64px' }}>

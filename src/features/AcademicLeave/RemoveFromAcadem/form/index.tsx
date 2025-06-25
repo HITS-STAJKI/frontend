@@ -49,8 +49,8 @@ export const RemoveFromAcademForm = ({ onSuccess, user }: RemoveFromAcademFormPr
     return (
         <form onSubmit={form.onSubmit(onSubmit)}>
             <Select
-                label="Выберите группу"
-                placeholder="Начните вводить номер группы"
+                label="Выберите поток"
+                placeholder="Начните вводить номер потока"
                 required
                 data={groups?.items!.map(group => ({
                     value: group.id!,

@@ -1,6 +1,6 @@
 import { Card, Flex } from '@mantine/core';
 import { Group as MGroup } from "@mantine/core";
-import { DeleteGroupButton, EditGroupButton } from "features/Group";
+import { DeleteGroupButton, EditGroupButton, GraduateGroupButton } from 'features/Group'
 import { EditListOfStudentsButton } from "features/Group/EditListOfStudents";
 import { GroupDto } from "services/api/api-client.types";
 
@@ -23,6 +23,7 @@ export const Group = ({ group, number }: GroupProps & {number: number}) => {
                     <div>{group.studentsCount} учащихся</div>
                     <EditGroupButton group={group} />
                     <DeleteGroupButton group={group} />
+                    <GraduateGroupButton group={group} />
                 </MGroup>
             </Flex>
         </Card>

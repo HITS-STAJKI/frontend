@@ -45,6 +45,7 @@ export const StackPage = () => {
                 <LanguageList
                     items={data || []}
                     type="stack"
+                    query={searchQuery}
                 />
             </Flex>
         </Container>

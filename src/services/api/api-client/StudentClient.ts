@@ -22,9 +22,9 @@ import { getAxios, getBaseUrl } from './helpers';
 export function sendStudentToAcadem(studentId: string, config?: AxiosRequestConfig | undefined): Promise<Types.StudentDto> {
     let url_ = getBaseUrl() + "/api/v1/student/{studentId}/to-academ";
     if (studentId === undefined || studentId === null)
-        throw new Error("The parameter 'studentId' must be defined.");
+      throw new Error("The parameter 'studentId' must be defined.");
     url_ = url_.replace("{studentId}", encodeURIComponent("" + studentId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigSendStudentToAcadem,
@@ -62,42 +62,42 @@ function processSendStudentToAcadem(response: AxiosResponse): Promise<Types.Stud
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initStudentDto(resultData200);
         return Promise.resolve<Types.StudentDto>(result200);
 
@@ -116,9 +116,9 @@ function processSendStudentToAcadem(response: AxiosResponse): Promise<Types.Stud
 export function returnStudentFromAcadem(studentId: string, body: Types.ReturnFromAcademDto, config?: AxiosRequestConfig | undefined): Promise<Types.StudentDto> {
     let url_ = getBaseUrl() + "/api/v1/student/{studentId}/from-academ";
     if (studentId === undefined || studentId === null)
-        throw new Error("The parameter 'studentId' must be defined.");
+      throw new Error("The parameter 'studentId' must be defined.");
     url_ = url_.replace("{studentId}", encodeURIComponent("" + studentId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeReturnFromAcademDto(body);
 
@@ -160,42 +160,42 @@ function processReturnStudentFromAcadem(response: AxiosResponse): Promise<Types.
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initStudentDto(resultData200);
         return Promise.resolve<Types.StudentDto>(result200);
 
@@ -214,9 +214,9 @@ function processReturnStudentFromAcadem(response: AxiosResponse): Promise<Types.
 export function updateStudent(id: string, body: Types.StudentEditDto, config?: AxiosRequestConfig | undefined): Promise<Types.StudentDto> {
     let url_ = getBaseUrl() + "/api/v1/student/{id}";
     if (id === undefined || id === null)
-        throw new Error("The parameter 'id' must be defined.");
+      throw new Error("The parameter 'id' must be defined.");
     url_ = url_.replace("{id}", encodeURIComponent("" + id));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeStudentEditDto(body);
 
@@ -258,42 +258,42 @@ function processUpdateStudent(response: AxiosResponse): Promise<Types.StudentDto
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initStudentDto(resultData200);
         return Promise.resolve<Types.StudentDto>(result200);
 
@@ -310,7 +310,7 @@ function processUpdateStudent(response: AxiosResponse): Promise<Types.StudentDto
  */
 export function createStudentForCurrentUser(body: Types.StudentCreateDto, config?: AxiosRequestConfig | undefined): Promise<Types.StudentDto> {
     let url_ = getBaseUrl() + "/api/v1/student";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeStudentCreateDto(body);
 
@@ -352,42 +352,42 @@ function processCreateStudentForCurrentUser(response: AxiosResponse): Promise<Ty
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initStudentDto(resultData200);
         return Promise.resolve<Types.StudentDto>(result200);
 
@@ -406,9 +406,9 @@ function processCreateStudentForCurrentUser(response: AxiosResponse): Promise<Ty
 export function createStudent(userId: string, body: Types.StudentCreateDto, config?: AxiosRequestConfig | undefined): Promise<Types.StudentDto> {
     let url_ = getBaseUrl() + "/api/v1/student/user/{userId}";
     if (userId === undefined || userId === null)
-        throw new Error("The parameter 'userId' must be defined.");
+      throw new Error("The parameter 'userId' must be defined.");
     url_ = url_.replace("{userId}", encodeURIComponent("" + userId));
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = Types.serializeStudentCreateDto(body);
 
@@ -450,42 +450,42 @@ function processCreateStudent(response: AxiosResponse): Promise<Types.StudentDto
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initStudentDto(resultData200);
         return Promise.resolve<Types.StudentDto>(result200);
 
@@ -502,7 +502,7 @@ function processCreateStudent(response: AxiosResponse): Promise<Types.StudentDto
  */
 export function getStudentsByIds(body: string[], config?: AxiosRequestConfig | undefined): Promise<Types.StudentDto[]> {
     let url_ = getBaseUrl() + "/api/v1/student/list/ids";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = JSON.stringify(body);
 
@@ -544,47 +544,47 @@ function processGetStudentsByIds(response: AxiosResponse): Promise<Types.Student
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         if (Array.isArray(resultData200)) {
-            result200 = resultData200.map(item =>
+              result200 = resultData200.map(item => 
                 Types.initStudentDto(item)
-            );
-        }
+              );
+            }
         return Promise.resolve<Types.StudentDto[]>(result200);
 
     } else if (status !== 200 && status !== 204) {
@@ -601,7 +601,7 @@ function processGetStudentsByIds(response: AxiosResponse): Promise<Types.Student
  */
 export function importStudents(file?: Types.FileParameter | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.FileResponse> {
     let url_ = getBaseUrl() + "/api/v1/student/import";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     const content_ = new FormData();
     if (file === null || file === undefined)
@@ -647,35 +647,35 @@ function processImportStudents(response: AxiosResponse): Promise<Types.FileRespo
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
@@ -768,7 +768,7 @@ export function getAllStudents(page?: number | undefined, size?: number | undefi
         throw new Error("The parameter 'lastLogin' cannot be null.");
     else if (lastLogin !== undefined)
         url_ += "lastLogin=" + encodeURIComponent(lastLogin ? "" + lastLogin.toISOString() : "") + "&";
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         ..._requestConfigGetAllStudents,
@@ -806,42 +806,42 @@ function processGetAllStudents(response: AxiosResponse): Promise<Types.PagedList
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
     } else if (status === 200) {
         const _responseText = response.data;
         let result200: any = null;
-        let resultData200 = _responseText;
+        let resultData200  = _responseText;
         result200 = Types.initPagedListDtoStudentDto(resultData200);
         return Promise.resolve<Types.PagedListDtoStudentDto>(result200);
 
@@ -863,7 +863,7 @@ export function exportStudents(studentIds?: string[] | undefined, config?: Axios
         throw new Error("The parameter 'studentIds' cannot be null.");
     else if (studentIds !== undefined)
         studentIds && studentIds.forEach(item => { url_ += "studentIds=" + encodeURIComponent("" + item) + "&"; });
-    url_ = url_.replace(/[?&]$/, "");
+      url_ = url_.replace(/[?&]$/, "");
 
     let options_: AxiosRequestConfig = {
         responseType: "blob",
@@ -902,35 +902,35 @@ function processExportStudents(response: AxiosResponse): Promise<Types.FileRespo
     if (status === 409) {
         const _responseText = response.data;
         let result409: any = null;
-        let resultData409 = _responseText;
+        let resultData409  = _responseText;
         result409 = Types.initErrorResponse(resultData409);
         return throwException("Conflict", status, _responseText, _headers, result409);
 
     } else if (status === 400) {
         const _responseText = response.data;
         let result400: any = null;
-        let resultData400 = _responseText;
+        let resultData400  = _responseText;
         result400 = Types.initErrorResponse(resultData400);
         return throwException("Bad Request", status, _responseText, _headers, result400);
 
     } else if (status === 500) {
         const _responseText = response.data;
         let result500: any = null;
-        let resultData500 = _responseText;
+        let resultData500  = _responseText;
         result500 = Types.initErrorResponse(resultData500);
         return throwException("Internal Server Error", status, _responseText, _headers, result500);
 
     } else if (status === 401) {
         const _responseText = response.data;
         let result401: any = null;
-        let resultData401 = _responseText;
+        let resultData401  = _responseText;
         result401 = Types.initErrorResponse(resultData401);
         return throwException("Unauthorized", status, _responseText, _headers, result401);
 
     } else if (status === 404) {
         const _responseText = response.data;
         let result404: any = null;
-        let resultData404 = _responseText;
+        let resultData404  = _responseText;
         result404 = Types.initErrorResponse(resultData404);
         return throwException("Not Found", status, _responseText, _headers, result404);
 
@@ -953,99 +953,99 @@ function processExportStudents(response: AxiosResponse): Promise<Types.FileRespo
 }
 let _requestConfigSendStudentToAcadem: Partial<AxiosRequestConfig> | null;
 export function getSendStudentToAcademRequestConfig() {
-    return _requestConfigSendStudentToAcadem;
+  return _requestConfigSendStudentToAcadem;
 }
 export function setSendStudentToAcademRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigSendStudentToAcadem = value;
+  _requestConfigSendStudentToAcadem = value;
 }
 export function patchSendStudentToAcademRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigSendStudentToAcadem = patch(_requestConfigSendStudentToAcadem ?? {});
+  _requestConfigSendStudentToAcadem = patch(_requestConfigSendStudentToAcadem ?? {});
 }
 
 let _requestConfigReturnStudentFromAcadem: Partial<AxiosRequestConfig> | null;
 export function getReturnStudentFromAcademRequestConfig() {
-    return _requestConfigReturnStudentFromAcadem;
+  return _requestConfigReturnStudentFromAcadem;
 }
 export function setReturnStudentFromAcademRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigReturnStudentFromAcadem = value;
+  _requestConfigReturnStudentFromAcadem = value;
 }
 export function patchReturnStudentFromAcademRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigReturnStudentFromAcadem = patch(_requestConfigReturnStudentFromAcadem ?? {});
+  _requestConfigReturnStudentFromAcadem = patch(_requestConfigReturnStudentFromAcadem ?? {});
 }
 
 let _requestConfigUpdateStudent: Partial<AxiosRequestConfig> | null;
 export function getUpdateStudentRequestConfig() {
-    return _requestConfigUpdateStudent;
+  return _requestConfigUpdateStudent;
 }
 export function setUpdateStudentRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateStudent = value;
+  _requestConfigUpdateStudent = value;
 }
 export function patchUpdateStudentRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigUpdateStudent = patch(_requestConfigUpdateStudent ?? {});
+  _requestConfigUpdateStudent = patch(_requestConfigUpdateStudent ?? {});
 }
 
 let _requestConfigCreateStudentForCurrentUser: Partial<AxiosRequestConfig> | null;
 export function getCreateStudentForCurrentUserRequestConfig() {
-    return _requestConfigCreateStudentForCurrentUser;
+  return _requestConfigCreateStudentForCurrentUser;
 }
 export function setCreateStudentForCurrentUserRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigCreateStudentForCurrentUser = value;
+  _requestConfigCreateStudentForCurrentUser = value;
 }
 export function patchCreateStudentForCurrentUserRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigCreateStudentForCurrentUser = patch(_requestConfigCreateStudentForCurrentUser ?? {});
+  _requestConfigCreateStudentForCurrentUser = patch(_requestConfigCreateStudentForCurrentUser ?? {});
 }
 
 let _requestConfigCreateStudent: Partial<AxiosRequestConfig> | null;
 export function getCreateStudentRequestConfig() {
-    return _requestConfigCreateStudent;
+  return _requestConfigCreateStudent;
 }
 export function setCreateStudentRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigCreateStudent = value;
+  _requestConfigCreateStudent = value;
 }
 export function patchCreateStudentRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigCreateStudent = patch(_requestConfigCreateStudent ?? {});
+  _requestConfigCreateStudent = patch(_requestConfigCreateStudent ?? {});
 }
 
 let _requestConfigGetStudentsByIds: Partial<AxiosRequestConfig> | null;
 export function getGetStudentsByIdsRequestConfig() {
-    return _requestConfigGetStudentsByIds;
+  return _requestConfigGetStudentsByIds;
 }
 export function setGetStudentsByIdsRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetStudentsByIds = value;
+  _requestConfigGetStudentsByIds = value;
 }
 export function patchGetStudentsByIdsRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetStudentsByIds = patch(_requestConfigGetStudentsByIds ?? {});
+  _requestConfigGetStudentsByIds = patch(_requestConfigGetStudentsByIds ?? {});
 }
 
 let _requestConfigImportStudents: Partial<AxiosRequestConfig> | null;
 export function getImportStudentsRequestConfig() {
-    return _requestConfigImportStudents;
+  return _requestConfigImportStudents;
 }
 export function setImportStudentsRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigImportStudents = value;
+  _requestConfigImportStudents = value;
 }
 export function patchImportStudentsRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigImportStudents = patch(_requestConfigImportStudents ?? {});
+  _requestConfigImportStudents = patch(_requestConfigImportStudents ?? {});
 }
 
 let _requestConfigGetAllStudents: Partial<AxiosRequestConfig> | null;
 export function getGetAllStudentsRequestConfig() {
-    return _requestConfigGetAllStudents;
+  return _requestConfigGetAllStudents;
 }
 export function setGetAllStudentsRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigGetAllStudents = value;
+  _requestConfigGetAllStudents = value;
 }
 export function patchGetAllStudentsRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigGetAllStudents = patch(_requestConfigGetAllStudents ?? {});
+  _requestConfigGetAllStudents = patch(_requestConfigGetAllStudents ?? {});
 }
 
 let _requestConfigExportStudents: Partial<AxiosRequestConfig> | null;
 export function getExportStudentsRequestConfig() {
-    return _requestConfigExportStudents;
+  return _requestConfigExportStudents;
 }
 export function setExportStudentsRequestConfig(value: Partial<AxiosRequestConfig>) {
-    _requestConfigExportStudents = value;
+  _requestConfigExportStudents = value;
 }
 export function patchExportStudentsRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
-    _requestConfigExportStudents = patch(_requestConfigExportStudents ?? {});
+  _requestConfigExportStudents = patch(_requestConfigExportStudents ?? {});
 }

@@ -18,7 +18,26 @@ export function FilterLanguageName({ id, onChangeValue }: { id: string; onChange
     return (
         <TextInput
             id={`filter-${id}`}
-            placeholder="Технологии"
+            placeholder="Выберите язык программирования"
+            value={value}
+            onChange={handleChange}
+        />
+    );
+}
+
+export function FilterGroupInput({ id, onChangeValue }: { id: string; onChangeValue: (val: string) => void; }) {
+    const [value, setValue] = useState("");
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const val = event.currentTarget.value;
+        setValue(val);
+        onChangeValue(val);
+    };
+
+    return (
+        <TextInput
+            id={`filter-${id}`}
+            placeholder="Введите номер потока"
             value={value}
             onChange={handleChange}
         />
@@ -41,7 +60,7 @@ export function FilterName({ id, onChangeValue, initialValue = "" }: { id: strin
     return (
         <TextInput
             id={`filter-${id}`}
-            placeholder="ФИО"
+            placeholder="Введите ФИО"
             value={value}
             onChange={handleChange}
         />
@@ -139,7 +158,7 @@ export function FilterCompanyName({ id, onChangeValue, initialValue = "" }: { id
     return (
         <TextInput
             id={`filter-${id}`}
-            placeholder="Название компании"
+            placeholder="Введите название компании"
             value={value}
             onChange={handleChange}
         />
@@ -206,7 +225,7 @@ export function FilterCompanySelect({ id, onChangeValue, initialValue }: { id: s
     return (
         <Select
             id={`filter-${id}`}
-            placeholder={isLoading ? "Загрузка..." : "Выберите компанию"}
+            placeholder={isLoading ? "Загрузка..." : "Выберите название компании"}
             value={value}
             onChange={handleChange}
             data={options}
@@ -241,7 +260,7 @@ export function FilterGroupSelect({ id, onChangeValue, initialValue }: { id: str
     return (
         <Select
             id={`filter-${id}`}
-            placeholder={isLoading ? "Загрузка..." : "Выберите группу"}
+            placeholder={isLoading ? "Загрузка..." : "Выберите поток"}
             value={value}
             onChange={handleChange}
             data={options}
@@ -290,7 +309,7 @@ export function FilterGroupMultiple({ id, initialValue = [], onChangeValue }: { 
     return (
         <MultiSelect
             id={`filter-${id}`}
-            placeholder={isLoading ? "Загрузка..." : "Выберите группу"}
+            placeholder={isLoading ? "Загрузка..." : "Выберите номер потока"}
             value={value}
             onChange={handleChange}
             data={options}
@@ -338,7 +357,7 @@ export function FilterCompanyMultiple({ id, initialValue = [], onChangeValue }: 
     return (
         <MultiSelect
             id={`filter-${id}`}
-            placeholder={isLoading ? "Загрузка..." : "Выберите компанию"}
+            placeholder={isLoading ? "Загрузка..." : "Выберите компании"}
             value={value ?? []}
             onChange={handleChange}
             data={options}
@@ -386,7 +405,7 @@ export function FilterStackMultiple({ id, initialValue = [], onChangeValue }: { 
     return (
         <MultiSelect
             id={`filter-${id}`}
-            placeholder={isLoading ? "Загрузка..." : "Выберите направление"}
+            placeholder={isLoading ? "Загрузка..." : "Выберите направления"}
             value={value ?? []}
             onChange={handleChange}
             data={options}
@@ -508,7 +527,7 @@ export function FilterUserRole({ id, onChangeValue, initialValue  }: { id: strin
     useEffect(() => {
         setTimeout(() => {
             setData([
-                { value: "ADMIN", label: "Админ" },
+                //{ value: "ADMIN", label: "Админ" },
                 { value: "DEAN", label: "Деканат" },
                 { value: "CURATOR", label: "Куратор" },
                 { value: "STUDENT", label: "Студент" },
@@ -565,7 +584,7 @@ export function FilterGroupName({ id, onChangeValue }: { id: string; onChangeVal
     return (
         <TextInput
             id={`filter-${id}`}
-            placeholder="Номер группы"
+            placeholder="Номер потока"
             value={value}
             onChange={handleChange}
         />
@@ -596,7 +615,7 @@ export function FilterUserName({
     return (
         <TextInput
             id={`filter-${id}`}
-            placeholder="Поиск по ФИО"
+            placeholder="Введите ФИО"
             value={value}
             onChange={handleChange}
         />
