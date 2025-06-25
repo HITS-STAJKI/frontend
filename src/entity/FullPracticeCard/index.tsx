@@ -59,7 +59,7 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {group?.number ?? 'Неизвестная группа'}
+                            {group?.number ?? 'Неизвестный поток'}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>

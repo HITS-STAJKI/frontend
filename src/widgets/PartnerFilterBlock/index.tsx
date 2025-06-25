@@ -12,7 +12,7 @@ export const PartnerFilterBlock = () => {
                 <NativeSelect ml="xs" label="Предпочитаемый компанией стек" data={['React', 'Angular', 'Vue']} />
 
                 <Flex direction="column" align="flex-start" ml="8px">
-                    <label>Только новые компании</label>
+                    <label>Компании, в которых никто не проходит практику</label>
                     <Switch />
                 </Flex>
             </Flex>

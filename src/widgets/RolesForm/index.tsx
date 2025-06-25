@@ -20,7 +20,7 @@ export function RoleDropdown() {
         <>
             <Menu position="left-start">
                 <Menu.Target>
-                    <Button>Создать пользователя</Button>
+                    <Button>Добавить роль пользователю</Button>
                 </Menu.Target>
                 <Menu.Dropdown style={{ display: "flex", flexDirection: "row", alignItems: "center", padding: 0 }}>
                     <Menu.Item onClick={() => setType('STUDENT')}>Студент</Menu.Item>
@@ -104,7 +104,7 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
             {type === 'STUDENT' ? (
                 <Select key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
                     return { value: item.id!, label: item.number! }
-                }) || []} label={'Группа'} />
+                }) || []} label={'Поток'} />
             ) :
                 type === 'CURATOR' ? (
                     <Select key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
