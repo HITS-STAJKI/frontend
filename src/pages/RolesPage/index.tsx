@@ -25,7 +25,7 @@ const RolesPage = () => {
         return 'Загрузка'
     }
     return (
-        <Container fluid>
+        <div style={{ width: '100%' }}>
             <Flex direction="column" style={{ width: '75%', margin: '0 auto', minWidth: '900px' }}>
                 <Flex justify="space-between" align="flex-end" mb="md">
                     <Title order={1}>Пользователи</Title>
@@ -69,7 +69,7 @@ const RolesPage = () => {
                     </>
                 )}
             </Flex>
-        </Container>
+        </div>
     );
 };
 
