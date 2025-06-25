@@ -11,7 +11,7 @@ export const PublicLayout = () => {
         >
             <AppShell.Header pl='md' pr='md'>
                 <Flex align='center' h='100%' justify='space-between' gap='xl'>
-                    <Title order={3}>{'Систему управления стажировками'}</Title>
+                    <Title order={3}>{'Система управления стажировками'}</Title>
                     <Flex gap='xl'>
                         <Anchor onClick={() => navigate(LOGIN_ROUTE)}>Вход</Anchor>
                         <Anchor onClick={() => navigate(REGISTRATION_ROUTE)}>Регистрация</Anchor>

@@ -11,7 +11,7 @@ export const PrivateLayout = () => {
         >
             <AppShell.Header pl='md' pr='md'>
                 <Flex align='center' h='100%' justify='space-between' gap='xl'>
-                    <Title order={3}>{'Систему управления стажировками'}</Title>
+                    <Title order={3}>{'Система управления стажировками'}</Title>
                 </Flex>
             </AppShell.Header>
             <AppShell.Navbar>
