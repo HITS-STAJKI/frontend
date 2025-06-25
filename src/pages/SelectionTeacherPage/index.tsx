@@ -65,7 +65,7 @@ const SelectionTeacherPage = () => {
                     ) : (
                         <>
                             <SelectionFinder studentCount={data?.pagination?.totalElements!} />
-                            <SelectionTeacherList items={data?.items!} pagination={data?.pagination!} initialSort={sortArray} />
+                            <SelectionTeacherList items={data?.items!} pagination={data?.pagination!} size={size} initialSort={sortArray} />
                             <Pagination pagination={data?.pagination} />
                         </>
                     )}

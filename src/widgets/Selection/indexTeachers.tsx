@@ -142,9 +142,10 @@ export type SortKeyST =
 type PagedListDtoPracticeSTProps = PagedListDtoPracticeDto & {
     initialSort: [SortKeyST, SortDirectionST] | null;
     onRefresh?: () => void;
+    size: number;
 };
 
-export function SelectionTeacherList({ items, pagination, initialSort = null }: PagedListDtoPracticeSTProps) {
+export function SelectionTeacherList({ items, pagination, initialSort = null, size }: PagedListDtoPracticeSTProps) {
     const [sort, setSort] = useState<[SortKeyST, SortDirectionST] | null>(initialSort);
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -242,7 +243,7 @@ export function SelectionTeacherList({ items, pagination, initialSort = null }: 
                 </Card>
             ) : (
                 items?.map((interview, localIndex) => {
-                    const globalIndex = (pagination?.currentPage!) * pagination?.size! + localIndex;
+                    const globalIndex = (pagination?.currentPage ? pagination?.currentPage : 10) * size + localIndex;
                     return (
                         <SelectionTeacherCard
                             key={interview.id}
