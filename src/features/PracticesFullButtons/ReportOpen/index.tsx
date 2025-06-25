@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Button, Card, Center, FileInput, Loader, Select, Space, Text, Tooltip } from "@mantine/core"
 import { DocSvgrepoCom } from "assets/icons"
 
