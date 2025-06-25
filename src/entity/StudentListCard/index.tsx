@@ -57,7 +57,7 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{fullName}</Text>
                         </Grid.Col>
                         <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
-                            <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{groupNumber ? groupNumber : 'Пользователь не в группе'}</Text>
+                            <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{groupNumber}</Text>
                         </Grid.Col>
                         <Grid.Col span={2.5} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                             <Text style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
