@@ -195,7 +195,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
         }
     };
     return (
-        <Modal opened={opened} onClose={onClose} title={<Text size="xl" style={{ fontWeight: 700 }}>Отчёт</Text>} size="xl">
+        <Modal opened={opened} onClose={onClose} title={<Text size="xl" style={{ fontWeight: 700 }}>Отчет</Text>} size="xl">
             {reportLoading ? (
                 <Center mt="md"><Loader /></Center>
             ) : isReportError ? (
@@ -273,7 +273,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                         render={
                                             <Flex align="end" gap="sm" mt="sm">
                                                 <Select
-                                                    label="Оценка за отчёт"
+                                                    label="Оценка за отчет"
                                                     placeholder="Выберите оценку"
                                                     data={['2', '3', '4', '5']}
                                                     value={grade}
@@ -345,7 +345,7 @@ export const ReportOpen = ({ practiceId, studentId }: ReportIdProps) => {
 
     return (
         <>
-            <Tooltip label="Просмотреть отчёт" withArrow position="top">
+            <Tooltip label="Просмотреть отчет" withArrow position="top">
                 <Button color="green" onClick={open} size="sm" style={{ aspectRatio: '1 / 1', padding: 0 }} >
                     <span style={{ fontSize: '2em' }}>
                         <DocSvgrepoCom />

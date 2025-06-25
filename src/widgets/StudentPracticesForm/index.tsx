@@ -145,7 +145,7 @@ export function PracticesList({ items, pagination, initialSort = null, size }: P
                         ))}
                         <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                             <Text size="sm" style={{ fontWeight: 500, color: "black", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                                Отчёт
+                                Отчет
                             </Text>
                         </Grid.Col>
                     </Grid>
