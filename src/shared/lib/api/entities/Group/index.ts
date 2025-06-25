@@ -1,3 +1,4 @@
+import { GroupDto } from "services/api/api-client.types"
 import { DeleteMessage, Page, PageFilter, Sort } from "../Common"
 import { Student } from "../Role"
 
@@ -8,7 +9,7 @@ export type Group = {
     studentsCount: number
 }
 
-export type GroupPage = Page<Group>
+export type GroupPage = Page<GroupDto>
 
 export type GroupCreate = Pick<Group, 'number'>
 
