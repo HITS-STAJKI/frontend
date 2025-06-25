@@ -11,13 +11,14 @@ export const RegistrationForm = () => {
             email: '',
             password: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            surName: ''
         }
     })
     const { mutateAsync } = useRegisterMutation()
     const navigate = useNavigate()
     const onFormSubmit = (vals: RegistrationFormProps) => {
-        mutateAsync({ fullName: `${vals.lastName} ${vals.firstName}`, email: vals.email, password: vals.password })
+        mutateAsync({ fullName: `${vals.lastName} ${vals.firstName}${vals.surName !== '' ? ` ${vals.surName}` : ''}`, email: vals.email, password: vals.password })
             .then(tokens => {
                 localStorage.setItem("token", tokens.token!)
                 localStorage.setItem("exp", tokens.expirationDate?.toString()!)
@@ -35,6 +36,7 @@ export const RegistrationForm = () => {
                     <Flex gap='md' direction='column'>
                         <TextInput label='Имя' required key={form.key('firstName')} {...form.getInputProps('firstName')} />
                         <TextInput label='Фамилия' required key={form.key('lastName')} {...form.getInputProps('lastName')} />
+                        <TextInput label='Отчество' key={form.key('surName')} {...form.getInputProps('surName')} />
                         <TextInput label='Email' required key={form.key('email')} {...form.getInputProps('email')} />
                         <PasswordInput label='Password' required key={form.key('password')} {...form.getInputProps('password')} />
                         <Button type='submit'>{'Зарегистрироваться'}</Button>

@@ -182,7 +182,9 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
         setMutationError(null);
         try {
             await setGradeMutation.mutateAsync({
-                body: report.id as unknown as ReportId,
+                body: {
+                    reportId: report.id
+                },
                 grade: parseInt(grade),
             })
             setOriginalGrade(grade);
