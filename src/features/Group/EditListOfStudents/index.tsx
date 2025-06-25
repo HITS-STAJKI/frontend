@@ -11,7 +11,7 @@ type ViewStudentsButtonProps = {
 export const EditListOfStudentsButton = ({ group }: ViewStudentsButtonProps) => {
     return (
         <Modal
-            title={`Список учащихся в группе ${group.number}`}
+            title={`Список учащихся в потоке ${group.number}`}
             render={open => (
                 <Button variant="subtle" color="blue" onClick={() => open()} size="md">
                     {group.number}

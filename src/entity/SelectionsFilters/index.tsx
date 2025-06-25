@@ -80,7 +80,7 @@ export function SelectionFiltersForm({ groupContent, companyContent, onFormSubmi
 
                 <Grid grow>
                     <Grid.Col span={1.5}>
-                        <Select label="Группа" placeholder="Выберите группу" data={groups} {...form.getInputProps('selectedGroup')} clearable/>
+                        <Select label="Поток" placeholder="Выберите поток" data={groups} {...form.getInputProps('selectedGroup')} clearable/>
                     </Grid.Col>
 
                     <Grid.Col span={1.5}>

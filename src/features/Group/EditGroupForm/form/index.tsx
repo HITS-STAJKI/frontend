@@ -31,7 +31,7 @@ export const EditGroupForm = ({ onSuccess, group }: EditGroupFormProps) => {
     return (
         <form onSubmit={form.onSubmit(handleEdit)}>
             <TextInput
-                label="Номер группы"
+                label="Номер потока"
                 key={form.key('number')}
                 error={form.errors}
                 mb="xs"
