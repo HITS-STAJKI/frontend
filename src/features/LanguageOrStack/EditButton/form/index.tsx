@@ -20,7 +20,6 @@ export const UpdateLanguageOrStackForm = ({ id, name, onSuccess, type, query }:
     })
     const onSub = async (name: UpdateStackDto | UpdateLanguageDto) => {
       if (type === 'language') {
-        console.log('123')
         await editLanguageMutate(name as UpdateLanguageDto)
         await queryClient.invalidateQueries({
           queryKey: QueryFactory.Programming_languageQuery.getLanguageListQueryKey(query)

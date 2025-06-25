@@ -16,7 +16,7 @@ interface StudentProps {
     onToggleSelect: () => void,
 }
 
-export function StudentListCard({ index, studentId, fullName, groupNumber, lastLoginDate, unreadMessagesCount, chatId, isSelected, onToggleSelect }: StudentProps) {
+export function StudentListCard({ index, studentId, userId, fullName, groupNumber, lastLoginDate, unreadMessagesCount, chatId, isSelected, onToggleSelect }: StudentProps) {
     const navigate = useNavigate();
     const [modalOpened, setModalOpened] = useState(false);
 
@@ -31,7 +31,22 @@ export function StudentListCard({ index, studentId, fullName, groupNumber, lastL
 
     return (
         <>
-            <Card key={studentId} shadow="sm" style={{ width: '100%', height: '64px', display: 'flex', cursor: 'pointer', transition: 'box-shadow 0.2s ease, background-color 0.2s ease', boxShadow: isHovered ? '0 0 10px rgba(0,0,0,0.1)' : undefined, backgroundColor: isHovered ? '#f9f9f9' : undefined }} onClick={handleCardClick} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} >
+            <Card 
+                key={studentId} 
+                shadow="sm" 
+                style={{ 
+                    width: '100%', 
+                    height: '64px', 
+                    display: 'flex', 
+                    cursor: 'pointer', 
+                    transition: 'box-shadow 0.2s ease, background-color 0.2s ease', 
+                    boxShadow: isHovered ? '0 0 10px rgba(0,0,0,0.1)' : undefined, 
+                    backgroundColor: isHovered ? '#f9f9f9' : undefined 
+                }} 
+                onClick={handleCardClick} 
+                onMouseEnter={() => setIsHovered(true)} 
+                onMouseLeave={() => setIsHovered(false)}
+            >
                 <div style={{ display: 'flex', alignItems: 'center', height: '100%', width: '100%' }}>
                     <Box style={{ width: '40px', textAlign: 'center' }}><Text>{index}</Text></Box>
                     <Box style={{ width: '40px', textAlign: 'center' }}>
@@ -56,9 +71,32 @@ export function StudentListCard({ index, studentId, fullName, groupNumber, lastL
                                 </Box>
                             )}
                         </Grid.Col>
-                        <Grid.Col span={2} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Button variant="outline" onClick={(e) => { e.stopPropagation(); navigate(`/practices/student/${studentId}`); }}>
+                        <Grid.Col span={2} style={{ 
+                            display: 'flex', 
+                            justifyContent: 'flex-end', 
+                            alignItems: 'center',
+                            gap: '8px' // Добавляем отступ между кнопками
+                        }}>
+                            
+                            <Button 
+                                variant="outline" 
+                                size="xs"
+                                onClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    navigate(`/practices/student/${studentId}`); 
+                                }}
+                            >
                                 Практика
+                            </Button>
+                            <Button 
+                                variant="outline" 
+                                size="xs" 
+                                onClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    navigate(`/profile/${userId}`); 
+                                }}
+                            >
+                                Профиль
                             </Button>
                         </Grid.Col>
                     </Grid>

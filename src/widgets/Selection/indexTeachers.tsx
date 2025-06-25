@@ -8,7 +8,7 @@ import { CommentSelection } from "./ModuleWindows";
 import { useGetUserByIdQuery } from "services/api/api-client/UserQuery";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { useSearchParams } from "react-router-dom";
-import { PagedListDtoPracticeDto } from "services/api/api-client.types";
+import { GroupDto, PagedListDtoPracticeDto } from "services/api/api-client.types";
 
 
 // --------------- Teacher ---------------
@@ -27,7 +27,7 @@ interface FilterMultySelectProps {
 
 interface FilterSelectProps {
     id: string;
-    items: Stack[] | GroupWithName[] | StatusWithID[];
+    items: Stack[] | GroupDto[] | StatusWithID[];
     onChangeValue: (val: string | null) => void;
     label: string;
 }
@@ -71,15 +71,12 @@ export function FilterSelect({ id, items, onChangeValue, label }: FilterSelectPr
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
     useEffect(() => {
-        setTimeout(() => {
-            const selectData = items.map(item => ({
-                value: item.id,
-                label: item.name,
-            }));
-
-            setData(selectData);
-        }, 300);
-    }, []);
+        const selectData = items.map(item => ({
+            value: item.id,
+            label: 'number' in item ? item.number : item.name, // Используем number если есть
+        }));
+        setData(selectData);
+    }, [items]);
 
     const handleChange = (val: string | null) => {
         setValue(val);

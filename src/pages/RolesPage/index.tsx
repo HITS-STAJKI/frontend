@@ -12,12 +12,13 @@ const RolesPage = () => {
     const nameParam = searchParams.get('name') || undefined;
     const roleParam = searchParams.get('role') as UserRole || undefined;
     const sizeParam = searchParams.get('size') || '10';
+    const page = Number(searchParams.get("page") ?? "0");
 
     const { data, isLoading } = useGetUserListQuery({
         fullName: nameParam,
         userRole: roleParam,
         size: Number(sizeParam),
-        page: 0
+        page: page
     });
 
     if (isLoading) {

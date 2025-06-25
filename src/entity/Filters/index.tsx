@@ -516,7 +516,7 @@ export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: {
     );
 }
 
-export function FilterUserRole({ id, onChangeValue, initialValue  }: { id: string; onChangeValue: (val: string | null) => void; initialValue?: string | null;  }) {
+export function FilterUserRole({ id, onChangeValue, initialValue }: { id: string; onChangeValue: (val: string | null) => void; initialValue?: string | null; }) {
     const [value, setValue] = useState<string | null>(initialValue || null);
     const [data, setData] = useState<{ value: string; label: string }[]>([]);
 
@@ -591,14 +591,14 @@ export function FilterGroupName({ id, onChangeValue }: { id: string; onChangeVal
     );
 }
 
-export function FilterUserName({ 
-    id, 
-    onChangeValue, 
-    initialValue = "" 
-}: { 
-    id: string; 
-    initialValue?: string | null; 
-    onChangeValue: (val: string | null) => void; 
+export function FilterUserName({
+    id,
+    onChangeValue,
+    initialValue = ""
+}: {
+    id: string;
+    initialValue?: string | null;
+    onChangeValue: (val: string | null) => void;
 }) {
     const [value, setValue] = useState(initialValue || "");
 

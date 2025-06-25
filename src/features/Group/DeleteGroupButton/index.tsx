@@ -5,18 +5,36 @@ import { GroupDto } from "services/api/api-client.types";
 import { useDeleteGroupMutation } from '../../../services/api/api-client/GroupQuery.ts'
 import { useQueryClient } from '@tanstack/react-query'
 import { QueryFactory } from '../../../services/api'
+import { useLocation } from "react-router-dom";
 
 type DeleteGroupButtonProps = {
     group: GroupDto
 }
 
 export const DeleteGroupButton = ({ group }: DeleteGroupButtonProps) => {
-    const { mutateAsync } = useDeleteGroupMutation(group.id!)
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
+    const { mutateAsync: groupDeleteMutate } = useDeleteGroupMutation(group.id!);
+
+    const location = useLocation();
+    const getQueryParams = () => {
+        const params = new URLSearchParams(location.search);
+        return {
+            number: params.get('number'),
+            group: params.get('group'),
+            size: params.get('size'),
+            page: params.get('page'),
+        };
+    };
     const handleDelete = async (close: () => void) => {
-        await mutateAsync()
+        await groupDeleteMutate()
+        const queryParams = getQueryParams();
         await queryClient.invalidateQueries({
-          queryKey: QueryFactory.GroupQuery.getGroupsQueryKey()
+            queryKey: QueryFactory.GroupQuery.getGroupsQueryKey(
+                queryParams.group ?? undefined,
+                queryParams.number ?? undefined,
+                queryParams.page ? Number(queryParams.page) : undefined,
+                queryParams.size ? Number(queryParams.size) : undefined
+            ),
         })
         close()
     }

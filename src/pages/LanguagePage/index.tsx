@@ -7,11 +7,6 @@ import { useGetLanguageListQuery } from "services/api/api-client/Programming_lan
 export const LanguagePage = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const { data, isLoading } = useGetLanguageListQuery(searchQuery);
-    if (isLoading) {
-        return <Center>
-            <Loader />
-        </Center>
-    }
     return (
         <Container style={{ width: '100%' }}>
             <Flex direction="column">
@@ -19,11 +14,11 @@ export const LanguagePage = () => {
                     type="language"
                     onSearch={setSearchQuery}
                 />
-                {isLoading ? (
-                    <div>Loading...</div>
-                ) : (
-                    <LanguageList items={data || []} type='language' query={searchQuery} />
-                )}
+                {isLoading ? <Center>
+                    <Loader />
+                </Center> : 
+                <LanguageList items={data || []} type='language' query={searchQuery} />
+                }
             </Flex>
         </Container>
 

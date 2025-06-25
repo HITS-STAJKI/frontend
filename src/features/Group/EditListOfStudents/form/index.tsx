@@ -1,8 +1,12 @@
 import { Button, Select } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { StudentUpdate } from "shared/lib"
-import { useState } from 'react';
-import { GroupDto } from "services/api/api-client.types";
+import { useMemo, useState } from 'react';
+import { GroupDto, StudentCreateDto } from "services/api/api-client.types";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCreateGroupMutation } from "services/api/api-client/GroupQuery";
+import { useCreateStudentMutation } from "services/api/api-client/StudentQuery";
+import { useGetAllStudentsQuery } from "services/api/api-client/StudentQuery";
 
 type AddStudentInGroupFormProps = {
     onSuccess: () => void
@@ -11,45 +15,95 @@ type AddStudentInGroupFormProps = {
 
 export const AddStudentInGroupForm = ({ onSuccess, group }: AddStudentInGroupFormProps) => {
     const [isAdding, setIsAdding] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
 
-    const form = useForm<StudentUpdate & { studentId: string }>({
+    const { data: studentsData, isLoading: isStudentsLoading } = useGetAllStudentsQuery({
+        fullName: searchQuery,
+        size: 100, // Получаем достаточно большое количество для выпадающего списка
+    });
+
+    // Преобразуем студентов в формат для Select
+    const studentsOptions = useMemo(() => {
+        return studentsData?.items?.map(student => ({
+            value: student.id!,
+            label: `${student.user?.fullName || 'Неизвестный студент'}`,
+        })) || [];
+    }, [studentsData]);
+
+    // const { mutateAsync: createStudentMutate } = useCreateStudentMutation(selectedStudentId || '', {
+    //     onSuccess: () => {
+    //         queryClient.invalidateQueries({ 
+    //             queryKey: ['group', group.id] 
+    //         });
+    //         queryClient.invalidateQueries({ 
+    //             queryKey: ['students'] 
+    //         });
+    //         onSuccess();
+    //     },
+    // });
+    const queryClient = useQueryClient();
+
+    const form = useForm<{ groupId: string }>({
         initialValues: {
-            groupId: group.id!,
-            studentId: ""
+            groupId: group.id!
         },
     });
 
-    const handleEdit = (vals: StudentUpdate & { studentId: string }) => {
-        console.log("Тело запроса", vals);
-        onSuccess();
+    const handleSubmit = async () => {
+        // if (!selectedStudentId) return;
+        // console.log("fff ", selectedStudentId, group.id)
+        // try {
+        //     await createStudentMutate(
+        //         selectedStudentId, 
+        //         {                 
+        //             body: {
+        //                 groupId: group.id
+                        
+        //             }
+        //         }
+        //     );
+            
+        //     form.reset();
+        //     setIsAdding(false);
+        //     setSelectedStudentId(null);
+        // } catch (error) {
+        //     console.error('Ошибка при добавлении студента:', error);
+        // }
     };
-
     return (
         <>
             <Button
                 color={isAdding ? 'gray' : 'blue'}
                 onClick={() => setIsAdding(prev => !prev)}
+                loading={isStudentsLoading}
             >
                 {isAdding ? 'Скрыть' : 'Добавить студента'}
             </Button>
             {isAdding && (
-                <form onSubmit={form.onSubmit(handleEdit)}>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                }}>
                     <Select
                         label="Выберите студента"
                         placeholder="Начните вводить имя студента"
-                        data={group.students!.map(student => ({
-                            value: student.id!,
-                            label: `${student.user.fullname}`,
-                        }))}
+                        data={studentsOptions}
                         searchable
-                        {...form.getInputProps('studentId')}
+                        clearable
+                        onSearchChange={setSearchQuery}
+                        value={selectedStudentId}
+                        onChange={setSelectedStudentId}
                     />
+                    
                     <Button
                         mt="md"
                         mb="md"
                         style={{ float: 'right' }}
-                        type='submit'>
-                        {'Сохранить'}
+                        type="submit"
+                        disabled={!selectedStudentId}
+                    >
+                        {'Добавить'}
                     </Button>
                 </form>
             )}

@@ -5,11 +5,11 @@ import { RoleType } from "../Role"
 export type User = {
     id: string
     email: string
-    fullname: string
+    fullName: string
     roles: Array<RoleDto>
 }
 
-export type UserRegistration = Pick<User, 'email' | 'fullname'> & {
+export type UserRegistration = Pick<User, 'email' | 'fullName'> & {
     password: string
 }
 
@@ -17,7 +17,7 @@ export type UserLogin = Pick<UserRegistration, 'email' | 'password'>
 
 export type UserList = Page<UserDto>
 
-export type UserUpdate = Pick<User, 'fullname'>
+export type UserUpdate = Pick<User, 'fullName'>
 
 export type UserListFilter = PageFilter & {
     userRole: RoleType
