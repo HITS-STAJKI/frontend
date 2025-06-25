@@ -46,7 +46,7 @@ export function SearchForm({ type, onSearch }: SearchFormProps) {
     );
 }
 
-export function LanguageList({ items, type, query }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' } & {query: string}) {
+export function LanguageList({ items, type }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' }) {
     return (
         <Flex direction="column" gap="md" mt="lg" style={{ width: '100%' }}>
             <Text style={{ marginBottom: '10px' }}>
