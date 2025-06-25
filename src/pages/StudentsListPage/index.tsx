@@ -58,7 +58,7 @@ export const StudentsListPage = () => {
                     { id: "isOnPractice", label: "Студент на практике?", element: (props) => <FilterTrueFalse id="isOnPractice" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "hasInterviews", label: "Студент приступил к собеседованиям?", element: (props) => <FilterTrueFalse id="hasInterviews" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "hasPracticeRequest", label: "У студента есть неподтвержденные практики?", element: (props) => <FilterTrueFalse id="hasPracticeRequest" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "stackIds", label: "Направление", element: (props) => <FilterStackMultiple id="stackIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "stackIds", label: "Стек", element: (props) => <FilterStackMultiple id="stackIds" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                     { id: "lastLogin", label: "Время последнего захода в систему", element: (props) => <FilterDateTime id="lastLogin" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                 ]} />
                 {isLoading ? (

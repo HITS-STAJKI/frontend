@@ -205,7 +205,7 @@ export function SelectionTeacherList({ items, pagination, initialSort = null, si
                             { key: "student.user.fullName", label: "ФИО", span: 2.9 },
                             { key: "student.group.number", label: "Поток", span: 1.5 },
                             { key: "company.name", label: "Компания", span: 1.5 },
-                            { key: 'stack.name', label: "Направление", span: 1.5 },
+                            { key: 'stack.name', label: "Стек", span: 1.5 },
                             { key: "languages.name", label: "Язык программирования", span: 1.5 },
                             { key: "status", label: "Статус", span: 1.6 },
                             { key: "createdAt", label: "Дата создания", span: 1.5 },
@@ -316,7 +316,7 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {stack ? stack.name : "Неизвестное направление"}
+                            {stack ? stack.name : "Неизвестный стек"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>

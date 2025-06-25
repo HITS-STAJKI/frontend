@@ -44,7 +44,7 @@ const SelectionTeacherPage = () => {
                     <FilterBlockFull availableFilters={[
                         { id: "studentName", label: "ФИО", element: (props) => <FilterName id="studentName" onChangeValue={props.onChangeValue} /> },
                         { id: "companyId", label: "Компания", element: (props) => <FilterCompanySelect id="companyId" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },
-                        { id: "stackId", label: "Направление", element: (props) => <FilterStack id="stackId" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },
+                        { id: "stackId", label: "Стек", element: (props) => <FilterStack id="stackId" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },
                         { id: "languageIds", label: "Язык программирования", element: (props) => <FilterLanguageMultiple initialValue={props.initialValue} id="languageIds" onChangeValue={props.onChangeValue} /> },
                         { id: "groupId", label: "Поток", element: (props) => <FilterGroupSelect id="groupId" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },
                         { id: "status", label: "Статус", element: (props) => <FilterInterviewStatus id="status" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },

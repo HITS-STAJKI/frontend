@@ -78,7 +78,7 @@ export function UnapprovedPracticesForm({ items, pagination, initialSort = null,
                             { key: "student.user.fullName", label: "Студент" },
                             { key: "student.group.number", label: "Поток" },
                             { key: "company.name", label: "Компания" },
-                            { key: "stack.name", label: "Направление" },
+                            { key: "stack.name", label: "Стек" },
                             { key: "createdAt", label: "Дата создания" }
                         ].map(({ key, label }) => (
                             <Grid.Col

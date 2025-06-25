@@ -190,7 +190,7 @@ export function FilterStack({ id, onChangeValue, initialValue }: { id: string; i
     return (
         <Select
             id={`filter-${id}`}
-            placeholder={isLoading ? "Загрузка..." : "Выберите стэк"}
+            placeholder={isLoading ? "Загрузка..." : "Выберите стек"}
             value={value}
             onChange={handleChange}
             data={options}

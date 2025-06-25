@@ -70,7 +70,7 @@ export function SelectionFiltersForm({ groupContent, companyContent, onFormSubmi
                     </Grid.Col>
 
                     <Grid.Col span={3}>
-                        <TextInput label="Направление практики" placeholder="Введите направление" {...form.getInputProps('Direction')}/>
+                        <TextInput label="Стек практики" placeholder="Введите стек" {...form.getInputProps('Direction')}/>
                     </Grid.Col>
 
                     <Grid.Col span={3}>
