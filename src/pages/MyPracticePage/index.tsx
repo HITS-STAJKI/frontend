@@ -41,7 +41,7 @@ const MyPracticePage = () => {
             <Flex direction="column" style={{ width: '100%', margin: '0 auto' }} gap="md">
                 <Group justify="space-between" mt="md" style={{ width: '100%' }} wrap="nowrap">
                     <Title order={2}>Практика студента</Title>
-                    <AttachReport practiceId={practice.id!} />
+                    {practice.isApproved  !== undefined && practice.isReportAttached  !== undefined && <AttachReport practiceId={practice.id!} isApproved={practice.isApproved} isReportAttached={practice.isReportAttached}/>}
                 </Group>
                 <Card shadow="sm" padding="md" style={{ width: '100%', display: 'flex' }}>
                     <Stack gap="xs">

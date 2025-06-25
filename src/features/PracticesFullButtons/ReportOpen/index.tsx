@@ -19,12 +19,14 @@ import { useGetCurrentUserQuery } from "services/api/api-client/UserQuery";
 type ReportIdProps = {
     practiceId: string;
     studentId: string | null;
+    isApproved: boolean; 
+    isReportAttached: boolean;
 };
 
-export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: ReportIdProps & { opened: boolean; onClose: () => void }) => {
+export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isApproved, isReportAttached }: ReportIdProps & { opened: boolean; onClose: () => void; }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const { data: report, isLoading: reportLoading, isError: isReportError, error: reportError } = useGetPracticeReportQuery(practiceId, { enabled: opened });
+    const { data: report, isLoading: reportLoading, isError: isReportError, error: reportError } = useGetPracticeReportQuery(practiceId, { enabled: (isApproved || isReportAttached) });
     const { data: fileMetadata, isLoading: fileLoading, isError: fileError } = useGetFileMetadataQuery(report?.fileId ?? '', { enabled: !!report?.fileId && opened });
 
     const { data: currentUser } = useGetCurrentUserQuery({ enabled: !studentId && opened });
@@ -80,38 +82,38 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
     }, [opened]);
 
     const handleDownload = async () => {
-        if (report?.fileId) {
-            try {
+        if (!isApproved || !isReportAttached || !report?.fileId) return;
 
-                const response = await fetch(`https://tomcat.sonya.jij.li/internship/api/v1/files/${report.fileId}/download`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error('Не удалось скачать файл')
-                }
-                const blob = await response.blob()
-                const url = window.URL.createObjectURL(blob)
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = fileMetadata?.name!;
-                document.body.appendChild(a);
-                a.click();
-                window.URL.revokeObjectURL(url);
-                document.body.removeChild(a);
+        try 
+        {
+            const response = await fetch(`https://tomcat.sonya.jij.li/internship/api/v1/files/${report.fileId}/download`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+            });
+            if (!response.ok) 
+            {
+                throw new Error('Не удалось скачать файл');
             }
-            catch {
-                setMutationError('Не удалось скачать файл')
-            }
+            const blob = await response.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileMetadata?.name!;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+        } 
+        catch 
+        {
+            setMutationError('Не удалось скачать файл');
         }
     };
 
     const handleAttach = async () => {
-        if (!selectedFile || !report) {
-            return;
-        }
+        if (!isApproved || !selectedFile || (report?.fileId !== null)) return;
 
         setMutationError(null);
         try {
@@ -140,9 +142,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
     };
 
     const handleReplace = async () => {
-        if (!selectedFile || !report || !report.fileId) {
-            return;
-        }
+        if (!isApproved || !selectedFile || !report || !report.fileId) return;
 
         setMutationError(null);
         try {
@@ -212,7 +212,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                     <FileInput
                                         accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                                         onChange={(file) => setSelectedFile(file)}
-                                        disabled={uploadMutation.isPending || deleteMutation.isPending}
+                                        disabled={!isApproved || uploadMutation.isPending || deleteMutation.isPending}
                                         label={null}
                                         style={{ flex: '2', minWidth: 0 }}
                                     />
@@ -221,7 +221,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                             color="green"
                                             size="xs"
                                             onClick={handleAttach}
-                                            disabled={!selectedFile || uploadMutation.isPending}
+                                            disabled={!isApproved || !selectedFile || uploadMutation.isPending}
                                             style={{
                                                 flex: '1',
                                                 whiteSpace: 'nowrap',
@@ -236,7 +236,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                                 variant="default"
                                                 color="gray"
                                                 onClick={handleReplace}
-                                                disabled={!selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending}
+                                                disabled={!isApproved || !selectedFile || uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending}
                                                 style={{ flex: '1', whiteSpace: 'nowrap' }}
                                             >
                                                 {(uploadMutation.isPending || deleteMutation.isPending || unattachMutation.isPending) ? 'Заменяется...' : 'Изменить'}
@@ -266,6 +266,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
                                         color="blue"
                                         leftSection={<IconDownload size={16} />}
                                         onClick={handleDownload}
+                                        disabled={!isApproved || !isReportAttached}
                                     >
                                         {fileMetadata?.name ?? 'Скачать файл'}
                                     </Button>
@@ -340,7 +341,7 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose }: Repo
     );
 };
 
-export const ReportOpen = ({ practiceId, studentId }: ReportIdProps) => {
+export const ReportOpen = ({ practiceId, studentId, isApproved, isReportAttached }: ReportIdProps) => {
     const [opened, { open, close }] = useDisclosure(false);
 
     return (
@@ -353,7 +354,7 @@ export const ReportOpen = ({ practiceId, studentId }: ReportIdProps) => {
                 </Button>
             </Tooltip>
 
-            <ReportOpenModal practiceId={practiceId} studentId={studentId} opened={opened} onClose={close} />
+            <ReportOpenModal practiceId={practiceId} studentId={studentId} opened={opened} onClose={close} isApproved={isApproved} isReportAttached={isReportAttached}/>
         </>
     );
 };

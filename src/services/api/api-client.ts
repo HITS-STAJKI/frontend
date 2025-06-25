@@ -1,4 +1,3 @@
-//@ts-nocheck
 import * as Types from './api-client.types';
 export * from './api-client.types';
 
@@ -11,7 +10,6 @@ export * from './api-client.types';
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
-//@ts-nocheck
 
 import type { AxiosError } from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
@@ -233,6 +231,7 @@ export function initPersister() {
 
 
   addResultTypeFactory('PracticeClient___getCurrentStudentPractice', (data: any) => Types.initPracticeDto(data));
+  addResultTypeFactory('PracticeClient___getPracticeById', (data: any) => Types.initPracticeDto(data));
   addResultTypeFactory('PracticeClient___getMyPractice', (data: any) => Types.initPracticeDto(data));
   addResultTypeFactory('PracticeClient___getStudentPractices', (data: any) => Types.initPagedPracticesDto(data));
   addResultTypeFactory('PracticeClient___getPracticeRequests', (data: any) => Types.initPagedListDtoPracticeDto(data));

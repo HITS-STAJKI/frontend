@@ -8,7 +8,7 @@ interface FullPracticeCardProps extends PracticeDto {
     index: number;
 }
 
-export function ShortPracticeCard({ id, user, company, createdAt, isPaid, isArchived, isApproved, index }: FullPracticeCardProps) {
+export function ShortPracticeCard({ id, user, company, createdAt, isPaid, isArchived, isApproved, isReportAttached, index }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
     const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
@@ -80,7 +80,7 @@ export function ShortPracticeCard({ id, user, company, createdAt, isPaid, isArch
                         {
                             //TODO: Сделать отображжение кнопок от роли
                         }
-                        {id && studentRole && <ReportShortOpen id={id} studentId={studentRole?.id} />}
+                        {id && studentRole && isApproved !== undefined && isReportAttached !== undefined && <ReportShortOpen id={id} studentId={studentRole?.id} isApproved={isApproved} isReportAttached={isReportAttached}/>}
                     </Grid.Col>
                 </Grid>
             </div>

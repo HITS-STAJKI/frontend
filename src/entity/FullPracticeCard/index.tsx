@@ -9,7 +9,7 @@ interface FullPracticeCardProps extends PracticeDto {
     onRefresh?: () => void;
 }
 
-export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, isArchived, isApproved, index, onRefresh }: FullPracticeCardProps) {
+export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, isArchived, isApproved, isReportAttached, index, onRefresh }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
     const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
@@ -89,11 +89,11 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <div onClick={(e) => e.stopPropagation()} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-                            {id && (
+                            {id &&  isApproved !== undefined &&  isReportAttached !== undefined && (
                                 <Grid.Col span={12} onClick={(e) => e.stopPropagation()}>
                                     <Box style={{ display: "flex", gap: 8, justifyContent: "center", alignItems: "center", width: "100%" }} >
                                         <Box style={{ visibility: id && studentRole ? "visible" : "hidden" }}>
-                                            <ReportOpen practiceId={id!} studentId={studentRole?.id!} />
+                                            <ReportOpen practiceId={id!} studentId={studentRole?.id!} isApproved={isApproved} isReportAttached={isReportAttached}/>
                                         </Box>
                                         <WithProfileRole
                                             render={<>

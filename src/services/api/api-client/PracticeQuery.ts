@@ -7,7 +7,6 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
-//@ts-nocheck
 import * as Types from '../api-client.types';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import type { UseQueryResult, QueryFunctionContext, UseQueryOptions, QueryClient, QueryKey, MutationKey, UseMutationOptions, UseMutationResult, QueryMeta, MutationMeta } from '@tanstack/react-query';
@@ -47,6 +46,10 @@ export type ApproveStudentPractices_1PracticeQueryParameters = {
   companyId: string ;
 }
 
+export type GetPracticeByIdPracticeQueryParameters = {
+  practiceId: string ;
+}
+
 export type GetStudentPracticesPracticeQueryParameters = {
   id: string ;
   page?: number | undefined ;
@@ -65,7 +68,7 @@ export type GetAllPracticesPracticeQueryParameters = {
   groupIds?: string[] | undefined ;
   companyId?: string | undefined ;
   hasReport?: boolean | undefined ;
-  isReportApproved?: boolean | undefined ;
+  isReportGraded?: boolean | undefined ;
   isArchived?: boolean | undefined ;
   isPracticeApproved?: boolean | undefined ;
   page?: number | undefined ;
@@ -535,6 +538,99 @@ return useMutation({
 });
 }
   
+export function getPracticeByIdUrl(practiceId: string): string {
+  let url_ = getBaseUrl() + "/api/v1/practice/{practiceId}";
+if (practiceId === undefined || practiceId === null)
+  throw new Error("The parameter 'practiceId' must be defined.");
+url_ = url_.replace("{practiceId}", encodeURIComponent("" + practiceId));
+  url_ = url_.replace(/[?&]$/, "");
+  return url_;
+}
+
+let getPracticeByIdDefaultOptions: Omit<UseQueryOptions<Types.PracticeDto, unknown, Types.PracticeDto>, 'queryKey' | 'queryFn'> & Partial<Pick<UseQueryOptions<Types.PracticeDto, unknown, Types.PracticeDto>, 'queryFn'>> = {
+};
+export function getGetPracticeByIdDefaultOptions() {
+  return getPracticeByIdDefaultOptions;
+};
+export function setGetPracticeByIdDefaultOptions(options: typeof getPracticeByIdDefaultOptions) {
+  getPracticeByIdDefaultOptions = options;
+}
+
+export function getPracticeByIdQueryKey(practiceId: string): QueryKey;
+export function getPracticeByIdQueryKey(...params: any[]): QueryKey {
+  if (params.length === 1 && isParameterObject(params[0])) {
+    const { practiceId,  } = params[0] as GetPracticeByIdPracticeQueryParameters;
+
+    return trimArrayEnd([
+        'PracticeClient',
+        'getPracticeById',
+        practiceId as any,
+      ]);
+  } else {
+    return trimArrayEnd([
+        'PracticeClient',
+        'getPracticeById',
+        ...params
+      ]);
+  }
+}
+export function __getPracticeById(context: QueryFunctionContext, axiosConfig?: AxiosRequestConfig | undefined) {
+  return Client.getPracticeById(
+      context.queryKey[2] as string,axiosConfig    );
+}
+
+export function useGetPracticeByIdQuery<TSelectData = Types.PracticeDto, TError = unknown>(dto: GetPracticeByIdPracticeQueryParameters, options?: Omit<UseQueryOptions<Types.PracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+/**
+ * Получение информации о практике по id
+ * @param practiceId Id практики
+ * @return OK
+ */
+export function useGetPracticeByIdQuery<TSelectData = Types.PracticeDto, TError = unknown>(practiceId: string, options?: Omit<UseQueryOptions<Types.PracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetPracticeByIdQuery<TSelectData = Types.PracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
+  let options: UseQueryOptions<Types.PracticeDto, TError, TSelectData> | undefined = undefined;
+  let axiosConfig: AxiosRequestConfig |undefined = undefined;
+  let practiceId: any = undefined;
+  
+  if (params.length > 0) {
+    if (isParameterObject(params[0])) {
+      ({ practiceId,  } = params[0] as GetPracticeByIdPracticeQueryParameters);
+      options = params[1];
+      axiosConfig = params[2];
+    } else {
+      [practiceId, options, axiosConfig] = params;
+    }
+  }
+
+  const metaContext = useContext(QueryMetaContext);
+  options = addMetaToOptions(options, metaContext);
+
+  return useQuery<Types.PracticeDto, TError, TSelectData>({
+    queryFn: axiosConfig ? (context) => __getPracticeById(context, axiosConfig) : __getPracticeById,
+    queryKey: getPracticeByIdQueryKey(practiceId),
+    ...getPracticeByIdDefaultOptions as unknown as Omit<UseQueryOptions<Types.PracticeDto, TError, TSelectData>, 'queryKey'>,
+    ...options,
+  });
+}
+/**
+ * Получение информации о практике по id
+ * @param practiceId Id практики
+ * @return OK
+ */
+export function setGetPracticeByIdData(queryClient: QueryClient, updater: (data: Types.PracticeDto | undefined) => Types.PracticeDto, practiceId: string) {
+  queryClient.setQueryData(getPracticeByIdQueryKey(practiceId),
+    updater
+  );
+}
+
+/**
+ * Получение информации о практике по id
+ * @param practiceId Id практики
+ * @return OK
+ */
+export function setGetPracticeByIdDataByQueryId(queryClient: QueryClient, queryKey: QueryKey, updater: (data: Types.PracticeDto | undefined) => Types.PracticeDto) {
+  queryClient.setQueryData(queryKey, updater);
+}
+    
 export function getMyPracticeUrl(): string {
   let url_ = getBaseUrl() + "/api/v1/practice/my";
   url_ = url_.replace(/[?&]$/, "");
@@ -838,7 +934,7 @@ export function setGetPracticeRequestsDataByQueryId(queryClient: QueryClient, qu
   queryClient.setQueryData(queryKey, updater);
 }
     
-export function getAllPracticesUrl(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
+export function getAllPracticesUrl(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportGraded?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): string {
   let url_ = getBaseUrl() + "/api/v1/practice/list/all?";
 if (studentName === null)
     throw new Error("The parameter 'studentName' cannot be null.");
@@ -856,10 +952,10 @@ if (hasReport === null)
     throw new Error("The parameter 'hasReport' cannot be null.");
 else if (hasReport !== undefined)
     url_ += "hasReport=" + encodeURIComponent("" + hasReport) + "&";
-if (isReportApproved === null)
-    throw new Error("The parameter 'isReportApproved' cannot be null.");
-else if (isReportApproved !== undefined)
-    url_ += "isReportApproved=" + encodeURIComponent("" + isReportApproved) + "&";
+if (isReportGraded === null)
+    throw new Error("The parameter 'isReportGraded' cannot be null.");
+else if (isReportGraded !== undefined)
+    url_ += "isReportGraded=" + encodeURIComponent("" + isReportGraded) + "&";
 if (isArchived === null)
     throw new Error("The parameter 'isArchived' cannot be null.");
 else if (isArchived !== undefined)
@@ -894,10 +990,10 @@ export function setGetAllPracticesDefaultOptions(options: typeof getAllPractices
 }
 
 export function getAllPracticesQueryKey(dto: GetAllPracticesPracticeQueryParameters): QueryKey;
-export function getAllPracticesQueryKey(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
+export function getAllPracticesQueryKey(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportGraded?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined): QueryKey;
 export function getAllPracticesQueryKey(...params: any[]): QueryKey {
   if (params.length === 1 && isParameterObject(params[0])) {
-    const { studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort,  } = params[0] as GetAllPracticesPracticeQueryParameters;
+    const { studentName, groupIds, companyId, hasReport, isReportGraded, isArchived, isPracticeApproved, page, size, sort,  } = params[0] as GetAllPracticesPracticeQueryParameters;
 
     return trimArrayEnd([
         'PracticeClient',
@@ -906,7 +1002,7 @@ export function getAllPracticesQueryKey(...params: any[]): QueryKey {
         groupIds as any,
         companyId as any,
         hasReport as any,
-        isReportApproved as any,
+        isReportGraded as any,
         isArchived as any,
         isPracticeApproved as any,
         page as any,
@@ -933,7 +1029,7 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
  * @param groupIds (optional) Список идентификаторов групп
  * @param companyId (optional) Идентификатор компании-партнера
  * @param hasReport (optional) Флаг выбора практик с прикрепленным отчетом или без. null - если все
- * @param isReportApproved (optional) Флаг выдачи практик с подтвержденным отчетом
+ * @param isReportGraded (optional) Флаг выдачи практик с оцененным отчетом
  * @param isArchived (optional) Флаг выдачи архивных данных
  * @param isPracticeApproved (optional) Флаг подтвержденных практик
  * @param page (optional) Zero-based page index (0..N)
@@ -941,7 +1037,7 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
+export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportGraded?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, options?: Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>, axiosConfig?: Partial<AxiosRequestConfig>): UseQueryResult<TSelectData, TError>;
 export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPracticeDto, TError = unknown>(...params: any []): UseQueryResult<TSelectData, TError> {
   let options: UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData> | undefined = undefined;
   let axiosConfig: AxiosRequestConfig |undefined = undefined;
@@ -949,7 +1045,7 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
   let groupIds: any = undefined;
   let companyId: any = undefined;
   let hasReport: any = undefined;
-  let isReportApproved: any = undefined;
+  let isReportGraded: any = undefined;
   let isArchived: any = undefined;
   let isPracticeApproved: any = undefined;
   let page: any = undefined;
@@ -958,11 +1054,11 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
   
   if (params.length > 0) {
     if (isParameterObject(params[0])) {
-      ({ studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort,  } = params[0] as GetAllPracticesPracticeQueryParameters);
+      ({ studentName, groupIds, companyId, hasReport, isReportGraded, isArchived, isPracticeApproved, page, size, sort,  } = params[0] as GetAllPracticesPracticeQueryParameters);
       options = params[1];
       axiosConfig = params[2];
     } else {
-      [studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort, options, axiosConfig] = params;
+      [studentName, groupIds, companyId, hasReport, isReportGraded, isArchived, isPracticeApproved, page, size, sort, options, axiosConfig] = params;
     }
   }
 
@@ -971,7 +1067,7 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
 
   return useQuery<Types.PagedListDtoPracticeDto, TError, TSelectData>({
     queryFn: axiosConfig ? (context) => __getAllPractices(context, axiosConfig) : __getAllPractices,
-    queryKey: getAllPracticesQueryKey(studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort),
+    queryKey: getAllPracticesQueryKey(studentName, groupIds, companyId, hasReport, isReportGraded, isArchived, isPracticeApproved, page, size, sort),
     ...getAllPracticesDefaultOptions as unknown as Omit<UseQueryOptions<Types.PagedListDtoPracticeDto, TError, TSelectData>, 'queryKey'>,
     ...options,
   });
@@ -982,7 +1078,7 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
  * @param groupIds (optional) Список идентификаторов групп
  * @param companyId (optional) Идентификатор компании-партнера
  * @param hasReport (optional) Флаг выбора практик с прикрепленным отчетом или без. null - если все
- * @param isReportApproved (optional) Флаг выдачи практик с подтвержденным отчетом
+ * @param isReportGraded (optional) Флаг выдачи практик с оцененным отчетом
  * @param isArchived (optional) Флаг выдачи архивных данных
  * @param isPracticeApproved (optional) Флаг подтвержденных практик
  * @param page (optional) Zero-based page index (0..N)
@@ -990,8 +1086,8 @@ export function useGetAllPracticesQuery<TSelectData = Types.PagedListDtoPractice
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function setGetAllPracticesData(queryClient: QueryClient, updater: (data: Types.PagedListDtoPracticeDto | undefined) => Types.PagedListDtoPracticeDto, studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
-  queryClient.setQueryData(getAllPracticesQueryKey(studentName, groupIds, companyId, hasReport, isReportApproved, isArchived, isPracticeApproved, page, size, sort),
+export function setGetAllPracticesData(queryClient: QueryClient, updater: (data: Types.PagedListDtoPracticeDto | undefined) => Types.PagedListDtoPracticeDto, studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportGraded?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined) {
+  queryClient.setQueryData(getAllPracticesQueryKey(studentName, groupIds, companyId, hasReport, isReportGraded, isArchived, isPracticeApproved, page, size, sort),
     updater
   );
 }
@@ -1002,7 +1098,7 @@ export function setGetAllPracticesData(queryClient: QueryClient, updater: (data:
  * @param groupIds (optional) Список идентификаторов групп
  * @param companyId (optional) Идентификатор компании-партнера
  * @param hasReport (optional) Флаг выбора практик с прикрепленным отчетом или без. null - если все
- * @param isReportApproved (optional) Флаг выдачи практик с подтвержденным отчетом
+ * @param isReportGraded (optional) Флаг выдачи практик с оцененным отчетом
  * @param isArchived (optional) Флаг выдачи архивных данных
  * @param isPracticeApproved (optional) Флаг подтвержденных практик
  * @param page (optional) Zero-based page index (0..N)

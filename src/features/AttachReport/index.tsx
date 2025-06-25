@@ -2,14 +2,14 @@ import { Button } from "@mantine/core"
 import { ReportOpenModal } from "features/PracticesFullButtons"
 import { useState } from "react"
 
-export const AttachReport = ({ practiceId }: { practiceId: string }) => {
+export const AttachReport = ({ practiceId, isApproved, isReportAttached  }: { practiceId: string; isApproved: boolean; isReportAttached: boolean; }) => {
     const [opened, setOpened] = useState<boolean>(false)
     return (
         <>
             <Button variant='outline' onClick={() => setOpened(true)}>
                 Прикрепить отчет
             </Button>
-            <ReportOpenModal practiceId={practiceId} studentId={null} opened={opened} onClose={() => setOpened(false)} />
+            <ReportOpenModal practiceId={practiceId} studentId={null} opened={opened} onClose={() => setOpened(false)} isApproved={isApproved} isReportAttached={isReportAttached}/>
         </>
     )
 }

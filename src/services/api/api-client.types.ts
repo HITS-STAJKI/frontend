@@ -1,4 +1,3 @@
-//@ts-nocheck
 //-----Types.File-----
 /** dto для возвращения ошибочных результатов */
 export interface ErrorResponse  {
@@ -453,6 +452,8 @@ export interface PracticeDto  {
   isArchived?: boolean;
   /** Подтверждена куратором */
   isApproved?: boolean;
+  /** Прикреплен ли файл отчета */
+  isReportAttached?: boolean;
   [key: string]: any;
 }
 export function deserializePracticeDto(json: string): PracticeDto {
@@ -2247,7 +2248,6 @@ export function prepareSerializeChatInfoDto(_data: ChatInfoDto): ChatInfoDto {
 }
 /** Роль пользователя */
 export enum UserRole {
-    ADMIN = "ADMIN",
     DEAN = "DEAN",
     CURATOR = "CURATOR",
     STUDENT = "STUDENT",
@@ -2266,7 +2266,6 @@ export enum Type {
     OTHER = "OTHER",
 }
 export enum RoleDtoUserRole {
-    ADMIN = "ADMIN",
     DEAN = "DEAN",
     CURATOR = "CURATOR",
     STUDENT = "STUDENT",

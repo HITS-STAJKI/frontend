@@ -7,7 +7,6 @@
 /* tslint:disable */
 /* eslint-disable */
 // ReSharper disable InconsistentNaming
-//@ts-nocheck
 import * as Types from '../api-client.types';
 import type { AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
@@ -778,6 +777,100 @@ function processApproveStudentPractices_1(response: AxiosResponse): Promise<Type
 }
 
 /**
+ * Получение информации о практике по id
+ * @param practiceId Id практики
+ * @return OK
+ */
+export function getPracticeById(practiceId: string, config?: AxiosRequestConfig | undefined): Promise<Types.PracticeDto> {
+    let url_ = getBaseUrl() + "/api/v1/practice/{practiceId}";
+    if (practiceId === undefined || practiceId === null)
+      throw new Error("The parameter 'practiceId' must be defined.");
+    url_ = url_.replace("{practiceId}", encodeURIComponent("" + practiceId));
+      url_ = url_.replace(/[?&]$/, "");
+
+    let options_: AxiosRequestConfig = {
+        ..._requestConfigGetPracticeById,
+        ...config,
+        method: "GET",
+        url: url_,
+        headers: {
+            ..._requestConfigGetPracticeById?.headers,
+            "Accept": "*/*",
+            ...config?.headers,
+        }
+    };
+
+    return getAxios().request(options_).catch((_error: any) => {
+        if (isAxiosError(_error) && _error.response) {
+            return _error.response;
+        } else {
+            throw _error;
+        }
+    }).then((_response: AxiosResponse) => {
+        return processGetPracticeById(_response);
+    });
+}
+
+function processGetPracticeById(response: AxiosResponse): Promise<Types.PracticeDto> {
+    const status = response.status;
+    let _headers: any = {};
+    if (response.headers && typeof response.headers === "object") {
+        for (let k in response.headers) {
+            if (response.headers.hasOwnProperty(k)) {
+                _headers[k] = response.headers[k];
+            }
+        }
+    }
+    if (status === 409) {
+        const _responseText = response.data;
+        let result409: any = null;
+        let resultData409  = _responseText;
+        result409 = Types.initErrorResponse(resultData409);
+        return throwException("Conflict", status, _responseText, _headers, result409);
+
+    } else if (status === 400) {
+        const _responseText = response.data;
+        let result400: any = null;
+        let resultData400  = _responseText;
+        result400 = Types.initErrorResponse(resultData400);
+        return throwException("Bad Request", status, _responseText, _headers, result400);
+
+    } else if (status === 500) {
+        const _responseText = response.data;
+        let result500: any = null;
+        let resultData500  = _responseText;
+        result500 = Types.initErrorResponse(resultData500);
+        return throwException("Internal Server Error", status, _responseText, _headers, result500);
+
+    } else if (status === 401) {
+        const _responseText = response.data;
+        let result401: any = null;
+        let resultData401  = _responseText;
+        result401 = Types.initErrorResponse(resultData401);
+        return throwException("Unauthorized", status, _responseText, _headers, result401);
+
+    } else if (status === 404) {
+        const _responseText = response.data;
+        let result404: any = null;
+        let resultData404  = _responseText;
+        result404 = Types.initErrorResponse(resultData404);
+        return throwException("Not Found", status, _responseText, _headers, result404);
+
+    } else if (status === 200) {
+        const _responseText = response.data;
+        let result200: any = null;
+        let resultData200  = _responseText;
+        result200 = Types.initPracticeDto(resultData200);
+        return Promise.resolve<Types.PracticeDto>(result200);
+
+    } else if (status !== 200 && status !== 204) {
+        const _responseText = response.data;
+        return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+    }
+    return Promise.resolve<Types.PracticeDto>(null as any);
+}
+
+/**
  * Получение информации о практике студентом
  * @return OK
  */
@@ -1088,7 +1181,7 @@ function processGetPracticeRequests(response: AxiosResponse): Promise<Types.Page
  * @param groupIds (optional) Список идентификаторов групп
  * @param companyId (optional) Идентификатор компании-партнера
  * @param hasReport (optional) Флаг выбора практик с прикрепленным отчетом или без. null - если все
- * @param isReportApproved (optional) Флаг выдачи практик с подтвержденным отчетом
+ * @param isReportGraded (optional) Флаг выдачи практик с оцененным отчетом
  * @param isArchived (optional) Флаг выдачи архивных данных
  * @param isPracticeApproved (optional) Флаг подтвержденных практик
  * @param page (optional) Zero-based page index (0..N)
@@ -1096,7 +1189,7 @@ function processGetPracticeRequests(response: AxiosResponse): Promise<Types.Page
  * @param sort (optional) Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
  * @return OK
  */
-export function getAllPractices(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportApproved?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoPracticeDto> {
+export function getAllPractices(studentName?: string | undefined, groupIds?: string[] | undefined, companyId?: string | undefined, hasReport?: boolean | undefined, isReportGraded?: boolean | undefined, isArchived?: boolean | undefined, isPracticeApproved?: boolean | undefined, page?: number | undefined, size?: number | undefined, sort?: string[] | undefined, config?: AxiosRequestConfig | undefined): Promise<Types.PagedListDtoPracticeDto> {
     let url_ = getBaseUrl() + "/api/v1/practice/list/all?";
     if (studentName === null)
         throw new Error("The parameter 'studentName' cannot be null.");
@@ -1114,10 +1207,10 @@ export function getAllPractices(studentName?: string | undefined, groupIds?: str
         throw new Error("The parameter 'hasReport' cannot be null.");
     else if (hasReport !== undefined)
         url_ += "hasReport=" + encodeURIComponent("" + hasReport) + "&";
-    if (isReportApproved === null)
-        throw new Error("The parameter 'isReportApproved' cannot be null.");
-    else if (isReportApproved !== undefined)
-        url_ += "isReportApproved=" + encodeURIComponent("" + isReportApproved) + "&";
+    if (isReportGraded === null)
+        throw new Error("The parameter 'isReportGraded' cannot be null.");
+    else if (isReportGraded !== undefined)
+        url_ += "isReportGraded=" + encodeURIComponent("" + isReportGraded) + "&";
     if (isArchived === null)
         throw new Error("The parameter 'isArchived' cannot be null.");
     else if (isArchived !== undefined)
@@ -1307,6 +1400,17 @@ export function setApproveStudentPractices_1RequestConfig(value: Partial<AxiosRe
 }
 export function patchApproveStudentPractices_1RequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
   _requestConfigApproveStudentPractices_1 = patch(_requestConfigApproveStudentPractices_1 ?? {});
+}
+
+let _requestConfigGetPracticeById: Partial<AxiosRequestConfig> | null;
+export function getGetPracticeByIdRequestConfig() {
+  return _requestConfigGetPracticeById;
+}
+export function setGetPracticeByIdRequestConfig(value: Partial<AxiosRequestConfig>) {
+  _requestConfigGetPracticeById = value;
+}
+export function patchGetPracticeByIdRequestConfig(patch: (value: Partial<AxiosRequestConfig>) => Partial<AxiosRequestConfig>) {
+  _requestConfigGetPracticeById = patch(_requestConfigGetPracticeById ?? {});
 }
 
 let _requestConfigGetMyPractice: Partial<AxiosRequestConfig> | null;

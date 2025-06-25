@@ -157,6 +157,7 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
                             isPaid={practice.isPaid}
                             isArchived={practice.isArchived}
                             isApproved={practice.isApproved}
+                            isReportAttached={practice.isReportAttached}
                             index={globalIndex + 1}
                             onRefresh={onRefresh}
                         />

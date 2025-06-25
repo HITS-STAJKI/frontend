@@ -243,7 +243,7 @@ export function SelectionTeacherList({ items, pagination, initialSort = null, si
                 </Card>
             ) : (
                 items?.map((interview, localIndex) => {
-                    const globalIndex = (pagination?.currentPage ? pagination?.currentPage : 10) * size + localIndex;
+                    const globalIndex = ((pagination?.currentPage ?? 0)) * (size) + localIndex;
                     return (
                         <SelectionTeacherCard
                             key={interview.id}
