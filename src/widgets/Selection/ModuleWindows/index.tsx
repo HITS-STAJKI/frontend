@@ -7,6 +7,9 @@ import { useApproveStudentPracticeMutation, useCreateStudentPracticeMutation } f
 import { useForm } from "@mantine/form";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { useDeleteInterviewMutation } from "services/api/api-client/InterviewsQuery";
+import { QueryFactory } from "services/api";
 
 
 export function CreateSelection({ id }: { id: string }) {
@@ -46,9 +49,15 @@ export function EditSelection({ id }: { id: string }) {
 }
 
 export const DeleteSelection = ({ id }: { id: string }) => {
+    const queryClient = useQueryClient();
+    const { mutateAsync: interwiewDeleteMutate } = useDeleteInterviewMutation(id);
 
-    const handleDelete = (close: () => void) => {
-        console.log(`Тело запроса удаления ${id}:`);
+    const handleDelete = async (close: () => void) => {
+        await interwiewDeleteMutate();
+        //че-то ниче не работает
+        await queryClient.invalidateQueries({
+            queryKey: QueryFactory.InterviewsQuery.getInterviewListQueryKey()
+        })
         close()
     }
     return (
