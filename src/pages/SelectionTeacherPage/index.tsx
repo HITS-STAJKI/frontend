@@ -33,31 +33,7 @@ const SelectionTeacherPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
     const { data, isLoading, isError, error } = useGetInterviewListQuery(studentName, companyId, stackId, languageIds, groupId, status as Status, dateFrom, dateTo, page, size, sort)
-    if (isLoading) {
-        return (
-            <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
-                <Loader size="lg" />
-            </Center>
-        );
-    }
 
-    if (isError) {
-        return (
-            <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6, width: '100%' }}>
-                <Text color="red" size="sm" style={{ textAlign: 'center' }}>
-                    Ошибка: {getErrorMessage(error)}
-                </Text>
-            </Card>
-        );
-    }
-
-    if (!data) {
-        return (
-            <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
-                <Text>Нет данных</Text>
-            </Center>
-        );
-    }
     return (
         <>
             <Container p={0} fluid style={{ width: '100%', marginInline: '2vh' }}>
@@ -73,9 +49,23 @@ const SelectionTeacherPage = () => {
                         { id: "dateTo", label: "Дата до", element: (props) => <FilterDate id="dateTo" onChangeValue={props.onChangeValue} initialValue={props.initialValue} /> },
                     ]}
                     />
-                    <SelectionFinder studentCount={data?.pagination?.totalElements!} />
-                    <SelectionTeacherList items={data?.items!} pagination={data?.pagination!} initialSort={sortArray} />
-                    <Pagination pagination={data?.pagination} />
+                    {isLoading ? (
+                        <Center style={{ height: 300 }}>
+                            <Loader size="lg" />
+                        </Center>
+                    ) : isError ? (
+                        <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6, width: '100%' }}>
+                            <Text color="red" size="sm" style={{ textAlign: 'center' }}>
+                                Ошибка: {getErrorMessage(error)}
+                            </Text>
+                        </Card>
+                    ) : (
+                        <>
+                            <SelectionFinder studentCount={data?.pagination?.totalElements!} />
+                            <SelectionTeacherList items={data?.items!} pagination={data?.pagination!} initialSort={sortArray} />
+                            <Pagination pagination={data?.pagination} />
+                        </>
+                    )}
                 </Flex>
             </Container>
         </>

@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { CompanyPartnerDto } from "services/api/api-client.types";
 import { useDownloadFileQuery } from 'services/api/api-client/FilesQuery';
 import { Roles, WithProfileRole } from 'shared/lib';
+import { getErrorMessage } from 'widgets/Helpes/GetErrorMessage';
 
 type PartnerInfoProps = {
     partner: CompanyPartnerDto;
@@ -24,29 +25,14 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     useEffect(() => {
-        if (fileData?.data) {
+        if (fileData?.data) 
+        {
             const reader = new FileReader();
             reader.onloadend = () => setImageSrc(reader.result as string);
             reader.readAsDataURL(fileData.data);
         }
     }, [fileData]);
-
-    const getErrorMessage = (error: unknown): string => {
-        if (!error) {
-            return 'Неизвестная ошибка';
-        }
-        if (typeof error === 'object' && error !== null) {
-            const err = error as any;
-            if (err.message) {
-                return err.message;
-            }
-            if (err.response?.data?.message) {
-                return err.response.data.message;
-            }
-        }
-        return 'Произошла ошибка при загрузке файла';
-    };
-
+    
     return (
         <Container w="100%">
             <Flex justify="space-between" align="center" mb="md">

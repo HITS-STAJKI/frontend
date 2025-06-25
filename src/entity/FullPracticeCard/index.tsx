@@ -89,9 +89,6 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                         <div onClick={(e) => e.stopPropagation()} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
-                            {
-                                //TODO: Сделать отображжение кнопок от роли
-                            }
                             {id && (
                                 <Grid.Col span={12} onClick={(e) => e.stopPropagation()}>
                                     <Box style={{ display: "flex", gap: 8, justifyContent: "center", alignItems: "center", width: "100%" }} >

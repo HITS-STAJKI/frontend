@@ -14,7 +14,7 @@ export function LanguageStackCard({ id, name, type, index }: Language & { type: 
                 </Flex>
                 
                 <Flex gap="md">
-                    <EditLanguageOrStack id={id} type={type} name={name}></EditLanguageOrStack>
+                    <EditLanguageOrStack id={id} type={type} name={name}/>
                     <DeleteLanguageOrStack id={id} type={type} />
                 </Flex>
             </Flex>

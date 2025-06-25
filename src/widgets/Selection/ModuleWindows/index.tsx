@@ -7,18 +7,23 @@ import { useApproveStudentPracticeMutation, useCreateStudentPracticeMutation } f
 import { useForm } from "@mantine/form";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { useState } from "react";
+import { useDeleteInterviewMutation } from "services/api/api-client/InterviewsQuery";
 
 
-export function CreateSelection({ id }: { id: string }) {
+export function CreateSelection({ id, onRefresh }: { id: string; onRefresh?: () => void }) {
     return (
         <Modal
-            render={open => <Button onClick={() => open()} style={{
-                padding: '0',
-                minWidth: '9rem'
-            }}>{"Создать отбор"}</Button>}
+            render={(open) => (
+                <Button onClick={() => open()} style={{ padding: '0', minWidth: '9rem' }}>
+                    {"Создать отбор"}
+                </Button>
+            )}
             content={({ close }) => (
                 <CreateSelectionForm
-                    onSuccess={() => close()}
+                    onSuccess={() => {
+                        onRefresh?.();
+                        close();
+                    }}
                     id={id}
                 />
             )}
@@ -27,17 +32,24 @@ export function CreateSelection({ id }: { id: string }) {
     );
 }
 
-export function EditSelection({ id }: { id: string }) {
+export function EditSelection({ id, onSuccess }: { id: string, onSuccess: () => void }) {
     return (
         <Modal
-            render={open => <Button onClick={() => open()} style={{
-                padding: '0',
-                aspectRatio: '1 / 1', marginInline: '10px'
-            }}>{<PencilSvgrepoCom fontSize={'30'} />}</Button>}
+            render={open => (
+                <Button
+                    onClick={() => open()}
+                    style={{ padding: '0', aspectRatio: '1 / 1', marginInline: '10px' }}
+                >
+                    <PencilSvgrepoCom fontSize={'30'} />
+                </Button>
+            )}
             content={({ close }) => (
                 <EditSelectionForm
-                    onSuccess={() => close()}
                     id={id}
+                    onSuccess={() => {
+                        close();
+                        onSuccess();
+                    }}
                 />
             )}
             title={"Редактировать отбор"}
@@ -45,56 +57,103 @@ export function EditSelection({ id }: { id: string }) {
     );
 }
 
-export const DeleteSelection = ({ id }: { id: string }) => {
+export const DeleteSelection = ({ id, onSuccess }: { id: string; onSuccess: () => void }) => {
+    const { mutateAsync, isPending: isDeleting, isError, error } = useDeleteInterviewMutation(id);
 
-    const handleDelete = (close: () => void) => {
-        console.log(`Тело запроса удаления ${id}:`);
-        close()
-    }
+    const handleDelete = async (close: () => void) => {
+        try 
+        {
+            await mutateAsync();
+            close();
+            onSuccess();
+        } 
+        catch 
+        {}
+    };
+
     return (
         <Modal
-            render={open => <Button color="red" onClick={() => open()} style={{ aspectRatio: '1 / 1', padding: 0 }}>
-                <TrashSvgrepoCom fontSize={'27'} />
-            </Button>}
-            content={({ close }) => <Button onClick={() => handleDelete(close)} color='red'>{'Удалить'}</Button>}
+            render={(open) => (
+                <Button color="red" onClick={() => open()} style={{ aspectRatio: '1 / 1', padding: 0 }}>
+                    <TrashSvgrepoCom fontSize={'27'} />
+                </Button>
+            )}
+            content={({ close }) => (
+                <>
+                    {isError && (
+                        <Text color="red" size="sm" mb="xs">
+                            {getErrorMessage(error)}
+                        </Text>
+                    )}
+                    <Button
+                        onClick={() => handleDelete(close)}
+                        color="red"
+                        loading={isDeleting}
+                        fullWidth
+                    >
+                        {'Удалить'}
+                    </Button>
+                </>
+            )}
             title={'Вы уверены, что хотите удалить данный отбор?'}
         />
+    );
+};
 
-    )
-}
-
-export const SuccedSelection = ({ id }: { id: string }) => {
-
+export const SuccedSelection = ({ id, onSuccess }: { id: string, onSuccess: () => void }) => {
     const form = useForm<{ isPaid: 'true' | 'false' }>({
-        initialValues: {
-            isPaid: 'false'
-        }
-    })
-    const { mutateAsync } = useCreateStudentPracticeMutation()
+        initialValues: { isPaid: 'false' }
+    });
+
+    const { mutateAsync, isPending, isError,  error } = useCreateStudentPracticeMutation();
+
     const handleSucced = (close: () => void) => {
-        return ({ isPaid }: { isPaid: 'true' | 'false' }) => {
-            mutateAsync({ interviewId: id, isPaid: isPaid === "true" ? true : false }).then(() => {
-                close()
-            })
-        }
-    }
+        return async ({ isPaid }: { isPaid: 'true' | 'false' }) => {
+            try 
+            {
+                await mutateAsync({ interviewId: id, isPaid: isPaid === "true" });
+                close();
+                onSuccess();
+            } 
+            catch (err) 
+            {}
+        };
+    };
+
     return (
         <Modal
             render={open =>
-                <Button color="#1cac78" onClick={() => open()} className={"PRACTICE"}>
+                <Button color="#1cac78" onClick={() => open()} className="PRACTICE">
                     {"Пройти практику"}
                 </Button>}
             content={({ close }) =>
                 <form style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }} onSubmit={form.onSubmit(handleSucced(close))}>
-                    <Select data={[{ value: 'true', label: 'Оплачиваемая' }, { value: 'false', label: 'Не оплачиваемая' }]} defaultValue={'true'} key={form.key('isPaid')} {...form.getInputProps('isPaid')} />
-                    <Button type='submit' color='green'>{'Подтвердить'}</Button>
+                    <Select
+                        data={[
+                            { value: 'true', label: 'Оплачиваемая' },
+                            { value: 'false', label: 'Не оплачиваемая' }
+                        ]}
+                        defaultValue={'true'}
+                        key={form.key('isPaid')}
+                        {...form.getInputProps('isPaid')}
+                    />
+
+                    {isError && (
+                        <Text color="red" size="sm">
+                            {getErrorMessage(error)}
+                        </Text>
+                    )}
+
+                    <Button type="submit" color="green" loading={isPending}>
+                        {'Подтвердить'}
+                    </Button>
                 </form>
             }
             title={'Вы уверены, что хотите проходить практику здесь?'}
         />
+    );
+};
 
-    )
-}
 
 export const SuccedTeacherSelection = ({ id }: { id: string }) => {
     const [error, setError] = useState<unknown>(null);

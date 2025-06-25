@@ -147,35 +147,42 @@ type PagedListDtoPracticeSTProps = PagedListDtoPracticeDto & {
     onRefresh?: () => void;
 };
 
-export function SelectionTeacherList({ items, pagination }: PagedListDtoPracticeSTProps) {
-    const [sort, setSort] = useState<[SortKeyST, SortDirectionST] | null>(null);
+export function SelectionTeacherList({ items, pagination, initialSort = null }: PagedListDtoPracticeSTProps) {
+    const [sort, setSort] = useState<[SortKeyST, SortDirectionST] | null>(initialSort);
     const [searchParams, setSearchParams] = useSearchParams();
 
     function handleSort(key: SortKeyST) {
         setSort((currentSort) => {
             let newSort: [SortKeyST, SortDirectionST] | null;
 
-            if (currentSort?.[0] === key) {
-                if (currentSort[1] === "asc") {
+            if (currentSort?.[0] === key) 
+            {
+                if (currentSort[1] === "asc") 
+                {
                     newSort = [key, "desc"];
                 }
-                else if (currentSort[1] === "desc") {
+                else if (currentSort[1] === "desc") 
+                {
                     newSort = null;
                 }
-                else {
+                else 
+                {
                     newSort = [key, "asc"];
                 }
             }
-            else {
+            else 
+            {
                 newSort = [key, "asc"];
             }
 
             const updatedParams = new URLSearchParams(searchParams);
-            if (newSort) {
+            if (newSort)
+            {
                 updatedParams.set("sort", newSort[0]);
                 updatedParams.set("sortDirection", newSort[1]);
             }
-            else {
+            else 
+            {
                 updatedParams.delete("sort");
                 updatedParams.delete("sortDirection");
             }
@@ -185,8 +192,10 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoPractice
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKeyST }) {
-        if (!sort || sort[0] !== columnKey) {
+    function SortArrow({ columnKey }: { columnKey: SortKeyST }) 
+    {
+        if (!sort || sort[0] !== columnKey) 
+        {
             return null;
         }
         return sort[1] === "asc" ?
@@ -237,22 +246,30 @@ export function SelectionTeacherList({ items, pagination }: PagedListDtoPractice
                     <Box style={{ width: "40px", textAlign: "center" }} />
                 </div>
             </Card>
-            {items?.map((interview, localIndex) => {
-                const globalIndex = (pagination?.currentPage!) * pagination?.size! + localIndex;
-                return (
-                    <SelectionTeacherCard
-                        key={interview.id}
-                        id={interview.id!}
-                        stack={interview.stack!}
-                        createdAt={interview?.createdAt?.toDateString()!}
-                        languages={interview.languages}
-                        status={interview.status}
-                        companyPartner={interview.companyPartner}
-                        student={interview.student}
-                        index={globalIndex + 1}
-                    />
-                );
-            })}
+            {(!items || items.length === 0) ? (
+                <Card withBorder padding="lg" radius="md" shadow="sm" style={{ width: '100%' }}>
+                    <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
+                        Отборов нет
+                    </Text>
+                </Card>
+            ) : (
+                items?.map((interview, localIndex) => {
+                    const globalIndex = (pagination?.currentPage!) * pagination?.size! + localIndex;
+                    return (
+                        <SelectionTeacherCard
+                            key={interview.id}
+                            id={interview.id!}
+                            stack={interview.stack!}
+                            createdAt={interview?.createdAt?.toDateString()!}
+                            languages={interview.languages}
+                            status={interview.status}
+                            companyPartner={interview.companyPartner}
+                            student={interview.student}
+                            index={globalIndex + 1}
+                        />
+                    );
+                })
+            )}
         </Flex>
     );
 }
@@ -264,9 +281,6 @@ interface FullInterviewCardProps extends InterviewForTeachers {
 
 export function SelectionTeacherCard({ id, student, companyPartner, createdAt, languages, stack, status, index }: FullInterviewCardProps) {
     const { data } = useGetUserByIdQuery(student.id!)
-    const handleClick = () => {
-        console.log("Открыли модалку");
-    };
 
     const getStatusText = (status: InterviewStatus): string => {
         switch (status) {
@@ -280,7 +294,6 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                 return "";
         }
     };
-    console.log(data)
     return (
         <Card key={id}
             shadow="sm"
@@ -290,7 +303,6 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                 display: 'flex',
                 transition: 'box-shadow 0.2s ease, background-color 0.2s ease',
             }}
-            onClick={handleClick}
             tabIndex={0}
         >
             <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
@@ -300,27 +312,27 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                 <Grid style={{ width: '100%', height: '100%' }}>
                     <Grid.Col span={2.9} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {student.fullName}
+                            {student ? student.fullName : "Неизвестный студент"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {data?.student?.group.number}
+                            {data?.student?.group ? data?.student?.group.number : "Неизвестная группа"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {companyPartner.name}
+                            {companyPartner ? companyPartner.name : "Неизвестная компания"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {stack.name}
+                            {stack ? stack.name : "Неизвестное направление"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {languages[0].name}
+                            {languages[0] ? languages[0].name : "Неизвестный язык"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.6} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -332,7 +344,7 @@ export function SelectionTeacherCard({ id, student, companyPartner, createdAt, l
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            {new Date(createdAt).toLocaleDateString("ru-RU")}
+                            {createdAt ? new Date(createdAt).toLocaleDateString("ru-RU") : "Неизвестная дата"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
