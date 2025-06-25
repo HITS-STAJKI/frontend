@@ -40,7 +40,7 @@ export const StudentsListPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
 
-    const { data, isLoading, isError, error } = useGetAllStudentsQuery(page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin);
+    const { data, isLoading, isError, error, refetch } = useGetAllStudentsQuery(page, size, sort, fullName, isAcadem, isGraduated, groupIds, companyIds, isOnPractice, hasPracticeRequest, hasInterviews, stackIds, lastLogin);
 
     const [selectedStudentIds, setSelectedStudentIds] = useState<string[]>([]);
 
@@ -73,7 +73,7 @@ export const StudentsListPage = () => {
                     <>
                         <StudentsFormUnder studentCount={data?.pagination?.totalElements ?? 0} />
                         <StudentsListForm items={data?.items} pagination={data?.pagination} initialSort={sortArray} selectedStudentIds={selectedStudentIds} setSelectedStudentIds={setSelectedStudentIds} />
-                        <StudentsCommentaryForm selectedStudentIds={selectedStudentIds} />
+                        <StudentsCommentaryForm selectedStudentIds={selectedStudentIds} refetchStudents={refetch}/>
                         <Pagination pagination={data?.pagination} />
                     </>
                 )}

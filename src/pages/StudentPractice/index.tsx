@@ -76,7 +76,7 @@ export const StudentPractice = () => {
                         <Text fw={500}>Компания:</Text>
                         <Text>Название: {practice.company?.name ?? "—"}</Text>
                         <Text size="sm">Описание: {practice.company?.description ?? "—"}</Text>
-                        <Text>Куратор: {practice.company?.curators?.[0].fullName ? ` ФИО ${practice.company?.curators?.[0].fullName}; Почта ${practice.company.curators[0].email};` : " —"} </Text>
+                        {practice.company?.curators != null &&  <Text>Куратор: {practice.company?.curators?.[0]?.fullName ? ` ФИО ${practice.company?.curators?.[0]?.fullName}; Почта ${practice.company.curators[0]?.email};` : " —"} </Text>}
                     </Stack>
                 </Card>
             </Flex>
