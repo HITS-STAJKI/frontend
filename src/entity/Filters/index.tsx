@@ -498,8 +498,8 @@ export function FilterTrueFalse({ id, onChangeValue, initialValue = "false" }: {
     const [value, setValue] = useState<string | null>(initialValue ?? "false");
 
     useEffect(() => {
-        onChangeValue(initialValue);
-    }, [initialValue]);
+        onChangeValue(value);
+    }, []);
 
     const handleChange = (val: string | null) => {
         setValue(val);
