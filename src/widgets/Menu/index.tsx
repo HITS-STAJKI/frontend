@@ -10,7 +10,7 @@ export const Menu = () => {
                 { to: LANGUAGES_ROUTE, label: 'Языки', },
                 { to: STACKS_ROUTE, label: 'Стэки' },
                 { to: ROLES_ROUTE, label: 'Пользователи' },
-                { to: GROUPS_ROUTE, label: 'Группы' },
+                { to: GROUPS_ROUTE, label: 'Потоки' },
             ], label: 'Администрирование', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD,]
         },
         { to: PARTNERS_ROUTE, label: 'Партнеры', userFor: [Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.STUDENT, Roles.TEACHER, Roles.CURATOR] },

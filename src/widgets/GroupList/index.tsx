@@ -1,4 +1,4 @@
-import { FilterBlockFull, FilterLanguageName, Group } from "entity"
+import { FilterBlockFull, FilterGroupInput, FilterLanguageName, Group } from "entity"
 import { GET_GROUPS } from "shared/lib"
 import { Pagination } from "shared/ui";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
@@ -35,8 +35,8 @@ export const GroupList = () => {
 export function GroupFilters() {
     return (
         <FilterBlockFull availableFilters={[
-            { id: "number", label: "Номер группы (ввод)", element: (props) => <FilterLanguageName id="number" onChangeValue={props.onChangeValue} /> },
-            { id: "group", label: "Номер группы (выбор)", element: (props) => <FilterSelect items={convertGroupsToGroupsWithName(GET_GROUPS.items)} id="group" onChangeValue={props.onChangeValue} label="Выберите номер группы" /> },
+            { id: "number", label: "Номер потока (ввод)", element: (props) => <FilterGroupInput id="number" onChangeValue={props.onChangeValue} /> },
+            { id: "group", label: "Номер потока (выбор)", element: (props) => <FilterSelect items={convertGroupsToGroupsWithName(GET_GROUPS.items)} id="group" onChangeValue={props.onChangeValue} label="Выберите номер потока" /> },
         ]}
             printButton={false}
         />

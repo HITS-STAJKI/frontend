@@ -47,7 +47,7 @@ export function UnapprovedPracticeCard({ id, user, group, company, stack, create
                         </Grid.Col>
                         <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                             <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                                {group?.number ?? 'Неизвестная группа'}
+                                {group?.number ?? 'Неизвестный поток'}
                             </Text>
                         </Grid.Col>
                         <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>

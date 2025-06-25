@@ -17,9 +17,9 @@ const PartnersPage = () => {
 
                 </Flex>
                 <FilterBlockShort availableFilters={[
-                    { id: "id", label: "Идентификатор компании", element: (props) => <FilterCompanySelect id="id" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "name", label: "Название компании", element: (props) => <FilterCompanyName id="name" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
-                    { id: "isNew", label: "Только новые компании", element: (props) => <FilterTrueFalse id="isNew" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "id", label: "Название компании (выбор)", element: (props) => <FilterCompanySelect id="id" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "name", label: "Название компании (ввод)", element: (props) => <FilterCompanyName id="name" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
+                    { id: "isNew", label: "Компании, в которых никто не проходит практику", element: (props) => <FilterTrueFalse id="isNew" initialValue={props.initialValue} onChangeValue={props.onChangeValue} /> },
                 ]} />
                 <PartnerList />
             </Flex>
