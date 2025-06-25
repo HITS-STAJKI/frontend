@@ -9,26 +9,29 @@ import { DeleteRole } from "features/DeleteRole";
 
 type ProfileBlockProps = {
     profileData: UserDetailsDto;
-    mode: "my" | "user";
+    mode: "my" | "user";   
+    onRefresh?: () => void;
 };
 
-export const ProfileBlock = ({
-    profileData,
-    mode,
-}: ProfileBlockProps) => {
+export const ProfileBlock = ({ profileData, mode, onRefresh }: ProfileBlockProps) => {
     const isStudent = !!profileData.student;
 
     const renderActionButton = () => {
-        if (mode === "my") {
-            return <ChangePassword />;
+        if (mode === "my") 
+        {
+            return <ChangePassword onRefresh={onRefresh}/>;
         }
 
-        if (mode === "user" && isStudent) {
-            if (profileData.student?.isAcadem) {
+        if (mode === "user" && isStudent) 
+        {
+            if (profileData.student?.isAcadem) 
+            {
                 return (
-                    <RemoveFromAcadem user={profileData} />
+                    <RemoveFromAcadem user={profileData} onRefresh={onRefresh} />
                 );
-            } else {
+            } 
+            else 
+            {
                 return (
                     <SendToAcadem user={profileData} />
                 );
@@ -58,8 +61,9 @@ export const ProfileBlock = ({
                 {profileData.educationalProgramLead && <Badge color="yellow" mr="xs">Рук. ОП</Badge>}
             </div>
 
-            <ProfileForm profileInfo={profileData} mod={mode} />
-            {(!!!profileData.curator && !!!profileData.dean && !!!profileData.educationalProgramLead && !!!profileData.student && !!!profileData.teacher) && <div>Ожидайте пока вам выдадут роль</div>}
+            <ProfileForm profileInfo={profileData} mod={mode} onSuccess={onRefresh}/>
+             {(!!!profileData.curator && !!!profileData.dean && !!!profileData.educationalProgramLead && !!!profileData.student && !!!profileData.teacher) && <div>Ожидайте пока вам выдадут роль</div>}
+
         </div>
     )
 }

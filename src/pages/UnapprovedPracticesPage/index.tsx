@@ -56,7 +56,7 @@ const UnapprovedPracticesPage = () => {
             <Container p={0} fluid style={{ width: '100%', marginInline: '2vh' }}>
                 <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
                     <UnapprovedPracticesFormUnder studentCount={practicesData?.pagination?.totalElements ?? 0} />
-                    <UnapprovedPracticesForm items={practicesData?.items!} pagination={practicesData?.pagination!} initialSort={sortArray}/>
+                    <UnapprovedPracticesForm items={practicesData?.items!} pagination={practicesData?.pagination!} initialSort={sortArray} size={size}/>
                     <Pagination pagination={practicesData?.pagination} />
                 </Flex>
             </Container>

@@ -1,4 +1,4 @@
-import { Button, Flex, TextInput, Text } from "@mantine/core";
+import { Button, Flex, TextInput, Text, Card } from "@mantine/core";
 import { LanguageStackCard } from "entity";
 import { CreateLanguageOrStackForm } from "features";
 import { Modal } from "shared/ui";
@@ -46,15 +46,25 @@ export function SearchForm({ type, onSearch }: SearchFormProps) {
     );
 }
 
-export function LanguageList({ items, type, query }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' } & {query: string}) {
+export function LanguageList({ items, type }: { items: LanguageDto[] | StackDto[] } & { type: 'language' | 'stack' }) {
     return (
         <Flex direction="column" gap="md" mt="lg" style={{ width: '100%' }}>
             <Text style={{ marginBottom: '10px' }}>
                 Найдено {type === 'language' ? 'языков' : 'стеков'}: {items.length}
             </Text>
-            {items.map((item, index) => (
-                <LanguageStackCard query={query} key={item.id} type={type} id={item.id} name={item.name} index={index} />
-            ))}
+            {(!items || items.length === 0) ? (
+                <Card withBorder padding="lg" radius="md" shadow="sm" style={{ width: '100%' }}>
+                    <Text style={{ textAlign: 'center' }} color="dimmed" size="lg">
+                        {type === 'language' ? 'Языков' : 'Стеков'} нет
+                    </Text>
+                </Card>
+            ) : (
+                (items ?? []).map((item, localIndex) => {
+                    return (
+                        <LanguageStackCard key={item.id} type={type} id={item.id} name={item.name} index={localIndex} />
+                    );
+                })
+            )}
         </Flex>
     );
 };

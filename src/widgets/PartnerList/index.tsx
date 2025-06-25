@@ -17,7 +17,8 @@ export const PartnerList = () => {
 
     const { data, isLoading, error } = useGetPartnersQuery(id, name, isNew, page, size);
 
-    if (isLoading) {
+    if (isLoading) 
+    {
         return (
             <Center style={{ height: '50vh' }}>
                 <Loader size="lg" />
@@ -25,7 +26,8 @@ export const PartnerList = () => {
         );
     }
 
-    if (error) {
+    if (error) 
+    {
         console.log('Ошибка запроса:', error);
         return (
             <Container size="100%" mt="3vh">

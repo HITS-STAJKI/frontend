@@ -10,6 +10,7 @@ export const StudentPracticesPage = () => {
     const { id } = useParams<{ id: string }>();
 
     const page = Number(searchParams.get("page") ?? "0");
+    const size = Number(searchParams.get("size") ?? "20");
 
     const sortParam = searchParams.get("sort") as SortKeyStudentPractices | null;
     const sortDirectionParam = searchParams.get("sortDirection") as SortDirectionStudentPractices | null;
@@ -21,7 +22,7 @@ export const StudentPracticesPage = () => {
         ? [sortArray[1], sortArray[0]]
         : undefined;
 
-    const { data: practicesData, isLoading, isError, error } = useGetStudentPracticesQuery(id as string, page, 20, sort);
+    const { data: practicesData, isLoading, isError, error } = useGetStudentPracticesQuery(id as string, page, size, sort);
 
     if (isLoading) {
         return (
@@ -58,7 +59,7 @@ export const StudentPracticesPage = () => {
         <div style={{ width: '100%' }}>
             <Flex direction="column" style={{ width: '95%', margin: '0 auto' }} gap="md">
                 <PracticesFormOver studentName={studentName} group={groupNumber} />
-                <PracticesList items={practicesData?.practices?.items} pagination={practicesData?.practices?.pagination} initialSort={sortArray} />
+                <PracticesList items={practicesData?.practices?.items} pagination={practicesData?.practices?.pagination} size={size} initialSort={sortArray} />
                 <Pagination pagination={practicesData?.practices?.pagination} />
             </Flex>
         </div>

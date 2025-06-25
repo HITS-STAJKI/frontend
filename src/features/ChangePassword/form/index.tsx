@@ -1,6 +1,7 @@
-import { Button, TextInput } from "@mantine/core"
+import { Button, Card, Text, TextInput } from "@mantine/core"
 import { useForm } from "@mantine/form"
 import { useUpdateCurrentUserPasswordMutation } from "services/api/api-client/UserQuery"
+import { getErrorMessage } from "widgets/Helpes/GetErrorMessage"
 
 type ChangePasswordFormProps = {
     onSuccess: () => void
@@ -23,7 +24,7 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
                 value !== values.newPassword ? 'Пароли не совпадают' : null,
         },
     });
-    const { mutateAsync } = useUpdateCurrentUserPasswordMutation()
+    const { mutateAsync, isPending, isError, error } = useUpdateCurrentUserPasswordMutation()
     const onSubmit = (vals: EditPasswordType) => {
         mutateAsync(vals).then(() => {
             onSuccess();
@@ -39,6 +40,7 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
                 mb="xs"
                 {...form.getInputProps('oldPassword')}
                 required
+                disabled={isPending}
             />
             <TextInput
                 label="Новый пароль"
@@ -46,6 +48,7 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
                 mb="xs"
                 {...form.getInputProps('newPassword')}
                 required
+                disabled={isPending}
             />
             <TextInput
                 label="Подтвердите новый пароль"
@@ -53,8 +56,23 @@ export const ChangePasswordForm = ({ onSuccess }: ChangePasswordFormProps) => {
                 mb="xs"
                 {...form.getInputProps('repeatNewPassword')}
                 required
+                disabled={isPending}
             />
-            <Button type='submit'>{'Сохранить'}</Button>
+
+            {isError && (
+                <Card mt="md" p="md" style={{ backgroundColor: '#ffe6e6', borderRadius: 6, width: '100%' }}>
+                    <Text color="red" size="sm" mb="xs">
+                        Ошибка при изменении пароля:
+                    </Text>
+                    <Text color="red" size="sm" mb="xs">
+                        {getErrorMessage((error as any))}
+                    </Text>
+                </Card>
+            )}
+
+            <Button type="submit" loading={isPending} fullWidth>
+                Сохранить
+            </Button>
         </form>
     );
 };

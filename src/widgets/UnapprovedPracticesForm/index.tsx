@@ -15,9 +15,10 @@ export type SortKeyUnapprovedPractices =
 
 type PagedListDtoPracticeDtoProps = PagedListDtoPracticeDto & {
     initialSort: [SortKeyUnapprovedPractices, SortDirectionUnapprovedPractices] | null;
+    size: number;
 };
 
-export function UnapprovedPracticesForm({ items, pagination, initialSort = null }: PagedListDtoPracticeDtoProps) {
+export function UnapprovedPracticesForm({ items, pagination, initialSort = null, size }: PagedListDtoPracticeDtoProps) {
     const [searchParams, setSearchParams] = useSearchParams();
     const [sort, setSort] = useState<[SortKeyUnapprovedPractices, SortDirectionUnapprovedPractices] | null>(initialSort);
 
@@ -136,7 +137,7 @@ export function UnapprovedPracticesForm({ items, pagination, initialSort = null 
                 </Card>
             ) : (
                 (items ?? []).map((practice, localIndex) => {
-                    const globalIndex = ((pagination?.currentPage ?? 0)) * (pagination?.size ?? 10) + localIndex;
+                    const globalIndex = ((pagination?.currentPage ?? 0)) * (size) + localIndex;
                     return (
                         <UnapprovedPracticeCard
                             key={practice.id}
