@@ -195,7 +195,7 @@ export function StudentsListForm({ items, pagination, initialSort, selectedStude
                             studentId={student.id}
                             userId={student.user.id}
                             fullName={student.user.fullName}
-                            groupNumber={student.group.number}
+                            groupNumber={student.group !== null && student.group !== undefined ? student.group.number : 'Группы нет'}
                             lastLoginDate={student.user.lastLoginDate}
                             unreadMessagesCount={student.unreadMessagesCount}
                             chatId={student.chatId}
@@ -279,8 +279,7 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
         setIsExporting(true);
         setExportError(null);
 
-        try 
-        {
+        try {
             const response = await fetch(`https://tomcat.sonya.jij.li/internship/api/v1/student/export?studentIds=${selectedStudentIds.join(',')}`, {
                 method: 'GET',
                 headers: {
@@ -288,8 +287,7 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
                 },
             });
 
-            if (!response.ok) 
-            {
+            if (!response.ok) {
                 throw new Error('Ошибка при экспорте студентов');
             }
 
@@ -302,9 +300,8 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
             a.click();
             window.URL.revokeObjectURL(objectUrl);
             a.remove();
-        } 
-        catch (err) 
-        {
+        }
+        catch (err) {
             console.error(err);
             setExportError(getErrorMessage(err));
         }
