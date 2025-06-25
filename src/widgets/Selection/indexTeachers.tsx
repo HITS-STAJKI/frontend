@@ -72,7 +72,7 @@ export function FilterSelect({ id, items, onChangeValue, label }: FilterSelectPr
 
     useEffect(() => {
         const selectData = items.map(item => ({
-            value: item.id,
+            value: item.id!,
             label: 'number' in item ? item.number : item.name, // Используем number если есть
         }));
         setData(selectData);
@@ -152,34 +152,27 @@ export function SelectionTeacherList({ items, pagination, initialSort = null }: 
         setSort((currentSort) => {
             let newSort: [SortKeyST, SortDirectionST] | null;
 
-            if (currentSort?.[0] === key) 
-            {
-                if (currentSort[1] === "asc") 
-                {
+            if (currentSort?.[0] === key) {
+                if (currentSort[1] === "asc") {
                     newSort = [key, "desc"];
                 }
-                else if (currentSort[1] === "desc") 
-                {
+                else if (currentSort[1] === "desc") {
                     newSort = null;
                 }
-                else 
-                {
+                else {
                     newSort = [key, "asc"];
                 }
             }
-            else 
-            {
+            else {
                 newSort = [key, "asc"];
             }
 
             const updatedParams = new URLSearchParams(searchParams);
-            if (newSort)
-            {
+            if (newSort) {
                 updatedParams.set("sort", newSort[0]);
                 updatedParams.set("sortDirection", newSort[1]);
             }
-            else 
-            {
+            else {
                 updatedParams.delete("sort");
                 updatedParams.delete("sortDirection");
             }
@@ -189,10 +182,8 @@ export function SelectionTeacherList({ items, pagination, initialSort = null }: 
         });
     }
 
-    function SortArrow({ columnKey }: { columnKey: SortKeyST }) 
-    {
-        if (!sort || sort[0] !== columnKey) 
-        {
+    function SortArrow({ columnKey }: { columnKey: SortKeyST }) {
+        if (!sort || sort[0] !== columnKey) {
             return null;
         }
         return sort[1] === "asc" ?

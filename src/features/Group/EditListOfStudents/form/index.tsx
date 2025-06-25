@@ -1,11 +1,8 @@
 import { Button, Select } from "@mantine/core"
 import { useForm } from "@mantine/form"
-import { StudentUpdate } from "shared/lib"
 import { useMemo, useState } from 'react';
-import { GroupDto, StudentCreateDto } from "services/api/api-client.types";
+import { GroupDto } from "services/api/api-client.types";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCreateGroupMutation } from "services/api/api-client/GroupQuery";
-import { useCreateStudentMutation } from "services/api/api-client/StudentQuery";
 import { useGetAllStudentsQuery } from "services/api/api-client/StudentQuery";
 
 type AddStudentInGroupFormProps = {
@@ -13,7 +10,7 @@ type AddStudentInGroupFormProps = {
     group: GroupDto
 }
 
-export const AddStudentInGroupForm = ({ onSuccess, group }: AddStudentInGroupFormProps) => {
+export const AddStudentInGroupForm = ({ group }: AddStudentInGroupFormProps) => {
     const [isAdding, setIsAdding] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
@@ -59,11 +56,11 @@ export const AddStudentInGroupForm = ({ onSuccess, group }: AddStudentInGroupFor
         //         {                 
         //             body: {
         //                 groupId: group.id
-                        
+
         //             }
         //         }
         //     );
-            
+
         //     form.reset();
         //     setIsAdding(false);
         //     setSelectedStudentId(null);
@@ -95,7 +92,7 @@ export const AddStudentInGroupForm = ({ onSuccess, group }: AddStudentInGroupFor
                         value={selectedStudentId}
                         onChange={setSelectedStudentId}
                     />
-                    
+
                     <Button
                         mt="md"
                         mb="md"
