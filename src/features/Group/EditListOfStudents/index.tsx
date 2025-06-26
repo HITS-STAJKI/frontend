@@ -24,7 +24,7 @@ export const EditListOfStudentsButton = ({ group }: ViewStudentsButtonProps) => 
                             <StudentCard key={student.id} student={student} />
                         ))}
                     </div>
-                    <AddStudentInGroupForm group={group} onSuccess={() => close()} />
+                    
                 </div>
             )}
         />
