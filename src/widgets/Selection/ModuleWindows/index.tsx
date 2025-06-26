@@ -11,7 +11,6 @@ import { useDeleteInterviewMutation } from "services/api/api-client/InterviewsQu
 import { useQueryClient } from '@tanstack/react-query'
 import { QueryFactory } from '../../../services/api'
 
-
 export function CreateSelection({ id, onRefresh }: { id: string; onRefresh?: () => void }) {
     return (
         <Modal
@@ -166,7 +165,7 @@ export const SuccedTeacherSelection = ({ id }: { id: string }) => {
         try {
             await mutation.mutateAsync();
             await queryClient.invalidateQueries({
-              queryKey: QueryFactory.PracticeQuery.getPracticeRequestsQueryKey().slice(-1,0)
+                queryKey: QueryFactory.PracticeQuery.getPracticeRequestsQueryKey().slice(-1, 0)
             })
             close();
         }
@@ -203,7 +202,7 @@ export const SuccedTeacherSelection = ({ id }: { id: string }) => {
     );
 };
 
-export const CommentSelection = ({ id }: { id: string }) => {
+export const CommentSelection = ({ id, refetchStudent }: { id: string, refetchStudent?: () => void }) => {
     return (
         <Modal
             render={open => <Button color="green" onClick={() => open()} style={{
@@ -214,7 +213,7 @@ export const CommentSelection = ({ id }: { id: string }) => {
                 <Flex direction="column" style={{ width: '100%' }} gap="md" mb="md">
                     <Container fluid w="100%">
                         <Space h="md" />
-                        <Messages id={id} />
+                        <Messages id={id} refetchStudent={refetchStudent} />
                         <Space h="md" />
                     </Container>
                 </Flex>
@@ -225,8 +224,8 @@ export const CommentSelection = ({ id }: { id: string }) => {
     );
 }
 
-const Messages = ({ id }: { id: string }) => {
+const Messages = ({ id, refetchStudent }: { id: string, refetchStudent?: () => void }) => {
     return (
-        <CommentSectionAlt chatId={id} height="50vh" />
+        <CommentSectionAlt chatId={id} height="50vh" refetchStudent={refetchStudent} />
     )
 }

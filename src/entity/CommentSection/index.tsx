@@ -51,12 +51,12 @@ function dateFormatter(isoDateStr: string): string {
 type CommentSectionAltProps = {
     chatId: string;
     height?: string | number;
+    refetchStudent?: () => void
 };
 
-export const CommentSectionAlt = ({ chatId, height = '50vh' }: CommentSectionAltProps) => {
+export const CommentSectionAlt = ({ chatId, height = '50vh', refetchStudent }: CommentSectionAltProps) => {
     const { data, isLoading, error, refetch } = useGetMessagesListQuery(chatId, 0, 10000, undefined);
     const comments = data?.items ?? [];
-
     const commentsRef = useRef<HTMLDivElement>(null);
 
     const scrollToBottom = () => {
@@ -67,6 +67,7 @@ export const CommentSectionAlt = ({ chatId, height = '50vh' }: CommentSectionAlt
 
     useEffect(() => {
         scrollToBottom();
+        refetchStudent?.()
     }, [comments]);
 
     return (
