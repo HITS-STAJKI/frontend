@@ -8,6 +8,8 @@ import { useForm } from "@mantine/form";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { useState } from "react";
 import { useDeleteInterviewMutation } from "services/api/api-client/InterviewsQuery";
+import { useQueryClient } from '@tanstack/react-query'
+import { QueryFactory } from '../../../services/api'
 
 
 export function CreateSelection({ id, onRefresh }: { id: string; onRefresh?: () => void }) {
@@ -154,6 +156,7 @@ export const SuccedSelection = ({ id, onSuccess }: { id: string, onSuccess: () =
 export const SuccedTeacherSelection = ({ id }: { id: string }) => {
     const [error, setError] = useState<unknown>(null);
     const [loading, setLoading] = useState(false);
+    const queryClient = useQueryClient()
 
     const mutation = useApproveStudentPracticeMutation(id);
 
@@ -162,6 +165,9 @@ export const SuccedTeacherSelection = ({ id }: { id: string }) => {
         setError(null);
         try {
             await mutation.mutateAsync();
+            await queryClient.invalidateQueries({
+              queryKey: QueryFactory.PracticeQuery.getPracticeRequestsQueryKey().slice(-1,0)
+            })
             close();
         }
         catch (err) {
