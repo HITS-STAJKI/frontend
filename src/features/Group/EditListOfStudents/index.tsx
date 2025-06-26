@@ -17,14 +17,14 @@ export const EditListOfStudentsButton = ({ group }: ViewStudentsButtonProps) => 
                     {group.number}
                 </Button>
             )}
-            content={({ close }) => (
+            content={({ }) => (
                 <div>
                     <div>
                         {group.students!.map(student => (
                             <StudentCard key={student.id} student={student} />
                         ))}
                     </div>
-                    
+
                 </div>
             )}
         />

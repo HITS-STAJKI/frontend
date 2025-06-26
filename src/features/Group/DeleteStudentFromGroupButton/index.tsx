@@ -32,13 +32,13 @@ export const DeleteStudentFromGroupButton = ({ student }: DeleteStudentFromGroup
     const studentRole = student.roles?.find(role => role.userRole === "STUDENT");
     const { mutateAsync: updateStudent } = useUpdateStudentMutation(studentRole?.id as string, {
         onSuccess: () => {
-          
-          queryClient.invalidateQueries({
-            queryKey: QueryFactory.GroupQuery.getGroupsQueryKey()
-          });
+
+            queryClient.invalidateQueries({
+                queryKey: QueryFactory.GroupQuery.getGroupsQueryKey()
+            });
         },
-      });
-      
+    });
+
     const handleEdit = async (values: StudentUpdate) => {
         console.log("oi ", student.id, values.groupId)
         await updateStudent({
@@ -53,10 +53,10 @@ export const DeleteStudentFromGroupButton = ({ student }: DeleteStudentFromGroup
             render={open => <Button color="red" onClick={() => open()} size="md" style={{ aspectRatio: '1 / 1', padding: 0 }}>
                 <TrashSvgrepoCom />
             </Button>}
-            content={({ close }) => (
+            content={({ }) => (
                 <form onSubmit={form.onSubmit(handleEdit)}>
                     <p>
-                        Вы можете переместить студента {student.fullName} в другой поток (или отправить его в академ через 
+                        Вы можете переместить студента {student.fullName} в другой поток (или отправить его в академ через
                         <Link to={`/profile/${student.id}`} style={{ marginLeft: '4px', color: 'blue', textDecoration: 'underline' }}>
                             профиль
                         </Link> студента).
@@ -74,7 +74,7 @@ export const DeleteStudentFromGroupButton = ({ student }: DeleteStudentFromGroup
                         />
                     )}
                     <Button mt="md" type='submit' color='red'>{'Переместить'}</Button>
-                    </form>
+                </form>
             )}
         />
     )
