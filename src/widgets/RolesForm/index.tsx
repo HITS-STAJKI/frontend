@@ -4,7 +4,7 @@ import { UserList } from "shared/lib/api/entities/User";
 import { UserCard } from "entity/UserCard";
 import { UserRole } from "services/api/api-client.types";
 import { useGetUserListQuery } from "services/api/api-client/UserQuery";
-import { forwardRef, useState } from "react";
+import { forwardRef, useMemo, useState } from "react";
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { useGetPartnersQuery } from "services/api/api-client/CompanyPartnersQuery";
 import { useCreateStudentMutation } from "services/api/api-client/StudentQuery";
@@ -40,11 +40,20 @@ export function RoleDropdown() {
 
 const UserSelect = forwardRef<HTMLInputElement, SelectProps>(({ ...props }, ref) => {
     const [name, setName] = useState('');
+    const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
     const { data } = useGetUserListQuery(name, undefined, 0, 100000)
+    const studentsOptions = useMemo(() => {
+        return data?.items?.map(student => ({
+            value: student.id!,
+            label: `${student.user?.fullName || 'Неизвестный студент'}`,
+        })) || [];
+    }, [data]);
     return <Select searchValue={name}
-        onSearchChange={setName} searchable ref={ref} data={data?.items?.map(item => {
-            return { value: item.id!, label: item.fullName! }
-        }) || []} {...props} />
+        searchable ref={ref} data={studentsOptions}
+        clearable
+        onSearchChange={setName}
+        value={selectedStudentId}
+        onChange={setSelectedStudentId} {...props} />
 })
 
 type AddUserRoleForm = {
@@ -55,13 +64,20 @@ type AddUserRoleForm = {
 
 const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'CURATOR' | 'DEAN' | 'EDUCATIONALPROGRAMLEAD', returnFn: () => void }) => {
     const form = useForm<AddUserRoleForm>()
-    const { data } = type === 'STUDENT' ? useGetGroupsQuery(undefined, undefined, 0, 1000000000) : useGetPartnersQuery(undefined, undefined, undefined, 0, 100000)
+    const [name, setName] = useState('');
+    const { data } = type === 'STUDENT' ? useGetGroupsQuery(undefined, name, 0, 1000000000) : useGetPartnersQuery(undefined, name, undefined, 0, 100000)
     const { mutateAsync: mutateStudent } = useCreateStudentMutation(form.getValues().userId || '')
     const { mutateAsync: mutateDean } = useCreateDeanMutation()
     const { mutateAsync: mutateCurator } = useCreateCuratorMutation()
     const { mutateAsync: mutateTeacher } = useCreateTeacherMutation()
     const { mutateAsync: mutateLead } = useCreateProgramLeadMutation()
     const { refetch } = useGetUserListQuery()
+    const options = useMemo(() => {
+        return data?.items?.map(item => ({
+            value: item.id!,
+            label: `${item.number || item.name}`,
+        })) || [];
+    }, [data]);
     const onSubmit = (vals: AddUserRoleForm) => {
         switch (type) {
             case 'STUDENT':
@@ -104,14 +120,10 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
             <Title>Выдать пользователю роль: {type === 'STUDENT' ? 'студент' : type === 'CURATOR' ? 'куратор' : type === 'DEAN' ? 'декан' : type === 'TEACHER' ? 'преподаватель' : 'руководитель образовательной программы'}</Title>
             <UserSelect key={form.key('userId')} {...form.getInputProps('userId')} label={'Пользователь'} />
             {type === 'STUDENT' ? (
-                <Select searchable key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
-                    return { value: item.id!, label: item.number! }
-                }) || []} label={'Поток'} />
+                <Select searchable clearable onSearchChange={setName} key={form.key('groupId')} {...form.getInputProps('groupId')} data={options} label={'Поток'} />
             ) :
                 type === 'CURATOR' ? (
-                    <Select searchable key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
-                        return { value: item.id!, label: item.name }
-                    }) || []} label={'Компания'} />
+                    <Select searchable clearable onSearchChange={setName} key={form.key('companyId')} {...form.getInputProps('companyId')} data={options} label={'Компания'} />
                 ) : <></>}
             <Button type='submit'>Выдать роль</Button>
         </form>
