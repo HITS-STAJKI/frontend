@@ -198,12 +198,12 @@ export function SearchRolesForm({ onSearch, initialValues }: {
 }
 
 
-export function UsersList({ items, pagination }: UserList) {
+export function UsersList({ items, pagination, size }: UserList & {size: number}) {
 
     return (
         <Flex wrap="wrap" gap="md" mt="lg" style={{ width: '100%' }}>
             {items.map((user, localIndex) => {
-                const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
+                const globalIndex = ((pagination?.currentPage ?? 1)) * (size) + localIndex;
                 return <UserCard
                     key={user.id}
                     user={user}

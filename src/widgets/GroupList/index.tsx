@@ -5,7 +5,7 @@ import { useGetGroupsQuery } from "services/api/api-client/GroupQuery";
 import { FilterSelect } from "widgets/Selection/indexTeachers";
 import { convertGroupsToGroupsWithName } from "widgets/Selection/newTypes";
 
-export const GroupList = ({ items, pagination }: GroupPage) => {
+export const GroupList = ({ items, pagination, size }: GroupPage & {size: number}) => {
 
     console.log("ppp", items)
     return (
@@ -13,7 +13,7 @@ export const GroupList = ({ items, pagination }: GroupPage) => {
         <div style={{ paddingBottom: '70px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '16px' }}>
                 {items.map((group, localIndex) => {
-                    const globalIndex = ((pagination?.currentPage ?? 1)) * (pagination?.size ?? 10) + localIndex;
+                    const globalIndex = ((pagination?.currentPage ?? 1)) * (size) + localIndex;
                     return (
                         <div key={group.id} style={{ width: '100%', margin: '8px 0' }}>
                             <Group group={group} number={globalIndex + 1} />
