@@ -19,7 +19,7 @@ import { useGetStackListQuery } from "services/api/api-client/StackQuery"
 // }
 
 const filters: ComboboxData = [
-    { value: 'fullname', label: 'ФИО' },
+    // { value: 'fullname', label: 'ФИО' },
     { value: 'isAcadem', label: 'Академ' },
     { value: 'isGraduated', label: 'Выпущен' },
     { value: 'groupIds', label: 'Потоки' },
@@ -32,18 +32,18 @@ const filters: ComboboxData = [
 ]
 
 const fields: Array<{ value: string | null, field: (setStats: React.Dispatch<React.SetStateAction<FilterRequest>>, data?: Array<{ value: string, label: string }>) => ReactNode }> = [
-    {
-        value: 'fullName', field: (setStats) => <Input.Wrapper label={'ФИО'}>
-            <Input
-                onChange={(e) => setStats(prev => {
-                    return {
-                        ...prev,
-                        fullname: e.currentTarget.value
-                    }
-                })}
-            />
-        </Input.Wrapper>
-    },
+    // {
+    //     value: 'fullName', field: (setStats) => <Input.Wrapper label={'ФИО'}>
+    //         <Input
+    //             onChange={(e) => setStats(prev => {
+    //                 return {
+    //                     ...prev,
+    //                     fullname: e.currentTarget.value
+    //                 }
+    //             })}
+    //         />
+    //     </Input.Wrapper>
+    // },
     {
         value: 'isAcadem', field: (setStats) => <Select label={'В академическом отпуске'} data={[
             { value: '', label: '--' },
