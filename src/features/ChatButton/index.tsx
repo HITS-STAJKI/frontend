@@ -9,6 +9,8 @@ export const ChatButton = () => {
     if (isLoading || isLoadingChat) {
         return <Loader />
     }
+    if (!data?.student?.chatId)
+        return <></>
     return <Flex gap={'xl'} align='center'>
         <CommentSelection id={data?.student?.chatId!} />
         {chatData?.unreadCount != null && chatData?.unreadCount > 0 && (
