@@ -6,7 +6,7 @@ import { getErrorMessage } from 'widgets/Helpes/GetErrorMessage';
 
 const ConcretePartnerPage = () => {
     const { id } = useParams();
-    const { data, isLoading, error, refetch } = useGetPartnerInfoQuery(id!);
+    const { data, isLoading, error } = useGetPartnerInfoQuery(id!);
 
     if (isLoading) {
         return (
@@ -48,7 +48,7 @@ const ConcretePartnerPage = () => {
 
     return (
         <Container w="90%" fluid>
-            <PartnerInfo partner={data} refetch={refetch} />
+            <PartnerInfo partner={data} />
         </Container>
     );
 };
