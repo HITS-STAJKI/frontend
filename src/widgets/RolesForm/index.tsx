@@ -40,7 +40,7 @@ export function RoleDropdown() {
 
 const UserSelect = forwardRef<HTMLInputElement, SelectProps>(({ ...props }, ref) => {
     const { data } = useGetUserListQuery(undefined, undefined, 0, 10000000000000)
-    return <Select ref={ref} data={data?.items?.map(item => {
+    return <Select searchable ref={ref} data={data?.items?.map(item => {
         return { value: item.id!, label: item.fullName! }
     }) || []} {...props} />
 })
@@ -102,12 +102,12 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
             <Title>Выдать пользователю роль: {type === 'STUDENT' ? 'студент' : type === 'CURATOR' ? 'куратор' : type === 'DEAN' ? 'декан' : type === 'TEACHER' ? 'преподаватель' : 'руководитель образовательной программы'}</Title>
             <UserSelect key={form.key('userId')} {...form.getInputProps('userId')} label={'Пользователь'} />
             {type === 'STUDENT' ? (
-                <Select key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
+                <Select searchable key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
                     return { value: item.id!, label: item.number! }
                 }) || []} label={'Поток'} />
             ) :
                 type === 'CURATOR' ? (
-                    <Select key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
+                    <Select searchable key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
                         return { value: item.id!, label: item.name }
                     }) || []} label={'Компания'} />
                 ) : <></>}
