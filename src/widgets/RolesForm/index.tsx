@@ -41,7 +41,7 @@ export function RoleDropdown() {
 const UserSelect = forwardRef<HTMLInputElement, SelectProps>(({ ...props }, ref) => {
     const name = useState<string>()
     const { data } = useGetUserListQuery(name[0], undefined, 0, 10000000000000)
-    return <Select onInput={e => name[1](e.currentTarget.value)} searchable ref={ref} data={data?.items?.map(item => {
+    return <Select onInput={e => name[1](e.currentTarget.value)} defaultSearchValue={name[0]} searchable ref={ref} data={data?.items?.map(item => {
         return { value: item.id!, label: item.fullName! }
     }) || []} {...props} />
 })
@@ -104,12 +104,12 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
             <Title>Выдать пользователю роль: {type === 'STUDENT' ? 'студент' : type === 'CURATOR' ? 'куратор' : type === 'DEAN' ? 'декан' : type === 'TEACHER' ? 'преподаватель' : 'руководитель образовательной программы'}</Title>
             <UserSelect key={form.key('userId')} {...form.getInputProps('userId')} label={'Пользователь'} />
             {type === 'STUDENT' ? (
-                <Select searchable onInput={e => name[1](e.currentTarget.value)} key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
+                <Select searchable defaultSearchValue={name[0]} onInput={e => name[1](e.currentTarget.value)} key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
                     return { value: item.id!, label: item.number! }
                 }) || []} label={'Поток'} />
             ) :
                 type === 'CURATOR' ? (
-                    <Select searchable onInput={e => name[1](e.currentTarget.value)} key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
+                    <Select searchable defaultSearchValue={name[0]} onInput={e => name[1](e.currentTarget.value)} key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
                         return { value: item.id!, label: item.name }
                     }) || []} label={'Компания'} />
                 ) : <></>}
