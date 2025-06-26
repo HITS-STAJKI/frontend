@@ -1,4 +1,5 @@
 import { AppShell, Flex, Title } from "@mantine/core"
+import { ChatButton } from "features/ChatButton"
 import { Outlet } from "react-router-dom"
 import { Menu } from "widgets/Menu"
 
@@ -12,6 +13,7 @@ export const PrivateLayout = () => {
             <AppShell.Header pl='md' pr='md'>
                 <Flex align='center' h='100%' justify='space-between' gap='xl'>
                     <Title order={3}>{'Система управления стажировками'}</Title>
+                    <ChatButton />
                 </Flex>
             </AppShell.Header>
             <AppShell.Navbar>
