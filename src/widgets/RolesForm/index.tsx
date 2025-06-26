@@ -39,11 +39,12 @@ export function RoleDropdown() {
 }
 
 const UserSelect = forwardRef<HTMLInputElement, SelectProps>(({ ...props }, ref) => {
-    const [name, setName] = useState<string>()
-    const { data } = useGetUserListQuery(name, undefined, 0, 10000000000000)
-    return <Select onInput={e => setName(e.currentTarget.value)} defaultSearchValue={name} searchable ref={ref} data={data?.items?.map(item => {
-        return { value: item.id!, label: item.fullName! }
-    }) || []} {...props} />
+    const [name, setName] = useState('');
+    const { data } = useGetUserListQuery(name, undefined, 0, 100000)
+    return <Select searchValue={name}
+        onSearchChange={setName} searchable ref={ref} data={data?.items?.map(item => {
+            return { value: item.id!, label: item.fullName! }
+        }) || []} {...props} />
 })
 
 type AddUserRoleForm = {
@@ -54,8 +55,7 @@ type AddUserRoleForm = {
 
 const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'CURATOR' | 'DEAN' | 'EDUCATIONALPROGRAMLEAD', returnFn: () => void }) => {
     const form = useForm<AddUserRoleForm>()
-    const [name, setName] = useState<string>()
-    const { data } = type === 'STUDENT' ? useGetGroupsQuery(undefined, name, 0, 1000000000) : useGetPartnersQuery(undefined, name, undefined, 0, 10000000)
+    const { data } = type === 'STUDENT' ? useGetGroupsQuery(undefined, undefined, 0, 1000000000) : useGetPartnersQuery(undefined, undefined, undefined, 0, 100000)
     const { mutateAsync: mutateStudent } = useCreateStudentMutation(form.getValues().userId || '')
     const { mutateAsync: mutateDean } = useCreateDeanMutation()
     const { mutateAsync: mutateCurator } = useCreateCuratorMutation()
@@ -104,12 +104,12 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
             <Title>Выдать пользователю роль: {type === 'STUDENT' ? 'студент' : type === 'CURATOR' ? 'куратор' : type === 'DEAN' ? 'декан' : type === 'TEACHER' ? 'преподаватель' : 'руководитель образовательной программы'}</Title>
             <UserSelect key={form.key('userId')} {...form.getInputProps('userId')} label={'Пользователь'} />
             {type === 'STUDENT' ? (
-                <Select searchable defaultSearchValue={name} onInput={e => setName(e.currentTarget.value)} key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
+                <Select searchable key={form.key('groupId')} {...form.getInputProps('groupId')} data={data?.items?.map(item => {
                     return { value: item.id!, label: item.number! }
                 }) || []} label={'Поток'} />
             ) :
                 type === 'CURATOR' ? (
-                    <Select searchable defaultSearchValue={name} onInput={e => setName(e.currentTarget.value)} key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
+                    <Select searchable key={form.key('companyId')} {...form.getInputProps('companyId')} data={data?.items?.map(item => {
                         return { value: item.id!, label: item.name }
                     }) || []} label={'Компания'} />
                 ) : <></>}
