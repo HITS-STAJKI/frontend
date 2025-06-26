@@ -22,7 +22,8 @@ export const RegistrationForm = () => {
             .then(tokens => {
                 localStorage.setItem("token", tokens.token!)
                 localStorage.setItem("exp", tokens.expirationDate?.toString()!)
-                navigate(MY_PROFILE_ROUTE)
+            }).then(() => {
+                location.href = MY_PROFILE_ROUTE
             })
             .catch(err => {
                 console.log(err)
