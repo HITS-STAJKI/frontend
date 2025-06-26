@@ -17,7 +17,7 @@ export const AddStudentInGroupForm = ({ group }: AddStudentInGroupFormProps) => 
 
     const { data: studentsData, isLoading: isStudentsLoading } = useGetAllStudentsQuery({
         fullName: searchQuery,
-        size: 100, // Получаем достаточно большое количество для выпадающего списка
+        size: 500, // Получаем достаточно большое количество для выпадающего списка
     });
 
     // Преобразуем студентов в формат для Select
