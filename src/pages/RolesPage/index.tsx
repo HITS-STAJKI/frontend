@@ -64,6 +64,7 @@ const RolesPage = () => {
                         <UsersList
                             items={data?.items!}
                             pagination={data?.pagination!}
+                            size={Number(sizeParam)}
                         />
                         <Pagination pagination={data?.pagination} />
                     </>

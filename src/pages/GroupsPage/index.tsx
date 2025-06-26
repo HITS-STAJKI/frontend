@@ -34,7 +34,7 @@ const GroupsPage = () => {
             {isLoading ? <Center>
                     <Loader />
                 </Center>: 
-                <GroupList items={items} pagination={data?.pagination!} /> 
+                <GroupList items={items} pagination={data?.pagination!} size={Number(sizeParam)}/> 
             }
             
         </Container>
