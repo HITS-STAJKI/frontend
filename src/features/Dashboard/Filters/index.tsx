@@ -1,4 +1,4 @@
-import { Center, ComboboxData, Flex, Input, Loader, MultiSelect, Select } from "@mantine/core"
+import { Center, ComboboxData, Flex, Loader, MultiSelect, Select } from "@mantine/core"
 import { FilterRequest, FilterType } from "../ChartCard"
 import { memo, ReactNode } from "react"
 import { useGetGroupsQuery } from "services/api/api-client/GroupQuery"
@@ -28,7 +28,7 @@ const filters: ComboboxData = [
     { value: 'hasPracticeRequest', label: 'Есть запрос на практику' },
     { value: 'hasInterviews', label: 'Есть интервью' },
     { value: 'stackIds', label: 'Стеки' },
-    { value: 'includeArchived', label: 'Архивированные' },
+    // { value: 'includeArchived', label: 'Архивированные' },
 ]
 
 const fields: Array<{ value: string | null, field: (setStats: React.Dispatch<React.SetStateAction<FilterRequest>>, data?: Array<{ value: string, label: string }>) => ReactNode }> = [
@@ -155,22 +155,22 @@ const fields: Array<{ value: string | null, field: (setStats: React.Dispatch<Rea
             })
         }} />
     },
-    {
-        value: 'includeArchived', field: (setStats) => <Select label='Архивированные' data={[
-            { value: '', label: '--' },
-            { value: 'true', label: 'Да' },
-            { value: 'false', label: 'Нет' },
-        ]}
-            onChange={e => {
-                setStats(prev => {
-                    return {
-                        ...prev,
-                        includeArchived: e === '' ? undefined : e === 'true' ? true : false
-                    }
-                })
-            }}
-            defaultValue={''} />
-    },
+    // {
+    //     value: 'includeArchived', field: (setStats) => <Select label='Архивированные' data={[
+    //         { value: '', label: '--' },
+    //         { value: 'true', label: 'Да' },
+    //         { value: 'false', label: 'Нет' },
+    //     ]}
+    //         onChange={e => {
+    //             setStats(prev => {
+    //                 return {
+    //                     ...prev,
+    //                     includeArchived: e === '' ? undefined : e === 'true' ? true : false
+    //                 }
+    //             })
+    //         }}
+    //         defaultValue={''} />
+    // },
     { value: null, field: () => <></> }
 ]
 
