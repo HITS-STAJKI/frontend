@@ -12,6 +12,8 @@ import { useCreateCuratorMutation } from "services/api/api-client/CuratorQuery";
 import { useCreateDeanMutation } from "services/api/api-client/DeanQuery";
 import { useCreateTeacherMutation } from "services/api/api-client/TeacherQuery";
 import { useCreateProgramLeadMutation } from "services/api/api-client/Educational_program_leadQuery";
+import { useQueryClient } from "@tanstack/react-query";
+import { QueryFactory } from "services/api";
 
 
 export function RoleDropdown() {
@@ -71,41 +73,38 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
     const { mutateAsync: mutateTeacher } = useCreateTeacherMutation()
     const { mutateAsync: mutateLead } = useCreateProgramLeadMutation()
     const { refetch } = useGetUserListQuery()
-    const onSubmit = (vals: AddUserRoleForm) => {
+    const queryClient = useQueryClient()
+    const onSubmit = async (vals: AddUserRoleForm) => {
         switch (type) {
             case 'STUDENT':
-                mutateStudent({ groupId: vals.groupId! }).then(() => {
+                await mutateStudent({ groupId: vals.groupId! }).then(() => {
                     returnFn()
-                }).then(() => {
-                    refetch()
                 })
                 break
             case 'TEACHER':
-                mutateTeacher({ userId: vals.userId! }).then(() => {
+                await mutateTeacher({ userId: vals.userId! }).then(() => {
                     returnFn()
-                }).then(() => {
-                    refetch()
                 })
                 break
             case 'CURATOR':
-                mutateCurator({ companyId: vals.companyId!, userId: vals.userId! }).then(() => {
+                await mutateCurator({ companyId: vals.companyId!, userId: vals.userId! }).then(() => {
                     returnFn()
-                }).then(() => {
-                    refetch()
                 })
                 break
             case 'DEAN':
-                mutateDean({ userId: vals.userId! }).then(() => {
+                await mutateDean({ userId: vals.userId! }).then(() => {
                     returnFn()
                 })
                 break
             case 'EDUCATIONALPROGRAMLEAD':
-                mutateLead({ userId: vals.userId! }).then(() => {
+                await mutateLead({ userId: vals.userId! }).then(() => {
                     returnFn()
                 })
                 break
         }
-
+        await queryClient.invalidateQueries({
+            queryKey: QueryFactory.UserQuery.getUserListQueryKey().slice(-1, 0)
+        })
 
     }
     return (
@@ -126,6 +125,8 @@ const AddUserRoleForm = ({ type, returnFn }: { type?: 'STUDENT' | 'TEACHER' | 'C
         </form>
     )
 }
+
+
 
 export function SearchRolesForm({ onSearch, initialValues }: {
     onSearch: (values: {
