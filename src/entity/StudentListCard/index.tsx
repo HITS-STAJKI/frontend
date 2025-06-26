@@ -2,6 +2,8 @@ import { Box, Button, Card, Checkbox, Grid, Modal, Text } from "@mantine/core"
 import { useState } from "react";
 import { CommentSectionAlt } from "entity"
 import { useNavigate } from "react-router-dom";
+import { useQueryClient } from '@tanstack/react-query'
+import { QueryFactory } from '../../services/api'
 
 interface StudentProps {
     index: number,
@@ -19,6 +21,7 @@ interface StudentProps {
 export function StudentListCard({ index, studentId, userId, fullName, groupNumber, lastLoginDate, unreadMessagesCount, chatId, isSelected, onToggleSelect }: StudentProps) {
     const navigate = useNavigate();
     const [modalOpened, setModalOpened] = useState(false);
+    const queryClient = useQueryClient()
 
     const handleCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
         if ((event.target as HTMLElement).closest('input, button, svg')) {
@@ -103,7 +106,14 @@ export function StudentListCard({ index, studentId, userId, fullName, groupNumbe
                 </div>
             </Card>
 
-            <StudentCommentsModal opened={modalOpened} onClose={() => setModalOpened(false)} chatId={chatId} />
+            <StudentCommentsModal
+              opened={modalOpened}
+              onClose={async () => {
+                setModalOpened(false);
+                  await queryClient.invalidateQueries({
+                      queryKey: QueryFactory.StackQuery.getStackListQueryKey().slice(-1,0)
+                  })}}
+              chatId={chatId} />
         </>
     );
 }

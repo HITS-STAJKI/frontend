@@ -148,7 +148,7 @@ export const EditPartnerForm = ({ onSuccess, partner }: EditPartnerFormProps) =>
                 pathname: window.location.pathname,
                 search: searchParams.toString(),
             });
-            window.location.reload();
+            // window.location.reload();
         } catch (e) {
             console.error("Ошибка обновления партнера", e);
         }

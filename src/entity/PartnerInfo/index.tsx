@@ -11,10 +11,9 @@ import { getErrorMessage } from 'widgets/Helpes/GetErrorMessage';
 
 type PartnerInfoProps = {
     partner: CompanyPartnerDto;
-    refetch: () => void;
 };
 
-export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
+export const PartnerInfo = ({ partner }: PartnerInfoProps) => {
     const navigate = useNavigate();
 
     const hasFile = Boolean(partner.fileId);
@@ -47,7 +46,7 @@ export const PartnerInfo = ({ partner, refetch }: PartnerInfoProps) => {
                     <WithProfileRole
                         render={
                             <>
-                                <EditPartnerButton partner={partner} onSuccess={refetch} />
+                                <EditPartnerButton partner={partner} />
                                 <DeletePartnerButton partner={partner} />
                             </>
                         }

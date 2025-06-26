@@ -3,14 +3,17 @@ import { PencilSvgrepoCom } from "assets/icons"
 import { Modal } from "shared/ui"
 import { EditPartnerForm } from "./form"
 import { CompanyPartnerDto } from "services/api/api-client.types"
+import { useQueryClient } from '@tanstack/react-query'
+import { QueryFactory } from '../../../services/api'
 
 type EditPartnerButtonProps = {
     partner: CompanyPartnerDto;
-    onSuccess: () => void;
 };
 
-export const EditPartnerButton = ({ partner, onSuccess }: EditPartnerButtonProps) => {
-    return (
+export const EditPartnerButton = ({ partner }: EditPartnerButtonProps) => {
+  const queryClient = useQueryClient();
+
+  return (
         <Modal
             render={(open) => (
                 <Button
@@ -25,8 +28,10 @@ export const EditPartnerButton = ({ partner, onSuccess }: EditPartnerButtonProps
             content={({ close }) => (
                 <EditPartnerForm
                     partner={partner}
-                    onSuccess={() => {
-                        onSuccess();
+                    onSuccess={async () => {
+                        await queryClient.invalidateQueries({
+                          queryKey: QueryFactory.CompanyPartnersQuery.getPartnerInfoQueryKey(partner.id)
+                        })
                         close();
                     }}
                 />
