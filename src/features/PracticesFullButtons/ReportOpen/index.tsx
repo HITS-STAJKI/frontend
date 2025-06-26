@@ -21,12 +21,13 @@ type ReportIdProps = {
     studentId: string | null;
     isApproved: boolean; 
     isReportAttached: boolean;
+    refetchPractice?: () => void;
 };
 
-export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isApproved, isReportAttached }: ReportIdProps & { opened: boolean; onClose: () => void; }) => {
+export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isApproved, isReportAttached, refetchPractice }: ReportIdProps & { opened: boolean; onClose: () => void; }) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    const { data: report, isLoading: reportLoading, isError: isReportError, error: reportError } = useGetPracticeReportQuery(practiceId, { enabled: (isApproved || isReportAttached) });
+    const { data: report, isLoading: reportLoading, isError: isReportError, error: reportError, refetch: refetchReport, } = useGetPracticeReportQuery(practiceId, { enabled: (isApproved || isReportAttached) });
     const { data: fileMetadata, isLoading: fileLoading, isError: fileError } = useGetFileMetadataQuery(report?.fileId ?? '', { enabled: !!report?.fileId && opened });
 
     const { data: currentUser } = useGetCurrentUserQuery({ enabled: !studentId && opened });
@@ -54,9 +55,11 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isAppr
     }, [report]);
 
     useEffect(() => {
-        if (opened) {
+        if (opened) 
+        {
             setMutationError(null);
-            if (studentId) {
+            if (studentId) 
+            {
                 getStudentMutation.mutateAsync([studentId])
                     .then((res) => {
                         const student = res?.[0];
@@ -67,8 +70,10 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isAppr
                         setMutationError(`Ошибка получения chatId: ${msg}`);
                     });
             }
-            else if (currentUser?.student?.chatId) {
-                if (!!currentUser.student) {
+            else if (currentUser?.student?.chatId) 
+            {
+                if (!!currentUser.student) 
+                {
                     setChatId(currentUser.student.chatId);
                 }
             }
@@ -76,10 +81,18 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isAppr
     }, [opened, studentId, currentUser]);
 
     useEffect(() => {
-        if (!opened) {
+        if (!opened) 
+        {
             setMutationError(null);
         }
     }, [opened]);
+
+    useEffect(() => {
+        if (opened && (isApproved || isReportAttached)) 
+        {
+            refetchReport();
+        }
+    }, [isApproved, isReportAttached, opened]);
 
     const handleDownload = async () => {
         if (!isApproved || !isReportAttached || !report?.fileId) return;
@@ -134,6 +147,9 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isAppr
                 reportId: report.id as unknown as ReportId,
                 fileId: uploadedFile.id
             });
+
+            refetchPractice?.();
+            refetchReport();
         }
         catch (err) {
             const msg = getErrorMessage(err);
@@ -165,6 +181,8 @@ export const ReportOpenModal = ({ practiceId, studentId, opened, onClose, isAppr
                 reportId: report.id as unknown as ReportId,
                 fileId: uploadedFile.id
             });
+
+            refetchReport();
         }
         catch (err) {
             const msg = getErrorMessage(err);

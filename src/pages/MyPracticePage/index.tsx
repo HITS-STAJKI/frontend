@@ -4,7 +4,7 @@ import { useGetMyPracticeQuery } from "services/api/api-client/PracticeQuery";
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 
 const MyPracticePage = () => {
-    const { data: practice, isLoading, isError, error } = useGetMyPracticeQuery();
+    const { data: practice, isLoading, isError, error, refetch  } = useGetMyPracticeQuery();
     if (isLoading) {
         return (
             <Center style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', pointerEvents: 'none', zIndex: 9999 }} >
@@ -41,7 +41,7 @@ const MyPracticePage = () => {
             <Flex direction="column" style={{ width: '100%', margin: '0 auto' }} gap="md">
                 <Group justify="space-between" mt="md" style={{ width: '100%' }} wrap="nowrap">
                     <Title order={2}>Практика студента</Title>
-                    {practice.isApproved  !== undefined && practice.isReportAttached  !== undefined && <AttachReport practiceId={practice.id!} isApproved={practice.isApproved} isReportAttached={practice.isReportAttached}/>}
+                    {practice.isApproved  !== undefined && practice.isReportAttached  !== undefined && <AttachReport practiceId={practice.id!} isApproved={practice.isApproved} isReportAttached={practice.isReportAttached} refetchPractice={refetch}/>}
                 </Group>
                 <Card shadow="sm" padding="md" style={{ width: '100%', display: 'flex' }}>
                     <Stack gap="xs">
