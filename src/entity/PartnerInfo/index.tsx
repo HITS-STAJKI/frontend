@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CompanyPartnerDto } from "services/api/api-client.types";
 import { useDownloadFileQuery } from 'services/api/api-client/FilesQuery';
+import { useGetCurrentUserQuery } from 'services/api/api-client/UserQuery';
 import { Roles, WithProfileRole } from 'shared/lib';
 import { getErrorMessage } from 'widgets/Helpes/GetErrorMessage';
 
@@ -20,18 +21,18 @@ export const PartnerInfo = ({ partner }: PartnerInfoProps) => {
     const { data: fileData, error: downloadError, isError: isDownloadError } = useDownloadFileQuery(partner.fileId ?? '', {
         enabled: hasFile,
     });
+    const { data: profile } = useGetCurrentUserQuery()
 
     const [imageSrc, setImageSrc] = useState<string | null>(null);
 
     useEffect(() => {
-        if (fileData?.data) 
-        {
+        if (fileData?.data) {
             const reader = new FileReader();
             reader.onloadend = () => setImageSrc(reader.result as string);
             reader.readAsDataURL(fileData.data);
         }
     }, [fileData]);
-    
+
     return (
         <Container w="100%">
             <Flex justify="space-between" align="center" mb="md">
@@ -43,7 +44,7 @@ export const PartnerInfo = ({ partner }: PartnerInfoProps) => {
                 </Group>
 
                 <Group>
-                    <WithProfileRole
+                    {profile?.curator?.companyPartner.id === partner.id && <WithProfileRole
                         render={
                             <>
                                 <EditPartnerButton partner={partner} />
@@ -51,7 +52,7 @@ export const PartnerInfo = ({ partner }: PartnerInfoProps) => {
                             </>
                         }
                         usersFor={[Roles.DEAN, Roles.EDUCATION_PROGRAM_LEAD, Roles.CURATOR]}
-                    />
+                    />}
 
                     <Button variant="outline" leftSection={<IconArrowLeft size={16} />} onClick={() => navigate('/partners')}>
                         Назад

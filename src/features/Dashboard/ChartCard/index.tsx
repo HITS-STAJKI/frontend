@@ -61,7 +61,7 @@ export const ChartCard = ({
         includeArchived
     )
     const { getStats } = useData()
-    const [filters, setFilters] = useState<Array<{ main: string, value: number }>>([])
+    const [filters, setFilters] = useState<Array<{ main: string, students: number }>>([])
     useEffect(() => {
         const objects: FilterRequest = {
             fullname,
@@ -79,15 +79,15 @@ export const ChartCard = ({
             if (Array.isArray(objects[main])) {
                 objects[main].forEach(el => {
                     getStats({ main, object: objects, value: el }).then(count => {
-                        setFilters(prev => [...prev, { main: String(el), value: count.count }])
+                        setFilters(prev => [...prev, { main: String(el), students: count.count }])
                     })
                 })
             }
             else {
                 const val = objects[main]
                 if (val !== undefined && val !== '') {
-                    getStats({ main, object: objects, value: val }).then(() => {
-                        setFilters([{ main: String(objects[main]), value: data?.count || 0 }])
+                    getStats({ main, object: objects, value: val }).then(count => {
+                        setFilters([{ main: String(objects[main]), students: count?.count || 0 }])
                     })
                 }
             }
@@ -125,9 +125,10 @@ export const ChartCard = ({
                 {filters.length <= 0 ? <Center w={'100%'} h='100%'>
                     <Title order={2}>Для отображения графика выберете индексируемый фильтр</Title>
                 </Center> : <ResponsiveBar data={filters.map(filter => {
+                    console.log(filter)
                     return {
                         main: dataGroups?.items?.find(item => item.id === filter.main)?.number || dataCompany?.items?.find(item => item.id === filter.main)?.name || dataStack?.find(item => item.id === filter.main)?.name || filter.main,
-                        'Студенты': filter.value
+                        value: filter.students
                     }
                 })}
                     indexBy={'main'}
