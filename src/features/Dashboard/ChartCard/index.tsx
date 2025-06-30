@@ -127,7 +127,7 @@ export const ChartCard = ({
                 </Center> : <ResponsiveBar data={filters.map(filter => {
                     return {
                         main: dataGroups?.items?.find(item => item.id === filter.main)?.number || dataCompany?.items?.find(item => item.id === filter.main)?.name || dataStack?.find(item => item.id === filter.main)?.name || filter.main,
-                        value: filter.value
+                        'Студенты': filter.value
                     }
                 })}
                     indexBy={'main'}
