@@ -118,6 +118,8 @@ export const ChartCard = ({
             </Center>
         </Flex>
     }
+    const filterss = filters.flatMap(value => value.value).sort((el1, el2) => el2 - el1)
+    console.log(filterss[0] / 10)
     return (
         <Flex w={'66%'} style={{ flexGrow: 1 }} p={'lg'} direction={'column'}>
             <Title>Всего результатов {data?.count}</Title>
@@ -143,7 +145,10 @@ export const ChartCard = ({
                             itemHeight: 16
                         },
                     ]}
-                    axisLeft={{ legend: "Студенты", legendOffset: -40 }}
+                    axisLeft={{
+                        legend: "Студенты", legendOffset: -40, tickValues: Math.floor(filterss[0] / 10) + (filterss[0] % 2 === 0 ? 0 : filterss[0] % 3 === 0 ? 3 : 1),
+                        format: (value) => Math.floor(value),
+                    }}
                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
                 />}
             </div>
