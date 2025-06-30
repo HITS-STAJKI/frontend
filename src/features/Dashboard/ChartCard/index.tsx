@@ -146,7 +146,7 @@ export const ChartCard = ({
                         },
                     ]}
                     axisLeft={{
-                        legend: "Студенты", legendOffset: -40, tickValues: Math.floor(filterss[0] / 10) + (filterss[0] % 2 === 0 ? 0 : filterss[0] % 3 === 0 ? 3 : 1),
+                        legend: "Студенты", legendOffset: -40, tickValues: Math.floor(filterss[0] / 10) + (filterss[0] % 2 === 0 ? 2 : filterss[0] % 3 === 0 ? 3 : 1),
                         format: (value) => Math.floor(value),
                     }}
                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
