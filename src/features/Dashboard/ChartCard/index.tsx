@@ -61,7 +61,7 @@ export const ChartCard = ({
         includeArchived
     )
     const { getStats } = useData()
-    const [filters, setFilters] = useState<Array<{ main: string, students: number }>>([])
+    const [filters, setFilters] = useState<Array<{ main: string, value: number }>>([])
     useEffect(() => {
         const objects: FilterRequest = {
             fullname,
@@ -79,7 +79,7 @@ export const ChartCard = ({
             if (Array.isArray(objects[main])) {
                 objects[main].forEach(el => {
                     getStats({ main, object: objects, value: el }).then(count => {
-                        setFilters(prev => [...prev, { main: String(el), students: count.count }])
+                        setFilters(prev => [...prev, { main: String(el), value: count.count }])
                     })
                 })
             }
@@ -87,7 +87,7 @@ export const ChartCard = ({
                 const val = objects[main]
                 if (val !== undefined && val !== '') {
                     getStats({ main, object: objects, value: val }).then(count => {
-                        setFilters([{ main: String(objects[main]), students: count?.count || 0 }])
+                        setFilters([{ main: main, value: count?.count || 0 }])
                     })
                 }
             }
@@ -125,10 +125,10 @@ export const ChartCard = ({
                 {filters.length <= 0 ? <Center w={'100%'} h='100%'>
                     <Title order={2}>Для отображения графика выберете индексируемый фильтр</Title>
                 </Center> : <ResponsiveBar data={filters.map(filter => {
-                    console.log(filter)
                     return {
+                        value: filter.value,
                         main: dataGroups?.items?.find(item => item.id === filter.main)?.number || dataCompany?.items?.find(item => item.id === filter.main)?.name || dataStack?.find(item => item.id === filter.main)?.name || filter.main,
-                        value: filter.students
+
                     }
                 })}
                     indexBy={'main'}
@@ -141,7 +141,7 @@ export const ChartCard = ({
                             itemsSpacing: 3,
                             itemWidth: 100,
                             itemHeight: 16
-                        }
+                        },
                     ]}
                     axisLeft={{ legend: "Студенты", legendOffset: -40 }}
                     margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
