@@ -9,7 +9,7 @@ interface FullPracticeCardProps extends PracticeDto {
     onRefresh?: () => void;
 }
 
-export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, isArchived, isApproved, isReportAttached, index, onRefresh }: FullPracticeCardProps) {
+export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, isArchived, isApproved, isReportAttached, reportGrade, index, onRefresh }: FullPracticeCardProps) {
     const navigate = useNavigate();
 
     const studentRole = user?.roles?.find(role => role.userRole === 'STUDENT');
@@ -52,12 +52,12 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
                     <Text>{index}</Text>
                 </Box>
                 <Grid style={{ width: '100%' }}>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Grid.Col span={2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {user?.fullName ?? 'Неизвестный пользователь'}
                         </Text>
                     </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Grid.Col span={1} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {group?.number ?? 'Неизвестный поток'}
                         </Text>
@@ -67,24 +67,29 @@ export function FullPracticeCard({ id, user, group, company, createdAt, isPaid, 
                             {company?.name ?? 'Неизвестная компания'}
                         </Text>
                     </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Grid.Col span={1.2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {isPaid == true ? "Да" : "Нет"}
                         </Text>
                     </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Grid.Col span={1.2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {isApproved == true ? "Да" : "Нет"}
                         </Text>
                     </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Grid.Col span={1.2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {isArchived == true ? "Да" : "Нет"}
                         </Text>
                     </Grid.Col>
-                    <Grid.Col span={1.5} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    <Grid.Col span={1.2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
                         <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                             {createdAt ? new Date(createdAt).toLocaleDateString("ru-RU") : '—'}
+                        </Text>
+                    </Grid.Col>
+                    <Grid.Col span={1.2} style={{ display: "flex", justifyContent: "center", width: '100%', alignItems: "center", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        <Text style={{ justifyContent: "center", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {isApproved == true ? (reportGrade !== null ? reportGrade : "Не выставлена") : "Не подтверждена"}
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={1.5} style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between" }}>

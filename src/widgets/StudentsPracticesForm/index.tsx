@@ -1,6 +1,6 @@
 import { Button, Flex, Card, Grid, Box, Group, Text, Modal, Select, Loader } from "@mantine/core"
 import { FullPracticeCard } from "entity/FullPracticeCard";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { IconChevronDown, IconChevronUp } from "@tabler/icons-react";
 import { PagedListDtoPracticeDto } from "services/api/api-client.types";
 import { useSearchParams } from "react-router-dom";
@@ -16,7 +16,8 @@ export type SortKeyAllPractices =
     | "createdAt"
     | "isPaid"
     | "isArchived"
-    | "isApproved";
+    | "isApproved"
+    | "reportGrade";
 
 type PagedListDtoPracticeProps = PagedListDtoPracticeDto & {
     initialSort: [SortKeyAllPractices, SortDirectionAllPractices] | null;
@@ -32,27 +33,34 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
         setSort((currentSort) => {
             let newSort: [SortKeyAllPractices, SortDirectionAllPractices] | null;
 
-            if (currentSort?.[0] === key) {
-                if (currentSort[1] === "asc") {
+            if (currentSort?.[0] === key) 
+            {
+                if (currentSort[1] === "asc") 
+                {
                     newSort = [key, "desc"];
                 }
-                else if (currentSort[1] === "desc") {
+                else if (currentSort[1] === "desc") 
+                {
                     newSort = null;
                 }
-                else {
+                else 
+                {
                     newSort = [key, "asc"];
                 }
             }
-            else {
+            else 
+            {
                 newSort = [key, "asc"];
             }
 
             const updatedParams = new URLSearchParams(searchParams);
-            if (newSort) {
+            if (newSort) 
+            {
                 updatedParams.set("sort", newSort[0]);
                 updatedParams.set("sortDirection", newSort[1]);
             }
-            else {
+            else 
+            {
                 updatedParams.delete("sort");
                 updatedParams.delete("sortDirection");
             }
@@ -63,7 +71,8 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
     }
 
     function SortArrow({ columnKey }: { columnKey: SortKeyAllPractices }) {
-        if (!sort || sort[0] !== columnKey) {
+        if (!sort || sort[0] !== columnKey) 
+        {
             return null;
         }
         return sort[1] === "asc" ?
@@ -81,59 +90,62 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
                     <Box style={{ width: "40px", textAlign: "center" }} />
                     <Grid style={{ width: "100%" }}>
                         {[
-                            { key: "student.user.fullName", label: "Студент" },
-                            { key: "student.group.number", label: "Поток" },
-                            { key: "company.name", label: "Компания" },
-                            { key: "isPaid", label: "Оплачиваемая" },
-                            { key: "isApproved", label: "Подтверждена" },
-                            { key: "isArchived", label: "Архивная" },
-                            { key: "createdAt", label: "Дата создания" },
-                        ].map(({ key, label }) => (
+                            { key: "student.user.fullName", label: "Студент", span: 2 },
+                            { key: "student.group.number", label: "Поток", span: 1 },
+                            { key: "company.name", label: "Компания", span: 1.5 },
+                            { key: "isPaid", label: "Оплачиваемая", span: 1.2 },
+                            { key: "isApproved", label: "Подтверждена", span: 1.2 },
+                            { key: "isArchived", label: "Архивная", span: 1.2 },
+                            { key: "createdAt", label: "Дата создания", span: 1.2 },
+                            { key: "reportGrade", label: "Оценка", span: 1.2 }
+                            ].map(({ key, label, span }) => (
                             <Grid.Col
                                 key={key}
-                                span={1.5}
+                                span={span}
+                                style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "stretch"
+                                }}
+                            >
+                                <Button
+                                variant="subtle"
+                                size="sm"
+                                onClick={() => handleSort(key as SortKeyAllPractices)}
                                 style={{
                                     display: "flex",
+                                    flexDirection: "row",
+                                    alignItems: "center",
                                     justifyContent: "center",
-                                    alignItems: "stretch"
-                                }}>
-                                <Button
-                                    variant="subtle"
-                                    size="sm"
-                                    onClick={() => handleSort(key as SortKeyAllPractices)}
+                                    width: "100%",
+                                    height: "100%",
+                                    color: "black",
+                                    textAlign: "center",
+                                    padding: "8px",
+                                    gap: "4px",
+                                }}
+                                >
+                                <span
                                     style={{
-                                        display: "flex",
-                                        flexDirection: "row",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        width: "100%",
-                                        height: "100%",
-                                        color: "black",
-                                        textAlign: "center",
-                                        padding: "8px",
-                                        gap: "4px",
-                                    }}>
-                                    <span
-                                        style={{
-                                            display: "-webkit-box",
-                                            WebkitLineClamp: 2,
-                                            WebkitBoxOrient: "vertical",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            whiteSpace: "normal",
-                                            lineHeight: "1.2em",
-                                            maxWidth: "100%",
-                                        }}
-                                    >
-                                        {label}
-                                    </span>
-                                    <span style={{ width: "16px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
-                                        <SortArrow columnKey={key as SortKeyAllPractices} />
-                                    </span>
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                    textOverflow: "ellipsis",
+                                    whiteSpace: "normal",
+                                    lineHeight: "1.2em",
+                                    maxWidth: "100%",
+                                    }}
+                                >
+                                    {label}
+                                </span>
+                                <span style={{ width: "16px", flexShrink: 0, display: "flex", justifyContent: "center" }}>
+                                    <SortArrow columnKey={key as SortKeyAllPractices} />
+                                </span>
                                 </Button>
                             </Grid.Col>
-                        ))}
-                        <Grid.Col span={1.5}></Grid.Col>
+                            ))}
+                            <Grid.Col span={1.5}></Grid.Col>
                     </Grid>
                 </div>
             </Card>
@@ -158,6 +170,7 @@ export function PracticesList({ items, pagination, initialSort = null, onRefresh
                             isArchived={practice.isArchived}
                             isApproved={practice.isApproved}
                             isReportAttached={practice.isReportAttached}
+                            reportGrade={practice.reportGrade}
                             index={globalIndex + 1}
                             onRefresh={onRefresh}
                         />

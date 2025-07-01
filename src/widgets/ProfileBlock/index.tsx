@@ -40,7 +40,6 @@ export const ProfileBlock = ({ profileData, mode, onRefresh }: ProfileBlockProps
 
         return null;
     };
-    console.log(!!profileData.student)
     return (
         <div style={{ marginTop: '2vh', marginLeft: '4vw', width: '50vw', minWidth: "300px" }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>

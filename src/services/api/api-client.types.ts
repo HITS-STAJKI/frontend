@@ -454,6 +454,8 @@ export interface PracticeDto  {
   isApproved?: boolean;
   /** Прикреплен ли файл отчета */
   isReportAttached?: boolean;
+  /** Оценка за отчет */
+  reportGrade?: number;
   [key: string]: any;
 }
 export function deserializePracticeDto(json: string): PracticeDto {
