@@ -6,6 +6,7 @@ import { SendToAcadem } from "features/AcademicLeave";
 import { UserDetailsDto } from "services/api/api-client.types";
 import { Logout } from "features";
 import { DeleteRole } from "features/DeleteRole";
+import { ReinstateStudent } from "features/ReinstateStudent"
 
 type ProfileBlockProps = {
     profileData: UserDetailsDto;
@@ -16,7 +17,7 @@ type ProfileBlockProps = {
 export const ProfileBlock = ({ profileData, mode, onRefresh }: ProfileBlockProps) => {
     const isStudent = !!profileData.student;
 
-    const renderActionButton = () => {
+    const renderActionButton = ({profileData} : {profileData: UserDetailsDto}) => {
         if (mode === "my") 
         {
             return <ChangePassword onRefresh={onRefresh}/>;
@@ -33,8 +34,13 @@ export const ProfileBlock = ({ profileData, mode, onRefresh }: ProfileBlockProps
             else 
             {
                 return (
-                    <SendToAcadem user={profileData} />
+                  <>
+                      {profileData.student?.isAcadem && <SendToAcadem user={profileData} />}
+                      {profileData.student?.isGraduated && <ReinstateStudent user={profileData} />}
+
+                  </>
                 );
+                      
             }
         }
 
@@ -47,7 +53,7 @@ export const ProfileBlock = ({ profileData, mode, onRefresh }: ProfileBlockProps
                 {profileData.student?.isGraduated && <Text c="gray" ml="xs">(Выпустился)</Text>}
                 {profileData.student?.isAcadem && <Text c="red" ml="xs">(В академе)</Text>}
                 <div style={{ marginLeft: 'auto', display: 'flex', gap: '0.5rem' }}>
-                    {renderActionButton()}
+                    {renderActionButton({profileData})}
                     {mode === 'user' ? <DeleteRole profileData={profileData} /> : <Logout />}
                 </div>
             </div>
