@@ -1,4 +1,4 @@
-import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea, FileInput, Checkbox } from "@mantine/core"
+import { Button, Flex, Card, Grid, Box, Group, Text, Stack, Textarea, FileInput, Checkbox, Table } from "@mantine/core"
 import { useMemo, useState } from "react";
 import { IconChevronDown, IconChevronUp, IconDownload } from "@tabler/icons-react";
 import { StudentListCard } from "entity/StudentListCard";
@@ -8,6 +8,7 @@ import { useSendMessagesMutation } from "services/api/api-client/ChatControllerQ
 import { getErrorMessage } from "widgets/Helpes/GetErrorMessage";
 import { UploadFileFilesMutationParameters } from "services/api/api-client/FilesQuery";
 import { useImportStudentsMutation } from "services/api/api-client/StudentQuery";
+import { Modal } from "shared/ui";
 
 type PracticesFormOverProps = {
     studentName: string,
@@ -310,37 +311,41 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
         }
     };
 
-    const handleImport = async (e: File | null) => {
-        if (!e?.name) {
-            return;
+    const handleImport = (close: () => void) => {
+        return async (e: File | null) => {
+            if (!e?.name) {
+                return;
+            }
+
+            setIsImporting(true);
+            setImportError(null);
+
+            const fp: UploadFileFilesMutationParameters = {
+                file: { data: e, fileName: e.name }
+            };
+
+            try {
+                const file = await importMutation(fp);
+                const url = window.URL.createObjectURL(file.data);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = file.fileName!;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
+
+                refetchStudents();
+            }
+            catch (err) {
+                setImportError(getErrorMessage(err));
+            }
+            finally {
+                setIsImporting(false);
+                close()
+            }
         }
 
-        setIsImporting(true);
-        setImportError(null);
-
-        const fp: UploadFileFilesMutationParameters = {
-            file: { data: e, fileName: e.name }
-        };
-
-        try {
-            const file = await importMutation(fp);
-            const url = window.URL.createObjectURL(file.data);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = file.fileName!;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.remove();
-
-            refetchStudents();
-        }
-        catch (err) {
-            setImportError(getErrorMessage(err));
-        }
-        finally {
-            setIsImporting(false);
-        }
     };
 
     return (
@@ -361,20 +366,104 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
                             {errorMessage}
                         </Text>
                     )}
-                    <Group justify="space-between" mt="sm">
+                    <Flex direction='column' align='start' mt="sm" gap='sm'>
+                        <Modal
+                            size='lg'
+                            render={(open) => <Button onClick={open} color='green'>
+                                Импортировать студентов
+                            </Button>}
+                            content={({ close }) => <Flex w={'100%'} direction={'column'} gap='sm'>
+                                <FileInput
+                                    label="Прикрепить студентов"
+                                    accept=".xlsx,.xls"
+                                    size="sm"
+                                    maw="100%"
+                                    miw="100%"
+                                    onChange={handleImport(close)}
+                                    disabled={isImporting}
+                                />
+                                <Text size='lg'>Для того, чтобы импортировать студентов прикрепите excel-файл в следующем формате.</Text>
+                                <Table>
+                                    <Table.Thead>
+                                        <Table.Tr>
+                                            <Table.Th>ФИО</Table.Th>
+                                            <Table.Th>Поток</Table.Th>
+                                            <Table.Th>Email</Table.Th>
+                                        </Table.Tr>
+                                    </Table.Thead>
+                                    <Table.Tbody>
+                                        <Table.Tr>
+                                            <Table.Td>
+                                                Иванов Иван Иванович
+                                            </Table.Td>
+                                            <Table.Td>
+                                                9722
+                                            </Table.Td>
+                                            <Table.Td>
+                                                example@example.ru
+                                            </Table.Td>
+                                        </Table.Tr>
+                                        <Table.Tr>
+                                            <Table.Td>
+                                                Иванов Мария Ивановна
+                                            </Table.Td>
+                                            <Table.Td>
+                                                9722
+                                            </Table.Td>
+                                            <Table.Td>
+                                                example2@example2.ru
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    </Table.Tbody>
+                                </Table>
+                                <Text size='lg'>В ответ вы получите файл с логинами и паролями в следующем формате.</Text>
+                                <Table>
+                                    <Table.Thead>
+                                        <Table.Tr>
+                                            <Table.Th>ФИО</Table.Th>
+                                            <Table.Th>Email</Table.Th>
+                                            <Table.Th>Сгенериррованный пароль</Table.Th>
+                                            <Table.Th>Статус</Table.Th>
+                                        </Table.Tr>
+                                    </Table.Thead>
+                                    <Table.Tbody>
+                                        <Table.Tr>
+                                            <Table.Td>
+                                                Иванов Иван Иванович
+                                            </Table.Td>
+                                            <Table.Td>
+                                                example@example.ru
+                                            </Table.Td>
+                                            <Table.Td>
+                                                dlfghdflkjngsnkjvoij098y5gvejranf
+                                            </Table.Td>
+                                            <Table.Td>
+                                                Успешно
+                                            </Table.Td>
+                                        </Table.Tr>
+                                        <Table.Tr>
+                                            <Table.Td>
+                                                Иванов Мария Иванович
+                                            </Table.Td>
+                                            <Table.Td>
+                                                example2@example2.ru
+                                            </Table.Td>
+                                            <Table.Td>
+
+                                            </Table.Td>
+                                            <Table.Td>
+                                                Ошибка: пользователь не существует
+                                            </Table.Td>
+                                        </Table.Tr>
+                                    </Table.Tbody>
+                                </Table>
+                            </Flex>}
+                            title={'Импортирование студентов'}
+                        />
                         <Button leftSection={<IconDownload size={16} />} color="green" onClick={handleExport} loading={isExporting} disabled={selectedStudentIds.length === 0 || isExporting} >
                             Экспортировать студентов
                         </Button>
-                        <FileInput
-                            label="Прикрепить студентов"
-                            accept=".xlsx,.xls"
-                            size="sm"
-                            maw="30%"
-                            miw="10%"
-                            onChange={handleImport}
-                            disabled={isImporting}
-                        />
-                    </Group>
+                    </Flex>
                     {exportError && (
                         <Text color="red" size="sm" style={{ marginTop: 8, textAlign: 'center' }}>
                             {exportError}

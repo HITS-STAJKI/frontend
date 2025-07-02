@@ -44,7 +44,7 @@ export const PartnerInfo = ({ partner }: PartnerInfoProps) => {
                 </Group>
 
                 <Group>
-                    {profile?.curator?.companyPartner.id === partner.id && <WithProfileRole
+                    {(profile?.curator?.companyPartner.id === partner.id || profile?.educationalProgramLead !== null || profile.educationalProgramLead !== undefined) && <WithProfileRole
                         render={
                             <>
                                 <EditPartnerButton partner={partner} />
