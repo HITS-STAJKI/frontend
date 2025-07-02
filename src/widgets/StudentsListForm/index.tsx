@@ -373,15 +373,6 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
                                 Импортировать студентов
                             </Button>}
                             content={({ close }) => <Flex w={'100%'} direction={'column'} gap='sm'>
-                                <FileInput
-                                    label="Прикрепить студентов"
-                                    accept=".xlsx,.xls"
-                                    size="sm"
-                                    maw="100%"
-                                    miw="100%"
-                                    onChange={handleImport(close)}
-                                    disabled={isImporting}
-                                />
                                 <Text size='lg'>Для того, чтобы импортировать студентов прикрепите excel-файл в следующем формате.</Text>
                                 <Table>
                                     <Table.Thead>
@@ -405,7 +396,7 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
                                         </Table.Tr>
                                         <Table.Tr>
                                             <Table.Td>
-                                                Иванов Мария Ивановна
+                                                Иванова Мария Ивановна
                                             </Table.Td>
                                             <Table.Td>
                                                 9722
@@ -443,7 +434,7 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
                                         </Table.Tr>
                                         <Table.Tr>
                                             <Table.Td>
-                                                Иванов Мария Иванович
+                                                Иванова Мария Иванович
                                             </Table.Td>
                                             <Table.Td>
                                                 example2@example2.ru
@@ -452,11 +443,20 @@ export function StudentsCommentaryForm({ selectedStudentIds, refetchStudents }: 
 
                                             </Table.Td>
                                             <Table.Td>
-                                                Ошибка: пользователь не существует
+                                                Ошибка: пользователь уже существует
                                             </Table.Td>
                                         </Table.Tr>
                                     </Table.Tbody>
                                 </Table>
+                                <FileInput
+                                    label="Прикрепить студентов"
+                                    accept=".xlsx,.xls"
+                                    size="sm"
+                                    maw="100%"
+                                    miw="100%"
+                                    onChange={handleImport(close)}
+                                    disabled={isImporting}
+                                />
                             </Flex>}
                             title={'Импортирование студентов'}
                         />
